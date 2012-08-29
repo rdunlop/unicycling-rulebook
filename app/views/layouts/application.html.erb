@@ -7,8 +7,25 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+    <div class="top_nav">
+        <h1>Rulebook</h1>
+    </div>
+    <div class="left_nav">
+        <%= link_to('Main Menu', welcome_index_path) %><br />
+        <% if user_signed_in? %>
+            <%= link_to('Logout', destroy_user_session_path, :method => :delete) %><br />
+        <% else %>
+            <%= link_to('Login', new_user_session_path) %><br />
+            <%= link_to('Sign-Up', new_user_registration_path) %><br />
+        <% end %>
+    </div>
+    <div class="main_nav">
+        <p id="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
 
-<%= yield %>
-
+        <%= yield %>
+        <hr />
+        <p>Copyright &copy; 2012 International Unicycling Federation<br /></p>
+    </div>
 </body>
 </html>

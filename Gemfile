@@ -12,6 +12,16 @@ gem 'cancan'
 #gem 'sqlite3'
 gem 'pg'
 
+group :development, :test, :cucumber do
+    gem 'factory_girl_rails'
+    gem 'rspec-rails'
+    gem 'capybara'
+    gem 'spork', ">=0.9.0.rc9"
+    gem 'syntax'
+    gem 'watchr'
+    gem 'foreman'
+end
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

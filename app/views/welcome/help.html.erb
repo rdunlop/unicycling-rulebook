@@ -1,0 +1,37 @@
+<h1>Instructions and Tips</h1>
+
+<% if can? :create, Event %>
+  <h2>Initial Setup</h2>
+  <p>Initially, there are a few one-time setup tasks that you should perform</p>
+  
+  <ul>
+    <li>Check out the initially-created <%= link_to 'Event Classes', event_classes_path %><br />
+    <li>Check out the initially-created <%= link_to 'Judge Types', judge_types_path %><br />
+    <b>Note</b>: these should match the UCP that you are using</li>
+    <li>Upload new <%= link_to 'Registrant Data', upload_file_registrants_path %></li>
+  </ul>
+
+  <h2>Standard Skill</h2>
+  <p>If you are using the Standard Skill portion of the system, you may need to upload/modify the
+  <%= link_to 'List of Standard Skills', upload_file_standard_skill_entries_path %>
+  </p>
+
+  <h2>Normal Actions</h2>
+  <p>The normal flow for using this system is:
+  <ol>
+    <li>Create some Events</li>
+    <li>Assign/import competitor lists for the events</li>
+    <li>Have users sign up</li>
+    <li>Set the users to have "judge" capability</li>
+    <li>Assign the users to judge certain events</li>
+    <li>Review the Judging results</li>
+    <li>Export the Judging results for an Event, and import it into UCP</li>
+  </ol>
+<% end %>
+
+<h2>Update Password</h2>
+<%= link_to 'Update Password', edit_user_registration_path %>
+
+<h2>Contact Me</h2>
+<p>If you are having any problems, please feel free to send me an email to contact me.
+<a href="mailto:unicycling@dunlopweb.com">unicycling@dunlopweb.com</a>

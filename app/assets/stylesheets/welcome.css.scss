@@ -1,0 +1,39 @@
+// Place all the styles related to the Welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$nav_width: 150px;
+$top_height: 5em;
+
+html,body{
+    margin: 0;
+    padding: 0;
+}
+body {
+    height: 100%;
+}
+.top_nav {
+    float: left;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+    height: $top_height;
+}
+
+.left_nav {
+    float: left;
+    overflow: auto;
+    top: $top_height;
+    padding: 5px;
+}
+
+.main_nav {
+    float: left;
+}
+
+.judge_events {
+    float: left;
+    padding: 10px;
+    margin: 10px;
+}
+
