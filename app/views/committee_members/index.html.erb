@@ -1,0 +1,27 @@
+<h1>Listing committee_members</h1>
+
+<table>
+  <tr>
+    <th>Committee</th>
+    <th>User</th>
+    <th>Voting</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @committee_members.each do |committee_member| %>
+  <tr>
+    <td><%= committee_member.committee_id %></td>
+    <td><%= committee_member.user_id %></td>
+    <td><%= committee_member.voting %></td>
+    <td><%= link_to 'Show', committee_member %></td>
+    <td><%= link_to 'Edit', edit_committee_member_path(committee_member) %></td>
+    <td><%= link_to 'Destroy', committee_member, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Committee member', new_committee_member_path %>

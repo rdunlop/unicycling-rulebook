@@ -1,0 +1,224 @@
+  [1m[36m (0.6ms)[0m  [1mALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mFixture Delete (0.4ms)[0m  [1mDELETE FROM "committee_members"[0m
+  [1m[35mFixture Insert (0.7ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 980190962)
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "committees"
+  [1m[36mFixture Insert (0.4ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 980190962)[0m
+  [1m[35mFixture Insert (0.3ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)
+  [1m[36mFixture Delete (0.5ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.6ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:25', '2012-08-29 16:27:25', 980190962)
+  [1m[36mFixture Insert (0.7ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)[0m
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "committee_members"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 980190962)[0m
+  [1m[35mFixture Insert (0.5ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "committees"[0m
+  [1m[35mFixture Insert (0.4ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 980190962)
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)[0m
+  [1m[35mFixture Delete (0.4ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:25', '2012-08-29 16:27:25', 980190962)[0m
+  [1m[35mFixture Insert (0.6ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "committee_members"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "committees"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:25', '2012-08-29 16:27:25', 980190962)
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)[0m
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "committee_members"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "committees"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 980190962)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:25', '2012-08-29 16:27:25', 980190962)[0m
+  [1m[35mFixture Insert (0.4ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "committee_members"[0m
+  [1m[35mFixture Insert (0.3ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 980190962)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:25', '2012-08-29 16:27:25', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "committees"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.3ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.5ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "committee_members"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "committees"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.5ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "committee_members"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "committees"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "committee_members"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "committees"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36m (0.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "committee_members"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "committees"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.3ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.6ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "committee_members"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "committees"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.5ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "committee_members"[0m
+  [1m[35mFixture Insert (0.4ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "committees"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.4ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.6ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "committee_members"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.3ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "committees"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.7ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "committee_members"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "committees"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.3ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.6ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "committee_members" DISABLE TRIGGER ALL;ALTER TABLE "committees" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.4ms)[0m  DELETE FROM "committee_members"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.3ms)[0m  INSERT INTO "committee_members" ("committee_id", "user_id", "voting", "created_at", "updated_at", "id") VALUES (1, 1, 'f', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "committees"[0m
+  [1m[35mFixture Insert (0.3ms)[0m  INSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "committees" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 980190962)[0m
+  [1m[35mFixture Insert (0.6ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+PG::Error: ERROR:  duplicate key value violates unique constraint "index_users_on_email"
+DETAIL:  Key (email)=() already exists.
+: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2012-08-29 16:27:26', '2012-08-29 16:27:26', 298486374)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "committee_members" ENABLE TRIGGER ALL;ALTER TABLE "committees" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
