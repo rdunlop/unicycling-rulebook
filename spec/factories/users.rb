@@ -9,8 +9,7 @@ FactoryGirl.define do
     # confirmed_at Time.now
 
     factory :admin_user do
-        #admin true
-        #registrant_id 2
+        admin true
     end
   end
 end
