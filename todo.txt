@@ -1,0 +1,1 @@
+- Change to use 'thin' server (as per heroku documentation https://devcenter.heroku.com/articles/rails3)
