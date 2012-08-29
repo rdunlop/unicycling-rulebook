@@ -1,4 +1,6 @@
 Rulebook::Application.routes.draw do
+  resources :proposals
+
   resources :committee_members
 
   resources :committees

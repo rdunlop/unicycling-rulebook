@@ -10,8 +10,13 @@ class Ability
 
     if user.admin
         can :manage, Committee
+        can :manage, Proposal
     else
         can :read, Committee
+        can :create, Proposal
+        can :manage, Proposal do |proposal|
+            proposal.try(:owner) == user
+        end
     end
     # Define abilities for the passed in user here. For example:
     #

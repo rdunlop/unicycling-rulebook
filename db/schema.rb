@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829191633) do
+ActiveRecord::Schema.define(:version => 20120829194359) do
 
   create_table "committee_members", :force => true do |t|
     t.integer  "committee_id"
@@ -25,6 +25,23 @@ ActiveRecord::Schema.define(:version => 20120829191633) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "proposals", :force => true do |t|
+    t.integer  "committee_id"
+    t.string   "status"
+    t.datetime "submit_date"
+    t.datetime "review_start_date"
+    t.datetime "review_end_date"
+    t.datetime "vote_start_date"
+    t.datetime "vote_end_date"
+    t.datetime "tabled_date"
+    t.boolean  "transition_straight_to_vote"
+    t.integer  "owner_id"
+    t.text     "summary"
+    t.text     "title"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
   end
 
   create_table "users", :force => true do |t|

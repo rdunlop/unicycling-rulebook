@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Committee:</b>
+  <%= @proposal.committee_id %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @proposal.status %>
+</p>
+
+<p>
+  <b>Submit date:</b>
+  <%= @proposal.submit_date %>
+</p>
+
+<p>
+  <b>Review start date:</b>
+  <%= @proposal.review_start_date %>
+</p>
+
+<p>
+  <b>Review end date:</b>
+  <%= @proposal.review_end_date %>
+</p>
+
+<p>
+  <b>Vote start date:</b>
+  <%= @proposal.vote_start_date %>
+</p>
+
+<p>
+  <b>Vote end date:</b>
+  <%= @proposal.vote_end_date %>
+</p>
+
+<p>
+  <b>Tabled date:</b>
+  <%= @proposal.tabled_date %>
+</p>
+
+<p>
+  <b>Transition straight to vote:</b>
+  <%= @proposal.transition_straight_to_vote %>
+</p>
+
+<p>
+  <b>Owner:</b>
+  <%= @proposal.owner_id %>
+</p>
+
+<p>
+  <b>Summary:</b>
+  <%= @proposal.summary %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @proposal.title %>
+</p>
+
+
+<%= link_to 'Edit', edit_proposal_path(@proposal) %> |
+<%= link_to 'Back', proposals_path %>

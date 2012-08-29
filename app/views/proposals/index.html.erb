@@ -1,0 +1,45 @@
+<h1>Listing proposals</h1>
+
+<table>
+  <tr>
+    <th>Committee</th>
+    <th>Status</th>
+    <th>Submit date</th>
+    <th>Review start date</th>
+    <th>Review end date</th>
+    <th>Vote start date</th>
+    <th>Vote end date</th>
+    <th>Tabled date</th>
+    <th>Transition straight to vote</th>
+    <th>Owner</th>
+    <th>Summary</th>
+    <th>Title</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @proposals.each do |proposal| %>
+  <tr>
+    <td><%= proposal.committee_id %></td>
+    <td><%= proposal.status %></td>
+    <td><%= proposal.submit_date %></td>
+    <td><%= proposal.review_start_date %></td>
+    <td><%= proposal.review_end_date %></td>
+    <td><%= proposal.vote_start_date %></td>
+    <td><%= proposal.vote_end_date %></td>
+    <td><%= proposal.tabled_date %></td>
+    <td><%= proposal.transition_straight_to_vote %></td>
+    <td><%= proposal.owner_id %></td>
+    <td><%= proposal.summary %></td>
+    <td><%= proposal.title %></td>
+    <td><%= link_to 'Show', proposal %></td>
+    <td><%= link_to 'Edit', edit_proposal_path(proposal) %></td>
+    <td><%= link_to 'Destroy', proposal, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Proposal', new_proposal_path %>
