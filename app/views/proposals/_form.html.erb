@@ -13,51 +13,22 @@
 
   <div class="field">
     <%= f.label :committee_id %><br />
-    <%= f.number_field :committee_id %>
+    <%= f.select(:committee_id, Committee.all.map{ |e| [e, e.id]}) %>
   </div>
   <div class="field">
-    <%= f.label :status %><br />
-    <%= f.text_field :status %>
-  </div>
-  <div class="field">
-    <%= f.label :submit_date %><br />
-    <%= f.datetime_select :submit_date %>
-  </div>
-  <div class="field">
-    <%= f.label :review_start_date %><br />
-    <%= f.datetime_select :review_start_date %>
-  </div>
-  <div class="field">
-    <%= f.label :review_end_date %><br />
-    <%= f.datetime_select :review_end_date %>
-  </div>
-  <div class="field">
-    <%= f.label :vote_start_date %><br />
-    <%= f.datetime_select :vote_start_date %>
-  </div>
-  <div class="field">
-    <%= f.label :vote_end_date %><br />
-    <%= f.datetime_select :vote_end_date %>
-  </div>
-  <div class="field">
-    <%= f.label :tabled_date %><br />
-    <%= f.datetime_select :tabled_date %>
-  </div>
-  <div class="field">
-    <%= f.label :transition_straight_to_vote %><br />
-    <%= f.check_box :transition_straight_to_vote %>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
   </div>
   <div class="field">
     <%= f.label :owner_id %><br />
     <%= f.number_field :owner_id %>
   </div>
   <div class="field">
+    Additional Notes:
+    (anything else to consider in the discussion)
+    <br />
     <%= f.label :summary %><br />
     <%= f.text_area :summary %>
-  </div>
-  <div class="field">
-    <%= f.label :title %><br />
-    <%= f.text_area :title %>
   </div>
   <div class="actions">
     <%= f.submit %>

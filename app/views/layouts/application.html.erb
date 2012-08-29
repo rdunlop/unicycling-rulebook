@@ -13,6 +13,8 @@
     <div class="left_nav">
         <%= link_to('Main Menu', welcome_index_path) %><br />
         <% if user_signed_in? %>
+            <%= link_to('Submit Proposal', new_proposal_path)%><br />
+            <%= link_to('FAQ', welcome_help_path)%><br />
             <%= link_to('Logout', destroy_user_session_path, :method => :delete) %><br />
         <% else %>
             <%= link_to('Login', new_user_session_path) %><br />
