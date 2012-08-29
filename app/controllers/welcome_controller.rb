@@ -13,6 +13,7 @@ class WelcomeController < ApplicationController
     @VOTETIME_TEXT = "7 days"
     # if majority == 2/3
     @majority_text = "2/3"
+    @majority = true
     # else
     # @majority_text = $majority *100 + "%"
   end
