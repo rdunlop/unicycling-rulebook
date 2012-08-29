@@ -1,4 +1,8 @@
 Rulebook::Application.routes.draw do
+  resources :committee_members
+
+  resources :committees
+
   devise_for :users
 
   # The priority is based upon order of creation:

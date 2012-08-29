@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829161702) do
+ActiveRecord::Schema.define(:version => 20120829162655) do
+
+  create_table "committee_members", :force => true do |t|
+    t.integer  "committee_id"
+    t.integer  "user_id"
+    t.boolean  "voting"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "committees", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
