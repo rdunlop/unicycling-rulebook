@@ -12,8 +12,8 @@
 
 <% @committee_members.each do |committee_member| %>
   <tr>
-    <td><%= committee_member.committee_id %></td>
-    <td><%= committee_member.user_id %></td>
+    <td><%= committee_member.committee %></td>
+    <td><%= committee_member.user %></td>
     <td><%= committee_member.voting %></td>
     <td><%= link_to 'Show', [@committee, committee_member] %></td>
     <td><%= link_to 'Edit', edit_committee_committee_member_path(@committee, committee_member) %></td>

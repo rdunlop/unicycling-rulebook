@@ -37,7 +37,7 @@ class CommitteeMembersController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @committee_member }
+      format.json { render json: [@committee, @committee_member] }
     end
   end
 
@@ -53,8 +53,8 @@ class CommitteeMembersController < ApplicationController
 
     respond_to do |format|
       if @committee_member.save
-        format.html { redirect_to @committee_member, notice: 'Committee member was successfully created.' }
-        format.json { render json: @committee_member, status: :created, location: @committee_member }
+        format.html { redirect_to [@committee, @committee_member], notice: 'Committee member was successfully created.' }
+        format.json { render json: [@committee, @committee_member], status: :created, location: [@committee, @committee_member] }
       else
         format.html { render action: "new" }
         format.json { render json: @committee_member.errors, status: :unprocessable_entity }
@@ -69,7 +69,7 @@ class CommitteeMembersController < ApplicationController
 
     respond_to do |format|
       if @committee_member.update_attributes(params[:committee_member])
-        format.html { redirect_to @committee_member, notice: 'Committee member was successfully updated.' }
+        format.html { redirect_to [@committee, @committee_member], notice: 'Committee member was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -85,7 +85,7 @@ class CommitteeMembersController < ApplicationController
     @committee_member.destroy
 
     respond_to do |format|
-      format.html { redirect_to committee_members_url }
+      format.html { redirect_to committee_committee_members_url(@committee) }
       format.json { head :no_content }
     end
   end

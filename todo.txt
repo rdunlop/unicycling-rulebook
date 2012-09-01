@@ -3,6 +3,8 @@
 - Add ability for Admin to adjust the admin status of another user.
 - add auto-enroll?
 
+- add tests for committee_member controller
+
 - The New Proposal "Comittee" selection should ONLY be the committees that I am a member of.
 
 - If I am not a member of any committees, put a message on the 'new proposal' page to say "e-mail the chairperson"

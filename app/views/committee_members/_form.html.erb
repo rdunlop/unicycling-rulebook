@@ -1,4 +1,4 @@
-<%= form_for(@committee_member) do |f| %>
+<%= form_for([@committee, @committee_member]) do |f| %>
   <% if @committee_member.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@committee_member.errors.count, "error") %> prohibited this committee_member from being saved:</h2>
