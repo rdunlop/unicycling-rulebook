@@ -30,4 +30,10 @@ describe Proposal do
     prop.committee = FactoryGirl.create(:committee)
     prop.valid?.should == true
   end
+
+  it "should return its title as the default string" do
+    prop = FactoryGirl.create(:proposal)
+
+    prop.to_s.should == prop.title
+  end
 end

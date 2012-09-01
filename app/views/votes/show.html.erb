@@ -2,12 +2,12 @@
 
 <p>
   <b>Proposal:</b>
-  <%= @vote.proposal_id %>
+  <%= @vote.proposal %>
 </p>
 
 <p>
   <b>User:</b>
-  <%= @vote.user_id %>
+  <%= @vote.user %>
 </p>
 
 <p>
@@ -16,5 +16,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_vote_path(@vote) %> |
-<%= link_to 'Back', votes_path %>
+<%= link_to 'Edit', edit_proposal_vote_path(@proposal, @vote) %> |
+<%= link_to 'Back', proposal_votes_path(@proposal) %>

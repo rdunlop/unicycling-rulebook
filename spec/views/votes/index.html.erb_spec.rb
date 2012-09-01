@@ -2,25 +2,16 @@ require 'spec_helper'
 
 describe "votes/index" do
   before(:each) do
+    @proposal = FactoryGirl.create(:proposal)
     assign(:votes, [
-      stub_model(Vote,
-        :proposal_id => 1,
-        :user_id => 2,
-        :vote => "Vote"
-      ),
-      stub_model(Vote,
-        :proposal_id => 1,
-        :user_id => 2,
-        :vote => "Vote"
-      )
-    ])
+        FactoryGirl.create(:vote, :proposal => @proposal),
+        FactoryGirl.create(:vote, :proposal => @proposal)])
   end
 
   it "renders a list of votes" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "tr>td", :text => 1.to_s, :count => 2
-    assert_select "tr>td", :text => 2.to_s, :count => 2
-    assert_select "tr>td", :text => "Vote".to_s, :count => 2
+    assert_select "tr>td", :text => @proposal.title.to_s, :count => 2
+    assert_select "tr>td", :text => "agree".to_s, :count => 2
   end
 end

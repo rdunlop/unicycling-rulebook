@@ -5,4 +5,9 @@ class Proposal < ActiveRecord::Base
     validates :owner, :presence => true
     validates :title, :presence => true
     validates :committee, :presence => true
+
+
+    def to_s
+        title
+    end
 end
