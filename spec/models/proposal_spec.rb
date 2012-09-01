@@ -2,11 +2,20 @@ require 'spec_helper'
 
 describe Proposal do
   it "should have an associated user" do
-    user = FactoryGirl.create(:user)
     prop = Proposal.new
+    prop.title = "Hello People"
     prop.valid?.should == false
 
-    prop.owner = user
+    prop.owner = FactoryGirl.create(:user)
+    prop.valid?.should == true
+  end
+
+  it "must have a title" do
+    prop = Proposal.new
+    prop.owner = FactoryGirl.create(:user)
+    prop.valid?.should == false
+
+    prop.title = "Hi there"
     prop.valid?.should == true
   end
 end

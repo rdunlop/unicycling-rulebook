@@ -1,4 +1,7 @@
 class CommitteeMembersController < ApplicationController
+  before_filter :authenticate_user!
+  load_and_authorize_resource
+
   # GET /committee_members
   # GET /committee_members.json
   def index

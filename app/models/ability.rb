@@ -10,6 +10,7 @@ class Ability
 
     if user.admin
         can :manage, Committee
+        can :manage, CommitteeMember
         can :manage, Proposal
     else
         can :read, Committee

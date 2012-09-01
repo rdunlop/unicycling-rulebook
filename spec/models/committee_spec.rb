@@ -8,4 +8,10 @@ describe Committee do
         committee.name = "Name"
         committee.valid?.should == true
     end
+
+    it "should return it's name as the string" do
+        committee = FactoryGirl.create(:committee)
+
+        committee.to_s.should == committee.name
+    end
 end

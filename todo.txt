@@ -1,1 +1,21 @@
 - Change to use 'thin' server (as per heroku documentation https://devcenter.heroku.com/articles/rails3)
+
+- Add ability for Admin to adjust the admin status of another user.
+- add auto-enroll?
+
+- The New Proposal "Comittee" selection should ONLY be the committees that I am a member of.
+
+- If I am not a member of any committees, put a message on the 'new proposal' page to say "e-mail the chairperson"
+- When a new proposal is submitted, e-mail it to the adminemail cc the 'backup' address.
+
+- Only allow proposal to be view by: admin, owner, (committee-member AND if the proposal IS NOT submitted.)
+
+- From Proposal-view, should be allowed to 'edit' proposal in various ways (Approve, Table, un_table, change-votes,change back to pre-voting, change dates, change committee)
+
+- As owner, should be allowed to 'call for votes','table' (in certain states)
+
+
+- Vote must have a comment if "disagree" is chosen.
+
+- Email to the whole committee should be sent when someone votes
+

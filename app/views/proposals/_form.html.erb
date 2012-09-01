@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :owner_id %><br />
-    <%= f.number_field :owner_id %>
+    <%= f.select(:owner_id, User.all.map{ |e| [e, e.id]}) %>
   </div>
   <div class="field">
     Additional Notes:
