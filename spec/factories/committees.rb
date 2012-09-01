@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :committee do
-    name 'Rulebook Committee'
+    sequence(:name) { |n| "Rulebook Committee #{n}" }
   end
 end

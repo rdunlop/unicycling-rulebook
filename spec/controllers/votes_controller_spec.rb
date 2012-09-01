@@ -19,48 +19,48 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe VotesController do
+  before(:each) do
+    @proposal = FactoryGirl.create(:proposal)
+    @user = FactoryGirl.create(:user)
+
+    sign_in @user
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # Vote. As you add validations to Vote, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    { vote: 'agree'
+    }
   end
   
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # VotesController. Be sure to keep this updated too.
-  def valid_session
-    {}
-  end
-
   describe "GET index" do
     it "assigns all votes as @votes" do
-      vote = Vote.create! valid_attributes
-      get :index, {}, valid_session
+      vote = FactoryGirl.create(:vote, :proposal => @proposal)
+      get :index, {:proposal_id => @proposal.id}
       assigns(:votes).should eq([vote])
     end
   end
 
   describe "GET show" do
     it "assigns the requested vote as @vote" do
-      vote = Vote.create! valid_attributes
-      get :show, {:id => vote.to_param}, valid_session
+      vote = FactoryGirl.create(:vote)
+      get :show, {:id => vote.to_param, :proposal_id => @proposal.id}
       assigns(:vote).should eq(vote)
     end
   end
 
   describe "GET new" do
     it "assigns a new vote as @vote" do
-      get :new, {}, valid_session
+      get :new, {:proposal_id => @proposal.id}
       assigns(:vote).should be_a_new(Vote)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested vote as @vote" do
-      vote = Vote.create! valid_attributes
-      get :edit, {:id => vote.to_param}, valid_session
+      vote = FactoryGirl.create(:vote)
+      get :edit, {:id => vote.to_param, :proposal_id => @proposal.id}
       assigns(:vote).should eq(vote)
     end
   end
@@ -69,19 +69,19 @@ describe VotesController do
     describe "with valid params" do
       it "creates a new Vote" do
         expect {
-          post :create, {:vote => valid_attributes}, valid_session
+          post :create, {:vote => valid_attributes, :proposal_id => @proposal.id}
         }.to change(Vote, :count).by(1)
       end
 
       it "assigns a newly created vote as @vote" do
-        post :create, {:vote => valid_attributes}, valid_session
+        post :create, {:vote => valid_attributes, :proposal_id => @proposal.id}
         assigns(:vote).should be_a(Vote)
         assigns(:vote).should be_persisted
       end
 
       it "redirects to the created vote" do
-        post :create, {:vote => valid_attributes}, valid_session
-        response.should redirect_to(Vote.last)
+        post :create, {:vote => valid_attributes, :proposal_id => @proposal.id}
+        response.should redirect_to([@proposal, Vote.last])
       end
     end
 
@@ -89,14 +89,14 @@ describe VotesController do
       it "assigns a newly created but unsaved vote as @vote" do
         # Trigger the behavior that occurs when invalid params are submitted
         Vote.any_instance.stub(:save).and_return(false)
-        post :create, {:vote => {}}, valid_session
+        post :create, {:vote => {}, :proposal_id => @proposal.id}
         assigns(:vote).should be_a_new(Vote)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Vote.any_instance.stub(:save).and_return(false)
-        post :create, {:vote => {}}, valid_session
+        post :create, {:vote => {}, :proposal_id => @proposal.id}
         response.should render_template("new")
       end
     end
@@ -105,42 +105,42 @@ describe VotesController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested vote" do
-        vote = Vote.create! valid_attributes
+        vote = FactoryGirl.create(:vote)
         # Assuming there are no other votes in the database, this
         # specifies that the Vote created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Vote.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => vote.to_param, :vote => {'these' => 'params'}}, valid_session
+        put :update, {:id => vote.to_param, :vote => {'these' => 'params'}, :proposal_id => @proposal.id}
       end
 
       it "assigns the requested vote as @vote" do
-        vote = Vote.create! valid_attributes
-        put :update, {:id => vote.to_param, :vote => valid_attributes}, valid_session
+        vote = FactoryGirl.create(:vote)
+        put :update, {:id => vote.to_param, :vote => valid_attributes, :proposal_id => @proposal.id}
         assigns(:vote).should eq(vote)
       end
 
       it "redirects to the vote" do
-        vote = Vote.create! valid_attributes
-        put :update, {:id => vote.to_param, :vote => valid_attributes}, valid_session
-        response.should redirect_to(vote)
+        vote = FactoryGirl.create(:vote)
+        put :update, {:id => vote.to_param, :vote => valid_attributes, :proposal_id => @proposal.id}
+        response.should redirect_to([@proposal, vote])
       end
     end
 
     describe "with invalid params" do
       it "assigns the vote as @vote" do
-        vote = Vote.create! valid_attributes
+        vote = FactoryGirl.create(:vote)
         # Trigger the behavior that occurs when invalid params are submitted
         Vote.any_instance.stub(:save).and_return(false)
-        put :update, {:id => vote.to_param, :vote => {}}, valid_session
+        put :update, {:id => vote.to_param, :vote => {}, :proposal_id => @proposal.id}
         assigns(:vote).should eq(vote)
       end
 
       it "re-renders the 'edit' template" do
-        vote = Vote.create! valid_attributes
+        vote = FactoryGirl.create(:vote)
         # Trigger the behavior that occurs when invalid params are submitted
         Vote.any_instance.stub(:save).and_return(false)
-        put :update, {:id => vote.to_param, :vote => {}}, valid_session
+        put :update, {:id => vote.to_param, :vote => {}, :proposal_id => @proposal.id}
         response.should render_template("edit")
       end
     end
@@ -148,16 +148,16 @@ describe VotesController do
 
   describe "DELETE destroy" do
     it "destroys the requested vote" do
-      vote = Vote.create! valid_attributes
+      vote = FactoryGirl.create(:vote)
       expect {
-        delete :destroy, {:id => vote.to_param}, valid_session
+        delete :destroy, {:id => vote.to_param, :proposal_id => @proposal.id}
       }.to change(Vote, :count).by(-1)
     end
 
     it "redirects to the votes list" do
-      vote = Vote.create! valid_attributes
-      delete :destroy, {:id => vote.to_param}, valid_session
-      response.should redirect_to(votes_url)
+      vote = FactoryGirl.create(:vote)
+      delete :destroy, {:id => vote.to_param, :proposal_id => @proposal.id}
+      response.should redirect_to(proposal_url(@proposal))
     end
   end
 
