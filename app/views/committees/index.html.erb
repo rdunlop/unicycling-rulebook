@@ -3,6 +3,7 @@
 <table>
   <tr>
     <th>Name</th>
+    <th>Committee Members</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,6 +13,7 @@
   <tr>
     <td><%= committee.name %></td>
     <td><%= link_to 'Show', committee %></td>
+    <td><%= link_to('Show Committee Members', committee_committee_members_path(committee)) %></td>
     <td><%= link_to 'Edit', edit_committee_path(committee) %></td>
     <td><%= link_to 'Destroy', committee, confirm: 'Are you sure?', method: :delete %></td>
   </tr>

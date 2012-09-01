@@ -20,6 +20,8 @@ require 'spec_helper'
 
 describe ProposalsController do
   before (:each) do
+    @committee = FactoryGirl.create(:committee)
+
     @user = FactoryGirl.create(:user)
     @admin_user = FactoryGirl.create(:admin_user)
     sign_in @user
@@ -30,6 +32,8 @@ describe ProposalsController do
   # update the return value of this method accordingly.
   def valid_attributes
     {
+        title: "My Title",
+        committee_id: @committee.id, 
         owner_id: @user.id}
   end
   

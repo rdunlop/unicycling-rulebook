@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :comment do
-    proposal_id 1
-    user_id 1
+    proposal # FactoryGirl
+    user # FactoryGirl
     comment "MyText"
   end
 end

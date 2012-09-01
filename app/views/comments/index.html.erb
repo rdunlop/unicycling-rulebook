@@ -15,13 +15,13 @@
     <td><%= comment.proposal_id %></td>
     <td><%= comment.user_id %></td>
     <td><%= comment.comment %></td>
-    <td><%= link_to 'Show', comment %></td>
-    <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
-    <td><%= link_to 'Destroy', comment, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Show', [@proposal, comment] %></td>
+    <td><%= link_to 'Edit', edit_proposal_comment_path(@proposal, comment) %></td>
+    <td><%= link_to 'Destroy', [@proposal, comment], confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Comment', new_comment_path %>
+<%= link_to 'New Comment', new_proposal_comment_path(@proposal) %>

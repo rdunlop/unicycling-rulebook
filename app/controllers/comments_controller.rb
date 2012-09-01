@@ -1,6 +1,11 @@
 class CommentsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
+  before_filter :load_proposal
+
+  def load_proposal
+    @proposal = Proposal.find(params[:proposal_id])
+  end
 
   # GET /comments
   # GET /comments.json
@@ -44,6 +49,8 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = Comment.new(params[:comment])
+    @comment.proposal = @proposal
+    @comment.user = current_user
 
     respond_to do |format|
       if @comment.save
@@ -63,7 +70,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+        format.html { redirect_to [@comment.proposal, @comment], notice: 'Comment was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -79,7 +86,7 @@ class CommentsController < ApplicationController
     @comment.destroy
 
     respond_to do |format|
-      format.html { redirect_to comments_url }
+      format.html { redirect_to @proposal }
       format.json { head :no_content }
     end
   end

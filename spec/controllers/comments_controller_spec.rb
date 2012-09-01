@@ -30,12 +30,12 @@ describe CommentsController do
   # Comment. As you add validations to Comment, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    { comment: "hi"}
   end
   
   describe "GET index" do
     it "assigns all comments as @comments" do
-      comment = Comment.create! valid_attributes
+      comment = FactoryGirl.create(:comment, :proposal => @proposal)
       get :index, {:proposal_id => @proposal.id}
       assigns(:comments).should eq([comment])
     end
@@ -43,7 +43,7 @@ describe CommentsController do
 
   describe "GET show" do
     it "assigns the requested comment as @comment" do
-      comment = Comment.create! valid_attributes
+      comment = FactoryGirl.create(:comment, :proposal => @proposal)
       get :show, {:id => comment.to_param, :proposal_id => @proposal.id}
       assigns(:comment).should eq(comment)
     end
@@ -58,7 +58,7 @@ describe CommentsController do
 
   describe "GET edit" do
     it "assigns the requested comment as @comment" do
-      comment = Comment.create! valid_attributes
+      comment = FactoryGirl.create(:comment, :proposal => @proposal)
       get :edit, {:id => comment.to_param, :proposal_id => @proposal.id}
       assigns(:comment).should eq(comment)
     end
@@ -80,7 +80,7 @@ describe CommentsController do
 
       it "redirects to the created comment" do
         post :create, {:comment => valid_attributes, :proposal_id => @proposal.id}
-        response.should redirect_to(Comment.last)
+        response.should redirect_to([@proposal, Comment.last])
       end
     end
 
@@ -104,7 +104,7 @@ describe CommentsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested comment" do
-        comment = Comment.create! valid_attributes
+        comment = FactoryGirl.create(:comment, :proposal => @proposal)
         # Assuming there are no other comments in the database, this
         # specifies that the Comment created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -114,21 +114,21 @@ describe CommentsController do
       end
 
       it "assigns the requested comment as @comment" do
-        comment = Comment.create! valid_attributes
+        comment = FactoryGirl.create(:comment, :proposal => @proposal)
         put :update, {:id => comment.to_param, :comment => valid_attributes, :proposal_id => @proposal.id}
         assigns(:comment).should eq(comment)
       end
 
       it "redirects to the comment" do
-        comment = Comment.create! valid_attributes
+        comment = FactoryGirl.create(:comment, :proposal => @proposal)
         put :update, {:id => comment.to_param, :comment => valid_attributes, :proposal_id => @proposal.id}
-        response.should redirect_to(comment)
+        response.should redirect_to([@proposal, comment])
       end
     end
 
     describe "with invalid params" do
       it "assigns the comment as @comment" do
-        comment = Comment.create! valid_attributes
+        comment = FactoryGirl.create(:comment, :proposal => @proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         Comment.any_instance.stub(:save).and_return(false)
         put :update, {:id => comment.to_param, :comment => {}, :proposal_id => @proposal.id}
@@ -136,7 +136,7 @@ describe CommentsController do
       end
 
       it "re-renders the 'edit' template" do
-        comment = Comment.create! valid_attributes
+        comment = FactoryGirl.create(:comment, :proposal => @proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         Comment.any_instance.stub(:save).and_return(false)
         put :update, {:id => comment.to_param, :comment => {}, :proposal_id => @proposal.id}
@@ -147,16 +147,16 @@ describe CommentsController do
 
   describe "DELETE destroy" do
     it "destroys the requested comment" do
-      comment = Comment.create! valid_attributes
+      comment = FactoryGirl.create(:comment, :proposal => @proposal)
       expect {
         delete :destroy, {:id => comment.to_param, :proposal_id => @proposal.id}
       }.to change(Comment, :count).by(-1)
     end
 
     it "redirects to the comments list" do
-      comment = Comment.create! valid_attributes
+      comment = FactoryGirl.create(:comment, :proposal => @proposal)
       delete :destroy, {:id => comment.to_param, :proposal_id => @proposal.id}
-      response.should redirect_to(comments_url)
+      response.should redirect_to(@proposal)
     end
   end
 
