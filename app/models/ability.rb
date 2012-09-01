@@ -14,6 +14,7 @@ class Ability
         can :manage, Proposal
     else
         can :read, Committee
+        can :manage, Comment
         can :create, Proposal
         can :manage, Proposal do |proposal|
             proposal.try(:owner) == user

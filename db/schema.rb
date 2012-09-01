@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829194359) do
+ActiveRecord::Schema.define(:version => 20120901200342) do
+
+  create_table "comments", :force => true do |t|
+    t.integer  "proposal_id"
+    t.integer  "user_id"
+    t.text     "comment"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "committee_members", :force => true do |t|
     t.integer  "committee_id"
@@ -62,5 +70,13 @@ ActiveRecord::Schema.define(:version => 20120829194359) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "votes", :force => true do |t|
+    t.integer  "proposal_id"
+    t.integer  "user_id"
+    t.string   "vote"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
 end

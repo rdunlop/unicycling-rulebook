@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :proposal do
-    committee_id 1
+    committee # FactoryGirl
     status "MyString"
     submit_date "2012-08-29 14:43:59"
     review_start_date "2012-08-29 14:43:59"
@@ -11,7 +11,7 @@ FactoryGirl.define do
     vote_end_date "2012-08-29 14:43:59"
     tabled_date "2012-08-29 14:43:59"
     transition_straight_to_vote false
-    owner_id 1
+    owner
     summary "MyText"
     title "MyText"
   end

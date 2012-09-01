@@ -1,9 +1,13 @@
 Rulebook::Application.routes.draw do
-  resources :proposals
+  resources :proposals do
+    resources :votes
+    resources :comments
+  end
 
-  resources :committee_members
+  resources :committees do
+    resources :committee_members
+  end
 
-  resources :committees
 
   devise_for :users
 
