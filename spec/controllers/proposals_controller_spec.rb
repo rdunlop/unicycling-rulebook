@@ -39,7 +39,7 @@ describe ProposalsController do
   
   describe "GET index" do
     it "assigns all proposals as @proposals" do
-      proposal = Proposal.create! valid_attributes
+      proposal = FactoryGirl.create(:proposal)
       get :index, {}
       assigns(:proposals).should eq([proposal])
     end
@@ -47,7 +47,7 @@ describe ProposalsController do
 
   describe "GET show" do
     it "assigns the requested proposal as @proposal" do
-      proposal = Proposal.create! valid_attributes
+      proposal = FactoryGirl.create(:proposal)
       get :show, {:id => proposal.to_param}
       assigns(:proposal).should eq(proposal)
     end
@@ -62,7 +62,7 @@ describe ProposalsController do
 
   describe "GET edit" do
     it "assigns the requested proposal as @proposal" do
-      proposal = Proposal.create! valid_attributes
+      proposal = FactoryGirl.create(:proposal)
       get :edit, {:id => proposal.to_param}
       assigns(:proposal).should eq(proposal)
     end
@@ -108,7 +108,7 @@ describe ProposalsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested proposal" do
-        proposal = Proposal.create! valid_attributes
+        proposal = FactoryGirl.create(:proposal)
         # Assuming there are no other proposals in the database, this
         # specifies that the Proposal created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -118,13 +118,13 @@ describe ProposalsController do
       end
 
       it "assigns the requested proposal as @proposal" do
-        proposal = Proposal.create! valid_attributes
+        proposal = FactoryGirl.create(:proposal)
         put :update, {:id => proposal.to_param, :proposal => valid_attributes}
         assigns(:proposal).should eq(proposal)
       end
 
       it "redirects to the proposal" do
-        proposal = Proposal.create! valid_attributes
+        proposal = FactoryGirl.create(:proposal)
         put :update, {:id => proposal.to_param, :proposal => valid_attributes}
         response.should redirect_to(proposal)
       end
@@ -132,7 +132,7 @@ describe ProposalsController do
 
     describe "with invalid params" do
       it "assigns the proposal as @proposal" do
-        proposal = Proposal.create! valid_attributes
+        proposal = FactoryGirl.create(:proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         Proposal.any_instance.stub(:save).and_return(false)
         put :update, {:id => proposal.to_param, :proposal => {}}
@@ -140,7 +140,7 @@ describe ProposalsController do
       end
 
       it "re-renders the 'edit' template" do
-        proposal = Proposal.create! valid_attributes
+        proposal = FactoryGirl.create(:proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         Proposal.any_instance.stub(:save).and_return(false)
         put :update, {:id => proposal.to_param, :proposal => {}}
@@ -151,14 +151,14 @@ describe ProposalsController do
 
   describe "DELETE destroy" do
     it "destroys the requested proposal" do
-      proposal = Proposal.create! valid_attributes
+      proposal = FactoryGirl.create(:proposal)
       expect {
         delete :destroy, {:id => proposal.to_param}
       }.to change(Proposal, :count).by(-1)
     end
 
     it "redirects to the proposals list" do
-      proposal = Proposal.create! valid_attributes
+      proposal = FactoryGirl.create(:proposal)
       delete :destroy, {:id => proposal.to_param}
       response.should redirect_to(proposals_url)
     end

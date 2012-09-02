@@ -44,6 +44,7 @@ class ProposalsController < ApplicationController
   # POST /proposals.json
   def create
     @proposal = Proposal.new(params[:proposal])
+    @proposal.status = 'Submitted'
 
     respond_to do |format|
       if @proposal.save
