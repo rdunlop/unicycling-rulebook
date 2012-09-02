@@ -1,3 +1,6 @@
+heroku addons:add sendgrid:starter
+- permissions to restrict who can do what to what object
+
 - Change to use 'thin' server (as per heroku documentation https://devcenter.heroku.com/articles/rails3)
 
 - Add ability for Admin to adjust the admin status of another user.

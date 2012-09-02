@@ -24,7 +24,7 @@ describe ProposalsController do
 
     @user = FactoryGirl.create(:user)
     @admin_user = FactoryGirl.create(:admin_user)
-    sign_in @user
+    sign_in @admin_user
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -164,4 +164,104 @@ describe ProposalsController do
     end
   end
 
+  describe "PUT set_voting" do
+    it "changes the status to voting" do
+        proposal = FactoryGirl.create(:proposal, :status => "Pre-Voting")
+
+        put :set_voting, {:id => proposal.to_param}
+
+        response.should redirect_to(proposal_path(proposal))
+        proposal = Proposal.find(proposal.id)
+        proposal.status.should == "Voting"
+        # the following subtraction yields fractions-of-a-day
+        ((proposal.vote_start_date - DateTime.now()) * 1.days).should < 2
+    end
+
+    it "should not be allowed to change unless the status is Pre-Voting" do
+        proposal = FactoryGirl.create(:proposal, :status => "Tabled")
+
+        put :set_voting, {:id => proposal.to_param}
+
+        response.should render_template("edit")
+        proposal = Proposal.find(proposal.id)
+        proposal.status.should == "Tabled"
+    end
+  end
+
+  describe "PUT set_review" do
+    it "changes the status to Review" do
+        proposal = FactoryGirl.create(:proposal, :status => "Submitted")
+
+        put :set_review, {:id => proposal.to_param}
+
+        response.should redirect_to(proposal_path(proposal))
+        proposal = Proposal.find(proposal.id)
+        proposal.status.should == "Review"
+        # the following subtraction yields fractions-of-a-day
+        ((proposal.review_start_date - DateTime.now()) * 1.days).should < 2
+    end
+
+    it "changes the status to Review from Tabled status" do
+        proposal = FactoryGirl.create(:proposal, :status => "Tabled")
+
+        put :set_review, {:id => proposal.to_param}
+
+        response.should redirect_to(proposal_path(proposal))
+        proposal = Proposal.find(proposal.id)
+        proposal.status.should == "Review"
+        # the following subtraction yields fractions-of-a-day
+        ((proposal.review_start_date - DateTime.now()) * 1.days).should < 2
+    end
+
+    it "should not be allowed to change unless the status is Submitted" do
+        proposal = FactoryGirl.create(:proposal, :status => "Pre-Voting")
+
+        put :set_review, {:id => proposal.to_param}
+
+        response.should render_template("edit")
+        proposal = Proposal.find(proposal.id)
+        proposal.status.should == "Pre-Voting"
+    end
+  end
+
+  describe "PUT set_pre_voting" do
+    before(:each) do
+        sign_out @admin_user
+        sign_in @admin_user
+    end
+
+    it "changes the status to Pre-Voting" do
+        proposal = FactoryGirl.create(:proposal, :status => "Voting")
+
+        put :set_pre_voting, {:id => proposal.to_param}
+
+        response.should redirect_to(proposal_path(proposal))
+        proposal = Proposal.find(proposal.id)
+        proposal.status.should == "Pre-Voting"
+    end
+
+    it "changes the status to Pre-Voting should remove any votes" do
+        proposal = FactoryGirl.create(:proposal, :status => "Voting")
+        vote = FactoryGirl.create(:vote, :proposal => proposal)
+
+        proposal.votes.count.should == 1
+
+        put :set_pre_voting, {:id => proposal.to_param}
+
+        response.should redirect_to(proposal_path(proposal))
+        proposal = Proposal.find(proposal.id)
+        proposal.status.should == "Pre-Voting"
+        proposal.votes.count.should == 0
+    end
+
+    it "should not be allowed to change unless the status is Voting" do
+        proposal = FactoryGirl.create(:proposal, :status => "Tabled")
+
+        put :set_pre_voting, {:id => proposal.to_param}
+
+        response.should render_template("edit")
+        proposal = Proposal.find(proposal.id)
+        proposal.status.should == "Tabled"
+    end
+  end
 end

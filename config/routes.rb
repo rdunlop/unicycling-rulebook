@@ -1,5 +1,10 @@
 Rulebook::Application.routes.draw do
   resources :proposals do
+    member do
+        put 'set_voting'
+        put 'set_review'
+        put 'set_pre_voting'
+    end
     resources :votes
     resources :comments
   end

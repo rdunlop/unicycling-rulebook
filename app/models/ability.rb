@@ -11,7 +11,14 @@ class Ability
     if user.admin
         can :manage, Committee
         can :manage, CommitteeMember
+
         can :manage, Proposal
+        can :set_voting, Proposal
+        can :set_review, Proposal
+        #admin-only:
+        can :set_approve, Proposal
+        can :set_pre_voting, Proposal
+
         can :manage, Vote
         can :manage, Comment
     else
@@ -20,6 +27,12 @@ class Ability
         can :manage, Vote
         can :create, Proposal
         can :manage, Proposal do |proposal|
+            proposal.try(:owner) == user
+        end
+        can :set_voting, Proposal do |proposal|
+            proposal.try(:owner) == user
+        end
+        can :set_review, Proposal do |proposal|
             proposal.try(:owner) == user
         end
     end

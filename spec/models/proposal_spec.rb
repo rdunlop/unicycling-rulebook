@@ -36,4 +36,22 @@ describe Proposal do
 
     prop.to_s.should == prop.title
   end
+
+  it "should have associated votes" do
+    proposal = FactoryGirl.create(:proposal)
+    vote = FactoryGirl.create(:vote, :proposal => proposal)
+
+    prop = Proposal.find(proposal.id)
+
+    prop.votes.count.should == 1
+  end
+
+  it "should have associated comments" do
+    proposal = FactoryGirl.create(:proposal)
+    vote = FactoryGirl.create(:comment, :proposal => proposal)
+
+    prop = Proposal.find(proposal.id)
+
+    prop.comments.count.should == 1
+  end
 end

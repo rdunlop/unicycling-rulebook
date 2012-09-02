@@ -83,4 +83,72 @@ class ProposalsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  # PUT /proposals/1/set_voting
+  def set_voting
+    @proposal = Proposal.find(params[:id])
+
+    if @proposal.status == "Pre-Voting"
+        proceed = true
+    else
+        proceed = false
+    end
+    @proposal.status = "Voting"
+    @proposal.vote_start_date = DateTime.now()
+
+    respond_to do |format|
+      if proceed and @proposal.save
+        format.html { redirect_to @proposal, notice: 'Proposal is now in the voting stage.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @proposal.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /proposals/1/set_review
+  def set_review
+    @proposal = Proposal.find(params[:id])
+
+    if (@proposal.status == "Submitted") or (@proposal.status == "Tabled")
+        proceed = true
+    else
+        proceed = false
+    end
+    @proposal.status = "Review"
+    @proposal.review_start_date = DateTime.now()
+
+    respond_to do |format|
+      if proceed and @proposal.save
+        format.html { redirect_to @proposal, notice: 'Proposal is now in the review stage.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @proposal.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /proposals/1/set_pre_voting
+  def set_pre_voting
+    @proposal = Proposal.find(params[:id])
+
+    if (@proposal.status == "Voting")
+        proceed = true
+    else
+        proceed = false
+    end
+    @proposal.status = "Pre-Voting"
+
+    respond_to do |format|
+      if proceed and @proposal.votes.delete_all and @proposal.save
+        format.html { redirect_to @proposal, notice: 'Proposal is now in the Pre-Voting stage. All votes have been deleted' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @proposal.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end
