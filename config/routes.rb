@@ -1,4 +1,6 @@
 Rulebook::Application.routes.draw do
+  resources :revisions
+
   resources :proposals do
     member do
         put 'set_voting'

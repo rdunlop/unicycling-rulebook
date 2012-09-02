@@ -19,6 +19,8 @@ class Ability
         can :set_approve, Proposal
         can :set_pre_voting, Proposal
 
+        can :manage, Revision
+
         can :manage, Vote
         can :manage, Comment
     else
@@ -34,6 +36,9 @@ class Ability
         end
         can :set_review, Proposal do |proposal|
             proposal.try(:owner) == user
+        end
+        can :create, Revision do |revision|
+            revision.proposal.owner == user
         end
     end
     # Define abilities for the passed in user here. For example:
