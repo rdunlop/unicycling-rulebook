@@ -54,6 +54,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
+        UserMailer.proposal_comment_added(@proposal, @comment, @comment.user).deliver
         format.html { redirect_to [@comment.proposal, @comment], notice: 'Comment was successfully created.' }
         format.json { render json: [@comment.proposal, @comment], status: :created, location: [@comment.proposal, @comment] }
       else

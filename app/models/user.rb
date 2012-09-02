@@ -7,6 +7,22 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
+  has_many :committee_members
+  has_many :committees, :through => :committee_members
+
+  def voting_text(committee)
+    committee_members.each do |cm|
+        if cm.committee == committee
+            if cm.voting
+                return "Voting Member"
+            else
+                return "Non-Voting Member"
+            end
+        end
+    end
+
+    return "Non-Voting Member"
+  end
 
   def to_s
     email

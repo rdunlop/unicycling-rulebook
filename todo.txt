@@ -1,6 +1,7 @@
 heroku addons:add sendgrid:starter
 - Update the _end_date properly
 - permissions to restrict who can do what to what object
+- Move proposal logic into the model
 
 - Change to use 'thin' server (as per heroku documentation https://devcenter.heroku.com/articles/rails3)
 

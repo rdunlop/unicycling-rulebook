@@ -20,6 +20,8 @@ require 'spec_helper'
 
 describe CommentsController do
   before(:each) do
+    ActionMailer::Base.deliveries.clear
+
     @proposal = FactoryGirl.create(:proposal)
 
     @user = FactoryGirl.create(:user)
@@ -81,6 +83,12 @@ describe CommentsController do
       it "redirects to the created comment" do
         post :create, {:comment => valid_attributes, :proposal_id => @proposal.id}
         response.should redirect_to([@proposal, Comment.last])
+      end
+
+      it "sends an e-mail" do
+        post :create, {:comment => valid_attributes, :proposal_id => @proposal.id}
+        num_deliveries = ActionMailer::Base.deliveries.size
+        num_deliveries.should == 1
       end
     end
 
