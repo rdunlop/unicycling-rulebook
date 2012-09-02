@@ -152,4 +152,21 @@ describe Proposal do
         @prop.references.should == @rev1.references
     end
   end
+
+  describe "with votes" do
+    before(:each) do
+        @prop = FactoryGirl.create(:proposal)
+        @rev1 = FactoryGirl.create(:revision, :proposal => @prop)
+        @vote = FactoryGirl.create(:vote, :proposal => @prop, :vote => 'agree', :comment => '')
+    end
+    it "should count the number of agree votes" do
+        @prop.agree_votes.should == 1
+    end
+    it "should count the number of disagree votes" do
+        @prop.disagree_votes.should == 0
+    end
+    it "should count the number of abstain votes" do
+        @prop.abstain_votes.should == 0
+    end
+  end
 end

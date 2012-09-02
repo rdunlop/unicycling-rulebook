@@ -38,6 +38,34 @@ class Proposal < ActiveRecord::Base
         self.latest_revision.references
     end
 
+    def count_votes(type)
+        count = 0
+        votes.each do |v|
+            if v.vote == type
+                count += 1
+            end
+        end
+        count
+    end
+
+    def agree_votes
+        count_votes('agree')
+    end
+    def disagree_votes
+        count_votes('disagree')
+    end
+    def abstain_votes
+        count_votes('abstain')
+    end
+
+    def vote_comments
+        comments = []
+        votes.each do |v|
+            comments << v.to_s
+        end
+        comments
+    end
+
     def status_string
         if self.status == 'Submitted'
             "Submitted"

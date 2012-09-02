@@ -27,6 +27,15 @@
 <h3>References</h3>
 <%= @proposal.references %>
 
+<% if @proposal.votes.count > 0 %>
+    <hr />
+    <h3>Votes on this proposal:</h3>
+    <b>Agree:</b> <strong><%= @proposal.agree_votes %></strong>, 
+    <b>Disagree:</b> <strong><%= @proposal.disagree_votes %></strong>, 
+    <b>Abstain:</b> <strong><%= @proposal.abstain_votes %></strong>.
+    <p><%= @proposal.vote_comments %></p>
+<% end %>
+
 <% @comments = @proposal.comments %>
 <% if not @comments.empty? %>
     <hr />
