@@ -27,4 +27,12 @@
 <h3>References</h3>
 <%= @proposal.references %>
 
+<% @comments = @proposal.comments %>
+<% if not @comments.empty? %>
+    <hr />
+    <h3>Comments about this proposal:</h3>
+    <% @comments.each do |comment| %>
+        <%= render :partial => "/comments/show", :object => comment %>
+    <% end%>
+<% end %>
 <%= render :partial => "/comments/form", :object => @comment %>

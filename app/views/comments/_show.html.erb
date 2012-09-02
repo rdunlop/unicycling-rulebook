@@ -1,0 +1,8 @@
+<% comment = show
+if comment.new_record?
+    return
+end
+%>
+<h4>Comments by <b><%= comment.user.to_s %></b>
+    on <i><b><%= comment.created_at.to_s %></b></i></h4>
+<p><blockquote><%= comment.comment %></blockquote></p>

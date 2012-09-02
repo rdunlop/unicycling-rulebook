@@ -7,7 +7,7 @@ Rulebook::Application.routes.draw do
         put 'set_pre_voting'
     end
     resources :votes
-    resources :comments
+    resources :comments, :only => [:create]
     resources :revisions
   end
 

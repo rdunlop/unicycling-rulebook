@@ -35,37 +35,6 @@ describe CommentsController do
     { comment: "hi"}
   end
   
-  describe "GET index" do
-    it "assigns all comments as @comments" do
-      comment = FactoryGirl.create(:comment, :proposal => @proposal)
-      get :index, {:proposal_id => @proposal.id}
-      assigns(:comments).should eq([comment])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested comment as @comment" do
-      comment = FactoryGirl.create(:comment, :proposal => @proposal)
-      get :show, {:id => comment.to_param, :proposal_id => @proposal.id}
-      assigns(:comment).should eq(comment)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new comment as @comment" do
-      get :new, {:proposal_id => @proposal.id}
-      assigns(:comment).should be_a_new(Comment)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested comment as @comment" do
-      comment = FactoryGirl.create(:comment, :proposal => @proposal)
-      get :edit, {:id => comment.to_param, :proposal_id => @proposal.id}
-      assigns(:comment).should eq(comment)
-    end
-  end
-
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Comment" do
@@ -82,7 +51,7 @@ describe CommentsController do
 
       it "redirects to the created comment" do
         post :create, {:comment => valid_attributes, :proposal_id => @proposal.id}
-        response.should redirect_to([@proposal, Comment.last])
+        response.should redirect_to(@proposal)
       end
 
       it "sends an e-mail" do
@@ -104,68 +73,8 @@ describe CommentsController do
         # Trigger the behavior that occurs when invalid params are submitted
         Comment.any_instance.stub(:save).and_return(false)
         post :create, {:comment => {}, :proposal_id => @proposal.id}
-        response.should render_template("new")
+        response.should render_template("propsals/show")
       end
     end
   end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested comment" do
-        comment = FactoryGirl.create(:comment, :proposal => @proposal)
-        # Assuming there are no other comments in the database, this
-        # specifies that the Comment created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Comment.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => comment.to_param, :comment => {'these' => 'params'}, :proposal_id => @proposal.id}
-      end
-
-      it "assigns the requested comment as @comment" do
-        comment = FactoryGirl.create(:comment, :proposal => @proposal)
-        put :update, {:id => comment.to_param, :comment => valid_attributes, :proposal_id => @proposal.id}
-        assigns(:comment).should eq(comment)
-      end
-
-      it "redirects to the comment" do
-        comment = FactoryGirl.create(:comment, :proposal => @proposal)
-        put :update, {:id => comment.to_param, :comment => valid_attributes, :proposal_id => @proposal.id}
-        response.should redirect_to([@proposal, comment])
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the comment as @comment" do
-        comment = FactoryGirl.create(:comment, :proposal => @proposal)
-        # Trigger the behavior that occurs when invalid params are submitted
-        Comment.any_instance.stub(:save).and_return(false)
-        put :update, {:id => comment.to_param, :comment => {}, :proposal_id => @proposal.id}
-        assigns(:comment).should eq(comment)
-      end
-
-      it "re-renders the 'edit' template" do
-        comment = FactoryGirl.create(:comment, :proposal => @proposal)
-        # Trigger the behavior that occurs when invalid params are submitted
-        Comment.any_instance.stub(:save).and_return(false)
-        put :update, {:id => comment.to_param, :comment => {}, :proposal_id => @proposal.id}
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested comment" do
-      comment = FactoryGirl.create(:comment, :proposal => @proposal)
-      expect {
-        delete :destroy, {:id => comment.to_param, :proposal_id => @proposal.id}
-      }.to change(Comment, :count).by(-1)
-    end
-
-    it "redirects to the comments list" do
-      comment = FactoryGirl.create(:comment, :proposal => @proposal)
-      delete :destroy, {:id => comment.to_param, :proposal_id => @proposal.id}
-      response.should redirect_to(@proposal)
-    end
-  end
-
 end
