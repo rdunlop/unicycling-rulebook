@@ -13,6 +13,6 @@ FactoryGirl.define do
     transition_straight_to_vote false
     owner
     summary "MyText"
-    title "MyText"
+    sequence(:title) {|e| "Proposal Title #{e}" }
   end
 end
