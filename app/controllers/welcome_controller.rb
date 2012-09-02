@@ -2,6 +2,19 @@ class WelcomeController < ApplicationController
   skip_authorization_check
 
   def index
+    if current_user.admin
+        @proposals = Proposal.all
+    else
+        # XXX proposals should be ordered by committee
+        @proposals = []
+        current_user.committees.each do |c|
+            c.proposals.each do |p|
+                if p.status != 'Submitted'
+                    @proposals += [p]
+                end
+            end
+        end
+    end
   end
 
   def help

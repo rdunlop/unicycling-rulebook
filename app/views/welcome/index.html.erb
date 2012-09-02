@@ -55,3 +55,13 @@ To have an up-to-date database of historical Unicycling World Records (NB these 
 To publicise the IUF Record Criteria and Liaison officers to the wider Unicycling Committee.
 <br />
 </p>
+
+<% if @proposals.empty? %>
+    <hr><h2>No proposals exist yet, but a <%= link_to('new proposal', new_proposal_path) %> can be created.</h2>
+<% else
+    @proposals.each do |p|
+        %>
+        Proposal: <%= p %>
+        <%
+    end
+end %>
