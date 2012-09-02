@@ -11,20 +11,24 @@
         <h1>Rulebook</h1>
     </div>
     <div class="left_nav">
-        <%= link_to('Main Menu', welcome_index_path) %><br />
+        <ul>
+        <li><%= link_to('Home', welcome_index_path) %></li>
         <% if user_signed_in? %>
-            <%= link_to('Submit Proposal', new_proposal_path)%><br />
-            <%= link_to('FAQ', welcome_help_path)%><br />
-            <%= link_to('Logout', destroy_user_session_path, :method => :delete) %><br />
+            <li><%= link_to('Submit Proposal', new_proposal_path)%></li>
+            <li><%= link_to('FAQ', welcome_help_path)%></li>
+            <li>Members</li>
+            <li>View Approved Proposals</li>
+            <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
             <% if current_user.admin %>
-                <%= link_to('Admin (Committee)', committees_path) %><br />
+                <li><%= link_to('Admin (Committee)', committees_path) %></li>
                 <% # XXX =link_to('Admin (Users)', users_path) 
-                %><br />
+                %>
             <% end %>
         <% else %>
-            <%= link_to('Login', new_user_session_path) %><br />
-            <%= link_to('Sign-Up', new_user_registration_path) %><br />
+            <li><%= link_to('Login', new_user_session_path) %></li>
+            <li><%= link_to('Sign-Up', new_user_registration_path) %></li>
         <% end %>
+        </ul>
     </div>
     <div class="main_nav">
         <p id="notice"><%= notice %></p>
