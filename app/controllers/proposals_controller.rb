@@ -17,6 +17,7 @@ class ProposalsController < ApplicationController
   # GET /proposals/1.json
   def show
     @proposal = Proposal.find(params[:id])
+    @comment = @proposal.comments.new
 
     respond_to do |format|
       format.html # show.html.erb

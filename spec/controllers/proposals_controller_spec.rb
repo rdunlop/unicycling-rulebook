@@ -51,6 +51,12 @@ describe ProposalsController do
       get :show, {:id => proposal.to_param}
       assigns(:proposal).should eq(proposal)
     end
+
+    it "should have a blank comment object" do
+      proposal = FactoryGirl.create(:proposal)
+      get :show, {:id => proposal.to_param}
+      assigns(:comment).should be_a_new(Comment)
+    end
   end
 
   describe "GET new" do
