@@ -5,6 +5,7 @@ describe "revisions/index" do
     @revs = assign(:revisions, [
         FactoryGirl.create(:revision),
         FactoryGirl.create(:revision)])
+    @proposal = @revs.first.proposal
   end
 
   it "renders a list of revisions" do

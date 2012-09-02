@@ -1,5 +1,4 @@
 Rulebook::Application.routes.draw do
-  resources :revisions
 
   resources :proposals do
     member do
@@ -9,6 +8,7 @@ Rulebook::Application.routes.draw do
     end
     resources :votes
     resources :comments
+    resources :revisions
   end
 
   resources :committees do

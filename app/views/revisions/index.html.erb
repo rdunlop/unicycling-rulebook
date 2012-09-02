@@ -21,13 +21,13 @@
     <td><%= revision.references %></td>
     <td><%= revision.change_description %></td>
     <td><%= revision.user_id %></td>
-    <td><%= link_to 'Show', revision %></td>
-    <td><%= link_to 'Edit', edit_revision_path(revision) %></td>
-    <td><%= link_to 'Destroy', revision, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Show', [@proposal, revision] %></td>
+    <td><%= link_to 'Edit', edit_proposal_revision_path(@proposal, revision) %></td>
+    <td><%= link_to 'Destroy', [@proposal, revision], confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Revision', new_revision_path %>
+<%= link_to 'New Revision', new_proposal_revision_path(@proposal) %>

@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @revision %> |
-<%= link_to 'Back', revisions_path %>
+<%= link_to 'Show', [@proposal, @revision] %> |
+<%= link_to 'Back', proposal_revisions_path(@proposal) %>

@@ -2,6 +2,11 @@ class RevisionsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
 
+  before_filter :load_proposal
+  def load_proposal
+    @proposal = Proposal.find(params[:proposal_id])
+  end
+
   # GET /revisions
   # GET /revisions.json
   def index
@@ -44,11 +49,13 @@ class RevisionsController < ApplicationController
   # POST /revisions.json
   def create
     @revision = Revision.new(params[:revision])
+    @revision.proposal = @proposal
+    @revision.user = current_user
 
     respond_to do |format|
       if @revision.save
-        format.html { redirect_to @revision, notice: 'Revision was successfully created.' }
-        format.json { render json: @revision, status: :created, location: @revision }
+        format.html { redirect_to [@proposal, @revision], notice: 'Revision was successfully created.' }
+        format.json { render json: [@proposal, @revision], status: :created, location: [@proposal, @revision] }
       else
         format.html { render action: "new" }
         format.json { render json: @revision.errors, status: :unprocessable_entity }
@@ -63,7 +70,7 @@ class RevisionsController < ApplicationController
 
     respond_to do |format|
       if @revision.update_attributes(params[:revision])
-        format.html { redirect_to @revision, notice: 'Revision was successfully updated.' }
+        format.html { redirect_to [@proposal, @revision], notice: 'Revision was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -79,7 +86,7 @@ class RevisionsController < ApplicationController
     @revision.destroy
 
     respond_to do |format|
-      format.html { redirect_to revisions_url }
+      format.html { redirect_to proposal_revisions_url(@proposal) }
       format.json { head :no_content }
     end
   end

@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "revisions/show" do
   before(:each) do
     @revision = assign(:revision, FactoryGirl.create(:revision))
+    @proposal = @revision.proposal
   end
 
   it "renders attributes in <p>" do

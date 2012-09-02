@@ -20,6 +20,8 @@ require 'spec_helper'
 
 describe RevisionsController do
   before(:each) do
+    @proposal = FactoryGirl.create(:proposal)
+
     @admin = FactoryGirl.create(:admin_user)
     sign_in @admin
   end
@@ -35,7 +37,7 @@ describe RevisionsController do
   describe "GET index" do
     it "assigns all revisions as @revisions" do
       revision = Revision.create! valid_attributes
-      get :index, {}
+      get :index, {:proposal_id => @proposal.id}
       assigns(:revisions).should eq([revision])
     end
   end
@@ -43,14 +45,14 @@ describe RevisionsController do
   describe "GET show" do
     it "assigns the requested revision as @revision" do
       revision = Revision.create! valid_attributes
-      get :show, {:id => revision.to_param}
+      get :show, {:id => revision.to_param, :proposal_id => @proposal.id}
       assigns(:revision).should eq(revision)
     end
   end
 
   describe "GET new" do
     it "assigns a new revision as @revision" do
-      get :new, {}
+      get :new, {:proposal_id => @proposal.id}
       assigns(:revision).should be_a_new(Revision)
     end
   end
@@ -58,7 +60,7 @@ describe RevisionsController do
   describe "GET edit" do
     it "assigns the requested revision as @revision" do
       revision = Revision.create! valid_attributes
-      get :edit, {:id => revision.to_param}
+      get :edit, {:id => revision.to_param, :proposal_id => @proposal.id}
       assigns(:revision).should eq(revision)
     end
   end
@@ -67,19 +69,21 @@ describe RevisionsController do
     describe "with valid params" do
       it "creates a new Revision" do
         expect {
-          post :create, {:revision => valid_attributes}
+          post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}
         }.to change(Revision, :count).by(1)
       end
 
       it "assigns a newly created revision as @revision" do
-        post :create, {:revision => valid_attributes}
+        post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}
         assigns(:revision).should be_a(Revision)
         assigns(:revision).should be_persisted
       end
 
       it "redirects to the created revision" do
-        post :create, {:revision => valid_attributes}
-        response.should redirect_to(Revision.last)
+        post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}
+        response.should redirect_to([@proposal, Revision.last])
+        Revision.last.user.should == @admin
+        Revision.last.proposal.should == @proposal
       end
     end
 
@@ -87,14 +91,14 @@ describe RevisionsController do
       it "assigns a newly created but unsaved revision as @revision" do
         # Trigger the behavior that occurs when invalid params are submitted
         Revision.any_instance.stub(:save).and_return(false)
-        post :create, {:revision => {}}
+        post :create, {:revision => {}, :proposal_id => @proposal.id}
         assigns(:revision).should be_a_new(Revision)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Revision.any_instance.stub(:save).and_return(false)
-        post :create, {:revision => {}}
+        post :create, {:revision => {}, :proposal_id => @proposal.id}
         response.should render_template("new")
       end
     end
@@ -109,19 +113,19 @@ describe RevisionsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Revision.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => revision.to_param, :revision => {'these' => 'params'}}
+        put :update, {:id => revision.to_param, :revision => {'these' => 'params'}, :proposal_id => @proposal.id}
       end
 
       it "assigns the requested revision as @revision" do
         revision = Revision.create! valid_attributes
-        put :update, {:id => revision.to_param, :revision => valid_attributes}
+        put :update, {:id => revision.to_param, :revision => valid_attributes, :proposal_id => @proposal.id}
         assigns(:revision).should eq(revision)
       end
 
       it "redirects to the revision" do
         revision = Revision.create! valid_attributes
-        put :update, {:id => revision.to_param, :revision => valid_attributes}
-        response.should redirect_to(revision)
+        put :update, {:id => revision.to_param, :revision => valid_attributes, :proposal_id => @proposal.id}
+        response.should redirect_to([@proposal, revision])
       end
     end
 
@@ -130,7 +134,7 @@ describe RevisionsController do
         revision = Revision.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Revision.any_instance.stub(:save).and_return(false)
-        put :update, {:id => revision.to_param, :revision => {}}
+        put :update, {:id => revision.to_param, :revision => {}, :proposal_id => @proposal.id}
         assigns(:revision).should eq(revision)
       end
 
@@ -138,7 +142,7 @@ describe RevisionsController do
         revision = Revision.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Revision.any_instance.stub(:save).and_return(false)
-        put :update, {:id => revision.to_param, :revision => {}}
+        put :update, {:id => revision.to_param, :revision => {}, :proposal_id => @proposal.id}
         response.should render_template("edit")
       end
     end
@@ -148,14 +152,14 @@ describe RevisionsController do
     it "destroys the requested revision" do
       revision = Revision.create! valid_attributes
       expect {
-        delete :destroy, {:id => revision.to_param}
+        delete :destroy, {:id => revision.to_param, :proposal_id => @proposal.id}
       }.to change(Revision, :count).by(-1)
     end
 
     it "redirects to the revisions list" do
       revision = Revision.create! valid_attributes
-      delete :destroy, {:id => revision.to_param}
-      response.should redirect_to(revisions_url)
+      delete :destroy, {:id => revision.to_param, :proposal_id => @proposal.id}
+      response.should redirect_to(proposal_revisions_url(@proposal))
     end
   end
 
