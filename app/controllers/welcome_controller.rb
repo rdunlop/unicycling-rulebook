@@ -5,7 +5,7 @@ class WelcomeController < ApplicationController
     if current_user.admin
         @proposals = Proposal.all
     else
-        # XXX proposals should be ordered by committee
+        # XXX proposals should be ordered by committee and status
         @proposals = []
         current_user.committees.each do |c|
             c.proposals.each do |p|

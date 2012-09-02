@@ -61,7 +61,21 @@ To publicise the IUF Record Criteria and Liaison officers to the wider Unicyclin
 <% else
     @proposals.each do |p|
         %>
-        Proposal: <%= p %>
+        <%= link_to('Proposal ' + p.id.to_s + ": " + p.to_s, p) %>
+
+        <% if p.status == 'Submitted' %>
+            <h4>
+                <blockquote>
+                    <b>Committee:</b><%= p.committee.to_s %><br />
+                    <b>Owner:</b><%= p.owner.to_s %><br />
+                    <b>Submit Date:</b><%= p.submit_date.to_s %><br />
+                    <b>Additonal Notes:</b> <%= p.summary %>
+                </blockquote>
+            </h4>
+        <% else %>
+            <%= "lah" %>
+        <% end %>
+        <hr />
         <%
     end
 end %>
