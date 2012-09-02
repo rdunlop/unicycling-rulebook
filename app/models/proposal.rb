@@ -7,7 +7,7 @@ class Proposal < ActiveRecord::Base
     validates :owner, :presence => true
     validates :title, :presence => true
     validates :committee, :presence => true
-
+    validates :status, :inclusion => { :in => [ 'Submitted', 'Review', 'Pre-Voting', 'Voting', 'Tabled', 'Passed', 'Failed' ] }
 
     def to_s
         title

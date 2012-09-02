@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :proposal do
     committee # FactoryGirl
-    status "MyString"
+    status "Submitted"
     submit_date "2012-08-29 14:43:59"
     review_start_date "2012-08-29 14:43:59"
     review_end_date "2012-08-29 14:43:59"

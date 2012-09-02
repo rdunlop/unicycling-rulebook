@@ -5,6 +5,7 @@ describe Proposal do
     prop = Proposal.new
     prop.committee = FactoryGirl.create(:committee)
     prop.title = "Hello People"
+    prop.status = 'Submitted'
     prop.valid?.should == false
 
     prop.owner = FactoryGirl.create(:user)
@@ -13,6 +14,7 @@ describe Proposal do
 
   it "must have a title" do
     prop = Proposal.new
+    prop.status = 'Submitted'
     prop.owner = FactoryGirl.create(:user)
     prop.committee = FactoryGirl.create(:committee)
     prop.valid?.should == false
@@ -23,6 +25,7 @@ describe Proposal do
 
   it "should have an associated committee" do
     prop = Proposal.new
+    prop.status = 'Submitted'
     prop.title = "Hello People"
     prop.owner = FactoryGirl.create(:user)
     prop.valid?.should == false
@@ -53,5 +56,27 @@ describe Proposal do
     prop = Proposal.find(proposal.id)
 
     prop.comments.count.should == 1
+  end
+
+  it "should only allow certain status values" do
+    proposal = FactoryGirl.create(:proposal)
+    proposal.valid?.should == true
+
+    proposal.status = "Submitted"
+    proposal.valid?.should == true
+    proposal.status = "Review"
+    proposal.valid?.should == true
+    proposal.status = "Pre-Voting"
+    proposal.valid?.should == true
+    proposal.status = "Voting"
+    proposal.valid?.should == true
+    proposal.status = "Tabled"
+    proposal.valid?.should == true
+    proposal.status = "Passed"
+    proposal.valid?.should == true
+    proposal.status = "Failed"
+    proposal.valid?.should == true
+    proposal.status = "Robin"
+    proposal.valid?.should == false
   end
 end
