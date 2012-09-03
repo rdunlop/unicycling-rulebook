@@ -13,19 +13,53 @@
 <%= link_to 'Edit', edit_proposal_path(@proposal) %> |
 <%= link_to 'Back', proposals_path %>
 
+<% # Display Voting Options 
+%>
+<% if not @vote.nil? %>
+    <% if not @vote.new_record? %>
+      <% # if vote already exists for this user
+      %>
+      <b>You have already voted:</b> <strong>
+      <%= @vote.vote %></strong><br />
+    <% else %>
+        <%= render :partial => "/votes/form", :object => @vote %>
+    <% end %>
+<% end %>
+
 <hr />
 <h3>Background</h3>
 <% # XXX must support multiple revisions?
 %>
-<%= @proposal.background %>
+<p><%= @proposal.background %></p>
+
+
+<% # XXX must be admin?
+%>
+<hr />
+<h3>Additional Notes</h3>
+<p><%= @proposal.summary %></p>
 
 <hr />
 <h3>Proposal</h3>
-<%= @proposal.body %>
+<p><%= @proposal.body %></p>
 
 <hr />
 <h3>References</h3>
-<%= @proposal.references %>
+<p><%= @proposal.references %></p>
+
+<% if @proposal.revisions.count > 1 %>
+    <hr />
+    <h3>Change Log:</h3>
+    <dl>
+        <% @proposal.revisions.each do |rev| %>
+            <dt><b><%= link_to('Revision' + rev.id, proposal_revision_path(@proposal, rev)) %>
+            changed by <i><%= rev.user.to_s %></i> on <i><%= rev.created_at.to_s(:long) %></i>
+            </b></dt>
+            <dd><%= rev.change_description %></dd>
+        <% end %>
+    </dl>
+<% end %>
+
 
 <% if @proposal.votes.count > 0 %>
     <hr />

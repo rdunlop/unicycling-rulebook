@@ -19,6 +19,16 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.find(params[:id])
     @comment = @proposal.comments.new
 
+    # XXX why is this always available?
+    if can? :vote, @proposal
+        @vote = @proposal.votes.new
+        @proposal.votes.each do |v|
+            if v.user == current_user
+                @vote = v
+            end
+        end
+    end
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @proposal }

@@ -10,18 +10,21 @@ class User < ActiveRecord::Base
   has_many :committee_members
   has_many :committees, :through => :committee_members
 
-  def voting_text(committee)
+  def voting_member(committee)
     committee_members.each do |cm|
         if cm.committee == committee
             if cm.voting
-                return "Voting Member"
+                return true
             else
-                return "Non-Voting Member"
+                return false
             end
         end
     end
+    return false
+  end
 
-    return "Non-Voting Member"
+  def voting_text(committee)
+    self.voting_member(committee) ? "Voting Member" : "Non-Voting Member"
   end
 
   def to_s

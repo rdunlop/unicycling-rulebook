@@ -57,6 +57,17 @@ describe ProposalsController do
       get :show, {:id => proposal.to_param}
       assigns(:comment).should be_a_new(Comment)
     end
+    it "should have a blank vote object" do
+      proposal = FactoryGirl.create(:proposal)
+      get :show, {:id => proposal.to_param}
+      assigns(:vote).should be_a_new(Vote)
+    end
+    it "should have the existing vote object for this user" do
+      proposal = FactoryGirl.create(:proposal)
+      vote = FactoryGirl.create(:vote, :proposal => proposal, :user => @admin_user)
+      get :show, {:id => proposal.to_param}
+      assigns(:vote).should == vote
+    end
   end
 
   describe "GET new" do

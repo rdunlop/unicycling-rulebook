@@ -52,13 +52,14 @@ class VotesController < ApplicationController
     @vote = Vote.new(params[:vote])
     @vote.proposal = @proposal
     @vote.user = current_user
+    @comment = @proposal.comments.new
 
     respond_to do |format|
       if @vote.save
-        format.html { redirect_to [@proposal, @vote], notice: 'Vote was successfully created.' }
-        format.json { render json: [@proposal, @vote], status: :created, location: [@proposal, @vote] }
+        format.html { redirect_to @proposal, notice: 'Vote was successfully created.' }
+        format.json { render json: @proposal, status: :created, location: @proposal }
       else
-        format.html { render action: "new" }
+        format.html { render "proposals/show" }
         format.json { render json: @vote.errors, status: :unprocessable_entity }
       end
     end

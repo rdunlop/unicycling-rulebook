@@ -41,6 +41,9 @@ class Ability
             revision.proposal.owner == user
         end
     end
+    can :vote, Proposal do |proposal|
+        proposal.status == 'Voting' and proposal.user.voting_member(proposal.committee)
+    end
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

@@ -81,7 +81,7 @@ describe VotesController do
 
       it "redirects to the created vote" do
         post :create, {:vote => valid_attributes, :proposal_id => @proposal.id}
-        response.should redirect_to([@proposal, Vote.last])
+        response.should redirect_to(@proposal)
       end
     end
 
@@ -97,7 +97,7 @@ describe VotesController do
         # Trigger the behavior that occurs when invalid params are submitted
         Vote.any_instance.stub(:save).and_return(false)
         post :create, {:vote => {}, :proposal_id => @proposal.id}
-        response.should render_template("new")
+        response.should render_template("proposals/show")
       end
     end
   end
