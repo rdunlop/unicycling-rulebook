@@ -2,14 +2,8 @@ require 'spec_helper'
 
 describe "proposals/new" do
   before(:each) do
-    assign(:proposal, stub_model(Proposal,
-      :committee_id => 1,
-      :status => "MyString",
-      :transition_straight_to_vote => false,
-      :owner_id => 1,
-      :summary => "MyText",
-      :title => "MyText"
-    ).as_new_record)
+    @proposal = FactoryGirl.create(:proposal)
+    @revision = FactoryGirl.create(:revision, :proposal => @proposal)
   end
 
   it "renders new proposal form" do

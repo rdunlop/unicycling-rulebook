@@ -2,14 +2,8 @@ require 'spec_helper'
 
 describe "proposals/edit" do
   before(:each) do
-    @proposal = assign(:proposal, stub_model(Proposal,
-      :committee_id => 1,
-      :status => "MyString",
-      :transition_straight_to_vote => false,
-      :owner_id => 1,
-      :summary => "MyText",
-      :title => "MyText"
-    ))
+    @proposal = FactoryGirl.create(:proposal)
+    @revision = FactoryGirl.create(:revision, :proposal => @proposal)
   end
 
   it "renders the edit proposal form" do
