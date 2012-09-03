@@ -10,8 +10,42 @@
 <b>Status:</b> <strong><%= @proposal.status_string %></strong><br />
 
 <!-- options -->
-<%= link_to 'Edit', edit_proposal_path(@proposal) %> |
-<%= link_to 'Back', proposals_path %>
+<% if can? :approve, @proposal %>
+    <b><i>Options to admin:</i></b>
+    <% if @proposal.status == 'Submitted' %>
+        <%= link_to('Approve', approve_proposal_path(@proposal)) %>
+        |
+    <% elsif @proposal.status == 'Tabled' %>
+        <%= link_to('Un-Table (return to discussion)', approve_proposal_path(@proposal)) %>
+        |
+    <% elsif @proposal.status == 'Voting' %>
+        <%= link_to('Modify Votes', modify_votes_proposal_path(@proposal)) %>
+        |
+        <%= link_to('Change Back to Pre-Voting', set_pre_voting_proposal_path(@proposal)) %>
+        |
+    <% end %>
+
+    <%= link_to('Modify Dates', modify_dates_proposal_path(@proposal)) %>
+    |
+    <%= link_to('Change Committee', modify_dates_proposal_path(@proposal)) %>
+    <br />
+<% end %>
+
+<% if can? :manage, @proposal %>
+    <b><i>Options to owner:</i></b>
+    <% if @proposal.status == 'Pre-Voting' %>
+          <%= link_to 'Call for Votes', call_for_votes_proposal_path(@proposal) %>
+    <% end %>
+    <% #  XXX move into model?
+    %>
+    <% if @proposal.status == 'Submitted' or
+          @proposal.status == 'Review' or
+          @proposal.status == 'Pre-Voting' %>
+          <%= link_to 'Table', table_proposal_path(@proposal) %>
+          |
+          <%= link_to 'Revise', edit_proposal_path(@proposal) %> |
+    <% end %>
+<% end %>
 
 <% # Display Voting Options 
 %>
