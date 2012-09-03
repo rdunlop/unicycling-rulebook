@@ -26,7 +26,7 @@ class UserMailer < ActionMailer::Base
 
     subject = "Rulebook Committee 2012 - " + proposal.committee.to_s
 
-    mail to: "to@dunlopweb.com", subject: subject
+    mail to: "robin@dunlopweb.com", subject: subject
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
