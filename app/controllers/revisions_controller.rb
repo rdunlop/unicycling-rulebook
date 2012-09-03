@@ -7,17 +7,6 @@ class RevisionsController < ApplicationController
     @proposal = Proposal.find(params[:proposal_id])
   end
 
-  # GET /revisions
-  # GET /revisions.json
-  def index
-    @revisions = Revision.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @revisions }
-    end
-  end
-
   # GET /revisions/1
   # GET /revisions/1.json
   def show
@@ -43,11 +32,6 @@ class RevisionsController < ApplicationController
     end
   end
 
-  # GET /revisions/1/edit
-  def edit
-    @revision = Revision.find(params[:id])
-  end
-
   # POST /revisions
   # POST /revisions.json
   def create
@@ -66,31 +50,4 @@ class RevisionsController < ApplicationController
     end
   end
 
-  # PUT /revisions/1
-  # PUT /revisions/1.json
-  def update
-    @revision = Revision.find(params[:id])
-
-    respond_to do |format|
-      if @revision.update_attributes(params[:revision])
-        format.html { redirect_to [@proposal, @revision], notice: 'Revision was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @revision.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /revisions/1
-  # DELETE /revisions/1.json
-  def destroy
-    @revision = Revision.find(params[:id])
-    @revision.destroy
-
-    respond_to do |format|
-      format.html { redirect_to proposal_revisions_url(@proposal) }
-      format.json { head :no_content }
-    end
-  end
 end

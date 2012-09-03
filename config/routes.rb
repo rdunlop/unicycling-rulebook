@@ -14,7 +14,7 @@ Rulebook::Application.routes.draw do
     end
     resources :votes
     resources :comments, :only => [:create]
-    resources :revisions
+    resources :revisions, :except => [:edit, :index, :put, :destroy]
   end
 
   resources :committees do

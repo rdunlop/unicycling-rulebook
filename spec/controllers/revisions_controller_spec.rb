@@ -35,14 +35,6 @@ describe RevisionsController do
       change_description: "blaa"}
   end
   
-  describe "GET index" do
-    it "assigns all revisions as @revisions" do
-      revision = Revision.create! valid_attributes
-      get :index, {:proposal_id => @proposal.id}
-      assigns(:revisions).should eq([@revision, revision])
-    end
-  end
-
   describe "GET show" do
     it "assigns the requested revision as @revision" do
       revision = Revision.create! valid_attributes
@@ -61,14 +53,6 @@ describe RevisionsController do
       assigns(:revision).background.should == @proposal.latest_revision.background
       assigns(:revision).body.should == @proposal.latest_revision.body
       assigns(:revision).references.should == @proposal.latest_revision.references
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested revision as @revision" do
-      revision = Revision.create! valid_attributes
-      get :edit, {:id => revision.to_param, :proposal_id => @proposal.id}
-      assigns(:revision).should eq(revision)
     end
   end
 
@@ -110,64 +94,4 @@ describe RevisionsController do
       end
     end
   end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested revision" do
-        revision = Revision.create! valid_attributes
-        # Assuming there are no other revisions in the database, this
-        # specifies that the Revision created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Revision.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => revision.to_param, :revision => {'these' => 'params'}, :proposal_id => @proposal.id}
-      end
-
-      it "assigns the requested revision as @revision" do
-        revision = Revision.create! valid_attributes
-        put :update, {:id => revision.to_param, :revision => valid_attributes, :proposal_id => @proposal.id}
-        assigns(:revision).should eq(revision)
-      end
-
-      it "redirects to the revision" do
-        revision = Revision.create! valid_attributes
-        put :update, {:id => revision.to_param, :revision => valid_attributes, :proposal_id => @proposal.id}
-        response.should redirect_to([@proposal, revision])
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the revision as @revision" do
-        revision = Revision.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Revision.any_instance.stub(:save).and_return(false)
-        put :update, {:id => revision.to_param, :revision => {}, :proposal_id => @proposal.id}
-        assigns(:revision).should eq(revision)
-      end
-
-      it "re-renders the 'edit' template" do
-        revision = Revision.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Revision.any_instance.stub(:save).and_return(false)
-        put :update, {:id => revision.to_param, :revision => {}, :proposal_id => @proposal.id}
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested revision" do
-      revision = Revision.create! valid_attributes
-      expect {
-        delete :destroy, {:id => revision.to_param, :proposal_id => @proposal.id}
-      }.to change(Revision, :count).by(-1)
-    end
-
-    it "redirects to the revisions list" do
-      revision = Revision.create! valid_attributes
-      delete :destroy, {:id => revision.to_param, :proposal_id => @proposal.id}
-      response.should redirect_to(proposal_revisions_url(@proposal))
-    end
-  end
-
 end
