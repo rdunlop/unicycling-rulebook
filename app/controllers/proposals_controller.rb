@@ -138,6 +138,7 @@ class ProposalsController < ApplicationController
   def set_review
     @proposal = Proposal.find(params[:id])
 
+    was_tabled = @proposal.status == 'Tabled'
     if (@proposal.status == "Submitted") or (@proposal.status == "Tabled")
         proceed = true
     else
@@ -145,9 +146,11 @@ class ProposalsController < ApplicationController
     end
     @proposal.status = "Review"
     @proposal.review_start_date = DateTime.now()
+    @proposal.review_end_date = DateTime.now() + 10
 
     respond_to do |format|
       if proceed and @proposal.save
+        UserMailer.proposal_status_review(@proposal, was_tabled).deliver
         format.html { redirect_to @proposal, notice: 'Proposal is now in the review stage.' }
         format.json { head :no_content }
       else

@@ -85,7 +85,7 @@ class UserMailer < ActionMailer::Base
     @set_aside_message = was_tabled ? "This proposal was Set-Aside, but has been put back into the review stage." : ""
     @body = @proposal.latest_revision.body
 
-    mail to: "to@dunlopweb.com", subject: "(Proposal " + @proposal.id.to_s + ") " + @proposal.title
+    mail to: create_committee_email(@proposal.committee), subject: "(Proposal " + @proposal.id.to_s + ") " + @proposal.title
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

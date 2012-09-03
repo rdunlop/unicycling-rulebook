@@ -237,8 +237,13 @@ describe ProposalsController do
   end
 
   describe "PUT set_review" do
+    before(:each) do
+        @proposal = FactoryGirl.create(:proposal, :status => "Submitted")
+        @revision = FactoryGirl.create(:revision, :proposal => @proposal)
+    end
+
     it "changes the status to Review" do
-        proposal = FactoryGirl.create(:proposal, :status => "Submitted")
+        proposal = @proposal
 
         put :set_review, {:id => proposal.to_param}
 
@@ -247,10 +252,21 @@ describe ProposalsController do
         proposal.status.should == "Review"
         # the following subtraction yields fractions-of-a-day
         ((proposal.review_start_date - DateTime.now()) * 1.days).should < 2
+        #((proposal.review_end_date - DateTime.now()) * 1.days).should < 1
+        #((proposal.review_end_date - DateTime.now()) * 1.days).should be_within(11).of(DateTime.now)
+        #((proposal.review_end_date - DateTime.now()) * 1.days).should < 11.0
+    end
+    it "should send an e-mail" do
+        proposal = @proposal
+
+        put :set_review, {:id => proposal.to_param}
+
+        num_deliveries = ActionMailer::Base.deliveries.size
+        num_deliveries.should == 1
     end
 
     it "changes the status to Review from Tabled status" do
-        proposal = FactoryGirl.create(:proposal, :status => "Tabled")
+        proposal = @proposal
 
         put :set_review, {:id => proposal.to_param}
 
@@ -262,7 +278,9 @@ describe ProposalsController do
     end
 
     it "should not be allowed to change unless the status is Submitted" do
-        proposal = FactoryGirl.create(:proposal, :status => "Pre-Voting")
+        @proposal.status = 'Pre-Voting'
+        @proposal.save
+        proposal = @proposal
 
         put :set_review, {:id => proposal.to_param}
 

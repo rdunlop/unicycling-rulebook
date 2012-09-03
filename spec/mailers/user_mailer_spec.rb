@@ -77,7 +77,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("(Proposal " + @proposal.id.to_s + ") " + @proposal.title)
-      mail.to.should eq(["to@dunlopweb.com"])
+      mail.to.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 

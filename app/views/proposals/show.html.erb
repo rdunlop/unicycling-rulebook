@@ -13,7 +13,7 @@
 <% if can? :approve, @proposal %>
     <b><i>Options to admin:</i></b>
     <% if @proposal.status == 'Submitted' %>
-        <%= link_to('Approve', approve_proposal_path(@proposal)) %>
+        <%= link_to('Approve', set_review_proposal_path(@proposal), :method => :put) %>
         |
     <% elsif @proposal.status == 'Tabled' %>
         <%= link_to('Un-Table (return to discussion)', approve_proposal_path(@proposal)) %>
