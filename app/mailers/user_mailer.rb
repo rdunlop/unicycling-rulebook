@@ -1,6 +1,26 @@
 class UserMailer < ActionMailer::Base
   default from: "unicycling@dunlopweb.com"
 
+  def create_admin_email
+    emails = []
+    User.all.each do |u|
+        if u.admin
+            emails << u.email
+        end
+    end
+    emails
+  end
+
+  def create_committee_email(committee)
+    emails = []
+    CommitteeMember.all.each do |cm|
+        if cm.committee == committee
+            emails << cm.user.email
+        end
+    end
+    emails
+  end
+
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
@@ -11,7 +31,7 @@ class UserMailer < ActionMailer::Base
     @body = proposal.latest_revision.body
     @title = proposal.title
 
-    mail to: "robin@dunlopweb.com", subject: 'New submission - Proposal ' + proposal.id.to_s + ' - ' + proposal.title
+    mail to: create_admin_email, subject: 'New submission - Proposal ' + proposal.id.to_s + ' - ' + proposal.title
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -28,7 +48,7 @@ class UserMailer < ActionMailer::Base
 
     subject = "Rulebook Committee 2012 - " + proposal.committee.to_s
 
-    mail to: "robin@dunlopweb.com", subject: subject
+    mail to: create_committee_email(proposal.committee), subject: subject
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -41,7 +61,7 @@ class UserMailer < ActionMailer::Base
     @change_description = proposal.latest_revision.change_description
     @body = proposal.latest_revision.body
 
-    mail to: "to@dunlopweb.com", subject: '(Proposal ' + proposal.id.to_s + ' New Revision - ' + proposal.title
+    mail to: create_committee_email(@proposal.committee), subject: '(Proposal ' + proposal.id.to_s + ' New Revision - ' + proposal.title
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

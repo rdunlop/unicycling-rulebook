@@ -1,5 +1,6 @@
 heroku addons:add sendgrid:starter
 - create a conf table, to configure the instance with the expected names/etc?
+- add auto-enroll YES
 
 - Update the _end_date properly
 - permissions to restrict who can do what to what object
@@ -8,7 +9,6 @@ heroku addons:add sendgrid:starter
 - Change to use 'thin' server (as per heroku documentation https://devcenter.heroku.com/articles/rails3)
 
 - Add ability for Admin to adjust the admin status of another user.
-- add auto-enroll?
 
 - add tests for committee_member controller
 
@@ -28,3 +28,8 @@ heroku addons:add sendgrid:starter
 
 - Email to the whole committee should be sent when someone votes
 
+
+Instructions:
+- Create a Single Committtee
+- Q: Should I auto-assign new people to the committee, or require (like now) that the administrator assign them to the committee, and determine if they are a "voting" member.
+- Q: Should we restrict the time that the committee is open for new registrants (right now, it has a hard-coded date which disables the sign-up form)

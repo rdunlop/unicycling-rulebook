@@ -20,6 +20,7 @@ require 'spec_helper'
 
 describe RevisionsController do
   before(:each) do
+    ActionMailer::Base.deliveries.clear
     @proposal = FactoryGirl.create(:proposal)
     @revision = FactoryGirl.create(:revision, :proposal => @proposal)
 
@@ -76,6 +77,11 @@ describe RevisionsController do
         Revision.last.user.should == @admin
         Revision.last.proposal.should == @proposal
       end
+      it "sends an e-mail when a new revision is created" do
+        post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}
+        num_deliveries = ActionMailer::Base.deliveries.size
+        num_deliveries.should == 1
+      end
     end
 
     describe "with invalid params" do
@@ -92,6 +98,21 @@ describe RevisionsController do
         post :create, {:revision => {}, :proposal_id => @proposal.id}
         response.should render_template("new")
       end
+    end
+    describe "with a Pre-Voting status proposal" do
+        before(:each) do
+            @proposal.status = 'Pre-Voting'
+            @proposal.save!
+        end
+        it "should set the status to review" do
+          post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}
+          assigns(:proposal).status.should == 'Review'
+        end
+        it "should set the review_start_date and review_end_date" do
+          post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}
+          ((assigns(:proposal).review_start_date - DateTime.now()) * 1.days).should < 1
+          ((assigns(:proposal).review_end_date - DateTime.now()) * 1.days).should > 2
+        end
     end
   end
 end

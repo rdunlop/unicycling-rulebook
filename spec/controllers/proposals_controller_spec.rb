@@ -20,6 +20,7 @@ require 'spec_helper'
 
 describe ProposalsController do
   before (:each) do
+    ActionMailer::Base.deliveries.clear
     @committee = FactoryGirl.create(:committee)
 
     @user = FactoryGirl.create(:user)
@@ -122,6 +123,15 @@ describe ProposalsController do
         expect {
           post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
         }.to change(Revision, :count).by(1)
+      end
+      it "sets the submit_date when created" do
+        post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
+        ((assigns(:proposal).submit_date - DateTime.now()) * 1.days).should < 1
+      end
+      it "sends an e-mail when a new submission is created" do
+        post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
+        num_deliveries = ActionMailer::Base.deliveries.size
+        num_deliveries.should == 1
       end
     end
 

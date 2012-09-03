@@ -59,6 +59,7 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.new(params[:proposal])
     @proposal.status = 'Submitted'
     @proposal.owner = current_user
+    @proposal.submit_date = DateTime.now()
 
     @revision = Revision.new(params[:revision])
     @revision.user = current_user
@@ -68,6 +69,7 @@ class ProposalsController < ApplicationController
         @proposal.save
         @revision.proposal = @proposal
         if @revision.save
+          UserMailer.proposal_submitted(@proposal).deliver
           format.html { redirect_to @proposal, notice: 'Proposal was successfully created.' }
           format.json { render json: @proposal, status: :created, location: @proposal }
         else

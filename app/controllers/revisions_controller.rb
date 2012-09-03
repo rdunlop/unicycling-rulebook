@@ -41,6 +41,13 @@ class RevisionsController < ApplicationController
 
     respond_to do |format|
       if @revision.save
+        UserMailer.proposal_revised(@proposal).deliver
+        if @proposal.status == 'Pre-Voting'
+            @proposal.status = 'Review'
+            @proposal.review_start_date = DateTime.now()
+            @proposal.review_end_date = DateTime.now() + 3
+            @proposal.save
+        end
         format.html { redirect_to [@proposal, @revision], notice: 'Revision was successfully created.' }
         format.json { render json: [@proposal, @revision], status: :created, location: [@proposal, @revision] }
       else
