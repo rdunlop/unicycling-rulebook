@@ -6,6 +6,7 @@ describe "proposals/show" do
     @revision = FactoryGirl.create(:revision, :proposal => @proposal, :background => "thebackground")
     @comment = @proposal.comments.new
     @vote = @proposal.votes.new
+    sign_in @proposal.user
   end
 
   it "renders attributes in <p>" do

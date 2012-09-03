@@ -11,7 +11,9 @@ describe "votes/new" do
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "form", :action => proposal_votes_path(@proposal), :method => "post" do
-      assert_select "select#vote_vote", :name => "vote[vote]"
+      assert_select "input#vote_vote_agree", :name => "vote[vote]"
+      assert_select "input#vote_vote_disagree", :name => "vote[vote]"
+      assert_select "input#vote_vote_abstain", :name => "vote[vote]"
     end
   end
 end
