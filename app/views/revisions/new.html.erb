@@ -1,6 +1,9 @@
 <h2>Revise your proposal</h2>
 <p>Please enter all the details below for revising your proposal.</p>
 
+<b>Title:</b><%= @proposal.title %><br />
+<b>Owner:</b><%= @proposal.owner %><br />
+
 <%= form_for([@proposal, @revision]) do |f| %>
   <% if @revision.errors.any? %>
     <div id="error_explanation">
@@ -15,5 +18,14 @@
   <% end %>
 
   <%= render :partial => "form", :object => f %>
+  <div class="field">
+    <%= f.label :change_description %>
+    <%= f.text_area :change_description %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
 <% end %>
 <%= link_to 'Back', proposal_revisions_path(@proposal) %>

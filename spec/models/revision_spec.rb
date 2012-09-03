@@ -22,9 +22,10 @@ describe Revision do
         rev.valid?.should == true
     end
 
-    it "must have a change_description" do
+    it "must have a change_description for subsequent revisions" do
         rev0 = FactoryGirl.create(:revision)
         rev = FactoryGirl.create(:revision, :proposal => rev0.proposal)
+        rev2 = FactoryGirl.build(:revision, :proposal => rev0.proposal)
         rev.change_description = ""
         rev.valid?.should == false
 
@@ -32,7 +33,8 @@ describe Revision do
         rev.valid?.should == true
     end
     it "need not have change_description if the proposal is new" do
-        rev = FactoryGirl.create(:revision)
+        prop = FactoryGirl.create(:proposal)
+        rev = FactoryGirl.build(:revision, :proposal => prop)
         rev.change_description = ""
         rev.valid?.should == true
     end

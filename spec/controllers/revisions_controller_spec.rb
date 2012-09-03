@@ -21,6 +21,7 @@ require 'spec_helper'
 describe RevisionsController do
   before(:each) do
     @proposal = FactoryGirl.create(:proposal)
+    @revision = FactoryGirl.create(:revision, :proposal => @proposal)
 
     @admin = FactoryGirl.create(:admin_user)
     sign_in @admin
@@ -38,7 +39,7 @@ describe RevisionsController do
     it "assigns all revisions as @revisions" do
       revision = Revision.create! valid_attributes
       get :index, {:proposal_id => @proposal.id}
-      assigns(:revisions).should eq([revision])
+      assigns(:revisions).should eq([@revision, revision])
     end
   end
 
@@ -54,6 +55,12 @@ describe RevisionsController do
     it "assigns a new revision as @revision" do
       get :new, {:proposal_id => @proposal.id}
       assigns(:revision).should be_a_new(Revision)
+    end
+    it "should contain information from previous revision" do
+      get :new, {:proposal_id => @proposal.id}
+      assigns(:revision).background.should == @proposal.latest_revision.background
+      assigns(:revision).body.should == @proposal.latest_revision.body
+      assigns(:revision).references.should == @proposal.latest_revision.references
     end
   end
 

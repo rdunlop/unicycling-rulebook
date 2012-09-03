@@ -1,6 +1,7 @@
 <%= form_for(@proposal) do |f| %>
-  <% if @proposal.errors.any? %>
+  <% if @proposal.errors.any? or @revision.errors.any? %>
     <div id="error_explanation">
+     <% if @proposal.errors.any? %>
       <h2><%= pluralize(@proposal.errors.count, "error") %> prohibited this proposal from being saved:</h2>
 
       <ul>
@@ -8,10 +9,8 @@
         <li><%= msg %></li>
       <% end %>
       </ul>
-    </div>
-  <% end %>
-  <% if @revision.errors.any? %>
-    <div id="error_explanation">
+     <% end %>
+     <% if @revision.errors.any? %>
       <h2><%= pluralize(@revision.errors.count, "error") %> prohibited this proposal from being saved:</h2>
 
       <ul>
@@ -19,6 +18,7 @@
         <li><%= msg %></li>
       <% end %>
       </ul>
+     <% end %>
     </div>
   <% end %>
 
@@ -34,7 +34,7 @@
     Owner: <%= @proposal.owner.to_s %>
   </div>
 
-  <%= fields_for(@proposal.revisions.new) do |g| %>
+  <%= fields_for(@revision) do |g| %>
     <%= render :partial => "/revisions/form", :object => g %>
   <% end %>
 

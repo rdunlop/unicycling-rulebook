@@ -43,7 +43,7 @@
           @proposal.status == 'Pre-Voting' %>
           <%= link_to 'Table', table_proposal_path(@proposal) %>
           |
-          <%= link_to 'Revise', edit_proposal_path(@proposal) %> |
+          <%= link_to 'Revise', new_proposal_revision_path(@proposal) %> |
     <% end %>
 <% end %>
 
@@ -86,7 +86,7 @@
     <h3>Change Log:</h3>
     <dl>
         <% @proposal.revisions.each do |rev| %>
-            <dt><b><%= link_to('Revision' + rev.id, proposal_revision_path(@proposal, rev)) %>
+            <dt><b><%= link_to('Revision' + rev.id.to_s, proposal_revision_path(@proposal, rev)) %>
             changed by <i><%= rev.user.to_s %></i> on <i><%= rev.created_at.to_s(:long) %></i>
             </b></dt>
             <dd><%= rev.change_description %></dd>

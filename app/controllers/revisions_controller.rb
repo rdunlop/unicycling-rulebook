@@ -33,6 +33,9 @@ class RevisionsController < ApplicationController
   # GET /revisions/new.json
   def new
     @revision = Revision.new
+    @revision.background = @proposal.latest_revision.background
+    @revision.body = @proposal.latest_revision.body
+    @revision.references = @proposal.latest_revision.references
 
     respond_to do |format|
       format.html # new.html.erb

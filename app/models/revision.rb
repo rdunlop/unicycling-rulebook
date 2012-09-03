@@ -8,7 +8,7 @@ class Revision < ActiveRecord::Base
     def change_description_required_for_updates
         if self.change_description.blank?
             if self.proposal
-                if self.proposal.revisions.count > 1
+                if self.proposal.revisions.count > 0
                     errors[:change_description] << "Change Description field must be present for all Revisions"
                 end
             end
