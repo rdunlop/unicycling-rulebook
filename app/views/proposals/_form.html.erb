@@ -10,19 +10,34 @@
       </ul>
     </div>
   <% end %>
+  <% if @revision.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@revision.errors.count, "error") %> prohibited this proposal from being saved:</h2>
+
+      <ul>
+      <% @revision.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="field">
-    <%= f.label :committee_id %><br />
+    <%= f.label :committee_id %>
     <%= f.select(:committee_id, Committee.all.map{ |e| [e, e.id]}) %>
   </div>
   <div class="field">
-    <%= f.label :title %><br />
+    <%= f.label :title %>
     <%= f.text_field :title %>
   </div>
   <div class="field">
-    <%= f.label :owner_id %><br />
-    <%= f.select(:owner_id, User.all.map{ |e| [e, e.id]}) %>
+    Owner: <%= @proposal.owner.to_s %>
   </div>
+
+  <%= fields_for(@proposal.revisions.new) do |g| %>
+    <%= render :partial => "/revisions/form", :object => g %>
+  <% end %>
+
   <div class="field">
     Additional Notes:
     (anything else to consider in the discussion)

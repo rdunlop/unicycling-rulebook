@@ -1,33 +1,14 @@
-<%= form_for([@proposal, @revision]) do |f| %>
-  <% if @revision.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@revision.errors.count, "error") %> prohibited this revision from being saved:</h2>
-
-      <ul>
-      <% @revision.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+    <div class="field">
+    <%= form.label :background %>
+    <%= form.text_area :background %>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :body %><br />
-    <%= f.text_area :body %>
-  </div>
-  <div class="field">
-    <%= f.label :background %><br />
-    <%= f.text_area :background %>
-  </div>
-  <div class="field">
-    <%= f.label :references %><br />
-    <%= f.text_area :references %>
-  </div>
-  <div class="field">
-    <%= f.label :change_description %><br />
-    <%= f.text_area :change_description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+    <div class="field">
+    <%= form.label :body %>
+    <%= form.text_area :body %>
+    </div>
+
+    <div class="field">
+    <%= form.label :references %>
+    <%= form.text_area :references %>
+    </div>

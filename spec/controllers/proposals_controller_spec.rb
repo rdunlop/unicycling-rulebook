@@ -33,8 +33,7 @@ describe ProposalsController do
   def valid_attributes
     {
         title: "My Title",
-        committee_id: @committee.id, 
-        owner_id: @user.id}
+        committee_id: @committee.id}
   end
   
   describe "GET index" do
@@ -75,6 +74,14 @@ describe ProposalsController do
       get :new, {}
       assigns(:proposal).should be_a_new(Proposal)
     end
+    it "should set the owner to be the current-logged-in user" do
+      get :new, {}
+      assigns(:proposal).owner.should == @admin_user
+    end
+    it "should also have a @revision" do
+      get :new, {}
+      assigns(:revision).should be_a_new(Revision)
+    end
   end
 
   describe "GET edit" do
@@ -87,21 +94,34 @@ describe ProposalsController do
 
   describe "POST create" do
     describe "with valid params" do
+      before(:each) do
+          @valid_revision_attributes = {
+            background: "some background",
+            body: "some body",
+            references: "some references"}
+      end
       it "creates a new Proposal" do
         expect {
-          post :create, {:proposal => valid_attributes}
+          post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
         }.to change(Proposal, :count).by(1)
       end
 
       it "assigns a newly created proposal as @proposal" do
-        post :create, {:proposal => valid_attributes}
+        post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
         assigns(:proposal).should be_a(Proposal)
         assigns(:proposal).should be_persisted
+        assigns(:revision).should be_a(Revision)
+        assigns(:revision).should be_persisted
       end
 
       it "redirects to the created proposal" do
-        post :create, {:proposal => valid_attributes}
+        post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
         response.should redirect_to(Proposal.last)
+      end
+      it "should increase revision count" do
+        expect {
+          post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
+        }.to change(Revision, :count).by(1)
       end
     end
 

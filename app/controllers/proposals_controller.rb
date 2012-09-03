@@ -39,6 +39,8 @@ class ProposalsController < ApplicationController
   # GET /proposals/new.json
   def new
     @proposal = Proposal.new
+    @proposal.owner = current_user
+    @revision = Revision.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -56,11 +58,22 @@ class ProposalsController < ApplicationController
   def create
     @proposal = Proposal.new(params[:proposal])
     @proposal.status = 'Submitted'
+    @proposal.owner = current_user
+
+    @revision = Revision.new(params[:revision])
+    @revision.user = current_user
 
     respond_to do |format|
-      if @proposal.save
-        format.html { redirect_to @proposal, notice: 'Proposal was successfully created.' }
-        format.json { render json: @proposal, status: :created, location: @proposal }
+      if @proposal.valid? and @revision.valid?
+        @proposal.save
+        @revision.proposal = @proposal
+        if @revision.save
+          format.html { redirect_to @proposal, notice: 'Proposal was successfully created.' }
+          format.json { render json: @proposal, status: :created, location: @proposal }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @proposal.errors, status: :unprocessable_entity }
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
