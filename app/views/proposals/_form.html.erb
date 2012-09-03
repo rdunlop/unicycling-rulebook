@@ -31,7 +31,7 @@
     <%= f.text_field :title %>
   </div>
   <div class="field">
-    Owner: <%= @proposal.owner.to_s %>
+    <label for="nothing">Owner:</label> <%= @proposal.owner.to_s %>
   </div>
 
   <%= fields_for(@revision) do |g| %>
@@ -39,10 +39,8 @@
   <% end %>
 
   <div class="field">
-    Additional Notes:
-    (anything else to consider in the discussion)
-    <br />
-    <%= f.label :summary %><br />
+    <%= f.label :summary, 'Additional Notes' %><br />
+    <div class="detail">(anything else to consider in the discussion)</div>
     <%= f.text_area :summary %>
   </div>
   <div class="actions">

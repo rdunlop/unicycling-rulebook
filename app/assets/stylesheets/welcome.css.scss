@@ -6,7 +6,7 @@ $nav_width: 150px;
 $top_height: 5em;
 
 html,body{
-    margin: 0;
+    margin: 20;
     padding: 0;
 }
 body {
@@ -44,3 +44,60 @@ body {
     margin: 10px;
 }
 
+// Form formatting:
+textarea {
+    height: 100px;
+}
+
+/* Taken from http://www.alistapart.com/articles/prettyaccessibleforms/ */
+form fieldset {
+  margin-bottom: 10px;
+}
+form legend {
+  padding: 0 2px;
+  font-weight: bold;
+}
+.detail {
+  width: 120px;
+  word-wrap: normal;
+  vertical-align: top;
+  display: inline-block;
+}
+form label {
+  display: inline-block;
+  line-height: 1.8;
+  font-weight: bold;
+  vertical-align: top;
+}
+form fieldset ol {
+  margin: 0;
+  padding: 0;
+}
+form fieldset li {
+  list-style: none;
+  padding: 5px;
+  margin: 0;
+}
+form fieldset fieldset {
+  border: none;
+  margin: 3px 0 0;
+}
+form fieldset fieldset legend {
+  padding: 0 0 5px;
+  font-weight: normal;
+}
+form fieldset fieldset label {
+  display: block;
+  width: auto;
+}
+form em {
+  font-weight: bold;
+  font-style: normal;
+  color: #f00;
+}
+form label {
+  width: 120px; /* Width of labels */
+}
+form fieldset fieldset label {
+  margin-left: 123px; /* Width plus 3 (html space) */
+}
