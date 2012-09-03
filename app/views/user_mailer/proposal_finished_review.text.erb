@@ -1,3 +1,9 @@
-UserMailer#proposal_finished_review
+Proposal <%= @proposal.id.to_s %> (<%= @proposal.title %>) has finished the review period
 
-<%= @greeting %>, find me in app/views/app/views/user_mailer/proposal_finished_review.text.erb
+Now that the proposal has finished the review period, 
+there are three options you can do:
+  1. Set it to a vote.
+  2. Make a revision to the proposal (returns to discussion for <%= @REVISIONTIME_TEXT %>)
+  3. Set-Aside the proposal.
+
+Please visit http://localhost:8080/proposals/<%= @proposal.id.to_s %>

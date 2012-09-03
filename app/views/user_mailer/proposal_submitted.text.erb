@@ -1,3 +1,8 @@
-UserMailer#proposal_submitted
+The following proposal has been submitted:
+Title: <%= @title %>
 
-<%= @greeting %>, find me in app/views/app/views/user_mailer/proposal_submitted.text.erb
+URL: http://localhost:8080/proposals/<%= @proposal.id.to_s %>
+
+PROPOSAL:
+
+<%= @body %>

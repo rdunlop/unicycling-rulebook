@@ -1,3 +1,12 @@
-UserMailer#vote_submitted
+<%= @committee_name %>
 
-<%= @greeting %>, find me in app/views/app/views/user_mailer/vote_submitted.text.erb
+Proposal <%= @proposal.id.to_s %>: <%= @proposal.title %>
+
+<%= @name %> voted <%= @vote_text %> on proposal <%= @proposal.id.to_s %>
+
+Comments:
+<%= @comments %>
+
+__________________________________________________________
+Proposal <%= @proposal.id.to_s %> can be viewed at:
+http://localhost:8080/proposals/<%= @proposal.id.to_s %>

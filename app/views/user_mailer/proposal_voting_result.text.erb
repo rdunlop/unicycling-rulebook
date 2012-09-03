@@ -1,3 +1,7 @@
-UserMailer#proposal_voting_result
+The following proposal has <%= @succeeded_failed %>:
+Title: <%= @proposal.title %>
+Voting Results: <%= @num_agree %> agree, <%= @num_disagree %> disagree, <%= @num_abstain %> abstain
 
-<%= @greeting %>, find me in app/views/app/views/user_mailer/proposal_voting_result.text.erb
+URL: http://localhost:8080/proposals/<%= @proposal.id.to_s %>
+
+To see the full proposal and the comments from the voting, visit the URL above.

@@ -1,3 +1,12 @@
-UserMailer#proposal_status_review
+The following proposal is now in the review stage:
 
-<%= @greeting %>, find me in app/views/app/views/user_mailer/proposal_status_review.text.erb
+<%= @set_aside_message -%>
+Title: <%= @proposal.title %>
+URL: http://localhost:8080/proposals/<%= @proposal.id.to_s %>
+
+If you are a committee member, please visit the URL above,
+read through the proposal and background, and make any comments
+so it can be improved.
+
+PROPOSAL:
+<%= @body %>
