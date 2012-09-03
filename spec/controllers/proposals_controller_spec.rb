@@ -88,6 +88,7 @@ describe ProposalsController do
   describe "GET edit" do
     it "assigns the requested proposal as @proposal" do
       proposal = FactoryGirl.create(:proposal)
+      revision = FactoryGirl.create(:revision, :proposal => proposal)
       get :edit, {:id => proposal.to_param}
       assigns(:proposal).should eq(proposal)
     end

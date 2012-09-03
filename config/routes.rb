@@ -10,7 +10,6 @@ Rulebook::Application.routes.draw do
         get 'call_for_votes'
         get 'approve'
         get 'modify_votes'
-        get 'modify_dates'
     end
     resources :votes
     resources :comments, :only => [:create]
