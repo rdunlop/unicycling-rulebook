@@ -9,4 +9,4 @@ Comments:
 
 __________________________________________________________
 Proposal <%= @proposal.id.to_s %> can be viewed at:
-http://localhost:8080/proposals/<%= @proposal.id.to_s %>
+<%= proposal_url(@proposal) %>

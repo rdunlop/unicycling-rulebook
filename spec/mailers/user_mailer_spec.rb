@@ -33,12 +33,7 @@ describe UserMailer do
     end
 
     it "renders the body" do
-      mail.body.encoded.should eq(
-        "Re: (Proposal " + @proposal.id.to_s + ") " + @proposal.title + "\r\n\r\n" +
-        @comment.comment + "\r\n\r\n\r\n--\r\n" + @user.to_s + " - " +
-        "Non-Voting Member" + "__________________________________________________________\r\n" +
-        "Proposal " + @proposal.id.to_s + " can be viewed at:\r\n" +
-        "http://localhost:8080/proposals/" + @proposal.id.to_s + "\r\n")
+      mail.body.encoded.should match(@comment.comment)
     end
   end
 

@@ -2,6 +2,6 @@ The following proposal has <%= @succeeded_failed %>:
 Title: <%= @proposal.title %>
 Voting Results: <%= @num_agree %> agree, <%= @num_disagree %> disagree, <%= @num_abstain %> abstain
 
-URL: http://localhost:8080/proposals/<%= @proposal.id.to_s %>
+URL: <%= proposal_url(@proposal) %>
 
 To see the full proposal and the comments from the voting, visit the URL above.

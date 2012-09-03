@@ -24,7 +24,7 @@ class UserMailer < ActionMailer::Base
     @comment = comment.comment
     @user = user.email
     @voting_status = user.voting_text(proposal.committee)
-    @proposal_id = proposal.id.to_s
+    @proposal = proposal
 
     subject = "Rulebook Committee 2012 - " + proposal.committee.to_s
 

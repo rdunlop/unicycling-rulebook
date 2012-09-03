@@ -1,6 +1,7 @@
 The following proposal has been revised:
 Title: <%= @proposal.title %>
-URL: http://localhost:8080/proposals/<%= @proposal.id.to_s %>
+URL: <%= proposal_url(@proposal) %>
+
 
 Changes made: 
 <%= @change_description %>

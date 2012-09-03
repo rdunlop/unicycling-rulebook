@@ -1,7 +1,7 @@
 The following proposal is now in the voting stage:
 Title: <%= @proposal.title %>
 
-URL: http://localhost:8080/proposals/<%= @proposal.id.to_s %>
+URL: <%= proposal_url(@proposal) %>
 
 If you are a committee member, please visit the URL above
 and read through the latest revision. Then vote how you see fit by <%= @vote_end %>.
