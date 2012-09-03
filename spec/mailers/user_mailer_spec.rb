@@ -27,7 +27,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("Rulebook Committee 2012 - " + @committee.name)
-      mail.to.should eq(["to@dunlopweb.com"])
+      mail.to.should eq(["robin@dunlopweb.com"])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
