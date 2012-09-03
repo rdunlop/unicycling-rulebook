@@ -50,9 +50,9 @@ describe Vote do
   it "should display a summary" do
     date =  DateTime.civil_from_format(:local, 2012, 1, 10, 11, 45)
 
-    user = FactoryGirl.create(:user, :email => 'robin@dunlopweb.com')
+    user = FactoryGirl.create(:user, :email => 'robin@dunlopweb.com', :name => "Robin Dunlop")
     vote = FactoryGirl.create(:vote, :vote => 'agree', :comment => "my comment", :user => user,
     :created_at => date)
-    vote.to_s.should == "<b>robin@dunlopweb.com</b> voted <strong>agree</strong> on <i>January 10, 2012, 11:45 AM</i><blockquote>my comment</blockquote>"
+    vote.to_s.should == "<b>Robin Dunlop</b> voted <strong>agree</strong> on <i>January 10, 2012, 11:45 AM</i><blockquote>my comment</blockquote>"
   end
 end

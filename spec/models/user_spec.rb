@@ -1,10 +1,17 @@
 require 'spec_helper'
 
 describe User do
-    it "should return it's email as the string" do
+    it "should require a name" do
         user = FactoryGirl.create(:user)
 
-        user.to_s.should == user.email
+        user.name = ""
+        user.valid?.should == false
+    end
+
+    it "should return it's name as the string" do
+        user = FactoryGirl.create(:user)
+
+        user.to_s.should == user.name
     end
 
     it "should be able to see its committees" do

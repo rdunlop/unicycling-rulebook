@@ -5,10 +5,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :name, :location, :email, :password, :password_confirmation, :remember_me
 
   has_many :committee_members
   has_many :committees, :through => :committee_members
+
+  validates :name, :presence => true
 
   def voting_member(committee)
     committee_members.each do |cm|
@@ -28,6 +30,6 @@ class User < ActiveRecord::Base
   end
 
   def to_s
-    email
+    name
   end
 end
