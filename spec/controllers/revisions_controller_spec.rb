@@ -38,7 +38,7 @@ describe RevisionsController do
   
   describe "GET show" do
     it "assigns the requested revision as @revision" do
-      revision = Revision.create! valid_attributes
+      revision = FactoryGirl.create(:revision, :proposal => @proposal)
       get :show, {:id => revision.to_param, :proposal_id => @proposal.id}
       assigns(:revision).should eq(revision)
     end

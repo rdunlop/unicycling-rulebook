@@ -11,6 +11,7 @@ class RevisionsController < ApplicationController
   # GET /revisions/1.json
   def show
     @revision = Revision.find(params[:id])
+    @comment = @revision.proposal.comments.new
 
     respond_to do |format|
       format.html # show.html.erb

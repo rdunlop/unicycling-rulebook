@@ -22,7 +22,7 @@ class Proposal < ActiveRecord::Base
         if self.latest_revision.nil?
             0
         else
-            self.latest_revision.id
+            self.latest_revision.num
         end
     end
 

@@ -5,6 +5,17 @@ class Revision < ActiveRecord::Base
     validates :body, :presence => true
     validate :change_description_required_for_updates
 
+    before_validation :determine_num
+
+    def determine_num
+        if proposal.nil? or proposal.new_record?
+            self.num = 1
+        else
+            self.num = proposal.revisions.count + 1
+        end
+    end
+
+
     def change_description_required_for_updates
         if self.change_description.blank?
             if self.proposal

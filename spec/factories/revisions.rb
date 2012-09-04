@@ -8,5 +8,6 @@ FactoryGirl.define do
     references "MyText3"
     change_description "MyText4"
     user # FactoryGirl
+    num 1
   end
 end

@@ -1,34 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Proposal:</b>
-  <%= @revision.proposal_id %>
-</p>
+<%= render :partial => "/proposals/show_revision", :locals => {:proposal => @revision.proposal, :revision => @revision } %>
 
-<p>
-  <b>Body:</b>
-  <%= @revision.body %>
-</p>
-
-<p>
-  <b>Background:</b>
-  <%= @revision.background %>
-</p>
-
-<p>
-  <b>References:</b>
-  <%= @revision.references %>
-</p>
-
-<p>
-  <b>Change Description:</b>
-  <%= @revision.change_description %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @revision.user_id %>
-</p>
-
-
-<%= link_to 'Back', proposal_revisions_path(@proposal) %>
+<%= link_to 'Back', proposal_path(@proposal) %>

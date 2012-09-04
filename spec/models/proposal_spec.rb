@@ -84,7 +84,7 @@ describe Proposal do
     revision = FactoryGirl.create(:revision)
     prop = revision.proposal
 
-    prop.latest_revision_number.should == revision.id
+    prop.latest_revision_number.should == revision.num
   end
   it "should provide all revisions in descending order" do
     prop = FactoryGirl.create(:proposal)

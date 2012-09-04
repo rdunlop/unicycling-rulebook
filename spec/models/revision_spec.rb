@@ -38,4 +38,12 @@ describe Revision do
         rev.change_description = ""
         rev.valid?.should == true
     end
+    it "should have a num property" do
+        prop = FactoryGirl.create(:proposal)
+        rev = FactoryGirl.create(:revision, :proposal => prop)
+        rev.num.should == 1
+
+        rev2 = FactoryGirl.create(:revision, :proposal => prop)
+        rev2.num.should == 2
+    end
 end
