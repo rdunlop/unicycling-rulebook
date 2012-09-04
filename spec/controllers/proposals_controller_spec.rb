@@ -26,6 +26,7 @@ describe ProposalsController do
     @user = FactoryGirl.create(:user)
     @admin_user = FactoryGirl.create(:admin_user)
     sign_in @admin_user
+    @cm = FactoryGirl.create(:committee_member, :committee => @committee, :user => @admin_user)
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -57,13 +58,18 @@ describe ProposalsController do
       get :show, {:id => proposal.to_param}
       assigns(:comment).should be_a_new(Comment)
     end
-    it "should have a blank vote object" do
+    it "should not have a vote object by default" do
       proposal = FactoryGirl.create(:proposal)
+      get :show, {:id => proposal.to_param}
+      assigns(:vote).should == nil
+    end
+    it "should have a blank vote object when in Voting" do
+      proposal = FactoryGirl.create(:proposal, :status => 'Voting', :committee => @committee)
       get :show, {:id => proposal.to_param}
       assigns(:vote).should be_a_new(Vote)
     end
     it "should have the existing vote object for this user" do
-      proposal = FactoryGirl.create(:proposal)
+      proposal = FactoryGirl.create(:proposal, :status => 'Voting', :committee => @committee)
       vote = FactoryGirl.create(:vote, :proposal => proposal, :user => @admin_user)
       get :show, {:id => proposal.to_param}
       assigns(:vote).should == vote

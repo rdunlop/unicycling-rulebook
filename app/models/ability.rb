@@ -12,7 +12,7 @@ class Ability
         can :manage, Committee
         can :manage, CommitteeMember
 
-        can :manage, Proposal
+        can [:read, :update, :create, :destroy], Proposal
         can :set_voting, Proposal
         can :set_review, Proposal
         #admin-only:
@@ -27,10 +27,7 @@ class Ability
         can :read, Committee
         can :manage, Comment
         can :manage, Vote
-        can :create, Proposal
-        can :manage, Proposal do |proposal|
-            proposal.try(:owner) == user
-        end
+        can [:read, :update, :create, :destroy], Proposal
         can :set_voting, Proposal do |proposal|
             proposal.try(:owner) == user
         end
@@ -41,6 +38,7 @@ class Ability
             revision.proposal.owner == user
         end
     end
+
     can :vote, Proposal do |proposal|
         proposal.status == 'Voting' and user.voting_member(proposal.committee)
     end
