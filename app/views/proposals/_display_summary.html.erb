@@ -1,0 +1,33 @@
+<%
+first_one = true
+proposals.each do |p|
+    if p.status != status
+        next
+    end
+    if first_one
+        first_one = false
+        %>
+        <hr />
+        <h3><%= header %></h3>
+        <p><%= status_text %></p>
+        <%
+    end
+    %>
+    <%= link_to('Proposal ' + p.id.to_s + ": " + p.to_s, p) %>
+
+    <% if p.status == 'Submitted' %>
+        <h4>
+            <blockquote>
+                    <b>Committee:</b><%= p.committee.to_s %><br />
+                    <b>Owner:</b><%= p.owner.to_s %><br />
+                    <b>Submit Date:</b><%= p.submit_date.to_s %><br />
+                    <b>Additonal Notes:</b> <%= p.summary %>
+            </blockquote>
+        </h4>
+    <% else %>
+        <small><i><%= p.status_summary %></i></small>
+        <strong><%= p.vote_detail(user) %></strong>
+    <% end %>
+    <hr />
+    <%
+end %>
