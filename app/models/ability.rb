@@ -8,31 +8,32 @@ class Ability
 
     #??? user ||= User.new # default user if not signed in
 
+    # SUPER ADMIN can do anything
     if user.admin
         can :manage, Committee
         can :manage, CommitteeMember
 
-        can [:read, :update, :create, :destroy], Proposal
-        can :set_voting, Proposal
-        can :set_review, Proposal
-        #admin-only:
-        can :set_pre_voting, Proposal
+        can :manage, Proposal
+            #includes :set_pre_voting
+            # and :set_review, :set_voting, :administer
+        # remove 'vote' from the 'all' set 
+        # (even administrators can't vote if not a voting member with proposal in 'voting' status)
+        cannot :vote, Proposal
 
         can :manage, Revision
-
         can :manage, Vote
         can :manage, Comment
     else
         can :read, Committee
-        can :manage, Comment
+        can :create, Comment
         can :create, Vote
+
         can [:read, :update, :create, :destroy], Proposal
-        can :set_voting, Proposal do |proposal|
+        # Owner-specific
+        can [:administer, :set_voting, :set_review], Proposal do |proposal|
             proposal.try(:owner) == user
         end
-        can :set_review, Proposal do |proposal|
-            proposal.try(:owner) == user
-        end
+
         can :create, Revision do |revision|
             revision.proposal.owner == user
         end

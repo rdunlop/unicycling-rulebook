@@ -26,14 +26,14 @@
         |
     <% end %>
 
-    <%= link_to('Modify Dates', edit_proposal_path(@proposal)) %>
+    <%= link_to('Modify Proposal Title/Committee/Status/Dates', edit_proposal_path(@proposal)) %>
     |
     <% #= link_to('Change Committee', modify_dates_proposal_path(@proposal)) 
     %>
     <br />
 <% end %>
 
-<% if can? :manage, @proposal %>
+<% if can? :administer, @proposal %>
     <b><i>Options to owner:</i></b>
     <% if @proposal.status == 'Pre-Voting' %>
           <%= link_to 'Call for Votes', set_voting_proposal_path(@proposal), :method => :put %>
@@ -47,8 +47,11 @@
           <%= link_to 'Table', table_proposal_path(@proposal) %>
           |
           <%= link_to 'Revise', new_proposal_revision_path(@proposal) %> |
+    <% else %>
+        No Options in this stage.
     <% end %>
 <% end %>
+<br />
 
 <% # Display Voting Options 
 %>

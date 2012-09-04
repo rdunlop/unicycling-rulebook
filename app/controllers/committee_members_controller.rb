@@ -39,6 +39,7 @@ class CommitteeMembersController < ApplicationController
   # POST /committee_members.json
   def create
     @committee_member = CommitteeMember.new(params[:committee_member])
+    @committee_member.committee = @committee
 
     respond_to do |format|
       if @committee_member.save

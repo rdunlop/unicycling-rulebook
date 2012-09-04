@@ -30,8 +30,7 @@ describe CommitteeMembersController do
   # Event. As you add validations to Event, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { committee_id: @committee.id,
-      user_id: @user.id,
+    { user_id: @user.id,
       voting: true
     }
   end
@@ -78,7 +77,7 @@ describe CommitteeMembersController do
 
   describe "GET edit" do
     it "fails when not admin user" do
-      committee_member = CommitteeMember.create! valid_attributes
+      committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
       get :edit, {:id => committee_member.to_param, :committee_id => @committee.id}
       response.should redirect_to(root_path)
     end
@@ -86,7 +85,7 @@ describe CommitteeMembersController do
     it "assigns the requested committee as @committee" do
       sign_out @user
       sign_in @admin_user
-      committee_member = CommitteeMember.create! valid_attributes
+      committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
       get :edit, {:id => committee_member.to_param, :committee_id => @committee.id}
       assigns(:committee_member).should eq(committee_member)
     end
@@ -151,7 +150,7 @@ describe CommitteeMembersController do
     end
     describe "with valid params" do
       it "updates the requested committee" do
-        committee_member = CommitteeMember.create! valid_attributes
+        committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         # Assuming there are no other events in the database, this
         # specifies that the CommitteeMember created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -161,13 +160,13 @@ describe CommitteeMembersController do
       end
 
       it "assigns the requested committee_member as @committee" do
-        committee_member = CommitteeMember.create! valid_attributes
+        committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         put :update, {:id => committee_member.to_param, :committee_member => valid_attributes, :committee_id => @committee.id}
         assigns(:committee_member).should eq(committee_member)
       end
 
       it "redirects to the committee" do
-        committee_member = CommitteeMember.create! valid_attributes
+        committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         put :update, {:id => committee_member.to_param, :committee_member => valid_attributes, :committee_id => @committee.id}
         response.should redirect_to(committee_committee_members_path(@committee))
       end
@@ -175,7 +174,7 @@ describe CommitteeMembersController do
 
     describe "with invalid params" do
       it "assigns the committee_member as @committee" do
-        committee_member = CommitteeMember.create! valid_attributes
+        committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         # Trigger the behavior that occurs when invalid params are submitted
         CommitteeMember.any_instance.stub(:save).and_return(false)
         put :update, {:id => committee_member.to_param, :committee_member => {}, :committee_id => @committee.id}
@@ -183,7 +182,7 @@ describe CommitteeMembersController do
       end
 
       it "re-renders the 'edit' template" do
-        committee_member = CommitteeMember.create! valid_attributes
+        committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         # Trigger the behavior that occurs when invalid params are submitted
         CommitteeMember.any_instance.stub(:save).and_return(false)
         put :update, {:id => committee_member.to_param, :committee_member => {}, :committee_id => @committee.id}
@@ -197,7 +196,7 @@ describe CommitteeMembersController do
       sign_in @user
     end
       it "should fail" do
-        committee_member = CommitteeMember.create! valid_attributes
+        committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         put :update, {:id => committee_member.to_param, :committee_member => valid_attributes, :committee_id => @committee.id}
         response.should redirect_to(root_path)
       end
@@ -210,14 +209,14 @@ describe CommitteeMembersController do
       sign_in @admin_user
     end
     it "destroys the requested committee" do
-      committee_member = CommitteeMember.create! valid_attributes
+      committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
       expect {
         delete :destroy, {:id => committee_member.to_param, :committee_id => @committee.id}
       }.to change(CommitteeMember, :count).by(-1)
     end
 
     it "redirects to the committee_member list" do
-      committee_member = CommitteeMember.create! valid_attributes
+      committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
       delete :destroy, {:id => committee_member.to_param, :committee_id => @committee.id}
       response.should redirect_to(committee_committee_members_path(@committee))
     end
@@ -225,7 +224,7 @@ describe CommitteeMembersController do
       it "fails to delete" do
         sign_out @admin_user
         sign_in @user
-        committee_member = CommitteeMember.create! valid_attributes
+        committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         delete :destroy, {:id => committee_member.to_param, :committee_id => @committee.id}
         response.should redirect_to(root_path)
       end
