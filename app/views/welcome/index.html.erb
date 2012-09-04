@@ -58,24 +58,12 @@ To publicise the IUF Record Criteria and Liaison officers to the wider Unicyclin
 
 <% if @proposals.empty? %>
     <hr><h2>No proposals exist yet, but a <%= link_to('new proposal', new_proposal_path) %> can be created.</h2>
-<% else
-    @proposals.each do |p|
-        %>
-        <%= link_to('Proposal ' + p.id.to_s + ": " + p.to_s, p) %>
-
-        <% if p.status == 'Submitted' %>
-            <h4>
-                <blockquote>
-                    <b>Committee:</b><%= p.committee.to_s %><br />
-                    <b>Owner:</b><%= p.owner.to_s %><br />
-                    <b>Submit Date:</b><%= p.submit_date.to_s %><br />
-                    <b>Additonal Notes:</b> <%= p.summary %>
-                </blockquote>
-            </h4>
-        <% else %>
-            <%= "lah" %>
-        <% end %>
-        <hr />
-        <%
-    end
-end %>
+<% else %>
+    <%= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Submitted', :header => 'New Unapproved Proposals:', :status_text => '', :user => current_user} %>
+    <%= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Review', :header => 'Proposals for Review:', :status_text => 'These proposals are currently being reviewed. Please comment on these so that the proposal will better represent what you want when it reaches the voting stage.', :user => current_user } %>
+    <%= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Pre-Voting', :header => 'Pre Voting Proposals:', :status_text => 'These proposals were in the review stage and are awaiting the final revision by the owner before it will be put in the voting stage.', :user => current_user } %>
+    <%= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Tabled', :header => 'Recent Set-Aside Proposals:', :status_text => 'These proposals were were Set-Aside.', :user => current_user } %>
+    <%= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Voting', :header => 'Proposals Being Voted On:', :status_text => 'These proposals are currently in the voting process.', :user => current_user } %>
+    <%= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Passed', :header => 'Recent Passed Proposals:', :status_text => 'These proposals were passed by the committee', :user => current_user } %>
+    <%= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Failed', :header => 'Recent Failed Proposals:', :status_text => 'These proposals have failed when voted on by the committee', :user => current_user } %>
+<% end %>

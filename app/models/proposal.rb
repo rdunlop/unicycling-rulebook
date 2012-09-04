@@ -58,6 +58,33 @@ class Proposal < ActiveRecord::Base
         count_votes('abstain')
     end
 
+    def status_summary
+        if self.status == 'Submitted'
+            ""
+        elsif self.status == 'Review'
+            "Ends " + self.review_end_date.to_date.to_s(:long)
+        elsif status == 'Pre-Voting'
+            "Ended " + self.review_end_date.to_date.to_s(:long)
+        elsif status == 'Voting'
+            "Ends " + self.vote_end_date.to_date.to_s(:long)
+        elsif status == 'Tabled'
+            "" + self.tabled_date.to_date.to_s(:long)
+        elsif status == 'Passed'
+            "" + self.vote_end_date.to_date.to_s(:long)
+        elsif status == 'Failed'
+            "" + self.vote_end_date.to_date.to_s(:long)
+        end
+    end
+
+    def vote_detail(user)
+        votes.each do |v|
+            if v.user == user
+                return v.vote
+            end
+        end
+        ""
+    end
+
     def status_string
         if self.status == 'Submitted'
             "Submitted"
