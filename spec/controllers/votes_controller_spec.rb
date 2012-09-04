@@ -21,10 +21,12 @@ require 'spec_helper'
 describe VotesController do
   before(:each) do
     ActionMailer::Base.deliveries.clear
-    @proposal = FactoryGirl.create(:proposal)
+    @proposal = FactoryGirl.create(:proposal, :status => 'Voting')
     @admin_user = FactoryGirl.create(:admin_user)
+    @user = FactoryGirl.create(:user)
+    FactoryGirl.create(:committee_member, :committee => @proposal.committee, :voting => true, :user => @user)
 
-    sign_in @admin_user
+    sign_in @user
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -36,6 +38,10 @@ describe VotesController do
   end
   
   describe "GET index" do
+    before(:each) do
+        sign_out @user
+        sign_in @admin_user
+    end
     it "assigns all votes as @votes" do
       vote = FactoryGirl.create(:vote, :proposal => @proposal)
       get :index, {:proposal_id => @proposal.id}
@@ -57,10 +63,24 @@ describe VotesController do
   end
 
   describe "GET edit" do
-    it "assigns the requested vote as @vote" do
-      vote = FactoryGirl.create(:vote)
-      get :edit, {:id => vote.to_param, :proposal_id => @proposal.id}
-      assigns(:vote).should eq(vote)
+    describe "as normal user" do
+      it "cannot view the edit page" do
+        vote = FactoryGirl.create(:vote)
+        get :edit, {:id => vote.to_param, :proposal_id => @proposal.id}
+        response.should redirect_to(root_path)
+      end
+    end
+
+    describe "as admin" do
+      before(:each) do
+        sign_out @user
+        sign_in @admin_user
+      end
+      it "assigns the requested vote as @vote" do
+        vote = FactoryGirl.create(:vote)
+        get :edit, {:id => vote.to_param, :proposal_id => @proposal.id}
+        assigns(:vote).should eq(vote)
+      end
     end
   end
 
@@ -88,6 +108,17 @@ describe VotesController do
         num_deliveries.should == 1
       end
     end
+    describe "when the proposal is not in voting" do
+        before(:each) do
+            @proposal.status = 'Submitted'
+            @proposal.save!
+        end
+        it "should not be possible to create a vote" do
+          expect {
+            post :create, {:vote => valid_attributes, :proposal_id => @proposal.id}
+          }.to change(Vote, :count).by(0)
+        end
+    end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved vote as @vote" do
@@ -107,31 +138,46 @@ describe VotesController do
   end
 
   describe "PUT update" do
-    describe "with valid params" do
+    before(:each) do
+        @vote = FactoryGirl.create(:vote, :proposal => @proposal)
+    end
+    describe "as a normal user" do
+      it "redirects to the vote" do
+        put :update, {:id => @vote.to_param, :vote => valid_attributes, :proposal_id => @proposal.id}
+        response.should redirect_to(root_path)
+      end
+    end
+
+    describe "with admin with valid params" do
+      before(:each) do
+        sign_out @user
+        sign_in @admin_user
+      end
       it "updates the requested vote" do
-        vote = FactoryGirl.create(:vote)
         # Assuming there are no other votes in the database, this
         # specifies that the Vote created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Vote.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => vote.to_param, :vote => {'these' => 'params'}, :proposal_id => @proposal.id}
+        put :update, {:id => @vote.to_param, :vote => {'these' => 'params'}, :proposal_id => @proposal.id}
       end
 
       it "assigns the requested vote as @vote" do
-        vote = FactoryGirl.create(:vote)
-        put :update, {:id => vote.to_param, :vote => valid_attributes, :proposal_id => @proposal.id}
-        assigns(:vote).should eq(vote)
+        put :update, {:id => @vote.to_param, :vote => valid_attributes, :proposal_id => @proposal.id}
+        assigns(:vote).should eq(@vote)
       end
 
       it "redirects to the vote" do
-        vote = FactoryGirl.create(:vote)
-        put :update, {:id => vote.to_param, :vote => valid_attributes, :proposal_id => @proposal.id}
-        response.should redirect_to([@proposal, vote])
+        put :update, {:id => @vote.to_param, :vote => valid_attributes, :proposal_id => @proposal.id}
+        response.should redirect_to([@proposal, @vote])
       end
     end
 
-    describe "with invalid params" do
+    describe "with admin and invalid params" do
+      before(:each) do
+        sign_out @user
+        sign_in @admin_user
+      end
       it "assigns the vote as @vote" do
         vote = FactoryGirl.create(:vote)
         # Trigger the behavior that occurs when invalid params are submitted
@@ -151,17 +197,28 @@ describe VotesController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested vote" do
-      vote = FactoryGirl.create(:vote)
-      expect {
-        delete :destroy, {:id => vote.to_param, :proposal_id => @proposal.id}
-      }.to change(Vote, :count).by(-1)
-    end
-
-    it "redirects to the votes list" do
+    it "should not be allowed" do
       vote = FactoryGirl.create(:vote)
       delete :destroy, {:id => vote.to_param, :proposal_id => @proposal.id}
-      response.should redirect_to(proposal_url(@proposal))
+      response.should redirect_to(root_path)
+    end
+    describe "as admin" do
+      before(:each) do
+        sign_out @user
+        sign_in @admin_user
+      end
+      it "destroys the requested vote" do
+        vote = FactoryGirl.create(:vote)
+        expect {
+          delete :destroy, {:id => vote.to_param, :proposal_id => @proposal.id}
+        }.to change(Vote, :count).by(-1)
+      end
+
+      it "redirects to the votes list" do
+        vote = FactoryGirl.create(:vote)
+        delete :destroy, {:id => vote.to_param, :proposal_id => @proposal.id}
+        response.should redirect_to(proposal_url(@proposal))
+      end
     end
   end
 

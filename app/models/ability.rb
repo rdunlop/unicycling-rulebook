@@ -42,6 +42,7 @@ class Ability
     can :vote, Proposal do |proposal|
         proposal.status == 'Voting' and user.voting_member(proposal.committee)
     end
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

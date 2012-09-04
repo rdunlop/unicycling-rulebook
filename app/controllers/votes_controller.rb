@@ -42,6 +42,7 @@ class VotesController < ApplicationController
     @vote.proposal = @proposal
     @vote.user = current_user
     @comment = @proposal.comments.new
+    authorize! :vote, @proposal
 
     respond_to do |format|
       if @vote.save
