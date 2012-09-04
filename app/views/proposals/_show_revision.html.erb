@@ -13,7 +13,7 @@
 <b>Status:</b> <strong><%= @proposal.status_string %></strong><br />
 
 <!-- options -->
-<% if can? :approve, @proposal %>
+<% if can? :set_review, @proposal %>
     <b><i>Options to admin:</i></b>
     <% if @proposal.status == 'Submitted' %>
         <%= link_to('Approve', set_review_proposal_path(@proposal), :method => :put) %>

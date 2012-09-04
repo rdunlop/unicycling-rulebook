@@ -7,8 +7,6 @@ Rulebook::Application.routes.draw do
         put 'set_pre_voting'
 # XXX need to update/consolidate these?
         get 'table'
-        get 'call_for_votes'
-        get 'approve'
         get 'modify_votes'
     end
     resources :votes

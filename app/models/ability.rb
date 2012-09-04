@@ -16,7 +16,6 @@ class Ability
         can :set_voting, Proposal
         can :set_review, Proposal
         #admin-only:
-        can :set_approve, Proposal
         can :set_pre_voting, Proposal
 
         can :manage, Revision
