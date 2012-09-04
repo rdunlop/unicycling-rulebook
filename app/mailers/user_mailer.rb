@@ -110,11 +110,12 @@ class UserMailer < ActionMailer::Base
     @proposal = vote.proposal
     @name = vote.user.to_s
 
-    @committee_name = "Hello" # XXX to be updated
+    committee = vote.proposal.committee
+    @committee_name = committee.to_s
     @vote_text = vote.vote
     @comments = vote.comment
 
-    mail to: "to@dunlopweb.com", subject: "(Proposal "  + @proposal.id.to_s + ") Vote from " + @name + " [" + @proposal.title + "]"
+    mail to: create_committee_email(committee), subject: "(Proposal "  + @proposal.id.to_s + ") Vote from " + @name + " [" + @proposal.title + "]"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

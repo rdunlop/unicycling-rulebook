@@ -20,6 +20,7 @@ require 'spec_helper'
 
 describe VotesController do
   before(:each) do
+    ActionMailer::Base.deliveries.clear
     @proposal = FactoryGirl.create(:proposal)
     @admin_user = FactoryGirl.create(:admin_user)
 
@@ -80,6 +81,11 @@ describe VotesController do
       it "redirects to the created vote" do
         post :create, {:vote => valid_attributes, :proposal_id => @proposal.id}
         response.should redirect_to(@proposal)
+      end
+      it "sends an email" do
+        post :create, {:vote => valid_attributes, :proposal_id => @proposal.id}
+        num_deliveries = ActionMailer::Base.deliveries.size
+        num_deliveries.should == 1
       end
     end
 

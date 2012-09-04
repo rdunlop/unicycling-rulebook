@@ -45,6 +45,7 @@ class VotesController < ApplicationController
 
     respond_to do |format|
       if @vote.save
+        UserMailer.vote_submitted(@vote).deliver
         format.html { redirect_to @proposal, notice: 'Vote was successfully created.' }
         format.json { render json: @proposal, status: :created, location: @proposal }
       else
