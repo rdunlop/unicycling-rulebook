@@ -168,12 +168,5 @@ describe Proposal do
     it "should count the number of abstain votes" do
         @prop.abstain_votes.should == 0
     end
-    it "should have vote comments" do
-        @prop.vote_comments.should match("<b>" + @vote.user.to_s + "</b> voted <strong>agree</strong> on ")
-    end
-    it "should have vote comments even with a new vote" do
-        @vote = @prop.votes.new
-        @prop.vote_comments.should match("<b>" + @vote.user.to_s + "</b> voted <strong>agree</strong> on ")
-    end
   end
 end

@@ -53,6 +53,6 @@ describe Vote do
     user = FactoryGirl.create(:user, :email => 'robin@dunlopweb.com', :name => "Robin Dunlop")
     vote = FactoryGirl.create(:vote, :vote => 'agree', :comment => "my comment", :user => user,
     :created_at => date)
-    vote.to_s.should == "<b>Robin Dunlop</b> voted <strong>agree</strong> on <i>January 10, 2012, 11:45 AM</i><blockquote>my comment</blockquote>"
+    vote.to_s.should == "Robin Dunlop voted agree on January 10, 2012, 11:45 AM (my comment)"
   end
 end

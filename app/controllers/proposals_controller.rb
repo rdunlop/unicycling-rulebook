@@ -125,7 +125,7 @@ class ProposalsController < ApplicationController
 
     respond_to do |format|
       if proceed and @proposal.save
-        UserMailer.proposal_call_for_voting(@proposal, was_tabled).deliver
+        UserMailer.proposal_call_for_voting(@proposal).deliver
         format.html { redirect_to @proposal, notice: 'Proposal is now in the voting stage.' }
         format.json { head :no_content }
       else
