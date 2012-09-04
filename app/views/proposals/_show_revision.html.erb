@@ -38,7 +38,8 @@
 <% if can? :manage, @proposal %>
     <b><i>Options to owner:</i></b>
     <% if @proposal.status == 'Pre-Voting' %>
-          <%= link_to 'Call for Votes', call_for_votes_proposal_path(@proposal) %>
+          <%= link_to 'Call for Votes', set_voting_proposal_path(@proposal), :method => :put %>
+          |
     <% end %>
     <% #  XXX move into model?
     %>

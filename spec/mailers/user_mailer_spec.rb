@@ -58,20 +58,6 @@ describe UserMailer do
     end
   end
 
-  describe "proposal_status_voting" do
-    let(:mail) { UserMailer.proposal_status_voting }
-
-    it "renders the headers" do
-      mail.subject.should eq("Proposal status voting")
-      mail.to.should eq(["to@dunlopweb.com"])
-      mail.from.should eq(["unicycling@dunlopweb.com"])
-    end
-
-    it "renders the body" do
-      mail.body.encoded.should match("Hi")
-    end
-  end
-
   describe "proposal_status_review" do
     let(:mail) { UserMailer.proposal_status_review(@proposal, true) }
 

@@ -234,6 +234,13 @@ describe ProposalsController do
         proposal = Proposal.find(proposal.id)
         proposal.status.should == "Tabled"
     end
+    it "sholud send an e-mail" do
+        proposal = FactoryGirl.create(:proposal, :status => "Pre-Voting")
+
+        put :set_voting, {:id => proposal.to_param}
+        num_deliveries = ActionMailer::Base.deliveries.size
+        num_deliveries.should == 1
+    end
   end
 
   describe "PUT set_review" do

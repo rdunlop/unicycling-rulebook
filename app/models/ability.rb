@@ -42,7 +42,7 @@ class Ability
         end
     end
     can :vote, Proposal do |proposal|
-        proposal.status == 'Voting' and proposal.user.voting_member(proposal.committee)
+        proposal.status == 'Voting' and user.voting_member(proposal.committee)
     end
     # Define abilities for the passed in user here. For example:
     #

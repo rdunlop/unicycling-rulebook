@@ -67,17 +67,6 @@ class UserMailer < ActionMailer::Base
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
-  #   en.user_mailer.proposal_status_voting.subject
-  #
-  def proposal_status_voting
-    @greeting = "Hi"
-
-    mail to: "to@dunlopweb.com"
-  end
-
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
   #   en.user_mailer.proposal_status_review.subject
   #
   def proposal_status_review(proposal, was_tabled)
