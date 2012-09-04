@@ -1,6 +1,9 @@
 Rulebook::Application.routes.draw do
 
-  resources :proposals do
+  resources :proposals, :except => [:index] do
+    collection do
+        get 'passed'
+    end
     member do
         put 'set_voting'
         put 'set_review'

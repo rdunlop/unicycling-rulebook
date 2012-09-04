@@ -38,11 +38,14 @@ describe ProposalsController do
         committee_id: @committee.id}
   end
   
-  describe "GET index" do
+  describe "GET passed" do
+    before(:each) do
+      @proposal = FactoryGirl.create(:proposal, :status => 'Passed')
+      @other_proposal = FactoryGirl.create(:proposal, :status => 'Failed')
+    end
     it "assigns all proposals as @proposals" do
-      proposal = FactoryGirl.create(:proposal)
-      get :index, {}
-      assigns(:proposals).should eq([proposal])
+      get :passed, {}
+      assigns(:proposals).should eq([@proposal])
     end
   end
 

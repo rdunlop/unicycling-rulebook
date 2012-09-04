@@ -2,13 +2,13 @@ class ProposalsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
 
-  # GET /proposals
-  # GET /proposals.json
-  def index
-    @proposals = Proposal.all
+  # GET /proposals/passed
+  # GET /proposals/passed.json
+  def passed
+    @proposals = Proposal.select{ |p| p.status == 'Passed'}
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # passed.html.erb
       format.json { render json: @proposals }
     end
   end
@@ -19,7 +19,6 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.find(params[:id])
     @comment = @proposal.comments.new
 
-    # XXX why is this always available?
     if can? :vote, @proposal
         @vote = @proposal.votes.new
         @proposal.votes.each do |v|

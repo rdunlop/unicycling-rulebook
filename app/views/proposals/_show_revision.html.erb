@@ -67,25 +67,7 @@
 <% end %>
 
 <hr />
-<h3>Background</h3>
-<% # XXX must support multiple revisions?
-%>
-<p><%= @revision.background %></p>
-
-
-<% # XXX must be admin?
-%>
-<hr />
-<h3>Additional Notes</h3>
-<p><%= @proposal.summary %></p>
-
-<hr />
-<h3>Proposal</h3>
-<p><%= @revision.body %></p>
-
-<hr />
-<h3>References</h3>
-<p><%= @revision.references %></p>
+<%= render :partial => "/proposals/proposal_details", :locals => {:proposal => @proposal, :revision => @revision } %>
 
 <% if @proposal.revisions.count > 1 %>
     <hr />
@@ -103,10 +85,7 @@
 
 <% if @proposal.votes.count > 0 %>
     <hr />
-    <h3>Votes on this proposal:</h3>
-    <b>Agree:</b> <strong><%= @proposal.agree_votes %></strong>, 
-    <b>Disagree:</b> <strong><%= @proposal.disagree_votes %></strong>, 
-    <b>Abstain:</b> <strong><%= @proposal.abstain_votes %></strong>.
+    <%= render :partial => "/proposals/vote_summary", :object => @proposal %>
     <p>
     <% @proposal.votes.each do |v| %>
         <%= render :partial => "/votes/show", :object => v %>

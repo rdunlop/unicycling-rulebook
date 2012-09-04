@@ -17,7 +17,7 @@
             <li><%= link_to('Submit Proposal', new_proposal_path)%></li>
             <li><%= link_to('FAQ', welcome_help_path)%></li>
             <li>Members</li>
-            <li>View Approved Proposals</li>
+            <li><%= link_to('View Approved Proposals', passed_proposals_path) %></li>
             <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
             <% if current_user.admin %>
                 <li><%= link_to('Admin (Committee)', committees_path) %></li>

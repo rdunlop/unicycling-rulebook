@@ -13,7 +13,6 @@ heroku addons:add sendgrid:starter
 - The New Proposal "Comittee" selection should ONLY be the committees that I am a member of.
 
 - If I am not a member of any committees, put a message on the 'new proposal' page to say "e-mail the chairperson"
-- When a new proposal is submitted, e-mail it to the adminemail cc the 'backup' address.
 
 - Only allow proposal to be view by: admin, owner, (committee-member AND if the proposal IS NOT submitted.)
 
