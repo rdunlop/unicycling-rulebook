@@ -7,9 +7,8 @@ Rulebook::Application.routes.draw do
         put 'set_pre_voting'
 # XXX need to update/consolidate these?
         get 'table'
-        get 'modify_votes'
     end
-    resources :votes
+    resources :votes, :except => [:show]
     resources :comments, :only => [:create]
     resources :revisions, :except => [:edit, :index, :put, :destroy]
   end

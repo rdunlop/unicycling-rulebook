@@ -2,7 +2,6 @@
 
 <table>
   <tr>
-    <th>Proposal</th>
     <th>User</th>
     <th>Vote</th>
     <th></th>
@@ -12,10 +11,8 @@
 
 <% @votes.each do |vote| %>
   <tr>
-    <td><%= vote.proposal %></td>
     <td><%= vote.user %></td>
     <td><%= vote.vote %></td>
-    <td><%= link_to 'Show', [@proposal, vote] %></td>
     <td><%= link_to 'Edit', edit_proposal_vote_path(@proposal, vote) %></td>
     <td><%= link_to 'Destroy', [@proposal, vote], confirm: 'Are you sure?', method: :delete %></td>
   </tr>

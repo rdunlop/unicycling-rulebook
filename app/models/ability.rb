@@ -25,7 +25,7 @@ class Ability
     else
         can :read, Committee
         can :manage, Comment
-        can :manage, Vote
+        can :create, Vote
         can [:read, :update, :create, :destroy], Proposal
         can :set_voting, Proposal do |proposal|
             proposal.try(:owner) == user

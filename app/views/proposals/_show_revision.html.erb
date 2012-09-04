@@ -22,7 +22,7 @@
         <%= link_to('Un-Table (return to discussion)', approve_proposal_path(@proposal)) %>
         |
     <% elsif @proposal.status == 'Voting' %>
-        <%= link_to('Modify Votes', modify_votes_proposal_path(@proposal)) %>
+        <%= link_to('Modify Votes', proposal_votes_path(@proposal)) %>
         |
         <%= link_to('Change Back to Pre-Voting', set_pre_voting_proposal_path(@proposal)) %>
         |

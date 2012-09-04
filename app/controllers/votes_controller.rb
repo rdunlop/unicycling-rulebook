@@ -11,22 +11,11 @@ class VotesController < ApplicationController
   # GET /votes
   # GET /votes.json
   def index
-    @votes = Vote.all
+    @votes = @proposal.votes
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @votes }
-    end
-  end
-
-  # GET /votes/1
-  # GET /votes/1.json
-  def show
-    @vote = Vote.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: [@proposal, @vote] }
     end
   end
 

@@ -21,9 +21,9 @@ require 'spec_helper'
 describe VotesController do
   before(:each) do
     @proposal = FactoryGirl.create(:proposal)
-    @user = FactoryGirl.create(:user)
+    @admin_user = FactoryGirl.create(:admin_user)
 
-    sign_in @user
+    sign_in @admin_user
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -40,13 +40,11 @@ describe VotesController do
       get :index, {:proposal_id => @proposal.id}
       assigns(:votes).should eq([vote])
     end
-  end
-
-  describe "GET show" do
-    it "assigns the requested vote as @vote" do
-      vote = FactoryGirl.create(:vote)
-      get :show, {:id => vote.to_param, :proposal_id => @proposal.id}
-      assigns(:vote).should eq(vote)
+    it "should only show votes from this proposal" do
+      vote = FactoryGirl.create(:vote, :proposal => @proposal)
+      other_vote = FactoryGirl.create(:vote)
+      get :index, {:proposal_id => @proposal.id}
+      assigns(:votes).should eq([vote])
     end
   end
 
