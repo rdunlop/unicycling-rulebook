@@ -1,21 +1,19 @@
-<h1>Listing committee_members</h1>
+<h1>Listing Members for <%= @committee.to_s %></h1>
 
 <table>
   <tr>
-    <th>Committee</th>
     <th>User</th>
+    <th>Email</th>
     <th>Voting</th>
-    <th></th>
     <th></th>
     <th></th>
   </tr>
 
 <% @committee_members.each do |committee_member| %>
   <tr>
-    <td><%= committee_member.committee %></td>
     <td><%= committee_member.user %></td>
+    <td><%= committee_member.user.email %></td>
     <td><%= committee_member.voting %></td>
-    <td><%= link_to 'Show', [@committee, committee_member] %></td>
     <td><%= link_to 'Edit', edit_committee_committee_member_path(@committee, committee_member) %></td>
     <td><%= link_to 'Destroy', [@committee, committee_member], confirm: 'Are you sure?', method: :delete %></td>
   </tr>
@@ -24,4 +22,5 @@
 
 <br />
 
-<%= link_to 'New Committee member', new_committee_committee_member_path(@committee) %>
+<%= link_to 'New Committee member', new_committee_committee_member_path(@committee) %><br />
+<%= link_to 'Back', committees_path %>

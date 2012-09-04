@@ -23,6 +23,10 @@
     <%= f.text_field :title %>
   </div>
   <div class="field">
+    <%= f.label :committee_id %>
+    <%= f.select(:committee_id, Committee.all.map {|c| [c.to_s, c.id]}) %>
+  </div>
+  <div class="field">
     <%= f.label :status %>
     <%= f.select(:status, [['Submitted'],['Review'],['Pre-Voting'],['Voting'],['Set-Aside', 'Tabled'],['Passed'],['Failed']]) %>
   </div>

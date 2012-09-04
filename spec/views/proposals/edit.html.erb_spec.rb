@@ -12,6 +12,7 @@ describe "proposals/edit" do
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "form", :action => proposals_path(@proposal), :method => "post" do
       assert_select "input#proposal_title", :name => "proposal[title]"
+      assert_select "select#proposal_committee_id", :name => "proposal[committee_id]"
       assert_select "select#proposal_status", :name => "proposal[status]"
     end
   end

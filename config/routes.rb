@@ -13,8 +13,8 @@ Rulebook::Application.routes.draw do
     resources :revisions, :except => [:edit, :index, :put, :destroy]
   end
 
-  resources :committees do
-    resources :committee_members
+  resources :committees, :except => [:show] do
+    resources :committee_members, :except => [:show]
   end
 
 

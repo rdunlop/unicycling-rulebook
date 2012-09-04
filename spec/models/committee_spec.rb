@@ -21,4 +21,10 @@ describe Committee do
 
         committee.proposals.should == [proposal]
     end
+
+    it "should be able to look up its members" do
+        committee_member = FactoryGirl.create(:committee_member)
+        com = committee_member.committee
+        com.committee_members.should == [committee_member]
+    end
 end

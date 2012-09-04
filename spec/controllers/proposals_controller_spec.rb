@@ -182,6 +182,15 @@ describe ProposalsController do
         put :update, {:id => proposal.to_param, :proposal => valid_attributes}
         response.should redirect_to(proposal)
       end
+      it "can change the committee" do
+        proposal = FactoryGirl.create(:proposal)
+        new_c = FactoryGirl.create(:committee)
+        put :update, {:id => proposal.to_param, :proposal => {:title => "New Title", :committee_id => new_c}}
+        response.should redirect_to(proposal)
+        proposal = Proposal.find(proposal.id)
+        proposal.committee.should == new_c
+        proposal.title.should == "New Title"
+      end
     end
 
     describe "with invalid params" do

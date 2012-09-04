@@ -47,15 +47,6 @@ describe CommitteesController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested committee as @committee" do
-      committee = FactoryGirl.create(:committee)
-
-      get :show, {:id => committee.to_param}
-      assigns(:committee).should eq(committee)
-    end
-  end
-
   describe "GET new" do
     it "fails when not an Admin" do
       get :new, {}
@@ -106,7 +97,7 @@ describe CommitteesController do
 
       it "redirects to the created committee" do
         post :create, {:committee => valid_attributes}
-        response.should redirect_to(Committee.last)
+        response.should redirect_to(committees_path)
       end
     end
 
@@ -163,7 +154,7 @@ describe CommitteesController do
       it "redirects to the committee" do
         committee = Committee.create! valid_attributes
         put :update, {:id => committee.to_param, :committee => valid_attributes}
-        response.should redirect_to(committee)
+        response.should redirect_to(committees_path)
       end
     end
 
