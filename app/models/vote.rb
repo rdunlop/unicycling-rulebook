@@ -8,11 +8,12 @@ class Vote < ActiveRecord::Base
     validates :vote, :inclusion => { :in => [ 'agree', 'disagree', 'abstain' ] }
 
     def to_s
-        res = "<b>" + user.to_s + "</b>" +
-              " voted <strong>" + vote + "</strong>" +
-              " on <i>" + self.created_at.strftime("%B %d, %Y, %I:%M %p") + "</i>"
+        if self.new_record?
+            return ""
+        end
+        res = user.to_s + " voted " + self.vote + " on " + self.created_at.strftime("%B %d, %Y, %I:%M %p")
         if not comment.blank?
-            res += "<blockquote>" + self.comment + "</blockquote>"
+            res += " (" + self.comment + ")"
         end
         res
     end

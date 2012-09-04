@@ -58,14 +58,6 @@ class Proposal < ActiveRecord::Base
         count_votes('abstain')
     end
 
-    def vote_comments
-        comments = []
-        votes.each do |v|
-            comments << v.to_s
-        end
-        comments
-    end
-
     def status_string
         if self.status == 'Submitted'
             "Submitted"
