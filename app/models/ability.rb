@@ -25,6 +25,7 @@ class Ability
         can :manage, Comment
     else
         can :read, Committee
+        can :membership, Committee
         can :create, Comment
         can :create, Vote
 

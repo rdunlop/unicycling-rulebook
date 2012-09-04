@@ -17,6 +17,9 @@ Rulebook::Application.routes.draw do
   end
 
   resources :committees, :except => [:show] do
+    collection do
+        get 'membership'
+    end
     resources :committee_members, :except => [:show]
   end
 

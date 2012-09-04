@@ -216,4 +216,18 @@ describe CommitteesController do
       end
     end
   end
+
+  describe "GET membership" do
+    it "assigns all committees as @committees" do
+      committee = FactoryGirl.create(:committee)
+      get :membership
+      response.should be_success
+      assigns(:committees).should == [committee]
+    end
+    it "should assign all users as @users" do
+      get :membership
+      response.should be_success
+      assigns(:users).should == [@user, @admin_user]
+    end
+  end
 end

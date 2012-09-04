@@ -72,4 +72,9 @@ class CommitteesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def membership
+    #@committees = Committee.all
+    @users = User.all
+  end
 end
