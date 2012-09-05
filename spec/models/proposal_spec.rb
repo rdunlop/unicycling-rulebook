@@ -158,6 +158,8 @@ describe Proposal do
         @prop = FactoryGirl.create(:proposal)
         @rev1 = FactoryGirl.create(:revision, :proposal => @prop)
         @vote = FactoryGirl.create(:vote, :proposal => @prop, :vote => 'agree', :comment => '')
+
+        @cm = FactoryGirl.create(:committee_member, :user => @vote.user, :committee => @prop.committee)
     end
     it "should count the number of agree votes" do
         @prop.agree_votes.should == 1
@@ -168,10 +170,53 @@ describe Proposal do
     it "should count the number of abstain votes" do
         @prop.abstain_votes.should == 0
     end
+    it "should have all voting members (1) voted" do
+        @prop.all_voting_members_voted.should == true
+    end
+    it "should have enough (100%) of the members have voted" do
+        @prop.number_of_voting_members.should == 1
+        @prop.have_voting_quorum.should == true
+    end
+    it "should have at_least_2/3 agree" do
+        @prop.at_least_two_thirds_agree.should == true
+    end
+
+    describe "if there is a 2nd committee_members who hasn't voted" do
+        before(:each) do
+            @cm2 = FactoryGirl.create(:committee_member, :committee => @prop.committee)
+        end
+        it "should have not all voting members (1/2) voted)" do
+            @prop.all_voting_members_voted.should == false
+        end
+        it "should have enough (50%) of the members voted" do
+            @prop.number_of_voting_members.should == 2
+            @prop.have_voting_quorum.should == true
+        end
+        describe "when the 2nd member votes disagree" do
+            before(:each) do
+              @vote = FactoryGirl.create(:vote, :user => @cm2.user, :proposal => @prop, :vote => 'disagree', :comment => 'hi')
+            end
+            it "should NOT have at least 2/3 agree" do
+              @prop.at_least_two_thirds_agree.should == false
+            end
+        end
+        
+        describe "if there is a 3rd committee_members who hasn't voted" do
+          before(:each) do
+            FactoryGirl.create(:committee_member, :committee => @prop.committee)
+          end
+          it "should have not all voting members (1/3) voted)" do
+            @prop.all_voting_members_voted.should == false
+          end
+          it "should have enough (33%) of the members voted" do
+            @prop.have_voting_quorum.should == false
+          end
+        end
+    end
   end
 
 
-  describe "with existing proposals" do
+  describe "with existing Review+Submitted proposals" do
     before(:each) do
         # review proposal which will be advanced
         @p1 = FactoryGirl.create(:proposal, :status => 'Review', :review_end_date => Time.now - 1.minute)
@@ -208,7 +253,70 @@ describe Proposal do
             num_deliveries = ActionMailer::Base.deliveries.size
             num_deliveries.should == 1
         end
-
     end
+  end
+
+  describe "with 'Voting' proposals" do
+      before(:each) do
+          # voting proposal which will NOT be advanced (due to date)
+          @p4 = FactoryGirl.create(:proposal, :status => 'Voting', :vote_end_date => Time.now + 1.days)
+          @r4 = FactoryGirl.create(:revision, :proposal => @p4)
+
+          # voting proposal which will be failed (due to no votes)
+          @p5 = FactoryGirl.create(:proposal, :status => 'Voting', :vote_end_date => Time.now - 1.hours)
+          @r5 = FactoryGirl.create(:revision, :proposal => @p5)
+
+          FactoryGirl.create(:committee_member, :committee => @p4.committee)
+          FactoryGirl.create(:committee_member, :committee => @p5.committee)
+      end
+      describe "when calling update_states" do
+        before(:each) do
+          ActionMailer::Base.deliveries.clear
+
+          Proposal.update_states
+        end
+        it "should not change a proposal if the voting period is not over" do
+          @p4.reload
+          @p4.status.should == 'Voting'
+        end
+        it "should mark a proposal as Failed if there are no votes" do
+          @p5.reload
+          @p5.status.should == 'Failed'
+        end
+        it "should send an e-mail when it changes a proposal" do
+          num_deliveries = ActionMailer::Base.deliveries.size
+          num_deliveries.should == 1
+        end
+      end
+      describe "calling update_states when all of the voting-members have voted agree" do
+        before(:each) do
+            @p5.committee.committee_members.each do |cm|
+                FactoryGirl.create(:vote, :proposal => @p5, :user => cm.user, :vote => 'agree')
+            end
+            ActionMailer::Base.deliveries.clear
+            Proposal.update_states
+        end
+        it "should mark the proposal as passed" do
+          @p5.reload
+          @p5.status.should == 'Passed'
+        end
+        it "should send an e-mail" do
+          num_deliveries = ActionMailer::Base.deliveries.size
+          num_deliveries.should == 1
+        end
+      end
+      describe "calling update_states when all voting-members have voted disagree, but the time has not completed" do
+        before(:each) do
+            @p4.committee.committee_members.each do |cm|
+                FactoryGirl.create(:vote, :proposal => @p4, :user => cm.user, :vote => 'disagree')
+            end
+            ActionMailer::Base.deliveries.clear
+            Proposal.update_states
+        end
+        it "should mark the proposal as 'Failed'" do
+          @p4.reload
+          @p4.status.should == 'Failed'
+        end
+      end
   end
 end

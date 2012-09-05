@@ -17,9 +17,43 @@ class Proposal < ActiveRecord::Base
                 proposal.status = 'Pre-Voting'
                 proposal.save
                 UserMailer.proposal_finished_review(proposal).deliver
-            #elsif proposal.status == 'Voting' and proposal.vote_end_date 
+            elsif proposal.status == 'Voting' and (proposal.vote_end_date <= Time.now or proposal.all_voting_members_voted)
+                if proposal.have_voting_quorum and proposal.at_least_two_thirds_agree
+                    proposal.status = 'Passed'
+                else
+                    proposal.status = 'Failed'
+                end
+                proposal.save
+                UserMailer.proposal_voting_result(proposal, proposal.status == 'Passed').deliver
             end
         end
+    end
+
+    def at_least_two_thirds_agree
+        votes_which_count = self.agree_votes + self.disagree_votes
+        (self.agree_votes / votes_which_count.to_f) >= (2 / 3.0)
+    end
+
+    def have_voting_quorum
+        if number_of_voting_members == 0
+            return false
+        end
+
+        if (self.votes.count / number_of_voting_members.to_f) >= 0.50
+            true
+        else
+            false
+        end
+    end
+
+    def number_of_voting_members
+        x = self.committee.committee_members.select {|cm| cm.voting }
+        x.count
+    end
+
+public
+    def all_voting_members_voted
+        self.number_of_voting_members == self.votes.count
     end
 
     def latest_revision
@@ -50,6 +84,7 @@ class Proposal < ActiveRecord::Base
         self.latest_revision.references
     end
 
+private
     def count_votes(type)
         count = 0
         votes.each do |v|
@@ -60,6 +95,7 @@ class Proposal < ActiveRecord::Base
         count
     end
 
+public
     def agree_votes
         count_votes('agree')
     end
@@ -118,4 +154,4 @@ class Proposal < ActiveRecord::Base
     def to_s
         title
     end
-
+end
