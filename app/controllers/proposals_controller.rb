@@ -58,7 +58,7 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.new(params[:proposal])
     @proposal.status = 'Submitted'
     @proposal.owner = current_user
-    @proposal.submit_date = DateTime.now()
+    @proposal.submit_date = Time.now()
 
     @revision = Revision.new(params[:revision])
     @revision.user = current_user
@@ -120,7 +120,8 @@ class ProposalsController < ApplicationController
         proceed = false
     end
     @proposal.status = "Voting"
-    @proposal.vote_start_date = DateTime.now()
+    @proposal.vote_start_date = Time.now()
+    @proposal.vote_end_date = @proposal.vote_start_date + 7.days
 
     respond_to do |format|
       if proceed and @proposal.save
@@ -145,8 +146,8 @@ class ProposalsController < ApplicationController
         proceed = false
     end
     @proposal.status = "Review"
-    @proposal.review_start_date = DateTime.now()
-    @proposal.review_end_date = DateTime.now() + 10
+    @proposal.review_start_date = Time.now()
+    @proposal.review_end_date = Time.now() + 10.days
 
     respond_to do |format|
       if proceed and @proposal.save

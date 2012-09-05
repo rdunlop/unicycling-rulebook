@@ -30,6 +30,7 @@ heroku addons:add sendgrid:starter
 
 - From Proposal-view, should be allowed to 'edit' proposal in various ways (Approve, Table, un_table, change-votes,change back to pre-voting, change dates, change committee)
 
+- Mock Time.now, and pass it around, to eliminate 'fuzzy-matching' when checking timestamps.
 
 Instructions:
 - Create a Single Committtee

@@ -17,6 +17,7 @@ class Proposal < ActiveRecord::Base
                 proposal.status = 'Pre-Voting'
                 proposal.save
                 UserMailer.proposal_finished_review(proposal).deliver
+            #elsif proposal.status == 'Voting' and proposal.vote_end_date 
             end
         end
     end
@@ -117,4 +118,4 @@ class Proposal < ActiveRecord::Base
     def to_s
         title
     end
-end
+
