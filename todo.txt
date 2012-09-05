@@ -1,6 +1,18 @@
 heroku addons:add sendgrid:starter
+
+- Determine delayed-send heroku? for auto-advancing of the proposals.
+- Write up the usage for the system, and how it can be configured.
+
+- Display indicators which say that "Your name will not be displayed along with your vote."
+- "Do not send me e-mails"
+- "send me e-mail once a week"
+- list all committees in the "sign up" form, and allow people to enter their preferences when signing up. (perhaps as freeform text?)
+- Ability for public to "read" proposals in certain states.
+- Hide the voting results while voting is in progress.
+- only display voting info to members
+- display "who voted" for admins
 - create a conf table, to configure the instance with the expected names/etc?
-- add auto-enroll YES
+- add auto-enroll YES (option configured by the system?)
 
 - Update the _end_date properly
 - permissions to restrict who can do what to what object
