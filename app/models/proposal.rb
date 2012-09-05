@@ -10,6 +10,17 @@ class Proposal < ActiveRecord::Base
     validates :committee, :presence => true
     validates :status, :inclusion => { :in => [ 'Submitted', 'Review', 'Pre-Voting', 'Voting', 'Tabled', 'Passed', 'Failed' ] }
 
+    # This is the auto-updated function CLASS METHOD
+    def self.update_states
+        Proposal.all.each do |proposal|
+            if proposal.status == 'Review' and proposal.review_end_date <= Time.now
+                proposal.status = 'Pre-Voting'
+                proposal.save
+                UserMailer.proposal_finished_review(proposal).deliver
+            end
+        end
+    end
+
     def latest_revision
         if self.revisions.empty?
             nil

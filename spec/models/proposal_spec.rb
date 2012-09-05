@@ -169,4 +169,46 @@ describe Proposal do
         @prop.abstain_votes.should == 0
     end
   end
+
+
+  describe "with existing proposals" do
+    before(:each) do
+        # review proposal which will be advanced
+        @p1 = FactoryGirl.create(:proposal, :status => 'Review', :review_end_date => Time.now - 1.minute)
+        @r1 = FactoryGirl.create(:revision, :proposal => @p1)
+
+        # submitted proposal which will not be advanced
+        @p2 = FactoryGirl.create(:proposal, :status => 'Submitted')
+        @r2 = FactoryGirl.create(:revision, :proposal => @p2)
+
+        # review proposal which will NOT be advanced (due to date)
+        @p3 = FactoryGirl.create(:proposal, :status => 'Review', :review_end_date => Time.now + 3.days)
+        @r3 = FactoryGirl.create(:revision, :proposal => @p3)
+
+        ActionMailer::Base.deliveries.clear
+    end
+    describe "when I call Proposal.update_states" do
+        before(:each) do
+            Proposal.update_states
+        end
+
+        it "updates 'Review' proposals that have expired to have status 'Pre-Voting'" do
+            @p1.reload
+            @p1.status.should == 'Pre-Voting'
+        end
+        it "doesn't change the 'Submitted' proposal'" do
+            @p2.reload
+            @p2.status.should == 'Submitted'
+        end
+        it "doesn't change entries which haven't expired yet" do
+            @p3.reload
+            @p3.status.should == 'Review'
+        end
+        it "should send an e-mail when it changes a proposal" do
+            num_deliveries = ActionMailer::Base.deliveries.size
+            num_deliveries.should == 1
+        end
+
+    end
+  end
 end
