@@ -171,6 +171,14 @@ describe VotesController do
         put :update, {:id => @vote.to_param, :vote => valid_attributes, :proposal_id => @proposal.id}
         response.should redirect_to([@proposal, @vote])
       end
+      it "sends an e-mail" do
+        put :update, {:id => @vote.to_param, :vote => {vote: 'disagree'}, :proposal_id => @proposal.id}
+        num_deliveries = ActionMailer::Base.deliveries.size
+        num_deliveries.should == 1
+
+        note = ActionMailer::Base.deliveries.first
+        note.body.should match(' agree to disagree')
+      end
     end
 
     describe "with admin and invalid params" do

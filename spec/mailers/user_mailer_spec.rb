@@ -73,11 +73,11 @@ describe UserMailer do
   end
 
   describe "vote_changed" do
-    let(:mail) { UserMailer.vote_changed(@user, 'disagree', 'abstain') }
+    let(:mail) { UserMailer.vote_changed(@committee, @user, 'disagree', 'abstain') }
 
     it "renders the headers" do
       mail.subject.should eq("Vote Changed")
-      mail.to.should eq(["to@dunlopweb.com"])
+      mail.to.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
@@ -87,16 +87,19 @@ describe UserMailer do
   end
 
   describe "new_committee_applicant" do
-    let(:mail) { UserMailer.new_committee_applicant }
+    let(:mail) { UserMailer.new_committee_applicant(@user) }
+    before(:each) do
+        @admin_user = FactoryGirl.create(:admin_user)
+    end
 
     it "renders the headers" do
       mail.subject.should eq("New committee applicant")
-      mail.to.should eq(["to@dunlopweb.com"])
+      mail.to.should eq([@admin_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("Hi")
+      mail.body.encoded.should match("Here are the details of the new applicant:")
     end
   end
 
@@ -137,7 +140,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("(Proposal " + @proposal.id.to_s + ") Call for voting")
-      mail.to.should eq(["to@dunlopweb.com"])
+      mail.to.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
@@ -151,7 +154,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("Proposal voting result")
-      mail.to.should eq(["to@dunlopweb.com"])
+      mail.to.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 

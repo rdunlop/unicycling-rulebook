@@ -2,6 +2,7 @@ heroku addons:add sendgrid:starter
 
 
 - Learn why self.number_of_votincg_members gives me private/public error
+- Send an e-mail to the admin whenever a new application is receieved.
 
 - Determine delayed-send heroku? for auto-advancing of the proposals.
 - Write up the usage for the system, and how it can be configured.

@@ -61,8 +61,11 @@ class VotesController < ApplicationController
   def update
     @vote = Vote.find(params[:id])
 
+    previous_value = @vote.vote
+
     respond_to do |format|
       if @vote.update_attributes(params[:vote])
+        UserMailer.vote_changed(@vote.proposal.committee, current_user, previous_value, @vote.vote).deliver
         format.html { redirect_to [@proposal, @vote], notice: 'Vote was successfully updated.' }
         format.json { head :no_content }
       else

@@ -82,12 +82,12 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.vote_changed.subject
   #
-  def vote_changed(user, old_vote_string, new_vote_string)
+  def vote_changed(committee, user, old_vote_string, new_vote_string)
     @name = user.to_s
     @old_vote = old_vote_string
     @new_vote = new_vote_string
 
-    mail to: "to@dunlopweb.com", subject: "Vote Changed"
+    mail to: create_committee_email(committee), subject: "Vote Changed"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -95,10 +95,13 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.new_committee_applicant.subject
   #
-  def new_committee_applicant
-    @greeting = "Hi"
+  def new_committee_applicant(user)
+    @name = user.name
+    @email = user.email
+    @location = user.location
+    @comments = "n/a"
 
-    mail to: "to@dunlopweb.com"
+    mail to: create_admin_email
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -139,7 +142,7 @@ class UserMailer < ActionMailer::Base
     @proposal = proposal
     @vote_end = proposal.vote_end_date.to_s
 
-    mail to: "to@dunlopweb.com", subject: '(Proposal ' + @proposal.id.to_s + ') Call for voting'
+    mail to: create_committee_email(@proposal.committee), subject: '(Proposal ' + @proposal.id.to_s + ') Call for voting'
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -154,6 +157,6 @@ class UserMailer < ActionMailer::Base
     @num_disagree = proposal.disagree_votes
     @num_abstain = proposal.abstain_votes
 
-    mail to: "to@dunlopweb.com"
+    mail to: create_committee_email(@proposal.committee)
   end
 end
