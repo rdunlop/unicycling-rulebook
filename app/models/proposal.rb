@@ -15,6 +15,7 @@ class Proposal < ActiveRecord::Base
         Proposal.all.each do |proposal|
             if proposal.status == 'Review' and proposal.review_end_date <= Time.now
                 proposal.status = 'Pre-Voting'
+                puts "Changing Proposal #{proposal.title} from Review to Pre-Voting"
                 proposal.save
                 UserMailer.proposal_finished_review(proposal).deliver
             elsif proposal.status == 'Voting' and (proposal.vote_end_date <= Time.now or proposal.all_voting_members_voted)
@@ -23,6 +24,7 @@ class Proposal < ActiveRecord::Base
                 else
                     proposal.status = 'Failed'
                 end
+                puts "Changing Proposal #{proposal.title} from Voting to #{proposal.status}"
                 proposal.save
                 UserMailer.proposal_voting_result(proposal, proposal.status == 'Passed').deliver
             end

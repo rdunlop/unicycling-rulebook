@@ -1,22 +1,48 @@
-heroku addons:add sendgrid:starter
+Friday To-Do:
 
+- Get heroku scheduler to run every hour
+  - Determine delayed-send heroku? for auto-advancing of the proposals.
 
-- Learn why self.number_of_votincg_members gives me private/public error
-- Send an e-mail to the admin whenever a new application is receieved.
+- Look at the old implementation of date-time to see if it should be rounded to the next-day, or not.
 
-- Determine delayed-send heroku? for auto-advancing of the proposals.
-- Write up the usage for the system, and how it can be configured.
-
+- Remove indication of who-voted-what based on Olaf.
+- display "who voted" for admins
+- Hide the voting results while voting is in progress.
+- Add indication of percentage:
+  - Add indicators to show whether the proposal will pass/fail based on the quorum rules.
 - Display indicators which say that "Your name will not be displayed along with your vote."
+
+- Add ability for Admin to adjust the admin status of another user.
+- The New Proposal "Comittee" selection should ONLY be the committees that I am a member of.
+
+- Add option to "auto-enroll" people to a given group (include option about whether they are a voting member by default or not)
+
+- Ability for public to "read" proposals that have "passed".
+
 - "Do not send me e-mails"
 - "send me e-mail once a week"
+- Add interface to allow people to modify these settings for themselves easily.
+- Update the e-mails with a footer which talks about how to modify these settings
+
+- Add freeform text box to application
+- Add Conf table which allows admin to specify the time-delay for many things
+- Send an e-mail to the admin whenever a new application is receieved.
+
+- Add Conf table which allows admin to specify that new applications are no longer accepted?
+
+- REVOKE my gmail password, and create a new gmail account for using?
+
+
+- Ask Olaf which statuses should "PUBLIC" be allowed to see proposals....Passed? Other?
+
+- Learn why self.number_of_votincg_members gives me private/public error
+
+- Write up the usage for the system, and how it can be configured.
+ - Please allow 30 seconds when you first load the page....it may take a few seconds before it comes up.
+
 - list all committees in the "sign up" form, and allow people to enter their preferences when signing up. (perhaps as freeform text?)
-- Ability for public to "read" proposals in certain states.
-- Hide the voting results while voting is in progress.
 - only display voting info to members
-- display "who voted" for admins
 - create a conf table, to configure the instance with the expected names/etc?
-- add auto-enroll YES (option configured by the system?)
 
 - Update the _end_date properly
 - permissions to restrict who can do what to what object
@@ -24,9 +50,6 @@ heroku addons:add sendgrid:starter
 
 - Change to use 'thin' server (as per heroku documentation https://devcenter.heroku.com/articles/rails3)
 
-- Add ability for Admin to adjust the admin status of another user.
-
-- The New Proposal "Comittee" selection should ONLY be the committees that I am a member of.
 
 - If I am not a member of any committees, put a message on the 'new proposal' page to say "e-mail the chairperson"
 
