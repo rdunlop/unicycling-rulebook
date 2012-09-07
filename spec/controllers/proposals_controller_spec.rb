@@ -101,6 +101,20 @@ describe ProposalsController do
       get :edit, {:id => proposal.to_param}
       assigns(:proposal).should eq(proposal)
     end
+    describe "as a committee-admin for the same committee" do
+        before(:each) do
+            @proposal = FactoryGirl.create(:proposal, :status => "Review")
+            sign_out @admin_user
+            cm = FactoryGirl.create(:committee_member, :committee => @proposal.committee, :admin => true)
+            @cm_admin_user = cm.user
+            sign_in @cm_admin_user
+        end
+        it "should be able to get" do
+            get :edit, {:id => @proposal.to_param}
+            assigns(:proposal).should eq(@proposal)
+            response.should render_template("edit")
+        end
+    end
   end
 
   describe "POST create" do
@@ -213,6 +227,19 @@ describe ProposalsController do
         response.should render_template("edit")
       end
     end
+    describe "as a committee-admin for the same committee" do
+        before(:each) do
+            @proposal = FactoryGirl.create(:proposal, :status => "Review")
+            sign_out @admin_user
+            cm = FactoryGirl.create(:committee_member, :committee => @proposal.committee, :admin => true)
+            @cm_admin_user = cm.user
+            sign_in @cm_admin_user
+        end
+        it "should be able to update" do
+            put :update, {:id => @proposal.to_param, :proposal => valid_attributes}
+            response.should redirect_to(@proposal)
+        end
+    end
   end
 
   describe "DELETE destroy" do
@@ -258,6 +285,20 @@ describe ProposalsController do
         put :set_voting, {:id => proposal.to_param}
         num_deliveries = ActionMailer::Base.deliveries.size
         num_deliveries.should == 1
+    end
+    describe "as a committee-admin for the same committee" do
+        before(:each) do
+            @proposal = FactoryGirl.create(:proposal, :status => "Pre-Voting")
+            sign_out @admin_user
+            cm = FactoryGirl.create(:committee_member, :committee => @proposal.committee, :admin => true)
+            @cm_admin_user = cm.user
+            sign_in @cm_admin_user
+        end
+        it "should be able to set_voting" do
+            put :set_voting, {:id => @proposal.to_param}
+
+            response.should redirect_to(proposal_path(@proposal))
+        end
     end
   end
 
@@ -309,6 +350,29 @@ describe ProposalsController do
         response.should render_template("edit")
         proposal = Proposal.find(proposal.id)
         proposal.status.should == "Pre-Voting"
+    end
+    describe "as a non-super-user" do
+        before(:each) do
+            sign_out @admin_user
+            sign_in FactoryGirl.create(:user)
+        end
+        it "should not be able to set_review a proposal" do
+            put :set_review, {:id => @proposal.to_param}
+            response.should redirect_to(root_path)
+        end
+    end
+    describe "as a committee-admin for the same committee" do
+        before(:each) do
+            sign_out @admin_user
+            cm = FactoryGirl.create(:committee_member, :committee => @proposal.committee, :admin => true)
+            @cm_admin_user = cm.user
+            sign_in @cm_admin_user
+        end
+        it "should be able to set_review" do
+            put :set_review, {:id => @proposal.to_param}
+
+            response.should redirect_to(proposal_path(@proposal))
+        end
     end
   end
 

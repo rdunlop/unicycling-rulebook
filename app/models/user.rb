@@ -12,13 +12,31 @@ class User < ActiveRecord::Base
 
   validates :name, :presence => true
 
+  def is_committee_admin(committee)
+    committee_members.each do |cm|
+        if cm.committee == committee
+            if cm.admin
+                return true
+            end
+        end
+    end
+    return false
+  end
+
+  def is_in_committee(committee)
+    committee_members.each do |cm|
+        if cm.committee == committee
+            return true
+        end
+    end
+    return false
+  end
+
   def voting_member(committee)
     committee_members.each do |cm|
         if cm.committee == committee
             if cm.voting
                 return true
-            else
-                return false
             end
         end
     end

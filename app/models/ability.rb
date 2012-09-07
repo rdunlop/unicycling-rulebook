@@ -29,10 +29,24 @@ class Ability
         can :create, Comment
         can :create, Vote
 
-        can [:read, :update, :create, :destroy], Proposal
+        can :create, Proposal
+
+        can [:read], Proposal do |proposal|
+            if proposal.status == 'Submitted'
+                user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
+            else
+                user.is_in_committee(proposal.committee)
+            end
+        end
+
+        can :update, Proposal do |proposal|
+            user.is_committee_admin(proposal.committee)
+        end
+
         # Owner-specific
-        can [:administer, :set_voting, :set_review], Proposal do |proposal|
-            proposal.try(:owner) == user
+        # Committee-admin-specific
+        can [:set_review, :set_voting], Proposal do |proposal|
+            user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
         end
 
         can :create, Revision do |revision|

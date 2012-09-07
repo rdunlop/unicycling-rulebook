@@ -4,16 +4,9 @@ class WelcomeController < ApplicationController
   def index
     @proposals = []
     if user_signed_in?
-      if current_user.admin
-        @proposals = Proposal.all
-      else
-        # XXX proposals should be ordered by committee and status
-        current_user.committees.each do |c|
-            c.proposals.each do |p|
-                if p.status != 'Submitted'
-                    @proposals += [p]
-                end
-            end
+      Proposal.all.each do |p|
+        if can? :read, p
+          @proposals += [p]
         end
       end
     end

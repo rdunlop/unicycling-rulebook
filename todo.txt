@@ -30,6 +30,8 @@ Done - Look at the old implementation of date-time to see if it should be rounde
 - Display indicators which say that "Your name will not be displayed along with your vote."
 
 
+- Clean up the redundant code in the tests....really nasty duplication
+- Add unit tests for user:is_in_committee/etc methods
 - LEARN why I don't need to have attr_accessible :admin in the committee_member model.
 
 - Don't allow the same user to be added to a committee 2x.

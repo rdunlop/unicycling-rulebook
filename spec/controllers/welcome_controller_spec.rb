@@ -51,6 +51,23 @@ describe WelcomeController do
             assigns(:proposals).should eq([@proposal])
         end
     end
+    describe "for a committee-admin" do
+        before(:each) do
+            cm = FactoryGirl.create(:committee_member, :user => @user)
+            committee = cm.committee
+            @other_person_proposal = FactoryGirl.create(:proposal, :status => 'Submitted', :owner => @user, :committee => cm.committee)
+
+            new_user = FactoryGirl.create(:user)
+            FactoryGirl.create(:committee_member, :user => new_user, :committee => committee, :admin => true)
+
+            sign_out @user
+            sign_in new_user
+        end
+        it "should see the 'Submitted' proposals in that committee" do
+            get :index, {}
+            assigns(:proposals).should eq([@other_person_proposal])
+        end
+    end
     it "shows a proposal from a different user in same committee" do
         @committee = FactoryGirl.create(:committee)
         @cm2 = FactoryGirl.create(:committee_member, :committee => @committee)
