@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120904001941) do
+ActiveRecord::Schema.define(:version => 20120907191128) do
 
   create_table "comments", :force => true do |t|
     t.integer  "proposal_id"
@@ -38,12 +38,12 @@ ActiveRecord::Schema.define(:version => 20120904001941) do
   create_table "proposals", :force => true do |t|
     t.integer  "committee_id"
     t.string   "status"
-    t.datetime "submit_date"
-    t.datetime "review_start_date"
-    t.datetime "review_end_date"
-    t.datetime "vote_start_date"
-    t.datetime "vote_end_date"
-    t.datetime "tabled_date"
+    t.date     "submit_date"
+    t.date     "review_start_date"
+    t.date     "review_end_date"
+    t.date     "vote_start_date"
+    t.date     "vote_end_date"
+    t.date     "tabled_date"
     t.boolean  "transition_straight_to_vote"
     t.integer  "owner_id"
     t.text     "summary"

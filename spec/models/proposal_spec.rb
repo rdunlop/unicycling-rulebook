@@ -101,37 +101,37 @@ describe Proposal do
     end
     it "should print the review dates for a Review proposal" do
         prop = FactoryGirl.create(:proposal, :status => 'Review', 
-                                             :review_start_date => DateTime.civil_from_format(:local, 2012, 1, 1),
-                                             :review_end_date   => DateTime.civil_from_format(:local, 2012, 1, 10))
+                                             :review_start_date => Date.new(2012, 1, 1),
+                                             :review_end_date   => Date.new(2012, 1, 10))
         prop.status_string.should == "Review from January  1, 2012 to January 10, 2012"
     end
 
     it "should print the review dates for a Pre-Voting proposal" do
         prop = FactoryGirl.create(:proposal, :status => 'Pre-Voting', 
-                                             :review_start_date => DateTime.civil_from_format(:local, 2012, 1, 1),
-                                             :review_end_date   => DateTime.civil_from_format(:local, 2012, 1, 10))
+                                             :review_start_date => Date.new(2012, 1, 1),
+                                             :review_end_date   => Date.new(2012, 1, 10))
         prop.status_string.should == "Pre-Voting (Reviewed from January  1, 2012 to January 10, 2012)"
     end
     it "should print the voting dates for a Voting proposal" do
         prop = FactoryGirl.create(:proposal, :status => 'Voting', 
-                                             :vote_start_date => DateTime.civil_from_format(:local, 2012, 1, 1),
-                                             :vote_end_date   => DateTime.civil_from_format(:local, 2012, 1, 10))
+                                             :vote_start_date => Date.new(2012, 1, 1),
+                                             :vote_end_date   => Date.new(2012, 1, 10))
         prop.status_string.should == "Voting from January  1, 2012 to January 10, 2012"
     end
     it "should print the review dates for a Tabled proposal" do
         prop = FactoryGirl.create(:proposal, :status => 'Tabled', 
-                                             :review_start_date => DateTime.civil_from_format(:local, 2012, 1, 1),
-                                             :review_end_date   => DateTime.civil_from_format(:local, 2012, 1, 10))
+                                             :review_start_date => Date.new(2012, 1, 1),
+                                             :review_end_date   => Date.new(2012, 1, 10))
         prop.status_string.should == "Set-Aside (Reviewed from January  1, 2012 to January 10, 2012)"
     end
     it "should print the vote end dates for a Passed proposal" do
         prop = FactoryGirl.create(:proposal, :status => 'Passed', 
-                                             :vote_end_date => DateTime.civil_from_format(:local, 2012, 2, 1))
+                                             :vote_end_date => Date.new(2012, 2, 1))
         prop.status_string.should == "Passed on February  1, 2012"
     end
     it "should print the vote end dates for a Failde proposal" do
         prop = FactoryGirl.create(:proposal, :status => 'Failed', 
-                                             :vote_end_date => DateTime.civil_from_format(:local, 2012, 2, 1))
+                                             :vote_end_date => Date.new(2012, 2, 1))
         prop.status_string.should == "Failed on February  1, 2012"
     end
   end
@@ -219,7 +219,7 @@ describe Proposal do
   describe "with existing Review+Submitted proposals" do
     before(:each) do
         # review proposal which will be advanced
-        @p1 = FactoryGirl.create(:proposal, :status => 'Review', :review_end_date => Time.now - 1.minute)
+        @p1 = FactoryGirl.create(:proposal, :status => 'Review', :review_end_date => Date.today.prev_day(1))
         @r1 = FactoryGirl.create(:revision, :proposal => @p1)
 
         # submitted proposal which will not be advanced
@@ -227,7 +227,7 @@ describe Proposal do
         @r2 = FactoryGirl.create(:revision, :proposal => @p2)
 
         # review proposal which will NOT be advanced (due to date)
-        @p3 = FactoryGirl.create(:proposal, :status => 'Review', :review_end_date => Time.now + 3.days)
+        @p3 = FactoryGirl.create(:proposal, :status => 'Review', :review_end_date => Date.today)
         @r3 = FactoryGirl.create(:revision, :proposal => @p3)
 
         ActionMailer::Base.deliveries.clear
@@ -259,11 +259,11 @@ describe Proposal do
   describe "with 'Voting' proposals" do
       before(:each) do
           # voting proposal which will NOT be advanced (due to date)
-          @p4 = FactoryGirl.create(:proposal, :status => 'Voting', :vote_end_date => Time.now + 1.days)
+          @p4 = FactoryGirl.create(:proposal, :status => 'Voting', :vote_end_date => Date.today)
           @r4 = FactoryGirl.create(:revision, :proposal => @p4)
 
           # voting proposal which will be failed (due to no votes)
-          @p5 = FactoryGirl.create(:proposal, :status => 'Voting', :vote_end_date => Time.now - 1.hours)
+          @p5 = FactoryGirl.create(:proposal, :status => 'Voting', :vote_end_date => Date.today.prev_day(1))
           @r5 = FactoryGirl.create(:revision, :proposal => @p5)
 
           FactoryGirl.create(:committee_member, :committee => @p4.committee)

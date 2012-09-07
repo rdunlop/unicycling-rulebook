@@ -136,7 +136,7 @@ describe ProposalsController do
       end
       it "sets the submit_date when created" do
         post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
-        ((assigns(:proposal).submit_date - Time.now).abs / 1.days).should < 1
+        (assigns(:proposal).submit_date - Date.today).should == 0
       end
       it "sends an e-mail when a new submission is created" do
         post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
@@ -239,9 +239,8 @@ describe ProposalsController do
         response.should redirect_to(proposal_path(proposal))
         proposal = Proposal.find(proposal.id)
         proposal.status.should == "Voting"
-        # the following subtraction yields fractions-of-a-day
-        ((Time.now - proposal.vote_start_date).abs / 1.days).should < 1
-        ((proposal.vote_end_date - Time.now) / 1.days).should be_within(0.1).of(7)
+        (Date.today - proposal.vote_start_date).should == 0
+        (proposal.vote_end_date - Date.today).should == 7
     end
 
     it "should not be allowed to change unless the status is Pre-Voting" do
@@ -276,9 +275,8 @@ describe ProposalsController do
         response.should redirect_to(proposal_path(proposal))
         proposal = Proposal.find(proposal.id)
         proposal.status.should == "Review"
-        # the following subtraction yields fractions-of-a-day
-        ((Time.now - proposal.review_start_date).abs / 1.days).should < 1
-        ((proposal.review_end_date - Time.now) / 1.days).should be_within(0.1).of(10)
+        (Date.today - proposal.review_start_date).should == 0
+        (proposal.review_end_date - Date.today).should == 10
     end
     it "should send an e-mail" do
         proposal = @proposal
@@ -297,8 +295,8 @@ describe ProposalsController do
         response.should redirect_to(proposal_path(proposal))
         proposal = Proposal.find(proposal.id)
         proposal.status.should == "Review"
-        # the following subtraction yields fractions-of-a-day
-        ((proposal.review_start_date - Time.now).abs / 1.days).should < 1
+        (proposal.review_start_date - Date.today).should == 0
+        (proposal.review_end_date - Date.today).should == 10
     end
 
     it "should not be allowed to change unless the status is Submitted" do

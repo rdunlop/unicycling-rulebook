@@ -13,12 +13,12 @@ class Proposal < ActiveRecord::Base
     # This is the auto-updated function CLASS METHOD
     def self.update_states
         Proposal.all.each do |proposal|
-            if proposal.status == 'Review' and proposal.review_end_date <= Time.now
+            if proposal.status == 'Review' and proposal.review_end_date < Date.today
                 proposal.status = 'Pre-Voting'
                 puts "Changing Proposal #{proposal.title} from Review to Pre-Voting"
                 proposal.save
                 UserMailer.proposal_finished_review(proposal).deliver
-            elsif proposal.status == 'Voting' and (proposal.vote_end_date <= Time.now or proposal.all_voting_members_voted)
+            elsif proposal.status == 'Voting' and (proposal.vote_end_date < Date.today or proposal.all_voting_members_voted)
                 if proposal.have_voting_quorum and proposal.at_least_two_thirds_agree
                     proposal.status = 'Passed'
                 else

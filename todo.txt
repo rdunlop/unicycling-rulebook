@@ -1,9 +1,25 @@
 Friday To-Do:
 
-- Get heroku scheduler to run every hour
-  - Determine delayed-send heroku? for auto-advancing of the proposals.
+Done - Get heroku scheduler to run every hour
+Done  - Determine delayed-send heroku? for auto-advancing of the proposals.
 
 - Look at the old implementation of date-time to see if it should be rounded to the next-day, or not.
+
+- Add ability for Admin to adjust the admin status of another user.
+ - Add ability for a user to be set as an "admin" for a committee
+
+- The New Proposal "Comittee" selection should ONLY be the committees that I am a member of.
+
+- Add option to "auto-enroll" people to a given group (include option about whether they are a voting member by default or not)
+
+- Add freeform text box to application
+
+- "Do not send me e-mails"
+- "send me e-mail once a week"
+- Add interface to allow people to modify these settings for themselves easily.
+- Update the e-mails with a footer which talks about how to modify these settings
+ - Receive e-mails for comments/proposals/votes options
+
 
 - Remove indication of who-voted-what based on Olaf.
 - display "who voted" for admins
@@ -12,19 +28,7 @@ Friday To-Do:
   - Add indicators to show whether the proposal will pass/fail based on the quorum rules.
 - Display indicators which say that "Your name will not be displayed along with your vote."
 
-- Add ability for Admin to adjust the admin status of another user.
-- The New Proposal "Comittee" selection should ONLY be the committees that I am a member of.
 
-- Add option to "auto-enroll" people to a given group (include option about whether they are a voting member by default or not)
-
-- Ability for public to "read" proposals that have "passed".
-
-- "Do not send me e-mails"
-- "send me e-mail once a week"
-- Add interface to allow people to modify these settings for themselves easily.
-- Update the e-mails with a footer which talks about how to modify these settings
-
-- Add freeform text box to application
 - Add Conf table which allows admin to specify the time-delay for many things
 - Send an e-mail to the admin whenever a new application is receieved.
 
@@ -33,7 +37,12 @@ Friday To-Do:
 - REVOKE my gmail password, and create a new gmail account for using?
 
 
+- Olaf, should I remove the requirement that a "disagree" vote have a comment? (this conflicts slightly with the 'should not know who voted what' requirement)
+
 - Ask Olaf which statuses should "PUBLIC" be allowed to see proposals....Passed? Other?
+- Ability for public to "read" proposals that have "passed".
+ - Ability for public to "read" proposals and comments while they are in progress. But not comment. Configurable?
+
 
 - Learn why self.number_of_votincg_members gives me private/public error
 
