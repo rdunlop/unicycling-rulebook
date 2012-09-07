@@ -3,9 +3,9 @@ Friday To-Do:
 Done - Get heroku scheduler to run every hour
 Done  - Determine delayed-send heroku? for auto-advancing of the proposals.
 
-- Look at the old implementation of date-time to see if it should be rounded to the next-day, or not.
+Done - Look at the old implementation of date-time to see if it should be rounded to the next-day, or not.
 
-- Add ability for Admin to adjust the admin status of another user.
+#####- Add ability for Admin to adjust the admin status of another user.
  - Add ability for a user to be set as an "admin" for a committee
 
 - The New Proposal "Comittee" selection should ONLY be the committees that I am a member of.
@@ -20,6 +20,7 @@ Done  - Determine delayed-send heroku? for auto-advancing of the proposals.
 - Update the e-mails with a footer which talks about how to modify these settings
  - Receive e-mails for comments/proposals/votes options
 
+- Allow Tabling of proposals
 
 - Remove indication of who-voted-what based on Olaf.
 - display "who voted" for admins
@@ -28,6 +29,10 @@ Done  - Determine delayed-send heroku? for auto-advancing of the proposals.
   - Add indicators to show whether the proposal will pass/fail based on the quorum rules.
 - Display indicators which say that "Your name will not be displayed along with your vote."
 
+
+- LEARN why I don't need to have attr_accessible :admin in the committee_member model.
+
+- Don't allow the same user to be added to a committee 2x.
 
 - Add Conf table which allows admin to specify the time-delay for many things
 - Send an e-mail to the admin whenever a new application is receieved.

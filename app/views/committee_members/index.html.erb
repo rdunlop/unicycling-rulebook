@@ -4,6 +4,7 @@
   <tr>
     <th>User</th>
     <th>Email</th>
+    <th>Admin</th>
     <th>Voting</th>
     <th></th>
     <th></th>
@@ -13,6 +14,7 @@
   <tr>
     <td><%= committee_member.user %></td>
     <td><%= committee_member.user.email %></td>
+    <td><%= committee_member.admin %></td>
     <td><%= committee_member.voting %></td>
     <td><%= link_to 'Edit', edit_committee_committee_member_path(@committee, committee_member) %></td>
     <td><%= link_to 'Destroy', [@committee, committee_member], confirm: 'Are you sure?', method: :delete %></td>

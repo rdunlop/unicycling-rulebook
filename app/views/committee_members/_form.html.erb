@@ -16,6 +16,10 @@
     <%= f.select(:user_id, User.all.map{ |e| [e, e.id]}) %>
   </div>
   <div class="field">
+    <%= f.label :admin %><br />
+    <%= f.check_box :admin %>
+  </div>
+  <div class="field">
     <%= f.label :voting %><br />
     <%= f.check_box :voting %>
   </div>

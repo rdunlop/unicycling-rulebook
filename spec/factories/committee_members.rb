@@ -4,6 +4,7 @@ FactoryGirl.define do
   factory :committee_member do
     committee # FactoryGirl
     user #FactoryGirl
+    admin false
     voting true
   end
 end

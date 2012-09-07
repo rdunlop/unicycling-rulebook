@@ -31,6 +31,7 @@ describe CommitteeMembersController do
   # update the return value of this method accordingly.
   def valid_attributes
     { user_id: @user.id,
+      admin: false,
       voting: true
     }
   end
@@ -107,6 +108,11 @@ describe CommitteeMembersController do
         post :create, {:committee_member => valid_attributes, :committee_id => @committee.id}
         assigns(:committee_member).should be_a(CommitteeMember)
         assigns(:committee_member).should be_persisted
+        assigns(:committee_member).admin.should == false
+      end
+      it "sets the admin status correctly" do
+        post :create, {:committee_member => {user_id: @user.id, admin: true, voting: false }, :committee_id => @committee.id}
+        assigns(:committee_member).admin.should == true
       end
 
       it "redirects to the created committee_member" do
