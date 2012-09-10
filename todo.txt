@@ -6,9 +6,13 @@ Done  - Determine delayed-send heroku? for auto-advancing of the proposals.
 Done - Look at the old implementation of date-time to see if it should be rounded to the next-day, or not.
 
 #####- Add ability for Admin to adjust the admin status of another user.
- - Add ability for a user to be set as an "admin" for a committee
+Done - Add ability for a user to be set as an "admin" for a committee
 
-- The New Proposal "Comittee" selection should ONLY be the committees that I am a member of.
+Done - The New Proposal "Comittee" selection should ONLY be the committees that I am a member of.
+
+Done - Allow Tabling of proposals
+
+Done - Don't allow the same user to be added to a committee 2x.
 
 - Add option to "auto-enroll" people to a given group (include option about whether they are a voting member by default or not)
 
@@ -20,7 +24,6 @@ Done - Look at the old implementation of date-time to see if it should be rounde
 - Update the e-mails with a footer which talks about how to modify these settings
  - Receive e-mails for comments/proposals/votes options
 
-- Allow Tabling of proposals
 
 - Remove indication of who-voted-what based on Olaf.
 - display "who voted" for admins
@@ -34,7 +37,6 @@ Done - Look at the old implementation of date-time to see if it should be rounde
 - Add unit tests for user:is_in_committee/etc methods
 - LEARN why I don't need to have attr_accessible :admin in the committee_member model.
 
-- Don't allow the same user to be added to a committee 2x.
 
 - Add Conf table which allows admin to specify the time-delay for many things
 - Send an e-mail to the admin whenever a new application is receieved.
