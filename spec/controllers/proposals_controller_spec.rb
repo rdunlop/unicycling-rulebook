@@ -87,19 +87,34 @@ describe ProposalsController do
     it "should set the owner to be the current-logged-in user" do
       get :new, {}
       assigns(:proposal).owner.should == @admin_user
+      assigns(:committees).should == [@committee]
     end
     it "should also have a @revision" do
       get :new, {}
       assigns(:revision).should be_a_new(Revision)
     end
+    it "should not show committees I am not a member of" do
+      FactoryGirl.create(:committee)
+      get :new, {}
+      assigns(:committees).should == [@committee]
+    end
   end
 
   describe "GET edit" do
     it "assigns the requested proposal as @proposal" do
-      proposal = FactoryGirl.create(:proposal)
+      proposal = FactoryGirl.create(:proposal, :committee => @committee)
       revision = FactoryGirl.create(:revision, :proposal => proposal)
       get :edit, {:id => proposal.to_param}
       assigns(:proposal).should eq(proposal)
+      assigns(:committees).should == [@committee]
+    end
+    it "should not show committees that I am not a member of" do
+      proposal = FactoryGirl.create(:proposal, :committee => @committee)
+      revision = FactoryGirl.create(:revision, :proposal => proposal)
+      FactoryGirl.create(:committee)
+      get :edit, {:id => proposal.to_param}
+      assigns(:proposal).should eq(proposal)
+      assigns(:committees).should == [@committee]
     end
     describe "as a committee-admin for the same committee" do
         before(:each) do

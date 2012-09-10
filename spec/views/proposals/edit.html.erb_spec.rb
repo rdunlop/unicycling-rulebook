@@ -4,6 +4,7 @@ describe "proposals/edit" do
   before(:each) do
     @proposal = FactoryGirl.create(:proposal)
     @revision = FactoryGirl.create(:revision, :proposal => @proposal)
+    @committees = [FactoryGirl.create(:committee)]
   end
 
   it "renders the edit proposal form" do

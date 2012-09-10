@@ -40,6 +40,7 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.new
     @proposal.owner = current_user
     @revision = Revision.new
+    @committees = current_user.committees
 
     respond_to do |format|
       format.html # new.html.erb
@@ -50,6 +51,7 @@ class ProposalsController < ApplicationController
   # GET /proposals/1/edit
   def edit
     @proposal = Proposal.find(params[:id])
+    @committees = current_user.committees
   end
 
   # POST /proposals
