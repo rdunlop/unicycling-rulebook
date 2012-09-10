@@ -17,7 +17,7 @@
         <%= link_to('Approve', set_review_proposal_path(@proposal), :method => :put) %>
         |
     <% elsif @proposal.status == 'Tabled' %>
-        <%= link_to('Un-Table (return to discussion)', approve_proposal_path(@proposal)) %>
+        <%= link_to('Un-Table (return to discussion)', set_review_proposal_path(@proposal), :method => :put) %>
         |
     <% elsif @proposal.status == 'Voting' %>
         <%= link_to('Modify Votes', proposal_votes_path(@proposal)) %>
@@ -44,7 +44,7 @@
     <% if @proposal.status == 'Submitted' or
           @proposal.status == 'Review' or
           @proposal.status == 'Pre-Voting' %>
-          <%= link_to 'Table', table_proposal_path(@proposal) %>
+          <%= link_to('Table', table_proposal_path(@proposal), :method => :put) %>
           |
           <%= link_to 'Revise', new_proposal_revision_path(@proposal) %> |
     <% else %>

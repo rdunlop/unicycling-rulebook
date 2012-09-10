@@ -165,7 +165,7 @@ describe ProposalsController do
       end
       it "sets the submit_date when created" do
         post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
-        (assigns(:proposal).submit_date - Date.today).should == 0
+        assigns(:proposal).submit_date.should == Date.today
       end
       it "sends an e-mail when a new submission is created" do
         post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
@@ -281,7 +281,7 @@ describe ProposalsController do
         response.should redirect_to(proposal_path(proposal))
         proposal = Proposal.find(proposal.id)
         proposal.status.should == "Voting"
-        (Date.today - proposal.vote_start_date).should == 0
+        proposal.vote_start_date.should == Date.today
         (proposal.vote_end_date - Date.today).should == 7
     end
 
@@ -331,7 +331,7 @@ describe ProposalsController do
         response.should redirect_to(proposal_path(proposal))
         proposal = Proposal.find(proposal.id)
         proposal.status.should == "Review"
-        (Date.today - proposal.review_start_date).should == 0
+        proposal.review_start_date.should == Date.today
         (proposal.review_end_date - Date.today).should == 10
     end
     it "should send an e-mail" do
@@ -351,7 +351,7 @@ describe ProposalsController do
         response.should redirect_to(proposal_path(proposal))
         proposal = Proposal.find(proposal.id)
         proposal.status.should == "Review"
-        (proposal.review_start_date - Date.today).should == 0
+        proposal.review_start_date.should == Date.today
         (proposal.review_end_date - Date.today).should == 10
     end
 
@@ -429,6 +429,49 @@ describe ProposalsController do
         response.should render_template("edit")
         proposal = Proposal.find(proposal.id)
         proposal.status.should == "Tabled"
+    end
+  end
+  describe "PUT table" do
+    before(:each) do
+        sign_out @admin_user
+        sign_in @admin_user
+    end
+
+    it "changes the status to Tabled from review" do
+        proposal = FactoryGirl.create(:proposal, :status => "Review")
+
+        put :table, {:id => proposal.to_param}
+
+        response.should redirect_to(proposal_path(proposal))
+        proposal = Proposal.find(proposal.id)
+        proposal.status.should == "Tabled"
+        proposal.tabled_date == Date.today
+    end
+    it "changes the status to Tabled from Pre-Voting" do
+        proposal = FactoryGirl.create(:proposal, :status => "Pre-Voting")
+
+        put :table, {:id => proposal.to_param}
+
+        response.should redirect_to(proposal_path(proposal))
+        proposal = Proposal.find(proposal.id)
+        proposal.status.should == "Tabled"
+    end
+    it "should set the tabled_date" do
+        proposal = FactoryGirl.create(:proposal, :status => "Pre-Voting")
+
+        put :table, {:id => proposal.to_param}
+
+        proposal.reload
+        proposal.tabled_date.should == Date.today
+    end
+    it "does not allow changing to Tabled from Voting" do
+        proposal = FactoryGirl.create(:proposal, :status => "Voting")
+
+        put :table, {:id => proposal.to_param}
+
+        response.should render_template("show")
+        proposal = Proposal.find(proposal.id)
+        proposal.status.should == "Voting"
     end
   end
 end

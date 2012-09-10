@@ -184,4 +184,27 @@ class ProposalsController < ApplicationController
       end
     end
   end
+
+  # PUT /proposals/1/table
+  def table
+    @proposal = Proposal.find(params[:id])
+
+    if (@proposal.status == "Pre-Voting" or @proposal.status == "Review")
+        proceed = true
+    else
+        proceed = false
+    end
+    @proposal.status = "Tabled"
+    @proposal.tabled_date = Date.today()
+
+    respond_to do |format|
+      if proceed and @proposal.save
+        format.html { redirect_to @proposal, notice: 'Proposal has been Set-Aside' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "show" }
+        format.json { render json: @proposal.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end
