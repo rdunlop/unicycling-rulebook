@@ -11,7 +11,11 @@ class WelcomeController < ApplicationController
       end
     end
     @committees = @proposals.map {|p| p.committee}.uniq{|c| c.id}
-    @user_votes = current_user.votes
+    if user_signed_in?
+        @user_votes = current_user.votes
+    else
+        @user_votes = []
+    end
   end
 
   def help
