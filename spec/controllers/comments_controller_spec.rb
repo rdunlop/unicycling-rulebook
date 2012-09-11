@@ -20,7 +20,6 @@ require 'spec_helper'
 
 describe CommentsController do
   before(:each) do
-    ActionMailer::Base.deliveries.clear
 
     @proposal = FactoryGirl.create(:proposal)
 
@@ -55,6 +54,7 @@ describe CommentsController do
       end
 
       it "sends an e-mail" do
+        ActionMailer::Base.deliveries.clear
         post :create, {:comment => valid_attributes, :proposal_id => @proposal.id}
         num_deliveries = ActionMailer::Base.deliveries.size
         num_deliveries.should == 1

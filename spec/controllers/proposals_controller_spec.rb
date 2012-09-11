@@ -20,7 +20,6 @@ require 'spec_helper'
 
 describe ProposalsController do
   before (:each) do
-    ActionMailer::Base.deliveries.clear
     @committee = FactoryGirl.create(:committee)
 
     @user = FactoryGirl.create(:user)
@@ -168,6 +167,7 @@ describe ProposalsController do
         assigns(:proposal).submit_date.should == Date.today
       end
       it "sends an e-mail when a new submission is created" do
+        ActionMailer::Base.deliveries.clear
         post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
         num_deliveries = ActionMailer::Base.deliveries.size
         num_deliveries.should == 1
@@ -296,6 +296,7 @@ describe ProposalsController do
     end
     it "sholud send an e-mail" do
         proposal = FactoryGirl.create(:proposal, :status => "Pre-Voting")
+        ActionMailer::Base.deliveries.clear
 
         put :set_voting, {:id => proposal.to_param}
         num_deliveries = ActionMailer::Base.deliveries.size
@@ -336,6 +337,7 @@ describe ProposalsController do
     end
     it "should send an e-mail" do
         proposal = @proposal
+        ActionMailer::Base.deliveries.clear
 
         put :set_review, {:id => proposal.to_param}
 

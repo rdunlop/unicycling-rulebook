@@ -20,7 +20,6 @@ require 'spec_helper'
 
 describe RevisionsController do
   before(:each) do
-    ActionMailer::Base.deliveries.clear
     @proposal = FactoryGirl.create(:proposal)
     @revision = FactoryGirl.create(:revision, :proposal => @proposal)
 
@@ -78,6 +77,7 @@ describe RevisionsController do
         Revision.last.proposal.should == @proposal
       end
       it "sends an e-mail when a new revision is created" do
+        ActionMailer::Base.deliveries.clear
         post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}
         num_deliveries = ActionMailer::Base.deliveries.size
         num_deliveries.should == 1

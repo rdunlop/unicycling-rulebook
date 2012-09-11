@@ -13,5 +13,6 @@ FactoryGirl.define do
     factory :admin_user do
         admin true
     end
+    after_create { |user| user.confirm! }
   end
 end

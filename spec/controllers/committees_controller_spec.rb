@@ -227,7 +227,7 @@ describe CommitteesController do
     it "should assign all users as @users" do
       get :membership
       response.should be_success
-      assigns(:users).should == [@user, @admin_user]
+      assigns(:users).should =~ [@user, @admin_user]
     end
   end
 end
