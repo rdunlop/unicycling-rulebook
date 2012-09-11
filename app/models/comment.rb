@@ -5,4 +5,6 @@ class Comment < ActiveRecord::Base
     validates :proposal, :presence => true
     validates :user, :presence => true
     validates :comment, :presence => true
+
+    attr_accessible :comment
 end

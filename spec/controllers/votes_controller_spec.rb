@@ -32,7 +32,8 @@ describe VotesController do
   # Vote. As you add validations to Vote, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { vote: 'agree'
+    { vote: 'agree',
+      comment: ''
     }
   end
   

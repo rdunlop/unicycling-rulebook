@@ -34,6 +34,7 @@ describe ProposalsController do
   def valid_attributes
     {
         title: "My Title",
+        summary: "my summary",
         committee_id: @committee.id}
   end
   
@@ -201,6 +202,31 @@ describe ProposalsController do
         # submitted in the request.
         Proposal.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, {:id => proposal.to_param, :proposal => {'these' => 'params'}}
+      end
+      it "can update all of the fields" do
+        proposal = FactoryGirl.create(:proposal)
+        review_start_date = Date.today
+        review_end_date = Date.today.next_day(1)
+        vote_start_date = Date.today.next_month(1)
+        vote_end_date = Date.today.next_day(1).next_month(1)
+        attrs = {   title: "some",
+                    committee_id: proposal.committee,
+                    status: "Review",
+                    review_start_date: review_start_date,
+                    review_end_date: review_end_date,
+                    vote_start_date: vote_start_date,
+                    vote_end_date: vote_end_date }
+
+        put :update, {:id => proposal.to_param, :proposal => attrs}
+
+        response.should redirect_to(proposal)
+        proposal.reload
+        proposal.review_start_date.should == review_start_date
+        proposal.review_end_date.should == review_end_date
+        proposal.vote_start_date.should == vote_start_date
+        proposal.vote_end_date.should == vote_end_date
+        proposal.status.should == "Review"
+        proposal.title.should == "some"
       end
 
       it "assigns the requested proposal as @proposal" do

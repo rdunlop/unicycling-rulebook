@@ -7,6 +7,8 @@ class Vote < ActiveRecord::Base
     validates :comment, :presence => true, :if => "vote == 'disagree'"
     validates :vote, :inclusion => { :in => [ 'agree', 'disagree', 'abstain' ] }
 
+    attr_accessible :vote, :comment
+
     def to_s
         if self.new_record?
             return ""
