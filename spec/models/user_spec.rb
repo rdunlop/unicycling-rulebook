@@ -33,4 +33,10 @@ describe User do
 
         user.voting_text(cm.committee).should == "Non-Voting Member"
     end
+    it "should be able to list its votes" do
+        user = FactoryGirl.create(:user)
+        vote = FactoryGirl.create(:vote, :user => user)
+
+        user.votes.should == [vote]
+    end
 end

@@ -26,7 +26,7 @@ proposals.each do |p|
         </h4>
     <% else %>
         <small><i><%= p.status_summary %></i></small>
-        <strong><%= p.vote_detail(user) %></strong>
+        <strong><%= p.vote_detail(votes) %></strong>
     <% end %>
     <hr />
     <%

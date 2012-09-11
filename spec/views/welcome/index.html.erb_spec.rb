@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "welcome/index" do
 
   it "renders a link to create a new proposal when none exist" do
+    @committees = []
     @proposals = []
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
@@ -11,10 +12,16 @@ describe "welcome/index" do
 
   describe "when a proposal exists" do
     before(:each) do
-        @proposals = [FactoryGirl.create(:proposal)]
+        @proposal = FactoryGirl.create(:proposal)
+        @proposals = [@proposal]
+        @committees = [@proposals.first.committee]
         assign(:votes, [
             FactoryGirl.create(:vote, :proposal => @proposal),
             FactoryGirl.create(:vote, :proposal => @proposal)])
+        render
+    end
+    it "should find the proposal title" do
+        rendered.should match(@proposal.title)
     end
   end
 end

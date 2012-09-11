@@ -10,6 +10,8 @@ class WelcomeController < ApplicationController
         end
       end
     end
+    @committees = @proposals.map {|p| p.committee}.uniq{|c| c.id}
+    @user_votes = current_user.votes
   end
 
   def help

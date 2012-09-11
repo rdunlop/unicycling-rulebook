@@ -126,9 +126,9 @@ public
         end
     end
 
-    def vote_detail(user)
-        votes.each do |v|
-            if v.user == user
+    def vote_detail(user_votes)
+        user_votes.each do |v|
+            if v.proposal == self
                 return v.vote
             end
         end

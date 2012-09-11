@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
 
   has_many :committee_members
   has_many :committees, :through => :committee_members
+  has_many :votes
 
   validates :name, :presence => true
 
