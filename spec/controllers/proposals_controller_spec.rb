@@ -77,6 +77,14 @@ describe ProposalsController do
       get :show, {:id => proposal.to_param}
       assigns(:vote).should == vote
     end
+    it "should be able to see 'Review' proposal when not logged in" do
+      proposal = FactoryGirl.create(:proposal)
+      sign_out @admin_user
+
+      get :show, {:id => proposal.to_param}
+
+      assigns(:proposal).should eq(proposal)
+    end
   end
 
   describe "GET new" do

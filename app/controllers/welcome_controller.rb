@@ -3,11 +3,9 @@ class WelcomeController < ApplicationController
 
   def index
     @proposals = []
-    if user_signed_in?
-      Proposal.all.each do |p|
-        if can? :read, p
-          @proposals += [p]
-        end
+    Proposal.all.each do |p|
+      if can? :read, p
+        @proposals += [p]
       end
     end
     @committees = @proposals.map {|p| p.committee}.uniq{|c| c.id}

@@ -86,5 +86,17 @@ describe WelcomeController do
         get :index, {}
         assigns(:proposals).should eq([])
     end
+    describe "when not signed in" do
+        before(:each) do
+            sign_out @user
+        end
+
+        it "should show all proposals that are not 'Submitted'" do
+            # @proposal is 'Submitted'
+            proposal = FactoryGirl.create(:proposal, :status => 'Review')
+            get :index, {}
+            assigns(:proposals).should eq([proposal])
+        end
+    end
   end
 end

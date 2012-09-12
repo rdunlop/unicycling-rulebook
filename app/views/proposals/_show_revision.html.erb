@@ -101,4 +101,6 @@
         <%= render :partial => "/comments/show", :object => comment %>
     <% end%>
 <% end %>
-<%= render :partial => "/comments/form", :object => @comment %>
+<% if can? :create, Comment %>
+    <%= render :partial => "/comments/form", :object => @comment %>
+<% end %>

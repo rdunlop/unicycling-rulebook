@@ -1,5 +1,5 @@
 class ProposalsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:show]
   load_and_authorize_resource
 
   # GET /proposals/passed
@@ -17,7 +17,9 @@ class ProposalsController < ApplicationController
   # GET /proposals/1.json
   def show
     @proposal = Proposal.find(params[:id])
-    @comment = @proposal.comments.new
+    if can? :create, Comment
+        @comment = @proposal.comments.new
+    end
 
     if can? :vote, @proposal
         @vote = @proposal.votes.new

@@ -3,10 +3,13 @@ class Ability
 
   def initialize(user)
     if user.nil?
+        can [:read], Proposal do |proposal|
+            proposal.status != 'Submitted'
+        end
+        user ||= User.new # default user if not signed in
         return # no permissions
     end
 
-    #??? user ||= User.new # default user if not signed in
 
     # SUPER ADMIN can do anything
     if user.admin
