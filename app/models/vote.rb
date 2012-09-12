@@ -4,7 +4,6 @@ class Vote < ActiveRecord::Base
 
     validates :proposal, :presence => true
     validates :user, :presence => true
-    validates :comment, :presence => true, :if => "vote == 'disagree'"
     validates :vote, :inclusion => { :in => [ 'agree', 'disagree', 'abstain' ] }
 
     attr_accessible :vote, :comment

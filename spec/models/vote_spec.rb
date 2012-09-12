@@ -21,13 +21,12 @@ describe Vote do
     vote.valid?.should == true
   end
 
-  it "should require a comment if the vote is 'disagree'" do
+  it "should not require a comment" do
     vote = Vote.new
     vote.vote = 'agree'
     vote.proposal = FactoryGirl.create(:proposal)
     vote.user = FactoryGirl.create(:user)
-    vote.vote = 'disagree'
-    vote.valid?.should == false
+    vote.valid?.should == true
 
     vote.comment = "this is why"
     vote.valid?.should == true
