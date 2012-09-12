@@ -11,6 +11,7 @@ describe UserMailer do
       @cm = FactoryGirl.create(:committee_member, :committee => @committee, :user => @user)
       @other_cm_user = FactoryGirl.create(:user)
       @cm2 = FactoryGirl.create(:committee_member, :committee => @committee, :user => @other_cm_user)
+      @proposal_id_title_and_committee = "Proposal " + @proposal.id.to_s + " - " + @proposal.title + " for " + @committee.name
   end
   describe "proposal_submitted" do
     before(:each) do
@@ -20,7 +21,7 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_submitted(@proposal) }
 
     it "renders the headers" do
-      mail.subject.should eq("New submission - Proposal " + @proposal.id.to_s + " - " + @proposal.title)
+      mail.subject.should eq("New submission of " + @proposal_id_title_and_committee)
       mail.to.should eq([@admin_user.email, @admin_user2.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
@@ -34,7 +35,7 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_comment_added(@proposal, @comment, @user) }
 
     it "renders the headers" do
-      mail.subject.should eq("Rulebook Committee 2012 - " + @committee.name)
+      mail.subject.should eq("Comment Added on " + @proposal_id_title_and_committee)
       mail.to.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
@@ -48,7 +49,7 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_revised(@proposal) }
 
     it "renders the headers" do
-      mail.subject.should eq("(Proposal " + @proposal.id.to_s + " New Revision - " + @proposal.title)
+      mail.subject.should eq("Revision to " + @proposal_id_title_and_committee)
       mail.to.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
@@ -62,7 +63,7 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_status_review(@proposal, true) }
 
     it "renders the headers" do
-      mail.subject.should eq("(Proposal " + @proposal.id.to_s + ") " + @proposal.title)
+      mail.subject.should eq("Proposal in Review: " + @proposal_id_title_and_committee)
       mail.to.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
@@ -73,10 +74,10 @@ describe UserMailer do
   end
 
   describe "vote_changed" do
-    let(:mail) { UserMailer.vote_changed(@committee, @user, 'disagree', 'abstain') }
+    let(:mail) { UserMailer.vote_changed(@proposal, @user, 'disagree', 'abstain') }
 
     it "renders the headers" do
-      mail.subject.should eq("Vote Changed")
+      mail.subject.should eq("Vote Changed on " + @proposal_id_title_and_committee)
       mail.to.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
@@ -111,7 +112,7 @@ describe UserMailer do
     let(:mail) { UserMailer.vote_submitted(@vote) }
 
     it "renders the headers" do
-      mail.subject.should eq("(Proposal " + @proposal.id.to_s + ") Vote from " + @vote.user.to_s + " [" + @proposal.title + "]")
+      mail.subject.should eq("Vote Submitted on " + @proposal_id_title_and_committee)
       mail.to.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
@@ -125,7 +126,7 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_finished_review(@proposal) }
 
     it "renders the headers" do
-      mail.subject.should eq("Proposal has finished the review period")
+      mail.subject.should eq("Review Period has concluded for " + @proposal_id_title_and_committee)
       mail.to.should eq([@proposal.owner.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
@@ -139,7 +140,7 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_call_for_voting(@proposal) }
 
     it "renders the headers" do
-      mail.subject.should eq("(Proposal " + @proposal.id.to_s + ") Call for voting")
+      mail.subject.should eq("Call for Voting on " + @proposal_id_title_and_committee)
       mail.to.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
@@ -153,7 +154,7 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_voting_result(@proposal, true) }
 
     it "renders the headers" do
-      mail.subject.should eq("Proposal voting result")
+      mail.subject.should eq("Voting Completed for " + @proposal_id_title_and_committee)
       mail.to.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end

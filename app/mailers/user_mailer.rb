@@ -21,6 +21,10 @@ class UserMailer < ActionMailer::Base
     emails
   end
 
+  def create_proposal_subject(proposal)
+    "Proposal " + proposal.id.to_s + " - " + proposal.title + " for " + proposal.committee.to_s
+  end
+
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
@@ -31,7 +35,7 @@ class UserMailer < ActionMailer::Base
     @body = proposal.latest_revision.body
     @title = proposal.title
 
-    mail to: create_admin_email, subject: 'New submission - Proposal ' + proposal.id.to_s + ' - ' + proposal.title
+    mail to: create_admin_email, subject: 'New submission of ' + create_proposal_subject(proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -46,7 +50,7 @@ class UserMailer < ActionMailer::Base
     @voting_status = user.voting_text(proposal.committee)
     @proposal = proposal
 
-    subject = "Rulebook Committee 2012 - " + proposal.committee.to_s
+    subject = "Comment Added on " + create_proposal_subject(proposal)
 
     mail to: create_committee_email(proposal.committee), subject: subject
   end
@@ -61,7 +65,7 @@ class UserMailer < ActionMailer::Base
     @change_description = proposal.latest_revision.change_description
     @body = proposal.latest_revision.body
 
-    mail to: create_committee_email(@proposal.committee), subject: '(Proposal ' + proposal.id.to_s + ' New Revision - ' + proposal.title
+    mail to: create_committee_email(@proposal.committee), subject: 'Revision to ' + create_proposal_subject(proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -74,7 +78,7 @@ class UserMailer < ActionMailer::Base
     @set_aside_message = was_tabled ? "This proposal was Set-Aside, but has been put back into the review stage." : ""
     @body = @proposal.latest_revision.body
 
-    mail to: create_committee_email(@proposal.committee), subject: "(Proposal " + @proposal.id.to_s + ") " + @proposal.title
+    mail to: create_committee_email(@proposal.committee), subject: "Proposal in Review: " + create_proposal_subject(@proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -82,12 +86,12 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.vote_changed.subject
   #
-  def vote_changed(committee, user, old_vote_string, new_vote_string)
+  def vote_changed(proposal, user, old_vote_string, new_vote_string)
     @name = user.to_s
     @old_vote = old_vote_string
     @new_vote = new_vote_string
 
-    mail to: create_committee_email(committee), subject: "Vote Changed"
+    mail to: create_committee_email(proposal.committee), subject: "Vote Changed on " + create_proposal_subject(proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -118,7 +122,7 @@ class UserMailer < ActionMailer::Base
     @vote_text = vote.vote
     @comments = vote.comment
 
-    mail to: create_committee_email(committee), subject: "(Proposal "  + @proposal.id.to_s + ") Vote from " + @name + " [" + @proposal.title + "]"
+    mail to: create_committee_email(committee), subject: "Vote Submitted on " + create_proposal_subject(@proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -130,7 +134,7 @@ class UserMailer < ActionMailer::Base
     @REVISIONTIME_TEXT = "3 days"
     @proposal = proposal
 
-    mail to: proposal.owner.email, subject: 'Proposal has finished the review period'
+    mail to: proposal.owner.email, subject: "Review Period has concluded for " + create_proposal_subject(@proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -142,7 +146,7 @@ class UserMailer < ActionMailer::Base
     @proposal = proposal
     @vote_end = proposal.vote_end_date.to_s
 
-    mail to: create_committee_email(@proposal.committee), subject: '(Proposal ' + @proposal.id.to_s + ') Call for voting'
+    mail to: create_committee_email(@proposal.committee), subject: 'Call for Voting on ' + create_proposal_subject(@proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -157,6 +161,6 @@ class UserMailer < ActionMailer::Base
     @num_disagree = proposal.disagree_votes
     @num_abstain = proposal.abstain_votes
 
-    mail to: create_committee_email(@proposal.committee)
+    mail to: create_committee_email(@proposal.committee), subject: 'Voting Completed for ' + create_proposal_subject(@proposal)
   end
 end
