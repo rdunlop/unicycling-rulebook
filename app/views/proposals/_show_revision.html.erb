@@ -74,7 +74,11 @@
     <h3>Change Log:</h3>
     <dl>
         <% @proposal.revisions.each do |rev| %>
-            <dt><b><%= link_to('Revision ' + rev.num.to_s, proposal_revision_path(@proposal, rev)) %>
+            <dt><b><% if can? :read, Revision %>
+                <%= link_to('Revision ' + rev.num.to_s, proposal_revision_path(@proposal, rev)) %>
+            <% else %>
+                <%= 'Revision ' + rev.num.to_s %>
+            <% end %>
             changed by <i><%= rev.user.to_s %></i> on <i><%= rev.created_at.to_s(:long) %></i>
             </b></dt>
             <dd><%= rev.change_description %></dd>
@@ -87,8 +91,10 @@
     <hr />
     <%= render :partial => "/proposals/vote_summary", :object => @proposal %>
     <p>
-    <% @proposal.votes.each do |v| %>
-        <%= render :partial => "/votes/show", :object => v %>
+    <% if can? :read, Vote %>
+        <% @proposal.votes.each do |v| %>
+            <%= render :partial => "/votes/show", :object => v %>
+        <% end %>
     <% end %>
     </p>
 <% end %>

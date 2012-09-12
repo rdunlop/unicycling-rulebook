@@ -6,10 +6,11 @@ class Ability
         can [:read], Proposal do |proposal|
             proposal.status != 'Submitted'
         end
-        user ||= User.new # default user if not signed in
+        can :passed, Proposal
         return # no permissions
     end
 
+    #??? user ||= User.new # default user if not signed in
 
     # SUPER ADMIN can do anything
     if user.admin
@@ -44,6 +45,9 @@ class Ability
 
         can :update, Proposal do |proposal|
             user.is_committee_admin(proposal.committee)
+        end
+        can :read, Vote do |vote|
+            user.is_committee_admin(vote.proposal.committee)
         end
 
         # Owner-specific

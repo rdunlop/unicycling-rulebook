@@ -47,6 +47,11 @@ describe ProposalsController do
       get :passed, {}
       assigns(:proposals).should eq([@proposal])
     end
+    it "can read the passed proposals when not signed in" do
+      sign_out @admin_user
+      get :passed, {}
+      assigns(:proposals).should eq([@proposal])
+    end
   end
 
   describe "GET show" do

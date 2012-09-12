@@ -1,5 +1,5 @@
 class ProposalsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show]
+  before_filter :authenticate_user!, :except => [:show, :passed]
   load_and_authorize_resource
 
   # GET /proposals/passed
