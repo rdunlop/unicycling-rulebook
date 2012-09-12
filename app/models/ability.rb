@@ -27,6 +27,7 @@ class Ability
         can :manage, Revision
         can :manage, Vote
         can :manage, Comment
+        can :manage, User
     else
         can :read, Committee
         can :membership, Committee
@@ -34,6 +35,7 @@ class Ability
         can :create, Vote
 
         can :create, Proposal
+        can :read, User
 
         can [:read], Proposal do |proposal|
             if proposal.status == 'Submitted'
