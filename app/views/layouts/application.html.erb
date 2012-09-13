@@ -26,10 +26,8 @@
         <% if user_signed_in? %>
             <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
         <% end %>
-        <% if can? :create, Committee %>
-            <li><%= link_to('Admin (Committee)', committees_path) %></li>
-            <% # XXX =link_to('Admin (Users)', users_path) 
-                %>
+        <% if can? :read, Committee %>
+            <li><%= link_to('Committees (Admin Pages)', committees_path) %></li>
         <% end %>
         <% if not user_signed_in? %>
             <li><%= link_to('Login', new_user_session_path) %></li>

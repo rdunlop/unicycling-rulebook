@@ -26,6 +26,7 @@ class RevisionsController < ApplicationController
     @revision.background = @proposal.latest_revision.background
     @revision.body = @proposal.latest_revision.body
     @revision.references = @proposal.latest_revision.references
+    authorize! :revise, @proposal
 
     respond_to do |format|
       format.html # new.html.erb
@@ -39,6 +40,7 @@ class RevisionsController < ApplicationController
     @revision = Revision.new(params[:revision])
     @revision.proposal = @proposal
     @revision.user = current_user
+    authorize! :revise, @proposal
 
     respond_to do |format|
       if @revision.save

@@ -1,12 +1,7 @@
 class VotesController < ApplicationController
   before_filter :authenticate_user!
-  load_and_authorize_resource
-
-  before_filter :load_proposal
-
-  def load_proposal
-    @proposal = Proposal.find(params[:proposal_id])
-  end
+  load_and_authorize_resource :proposal
+  load_and_authorize_resource :vote, :through => :proposal
 
   # GET /votes
   # GET /votes.json
@@ -42,7 +37,6 @@ class VotesController < ApplicationController
     @vote.proposal = @proposal
     @vote.user = current_user
     @comment = @proposal.comments.new
-    authorize! :vote, @proposal
 
     respond_to do |format|
       if @vote.save

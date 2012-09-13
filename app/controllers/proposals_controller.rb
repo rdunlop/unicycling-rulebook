@@ -21,12 +21,14 @@ class ProposalsController < ApplicationController
         @comment = @proposal.comments.new
     end
 
+    @proposal.votes.each do |v|
+        if v.user == current_user
+            @vote = v
+        end
+    end
     if can? :vote, @proposal
-        @vote = @proposal.votes.new
-        @proposal.votes.each do |v|
-            if v.user == current_user
-                @vote = v
-            end
+        if @vote.nil?
+            @vote = @proposal.votes.new
         end
     end
 

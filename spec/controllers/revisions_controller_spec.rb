@@ -63,6 +63,19 @@ describe RevisionsController do
           post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}
         }.to change(Revision, :count).by(1)
       end
+      describe "as a normal user" do
+        before(:each) do
+            sign_out @admin
+            @user = FactoryGirl.create(:user)
+            @prop = FactoryGirl.create(:proposal, :owner => @user, :status => 'Review')
+            cm = FactoryGirl.create(:committee_member, :user => @user, :committee => @prop.committee)
+            sign_in @user
+        end
+        it "can create a revision to my own proposal" do
+            post :create, {:revision => valid_attributes, :proposal_id => @prop.id}
+            assigns(:revision).should be_persisted
+        end
+      end
 
       it "assigns a newly created revision as @revision" do
         post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}

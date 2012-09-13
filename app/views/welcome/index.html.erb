@@ -57,7 +57,11 @@ To publicise the IUF Record Criteria and Liaison officers to the wider Unicyclin
 </p>
 
 <% if @proposals.empty? %>
-    <hr><h2>No proposals exist yet, but a <%= link_to('new proposal', new_proposal_path) %> can be created.</h2>
+    <hr><h2>No proposals exist yet
+    <% if can? :create, Proposal %>
+        , but a <%= link_to('new proposal', new_proposal_path) %> can be created.,
+    <% end %>
+    </h2>
 <% else %>
   <% @committees.each do |committee| %>
     <h2>Committee: <%= committee %></h2>

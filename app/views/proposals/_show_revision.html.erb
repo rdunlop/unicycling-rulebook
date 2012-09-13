@@ -6,7 +6,9 @@
 </h2>
 
 <b>Committee:</b> <%= @proposal.committee %><br />
-<b>Owner:</b> <%= @proposal.owner %><br />
+<% if can? :read_usernames, @proposal %>
+    <b>Owner:</b> <%= @proposal.owner %><br />
+<% end %>
 <b>Submitted</b> on <%= @proposal.submit_date %><br />
 <b>Status:</b> <strong><%= @proposal.status_string %></strong><br />
 
@@ -33,7 +35,7 @@
     <br />
 <% end %>
 
-<% if can? :administer, @proposal %>
+<% if can? :revise, @proposal %>
     <b><i>Options to owner:</i></b>
     <% if @proposal.status == 'Pre-Voting' %>
           <%= link_to 'Call for Votes', set_voting_proposal_path(@proposal), :method => :put %>
@@ -46,7 +48,9 @@
           @proposal.status == 'Pre-Voting' %>
           <%= link_to('Table', table_proposal_path(@proposal), :method => :put) %>
           |
-          <%= link_to 'Revise', new_proposal_revision_path(@proposal) %> |
+          <% if can? :revise, @proposal %>
+            <%= link_to 'Revise', new_proposal_revision_path(@proposal) %> |
+          <% end %>
     <% else %>
         No Options in this stage.
     <% end %>

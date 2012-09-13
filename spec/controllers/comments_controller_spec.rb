@@ -21,9 +21,11 @@ require 'spec_helper'
 describe CommentsController do
   before(:each) do
 
-    @proposal = FactoryGirl.create(:proposal)
+    @proposal = FactoryGirl.create(:proposal, :status => 'Review')
 
     @user = FactoryGirl.create(:user)
+    FactoryGirl.create(:committee_member, :committee => @proposal.committee, :user => @user)
+
     sign_in @user
   end
 

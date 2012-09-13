@@ -2,15 +2,16 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    if user.nil?
-        can [:read], Proposal do |proposal|
-            proposal.status != 'Submitted'
-        end
-        can :passed, Proposal
-        return # no permissions
-    end
 
-    #??? user ||= User.new # default user if not signed in
+    user ||= User.new # default user if not signed in
+
+    # PUBLIC can:
+    can [:read], Proposal do |proposal|
+        proposal.status != 'Submitted'
+    end
+    can :passed, Proposal
+    can :membership, Committee
+
 
     # SUPER ADMIN can do anything
     if user.admin
@@ -20,52 +21,70 @@ class Ability
         can :manage, Proposal
             #includes :set_pre_voting
             # and :set_review, :set_voting, :administer
+
         # remove 'vote' from the 'all' set 
         # (even administrators can't vote if not a voting member with proposal in 'voting' status)
         cannot :vote, Proposal
 
-        can :manage, Revision
         can :manage, Vote
+        can :manage, Revision
         can :manage, Comment
         can :manage, User
-    else
-        can :read, Committee
-        can :membership, Committee
-        can :create, Comment
-        can :create, Vote
-
-        can :create, Proposal
-        can :read, User
-
-        can [:read], Proposal do |proposal|
-            if proposal.status == 'Submitted'
-                user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
-            else
-                user.is_in_committee(proposal.committee)
-            end
-        end
-
-        can :update, Proposal do |proposal|
-            user.is_committee_admin(proposal.committee)
-        end
-        can :read, Vote do |vote|
-            user.is_committee_admin(vote.proposal.committee)
-        end
-
-        # Owner-specific
-        # Committee-admin-specific
-        can [:set_review, :set_voting], Proposal do |proposal|
-            user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
-        end
-
-        can :create, Revision do |revision|
-            revision.proposal.owner == user
-        end
     end
 
+    # Can only create comments if I am in the committee
+    can :create, Comment do |comment|
+        user.is_in_committee(comment.proposal.committee)
+    end
+
+    # Only voting members can vote
     can :vote, Proposal do |proposal|
         proposal.status == 'Voting' and user.voting_member(proposal.committee)
     end
+    can :create, Vote do |vote|
+        vote.proposal.status == 'Voting' and user.voting_member(vote.proposal.committee)
+    end
+
+    # You must be in a committee in order to be able to create a Proposal
+    can :create, Proposal if user.committees.count > 0
+
+    # only allow people to see the usernames if they are in the committee
+    can :read_usernames, Proposal do |proposal|
+        user.is_in_committee(proposal.committee)
+    end
+
+    can [:read], Proposal do |proposal|
+        if proposal.status == 'Submitted'
+            user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
+        else
+            user.is_in_committee(proposal.committee)
+        end
+    end
+
+    # Committee-Admin
+
+    can :read, Committee do |committee|
+        user.is_committee_admin(committee)
+    end
+    can :update, Proposal do |proposal|
+        user.is_committee_admin(proposal.committee)
+    end
+
+    can :read, Vote do |vote|
+        user.is_committee_admin(vote.proposal.committee)
+    end
+
+    can [:set_review], Proposal do |proposal|
+        user.is_committee_admin(proposal.committee)
+    end
+
+    # Owner-specific
+    # Committee-admin-specific
+
+    can [:revise, :set_voting], Proposal do |proposal|
+        user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
+    end
+    can :create, Revision
 
     # Define abilities for the passed in user here. For example:
     #

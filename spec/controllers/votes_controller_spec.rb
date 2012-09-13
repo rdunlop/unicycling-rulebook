@@ -65,7 +65,7 @@ describe VotesController do
   describe "GET edit" do
     describe "as normal user" do
       it "cannot view the edit page" do
-        vote = FactoryGirl.create(:vote)
+        vote = FactoryGirl.create(:vote, :proposal => @proposal)
         get :edit, {:id => vote.to_param, :proposal_id => @proposal.id}
         response.should redirect_to(root_path)
       end
@@ -77,7 +77,7 @@ describe VotesController do
         sign_in @admin_user
       end
       it "assigns the requested vote as @vote" do
-        vote = FactoryGirl.create(:vote)
+        vote = FactoryGirl.create(:vote, :proposal => @proposal)
         get :edit, {:id => vote.to_param, :proposal_id => @proposal.id}
         assigns(:vote).should eq(vote)
       end
@@ -189,7 +189,7 @@ describe VotesController do
         sign_in @admin_user
       end
       it "assigns the vote as @vote" do
-        vote = FactoryGirl.create(:vote)
+        vote = FactoryGirl.create(:vote, :proposal => @proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         Vote.any_instance.stub(:save).and_return(false)
         put :update, {:id => vote.to_param, :vote => {}, :proposal_id => @proposal.id}
@@ -197,7 +197,7 @@ describe VotesController do
       end
 
       it "re-renders the 'edit' template" do
-        vote = FactoryGirl.create(:vote)
+        vote = FactoryGirl.create(:vote, :proposal => @proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         Vote.any_instance.stub(:save).and_return(false)
         put :update, {:id => vote.to_param, :vote => {}, :proposal_id => @proposal.id}
@@ -208,7 +208,7 @@ describe VotesController do
 
   describe "DELETE destroy" do
     it "should not be allowed" do
-      vote = FactoryGirl.create(:vote)
+      vote = FactoryGirl.create(:vote, :proposal => @proposal)
       delete :destroy, {:id => vote.to_param, :proposal_id => @proposal.id}
       response.should redirect_to(root_path)
     end
@@ -218,14 +218,14 @@ describe VotesController do
         sign_in @admin_user
       end
       it "destroys the requested vote" do
-        vote = FactoryGirl.create(:vote)
+        vote = FactoryGirl.create(:vote, :proposal => @proposal)
         expect {
           delete :destroy, {:id => vote.to_param, :proposal_id => @proposal.id}
         }.to change(Vote, :count).by(-1)
       end
 
       it "redirects to the votes list" do
-        vote = FactoryGirl.create(:vote)
+        vote = FactoryGirl.create(:vote, :proposal => @proposal)
         delete :destroy, {:id => vote.to_param, :proposal_id => @proposal.id}
         response.should redirect_to(proposal_url(@proposal))
       end
