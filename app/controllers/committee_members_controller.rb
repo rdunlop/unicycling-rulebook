@@ -1,12 +1,7 @@
 class CommitteeMembersController < ApplicationController
   before_filter :authenticate_user!
-  load_and_authorize_resource
-
-  before_filter :load_committee
-
-  def load_committee
-    @committee = Committee.find(params[:committee_id])
-  end
+  load_and_authorize_resource :committee
+  load_and_authorize_resource :committee_member, :through => :committee
 
   # GET /committee_members
   # GET /committee_members.json

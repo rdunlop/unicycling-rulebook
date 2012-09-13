@@ -1,11 +1,7 @@
 class RevisionsController < ApplicationController
   before_filter :authenticate_user!
-  load_and_authorize_resource
-
-  before_filter :load_proposal
-  def load_proposal
-    @proposal = Proposal.find(params[:proposal_id])
-  end
+  load_and_authorize_resource :proposal
+  load_and_authorize_resource :revision, :through => :proposal
 
   # GET /revisions/1
   # GET /revisions/1.json
