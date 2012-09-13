@@ -1,5 +1,6 @@
 class Ability
   include CanCan::Ability
+  # very important reference: https://github.com/ryanb/cancan/wiki/Nested-Resources
 
   def initialize(user)
 
