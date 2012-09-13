@@ -40,7 +40,9 @@ describe CommitteesController do
       response.should redirect_to(new_user_session_path)
     end
 
-    it "assigns all committees as @committees" do
+    it "assigns all committees as @committees when admin user" do
+      sign_out @user
+      sign_in @admin_user
       committee = Committee.create! valid_attributes
       get :index, {}
       assigns(:committees).should eq([committee])
