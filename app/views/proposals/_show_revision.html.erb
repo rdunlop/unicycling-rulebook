@@ -95,8 +95,8 @@
     <hr />
     <%= render :partial => "/proposals/vote_summary", :object => @proposal %>
     <p>
-    <% if can? :read, Vote %>
-        <% @proposal.votes.each do |v| %>
+    <% @proposal.votes.each do |v| %>
+        <% if can? :read, v %>
             <%= render :partial => "/votes/show", :object => v %>
         <% end %>
     <% end %>
