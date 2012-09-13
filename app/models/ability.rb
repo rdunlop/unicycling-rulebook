@@ -63,9 +63,8 @@ class Ability
 
     # Committee-Admin
 
-    can :read, Committee do |committee|
-        user.is_committee_admin(committee)
-    end
+    can :read, Committee if user.is_committee_admin(nil)
+
     can :update, Proposal do |proposal|
         user.is_committee_admin(proposal.committee)
     end
@@ -85,6 +84,9 @@ class Ability
         user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
     end
     can :create, Revision
+    can :read, Revision do |revision|
+        user.is_committee_admin(revision.try(:proposal).try(:committee)) or revision.try(:proposal).try(:owner) == user
+    end
 
     # Define abilities for the passed in user here. For example:
     #

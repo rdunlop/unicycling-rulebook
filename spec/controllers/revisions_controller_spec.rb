@@ -21,7 +21,7 @@ require 'spec_helper'
 describe RevisionsController do
   before(:each) do
     @proposal = FactoryGirl.create(:proposal)
-    @revision = FactoryGirl.create(:revision, :proposal => @proposal)
+    @revision = FactoryGirl.create(:revision, :proposal => @proposal, :user_id => @proposal.owner)
 
     @admin = FactoryGirl.create(:admin_user)
     sign_in @admin
@@ -40,6 +40,16 @@ describe RevisionsController do
       revision = FactoryGirl.create(:revision, :proposal => @proposal)
       get :show, {:id => revision.to_param, :proposal_id => @proposal.id}
       assigns(:revision).should eq(revision)
+    end
+    it "can see the revision of a 'Submitted' proposal as a normal user" do
+      user = @proposal.owner
+      FactoryGirl.create(:committee_member, :committee => @proposal.committee, :user => user)
+      sign_out @admin
+      sign_in user
+      get :show, {:id => @revision.to_param, :proposal_id => @proposal.id}
+      assigns(:revision).should eq(@revision)
+      response.should be_success
+      response.should render_template("show")
     end
   end
 
@@ -74,6 +84,7 @@ describe RevisionsController do
         it "can create a revision to my own proposal" do
             post :create, {:revision => valid_attributes, :proposal_id => @prop.id}
             assigns(:revision).should be_persisted
+            response.should redirect_to([@prop, Revision.last])
         end
       end
 

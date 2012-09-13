@@ -78,7 +78,7 @@
     <h3>Change Log:</h3>
     <dl>
         <% @proposal.revisions.each do |rev| %>
-            <dt><b><% if can? :read, Revision %>
+            <dt><b><% if can? :read, rev %>
                 <%= link_to('Revision ' + rev.num.to_s, proposal_revision_path(@proposal, rev)) %>
             <% else %>
                 <%= 'Revision ' + rev.num.to_s %>
@@ -111,6 +111,6 @@
         <%= render :partial => "/comments/show", :object => comment %>
     <% end%>
 <% end %>
-<% if can? :create, Comment %>
+<% if can? :create, @comment %>
     <%= render :partial => "/comments/form", :object => @comment %>
 <% end %>

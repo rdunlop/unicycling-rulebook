@@ -23,11 +23,11 @@
         <% if can? :passed, Proposal %>
             <li><%= link_to('View Approved Proposals', passed_proposals_path) %></li>
         <% end %>
-        <% if user_signed_in? %>
-            <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
-        <% end %>
         <% if can? :read, Committee %>
             <li><%= link_to('Committees (Admin Pages)', committees_path) %></li>
+        <% end %>
+        <% if user_signed_in? %>
+            <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
         <% end %>
         <% if not user_signed_in? %>
             <li><%= link_to('Login', new_user_session_path) %></li>

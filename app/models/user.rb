@@ -13,9 +13,9 @@ class User < ActiveRecord::Base
 
   validates :name, :presence => true
 
-  def is_committee_admin(committee)
+  def is_committee_admin(committee = nil)
     committee_members.each do |cm|
-        if cm.committee == committee
+        if cm.committee == committee or committee == nil
             if cm.admin
                 return true
             end
