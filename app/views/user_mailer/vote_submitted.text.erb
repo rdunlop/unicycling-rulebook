@@ -1,12 +1,6 @@
-<%= @committee_name %>
+A member voted on Proposal <%= @proposal.id.to_s %> - <%= @proposal.title %> for <%= @committee_name %>
 
-Proposal <%= @proposal.id.to_s %>: <%= @proposal.title %>
-
-<%= @name %> voted <%= @vote_text %> on proposal <%= @proposal.id.to_s %>
-
-Comments:
-<%= @comments %>
-
+Did you place your vote?
 __________________________________________________________
 Proposal <%= @proposal.id.to_s %> can be viewed at:
 <%= proposal_url(@proposal) %>

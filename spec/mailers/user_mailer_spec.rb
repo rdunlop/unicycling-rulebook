@@ -83,7 +83,7 @@ describe UserMailer do
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("changed from disagree to abstain")
+      mail.body.encoded.should match("A vote was changed from disagree to abstain by the administrator")
     end
   end
 
@@ -118,7 +118,8 @@ describe UserMailer do
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("voted agree on proposal")
+      mail.body.encoded.should match("A member voted on " + @proposal_id_title_and_committee)
+      mail.body.encoded.should match("Did you place your vote?")
     end
   end
 
