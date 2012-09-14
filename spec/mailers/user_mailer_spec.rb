@@ -13,6 +13,17 @@ describe UserMailer do
       @cm2 = FactoryGirl.create(:committee_member, :committee => @committee, :user => @other_cm_user)
       @proposal_id_title_and_committee = "Proposal " + @proposal.id.to_s + " - " + @proposal.title + " for " + @committee.name
   end
+  describe "when we have a one no-email super-admin and one normal super-admin" do
+    before(:each) do
+        @no_email_admin_user = FactoryGirl.create(:admin_user, :no_emails => true)
+        @normal_admin_user = FactoryGirl.create(:admin_user)
+    end
+    it "should only send to the normal admin" do
+        mail = UserMailer.proposal_submitted(@proposal)
+        mail.to.should eq([@normal_admin_user.email])
+    end
+  end
+
   describe "proposal_submitted" do
     before(:each) do
         @admin_user = FactoryGirl.create(:admin_user)
@@ -42,6 +53,17 @@ describe UserMailer do
 
     it "renders the body" do
       mail.body.encoded.should match(@comment.comment)
+    end
+  end
+
+  describe "with a no_emails committee member" do
+    before(:each) do
+        @other_cm_user.no_emails = true
+        @other_cm_user.save
+    end
+    it "should only e-mail to the normal user" do
+        mail = UserMailer.proposal_revised(@proposal)
+        mail.to.should eq([@user.email])
     end
   end
 

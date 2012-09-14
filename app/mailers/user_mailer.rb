@@ -5,7 +5,7 @@ class UserMailer < ActionMailer::Base
     emails = []
     User.all.each do |u|
         if u.admin
-            emails << u.email
+            emails << u.email unless u.no_emails
         end
     end
     emails
@@ -15,7 +15,7 @@ class UserMailer < ActionMailer::Base
     emails = []
     CommitteeMember.all.each do |cm|
         if cm.committee == committee
-            emails << cm.user.email
+            emails << cm.user.email unless cm.user.no_emails
         end
     end
     emails

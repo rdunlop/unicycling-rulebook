@@ -15,6 +15,9 @@
   <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
   <%= f.password_field :current_password %></div>
 
+  <div><%= f.label :no_emails %> <i>Disable All E-mails</i>
+  <%= f.check_box :no_emails %></div>
+
   <div><%= f.submit "Update" %></div>
 <% end %>
 

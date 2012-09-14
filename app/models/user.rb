@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :location, :email, :comments, :password, :password_confirmation, :remember_me
+  attr_accessible :name, :location, :email, :comments, :no_emails, :password, :password_confirmation, :remember_me
 
   has_many :committee_members
   has_many :committees, :through => :committee_members
@@ -14,6 +14,12 @@ class User < ActiveRecord::Base
   validates :name, :presence => true
 
   after_create :send_email_to_admins
+
+  after_initialize :init
+
+  def init
+    self.no_emails = false if self.no_emails.nil?
+  end
 
   def send_email_to_admins
     UserMailer.new_committee_applicant(self).deliver

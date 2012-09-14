@@ -50,8 +50,25 @@ describe User do
         user.votes.should == [vote]
     end
     it "should be able to be created with comments" do
-        user = User.new({:name => "Robin", :email => "email@robin.com", :password => "password", :password_confirmation => "password", :comments => "Something"})
+        user = User.new({:name => "Robin", 
+                         :email => "email@robin.com", 
+                         :password => "password", 
+                         :password_confirmation => "password", 
+                         :comments => "Something"})
         user.comments.should == "Something"
+        user.valid?.should == true
+    end
+    it "should have no_emails false by default" do
+        user = User.new
+        user.no_emails.should == false
+    end
+    it "should be able to be created with no_emails" do
+        user = User.new({:name => "Robin", 
+                         :email => "email@robin.com", 
+                         :password => "password", 
+                         :password_confirmation => "password", 
+                         :no_emails => true})
+        user.no_emails.should == true
         user.valid?.should == true
     end
 end
