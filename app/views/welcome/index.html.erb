@@ -63,7 +63,12 @@ To publicise the IUF Record Criteria and Liaison officers to the wider Unicyclin
     <% end %>
     </h2>
 <% else %>
+  <h4>Jump to Committee</h4>
   <% @committees.each do |committee| %>
+    <%= link_to committee.name, {:anchor => committee.id} %><br />
+  <% end %>
+  <% @committees.each do |committee| %>
+    <%= link_to '',{}, {:name => committee.id} %>
     <h2>Committee: <%= committee %></h2>
   <% @filter_proposals = @proposals.select {|p| p.committee == committee } %>
     <%= render :partial => "/proposals/display_summary", :locals => {:proposals => @filter_proposals, :status => 'Submitted', :header => 'New Unapproved Proposals:', :status_text => '', :votes => @user_votes} %>
