@@ -13,6 +13,12 @@ class User < ActiveRecord::Base
 
   validates :name, :presence => true
 
+  after_create :send_email_to_admins
+
+  def send_email_to_admins
+    UserMailer.new_committee_applicant(self).deliver
+  end
+
   def is_committee_admin(committee = nil)
     committee_members.each do |cm|
         if cm.committee == committee or committee == nil

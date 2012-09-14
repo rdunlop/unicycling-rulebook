@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 describe User do
+
+    it "sends an e-mail when a new user is created" do
+        ActionMailer::Base.deliveries.clear
+        user = FactoryGirl.create(:user)
+        num_deliveries = ActionMailer::Base.deliveries.size
+        # Note: devise sends a confirmation e-mail, I ALSO want
+        # one sent to the admins
+        num_deliveries.should == 2
+    end
+
     it "should require a name" do
         user = FactoryGirl.create(:user)
 
