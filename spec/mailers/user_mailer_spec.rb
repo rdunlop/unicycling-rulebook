@@ -88,7 +88,8 @@ describe UserMailer do
   end
 
   describe "new_committee_applicant" do
-    let(:mail) { UserMailer.new_committee_applicant(@user) }
+    let(:user) { FactoryGirl.create(:user, :comments => "Please add me") }
+    let(:mail) { UserMailer.new_committee_applicant(user) }
     before(:each) do
         @admin_user = FactoryGirl.create(:admin_user)
     end
@@ -101,6 +102,7 @@ describe UserMailer do
 
     it "renders the body" do
       mail.body.encoded.should match("Here are the details of the new applicant:")
+      mail.body.encoded.should match("Please add me")
     end
   end
 

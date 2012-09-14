@@ -103,7 +103,7 @@ class UserMailer < ActionMailer::Base
     @name = user.name
     @email = user.email
     @location = user.location
-    @comments = "n/a"
+    @comments = user.comments
 
     mail to: create_admin_email
   end

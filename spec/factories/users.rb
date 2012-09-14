@@ -7,6 +7,7 @@ FactoryGirl.define do
     sequence(:email) {|n| "person#{n}@example.com" }
     password 'please'
     password_confirmation 'please'
+    comments ''
     # required if the Devise Confirmable module is used
     # confirmed_at Time.now
 

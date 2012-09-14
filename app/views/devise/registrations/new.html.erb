@@ -19,6 +19,19 @@
   <div class="detail">ie. City, Region, Country</div>
   <%= f.text_field :location %></div>
 
+  <br />
+  <div><b>In the Comments</b> please name the committees that you want to be a part of, and also whether you want to be a voting member or discussion-only member.<br />
+  <b>Example</b>: <%= Committee.first.name %> - Voting, <%= Committee.last.name %> - Non-Voting.<br />
+  <br />
+  Available Committees:<br />
+  <ul>
+  <% Committee.all.each do |c| %>
+    <li><%= c.name %><br /></li>
+  <% end %>
+  </ul>
+  <div><%= f.label :comments %><br />
+  <div><%= f.text_area :comments %></div>
+
   <div><%= f.submit "Sign up" %></div>
 <% end %>
 

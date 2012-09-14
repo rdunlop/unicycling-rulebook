@@ -49,4 +49,9 @@ describe User do
 
         user.votes.should == [vote]
     end
+    it "should be able to be created with comments" do
+        user = User.new({:name => "Robin", :email => "email@robin.com", :password => "password", :password_confirmation => "password", :comments => "Something"})
+        user.comments.should == "Something"
+        user.valid?.should == true
+    end
 end
