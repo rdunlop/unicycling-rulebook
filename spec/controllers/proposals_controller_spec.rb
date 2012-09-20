@@ -40,17 +40,19 @@ describe ProposalsController do
   
   describe "GET passed" do
     before(:each) do
+      com = FactoryGirl.create(:committee, :preliminary => true)
+      @preliminary_proposal = FactoryGirl.create(:proposal, :status => 'Passed', :committee => com)
       @proposal = FactoryGirl.create(:proposal, :status => 'Passed')
       @other_proposal = FactoryGirl.create(:proposal, :status => 'Failed')
     end
     it "assigns all proposals as @proposals" do
       get :passed, {}
-      assigns(:proposals).should eq([@proposal])
+      assigns(:proposals).should eq([@proposal, @preliminary_proposal])
     end
     it "can read the passed proposals when not signed in" do
       sign_out @admin_user
       get :passed, {}
-      assigns(:proposals).should eq([@proposal])
+      assigns(:proposals).should eq([@proposal, @preliminary_proposal])
     end
   end
 
