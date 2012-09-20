@@ -60,6 +60,19 @@ describe CommitteeMembersController do
         assigns(:committee_members).should eq([cm])
       end
     end
+    describe "as committee_admin user" do
+        before(:each) do
+            @committee_admin = FactoryGirl.create(:user)
+            @cm = FactoryGirl.create(:committee_member, :admin => true, :user => @committee_admin)
+            sign_out @user
+            sign_in @committee_admin
+        end
+        it "should allow access" do
+            get :index, {:committee_id => @cm.committee.id}
+            response.should be_success
+            assigns(:committee_members).should eq([@cm])
+        end
+    end
   end
 
   describe "GET new" do
@@ -89,6 +102,19 @@ describe CommitteeMembersController do
       committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
       get :edit, {:id => committee_member.to_param, :committee_id => @committee.id}
       assigns(:committee_member).should eq(committee_member)
+    end
+    describe "as committee_admin user" do
+        before(:each) do
+            @committee_admin = FactoryGirl.create(:user)
+            @cm = FactoryGirl.create(:committee_member, :admin => true, :user => @committee_admin)
+            sign_out @user
+            sign_in @committee_admin
+        end
+        it "can edit a user" do
+            get :edit, {:id => @cm.to_param, :committee_id => @cm.committee.id}
+            response.should be_success
+            assigns(:committee_member).should eq(@cm)
+        end
     end
   end
 

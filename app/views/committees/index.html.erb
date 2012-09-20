@@ -13,13 +13,27 @@
   <tr>
     <td><%= committee.name %></td>
     <td><%= committee.preliminary ? 'yes' : 'no' %></td>
-    <td><%= link_to('Show Members', committee_committee_members_path(committee)) %></td>
-    <td><%= link_to 'Edit', edit_committee_path(committee) %></td>
-    <td><%= link_to 'Destroy', committee, confirm: 'Are you sure?', method: :delete %></td>
+    <td>
+    <% if can? :read, committee %>
+        <%= link_to('Show Members', committee_committee_members_path(committee)) %>
+    <% end %>
+    </td>
+    <td>
+    <% if can? :edit, committee %>
+        <%= link_to 'Edit', edit_committee_path(committee) %>
+    <% end %>
+    </td>
+    <td>
+    <% if can? :destroy, committee %>
+        <%= link_to 'Destroy', committee, confirm: 'Are you sure?', method: :delete %>
+    <% end %>
+    </td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Committee', new_committee_path %>
+<% if can? :create, Committee %>
+   <%= link_to 'New Committee', new_committee_path %>
+<% end %>

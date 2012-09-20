@@ -17,12 +17,18 @@
     <td><%= committee_member.admin %></td>
     <td><%= committee_member.voting %></td>
     <td><%= link_to 'Edit', edit_committee_committee_member_path(@committee, committee_member) %></td>
-    <td><%= link_to 'Destroy', [@committee, committee_member], confirm: 'Are you sure?', method: :delete %></td>
+    <td>
+    <% if can? :destroy, committee_member %>
+        <%= link_to 'Destroy', [@committee, committee_member], confirm: 'Are you sure?', method: :delete %>
+    <% end %>
+    </td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Committee member', new_committee_committee_member_path(@committee) %><br />
+<% if can? :create, CommitteeMember %>
+    <%= link_to 'New Committee member', new_committee_committee_member_path(@committee) %><br />
+<% end %>
 <%= link_to 'Back', committees_path %>

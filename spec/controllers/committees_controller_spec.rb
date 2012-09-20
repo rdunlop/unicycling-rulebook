@@ -40,6 +40,26 @@ describe CommitteesController do
       get :index
       response.should redirect_to(new_user_session_path)
     end
+    describe "for a committee_admin" do
+        before(:each) do
+            @committee_admin = FactoryGirl.create(:user)
+            @cm = FactoryGirl.create(:committee_member, :admin => true, :user => @committee_admin)
+            sign_out @user
+            sign_in @committee_admin
+        end
+        it "succeeds for committee_admin" do
+            get :index
+            response.should be_success
+        end
+        it "only shows MY committees" do
+            get :index
+            assigns(:committees).should eq([@cm.committee])
+        end
+    end
+    it "fails for non-special user" do
+      get :index
+      response.should redirect_to(root_path)
+    end
 
     it "assigns all committees as @committees when admin user" do
       sign_out @user
