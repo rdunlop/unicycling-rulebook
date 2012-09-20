@@ -6,7 +6,7 @@ describe "committee_members/new" do
     @committee = @cm.committee
   end
 
-  it "renders new proposal form" do
+  it "renders new committee Member form" do
     render
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers

@@ -3,6 +3,7 @@
 <table>
   <tr>
     <th>Name</th>
+    <th>Preliminary Committee?</th>
     <th>Committee Members</th>
     <th></th>
     <th></th>
@@ -11,6 +12,7 @@
 <% @committees.each do |committee| %>
   <tr>
     <td><%= committee.name %></td>
+    <td><%= committee.preliminary ? 'yes' : 'no' %></td>
     <td><%= link_to('Show Members', committee_committee_members_path(committee)) %></td>
     <td><%= link_to 'Edit', edit_committee_path(committee) %></td>
     <td><%= link_to 'Destroy', committee, confirm: 'Are you sure?', method: :delete %></td>

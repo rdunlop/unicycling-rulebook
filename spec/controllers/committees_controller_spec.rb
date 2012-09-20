@@ -29,7 +29,8 @@ describe CommitteesController do
   # Event. As you add validations to Event, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { name: "MyName"
+    { name: "MyName",
+      preliminary: false
     }
   end
   

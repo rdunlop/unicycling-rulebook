@@ -27,4 +27,9 @@ describe Committee do
         com = committee_member.committee
         com.committee_members.should == [committee_member]
     end
+
+    it "should be non-preliminary by default" do
+        committee = Committee.new
+        committee.preliminary.should == false
+    end
 end

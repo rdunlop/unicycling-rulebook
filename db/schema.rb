@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120914041730) do
+ActiveRecord::Schema.define(:version => 20120920010341) do
 
   create_table "comments", :force => true do |t|
     t.integer  "proposal_id"
@@ -32,8 +32,9 @@ ActiveRecord::Schema.define(:version => 20120914041730) do
 
   create_table "committees", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.boolean  "preliminary"
   end
 
   create_table "proposals", :force => true do |t|
