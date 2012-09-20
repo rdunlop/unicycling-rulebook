@@ -4,6 +4,9 @@ describe "committees/index" do
   before(:each) do
     @committees = [FactoryGirl.create(:committee, :preliminary => true),
                    FactoryGirl.create(:committee, :preliminary => false)]
+    @ability = Object.new
+    @ability.extend(CanCan::Ability)
+    controller.stub(:current_ability) { @ability }
   end
 
   it "renders a list of committees" do

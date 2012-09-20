@@ -6,6 +6,9 @@ describe "committee_members/index" do
     @cm = assign(:committee_members, [
             FactoryGirl.create(:committee_member, :committee => @committee, :admin => true, :voting => false),
             FactoryGirl.create(:committee_member, :committee => @committee, :voting => false)])
+    @ability = Object.new
+    @ability.extend(CanCan::Ability)
+    controller.stub(:current_ability) { @ability }
   end
 
   it "renders a list of committee_members" do
