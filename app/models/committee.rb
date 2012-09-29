@@ -4,7 +4,13 @@ class Committee < ActiveRecord::Base
     has_many :committee_members
     has_many :proposals
 
-    attr_accessible :name
+    attr_accessible :name, :preliminary
+
+    after_initialize :init
+
+    def init
+        self.preliminary = false if self.preliminary.nil?
+    end
 
     def to_s
         name

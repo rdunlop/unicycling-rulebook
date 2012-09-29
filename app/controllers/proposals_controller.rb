@@ -5,7 +5,9 @@ class ProposalsController < ApplicationController
   # GET /proposals/passed
   # GET /proposals/passed.json
   def passed
-    @proposals = Proposal.select{ |p| p.status == 'Passed'}
+    # the non-preliminary ones go first
+    @proposals = Proposal.select{ |p| p.committee.preliminary == false and p.status == 'Passed'}
+    @proposals += Proposal.select{ |p| p.committee.preliminary == true and p.status == 'Passed'}
 
     respond_to do |format|
       format.html # passed.html.erb

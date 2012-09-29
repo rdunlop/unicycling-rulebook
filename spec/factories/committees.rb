@@ -3,5 +3,6 @@
 FactoryGirl.define do
   factory :committee do
     sequence(:name) { |n| "Rulebook Committee #{n}" }
+    preliminary false
   end
 end

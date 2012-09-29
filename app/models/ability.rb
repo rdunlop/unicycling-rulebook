@@ -65,7 +65,18 @@ class Ability
 
     # Committee-Admin
 
-    can :read, Committee if user.is_committee_admin(nil)
+    can :read, Committee do |committee|
+        user.is_committee_admin(committee)
+    end
+    cannot :read, Committee if not user.is_committee_admin(nil) and not user.admin
+
+    can :read, CommitteeMember do |committte_member|
+        user.is_committee_admin(committee_member.committee)
+    end
+
+    can :update, CommitteeMember do |committee_member|
+        user.is_committee_admin(committee_member.committee)
+    end
 
     can :update, Proposal do |proposal|
         user.is_committee_admin(proposal.committee)

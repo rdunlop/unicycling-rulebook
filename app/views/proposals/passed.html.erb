@@ -3,6 +3,7 @@
 <% @proposals.each do |proposal| %>
     <hr />
     <h2>Proposal <%= proposal.id %>: <%= proposal.to_s %></h2>
+    <b>Committee:</b> <%= proposal.committee %><br />
     <h3>Vote Summary:</h3>
     <% if proposal.vote_end_date %>
     Passed on <%= proposal.vote_end_date.to_date.to_s(:long) %><br />

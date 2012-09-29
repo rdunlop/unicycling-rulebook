@@ -40,8 +40,9 @@ ActiveRecord::Schema.define(:version => 20120929035746) do
 
   create_table "committees", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.boolean  "preliminary"
   end
 
   create_table "proposals", :force => true do |t|

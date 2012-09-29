@@ -17,6 +17,8 @@ class WelcomeController < ApplicationController
       end
     end
     @committees = @proposals.map {|p| p.committee}.uniq{|c| c.id}
+    # sort the committees so that non-preliminary come first
+    @committees = @committees.sort {|a,b| a.preliminary == b.preliminary ? 0 : a.preliminary ? 1 : -1 }
     if user_signed_in?
         @user_votes = current_user.votes
     else

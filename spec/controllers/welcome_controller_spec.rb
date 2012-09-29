@@ -39,6 +39,7 @@ describe WelcomeController do
       proposal = FactoryGirl.create(:proposal, :status => 'Voting', :owner => @user, :committee => cm.committee)
       get :index, {}
       assigns(:proposals).should eq([proposal])
+      assigns(:committees).should eq([cm.committee])
     end
     describe "for an Admin" do
         before(:each) do
@@ -49,6 +50,15 @@ describe WelcomeController do
         it "assigns ALL proposals as @proposals" do
             get :index, {}
             assigns(:proposals).should eq([@proposal])
+        end
+        it "shows non-preliminary committees first" do
+            prelim_committee = FactoryGirl.create(:committee, :preliminary => true)
+            proposal = FactoryGirl.create(:proposal, :committee => prelim_committee)
+            non_prelim_committee = FactoryGirl.create(:committee, :preliminary => false)
+            proposal2 = FactoryGirl.create(:proposal, :committee => non_prelim_committee)
+
+            get :index, {}
+            assigns(:committees).should eq([@proposal.committee, non_prelim_committee, prelim_committee])
         end
     end
     describe "for a committee-admin" do
