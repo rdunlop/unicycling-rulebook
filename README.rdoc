@@ -106,6 +106,12 @@ rake db:migrate
 rails s --port 9292
 
 
+5. Install the heroku toolchain
+6. heroku login
+7. heroku keys:add (creates a new Ssh key pair for upload)
+8. git push heroku master
+9. heroku run rake db:migrate
+
 
 == Deploying to Heroku
 

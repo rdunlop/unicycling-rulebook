@@ -21,7 +21,9 @@
 
   <br />
   <div><b>In the Comments</b> please name the committees that you want to be a part of, and also whether you want to be a voting member or discussion-only member.<br />
+  <% if Committee.count > 0 %>
   <b>Example</b>: <%= Committee.first.name %> - Voting, <%= Committee.last.name %> - Non-Voting.<br />
+  <% end %>
   <br />
   Available Committees:<br />
   <ul>
