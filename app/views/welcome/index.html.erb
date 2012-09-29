@@ -1,3 +1,8 @@
+<% if not @config.nil? %>
+  <h1>Welcome to the <%= @config.rulebook_name %></h1>
+
+  <%= raw(@config.front_page) %>
+<% else %>
 <h1>Welcome to the IUF World Records Committee</h1>
 
 <p>
@@ -55,6 +60,7 @@ To have an up-to-date database of historical Unicycling World Records (NB these 
 To publicise the IUF Record Criteria and Liaison officers to the wider Unicycling Committee.
 <br />
 </p>
+<% end %>
 
 <% if @proposals.empty? %>
     <hr><h2>No proposals exist yet

@@ -1,5 +1,110 @@
 == Welcome to the Rulebook Application.
 
+== Common problems when using Vagrant for Rails development
+
+When installing your gems, you get a problem:
+
+$ cd /vagrant
+$ bundle install
+Installing cancan (1.6.7) 
+Installing nokogiri (1.5.2) with native extensions 
+Gem::Installer::ExtensionBuildError: ERROR: Failed to build gem native extension.
+...
+
+Resolution: install nokogiri extensions:
+$ sudo apt-get install libxslt-dev libxml2-dev
+$ bundle install
+
+-----
+Unable to connect to postgres database on local machine:
+
+$ rake db:create
+Couldn't create database for {"adapter"=>"postgresql", "encoding"=>"utf8", "database"=>"rulebook_development", "pool"=>5, "timeout"=>5000, "username"=>nil, "password"=>nil}
+fe_sendauth: no password supplied
+
+Resolution: specify the password in the config/database.yml file:
+development:
+  username: postgres
+  password: password
+...
+test:
+  username: postgres
+  password: password
+...
+production:
+  username: postgres
+  password: password
+...
+
+-----
+Unable to connect to postgres database on local machine:
+
+$ rake db:create
+FATAL:  Peer authentication failed for user "postgres"
+
+Resolution: cause database connection to be performed over TCP instead of over sockets. (chef's postgresql package configures the server for TCP)
+Modify the config/database.yml file:
+development:
+  host: 127.0.0.1
+...
+test:
+  host: 127.0.0.1
+...
+production:
+  host: 127.0.0.1
+...
+
+-----
+Unable to create database on local machine:
+
+$ rake db:create
+PG::Error: ERROR:  encoding UTF8 does not match locale en_US
+DETAIL:  The chosen LC_CTYPE setting requires encoding LATIN1.
+: CREATE DATABASE "rulebook_development" ENCODING = 'utf8'
+
+Resolution: change the desired encoding type to match the installed/created postgres database type
+Modify the config/database.yml file:
+development:
+   encoding: latin1  
+...
+test:
+   encoding: latin1  
+...
+production:
+   encoding: latin1  
+...
+
+-----
+Unable to create database in UTF8:
+psql -U postgres -h localhost
+
+# create database <database_name> with encoding='UTF-8' LC_CTYPE='en_US.utf8' LC_COLLATE='en_US.utf8' template=template0;
+
+-----
+Rails server is running on the wrong port:
+
+Resolution: Specify the port
+rails s --port 9292
+
+-----
+
+
+== Starting With Vagrant
+1. Log in and install dependencies
+vagrant up dev
+vagrant ssh dev
+cd /vagrant
+bundle install
+
+2. Create databases
+rake db:create
+
+3. Create tables
+rake db:migrate
+
+4. Start server
+rails s --port 9292
+
 
 
 == Deploying to Heroku
@@ -12,3 +117,5 @@
 
 3. Install the scheduling addon:
         <tt>heroku addons:add scheduler:standard</tt>
+
+

@@ -1,4 +1,7 @@
 <h1>Frequently Asked Questions</h1>
+<% if not @config.nil? %>
+  <%= raw @config.faq %>
+<% else %>
 
 <p>If you have a question that's not already answered below about this web application and how this committee is being ran, please email <a href="mailto:<%= @contactemail %>"><%= @contactname %></a>!</p>
 <dl>
@@ -37,6 +40,7 @@ portion of the committee is in agreement with any proposal that passes. <% end %
 proposal will be marked as either passed or failed. If it passed, it will
 then be presented with all the other passed proposals to the Officers for
 final approval.</p>
+<% end %>
 
 <h2>Update Password</h2>
 <%= link_to 'Update Password', edit_user_registration_path %>

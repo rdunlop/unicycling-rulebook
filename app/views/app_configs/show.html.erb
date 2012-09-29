@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Rulebook name:</b>
+  <%= @app_config.rulebook_name %>
+</p>
+
+<p>
+<b>Front page:</b><br />
+  <%= raw(@app_config.front_page) %>
+</p>
+
+<p>
+<b>Faq:</b><br />
+  <%= raw(@app_config.faq) %>
+</p>
+
+
+<%= link_to 'Edit', edit_app_config_path(@app_config) %> |
+<%= link_to 'Back', app_configs_path %>

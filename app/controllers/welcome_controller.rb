@@ -1,6 +1,14 @@
 class WelcomeController < ApplicationController
   skip_authorization_check
 
+  before_filter :load_config
+
+  def load_config
+    if AppConfig.count > 0
+      @config = AppConfig.first
+    end
+  end
+
   def index
     @proposals = []
     Proposal.all.each do |p|

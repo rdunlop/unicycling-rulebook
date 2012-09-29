@@ -1,5 +1,7 @@
 Rulebook::Application.routes.draw do
 
+  resources :app_configs
+
   resources :proposals, :except => [:index] do
     collection do
         get 'passed'
