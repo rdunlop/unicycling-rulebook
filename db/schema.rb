@@ -11,12 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120929035746) do
+ActiveRecord::Schema.define(:version => 20121001180313) do
 
   create_table "app_configs", :force => true do |t|
     t.string   "rulebook_name"
-    t.string   "front_page"
-    t.string   "faq"
+    t.text     "front_page"
+    t.text     "faq"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
