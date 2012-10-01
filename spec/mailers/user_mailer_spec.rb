@@ -33,7 +33,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("New submission of " + @proposal_id_title_and_committee)
-      mail.to.should eq([@admin_user.email, @admin_user2.email])
+      mail.to.should == [@admin_user.email, @admin_user2.email]
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
