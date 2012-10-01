@@ -1,12 +1,12 @@
 ActionMailer::Base.smtp_settings = {  
-    :address              => "smtp.gmail.com",  
-    :port                 => 587,  
-    :domain               => "uniusa.org",  
-    :user_name            => "rulebook-do-not-reply@uniusa.org",
-    :password             => "Z&arP5Ua^OZxXwg09DLv",  
+    :address              => ENV['MAIL_SERVER'],
+    :port                 => ENV['MAIL_PORT'],
+    :domain               => ENV['MAIL_DOMAIN'],
+    :user_name            => ENV['MAIL_USERNAME'],
+    :password             => ENV['MAIL_PASSWORD'],
     :authentication       => "plain",  
     :enable_starttls_auto => true  
 }  
-ActionMailer::Base.default :from => 'rulebook-do-not-reply@uniusa.org'
+ActionMailer::Base.default :from => ENV['MAIL_FULL_EMAIL']
 
-ActionMailer::Base.default_url_options[:host] = "usarulebook2012.herokuapp.com"
+ActionMailer::Base.default_url_options[:host] = ENV['DOMAIN']

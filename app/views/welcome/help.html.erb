@@ -1,5 +1,5 @@
 <h1>Frequently Asked Questions</h1>
-<% if not @config.nil? %>
+<% if not @config.nil? and not @config.faq.blank? %>
   <%= raw @config.faq %>
 <% else %>
 
