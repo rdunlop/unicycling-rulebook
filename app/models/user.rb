@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
 
   validates :name, :presence => true
 
+  scope :super_admin, where(:admin => true)
+
   after_create :send_email_to_admins
 
   after_initialize :init
@@ -22,7 +24,9 @@ class User < ActiveRecord::Base
   end
 
   def send_email_to_admins
-    UserMailer.new_committee_applicant(self).deliver
+    if User.super_admin.count > 0
+      UserMailer.new_committee_applicant(self).deliver
+    end
   end
 
   def is_committee_admin(committee = nil)

@@ -6,9 +6,31 @@ describe User do
         ActionMailer::Base.deliveries.clear
         user = FactoryGirl.create(:user)
         num_deliveries = ActionMailer::Base.deliveries.size
-        # Note: devise sends a confirmation e-mail, I ALSO want
-        # one sent to the admins
-        num_deliveries.should == 2
+        # Note: devise sends a confirmation e-mail,
+        # without having an admin user in the system, it will not send one there too.
+        num_deliveries.should == 1
+    end
+
+    describe "with an admin user existing" do
+        before(:each) do
+            FactoryGirl.create(:admin_user)
+        end
+        it "should have a to: address in both e-mails" do
+            ActionMailer::Base.deliveries.clear
+            user = FactoryGirl.create(:user)
+            deliveries = ActionMailer::Base.deliveries
+            num_deliveries = ActionMailer::Base.deliveries.size
+            # Note: devise sends a confirmation e-mail, I ALSO want
+            # one sent to the admins
+
+            num_deliveries.should == 2
+
+            sign_up_email = deliveries.first
+            new_applicant_email = deliveries.last
+
+            sign_up_email.to.count.should == 1
+            new_applicant_email.to.count.should == 1
+        end
     end
 
     it "should require a name" do
