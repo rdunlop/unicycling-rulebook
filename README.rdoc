@@ -24,6 +24,18 @@ heroku config:add MAIL_PASSWORD=something
 heroku config:add MAIL_FULL_EMAIL=rulebook-do-not-reply@uniusa.org
 heroku config:add DOMAIN=usarulebook2012.herokuapp.com
 
+== On Non-GMail systems, you may need to set the MAIL_TLS=false variable too (see initializers/mailer.rb)
+
+Current values for Unicycling.org rulebook are:
+MAIL_SERVER=unicycling.org
+MAIL_PORT=25
+MAIL_DOMAIN=unicycling.org
+MAIL_USERNAME=rulebook@unicycling.org
+MAIL_PASSWORD=********
+MAIL_FULL_EMAIL=rulebook@unicycling.org
+MAIL_TLS=false
+DOMAIN=rulebook.unicycling.org
+
 == Common problems when using Vagrant for Rails development
 
 When installing your gems, you get a problem:
