@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "unicycling@dunlopweb.com"
+  default from: (ENV['MAIL_FULL_EMAIL'] || "unicycling@dunlopweb.com")
 
   def create_admin_email
     emails = []
