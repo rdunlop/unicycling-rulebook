@@ -29,6 +29,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def accessible_committees
+    if self.admin
+        Committee.all
+    else
+        self.committees
+    end
+  end
+
   def is_committee_admin(committee = nil)
     committee_members.each do |cm|
         if cm.committee == committee or committee == nil

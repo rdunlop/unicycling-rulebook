@@ -26,6 +26,7 @@ describe ProposalsController do
     @admin_user = FactoryGirl.create(:admin_user)
     sign_in @admin_user
     @cm = FactoryGirl.create(:committee_member, :committee => @committee, :user => @admin_user)
+    @cm2 = FactoryGirl.create(:committee_member, :committee => @committee, :user => @user)
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -109,9 +110,22 @@ describe ProposalsController do
       assigns(:revision).should be_a_new(Revision)
     end
     it "should not show committees I am not a member of" do
+      sign_out @admin_user
+      sign_in @user
       FactoryGirl.create(:committee)
       get :new, {}
       assigns(:committees).should == [@committee]
+    end
+    describe "as a super-admin" do
+      before(:each) do
+        @new_super_user = FactoryGirl.create(:admin_user)
+        sign_out @admin_user
+        sign_in @new_super_user
+      end
+      it "should show me the committee" do
+        get :new, {}
+        assigns(:committees).should == [@committee]
+      end
     end
   end
 
@@ -123,13 +137,25 @@ describe ProposalsController do
       assigns(:proposal).should eq(proposal)
       assigns(:committees).should == [@committee]
     end
-    it "should not show committees that I am not a member of" do
-      proposal = FactoryGirl.create(:proposal, :committee => @committee)
+    it "should not show committees that I am not an administrator of" do
+      @other_committee = FactoryGirl.create(:committee)
+      @other_committee_admin_user = FactoryGirl.create(:user)
+      @cm3 = FactoryGirl.create(:committee_member, :committee => @other_committee, :user => @other_committee_admin_user, :admin => true)
+      proposal = FactoryGirl.create(:proposal, :owner => @user, :committee => @other_committee)
       revision = FactoryGirl.create(:revision, :proposal => proposal)
       FactoryGirl.create(:committee)
+      sign_out @admin_user
+      sign_in @other_committee_admin_user
       get :edit, {:id => proposal.to_param}
       assigns(:proposal).should eq(proposal)
-      assigns(:committees).should == [@committee]
+      assigns(:committees).should == [@other_committee]
+    end
+    it "as super-admin, should show all of the committees" do
+      proposal = FactoryGirl.create(:proposal, :committee => @committee)
+      revision = FactoryGirl.create(:revision, :proposal => proposal)
+      cm = FactoryGirl.create(:committee)
+      get :edit, {:id => proposal.to_param}
+      assigns(:committees).should == [@committee, cm]
     end
     describe "as a committee-admin for the same committee" do
         before(:each) do

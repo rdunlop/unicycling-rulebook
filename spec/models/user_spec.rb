@@ -45,6 +45,11 @@ describe User do
 
         user.to_s.should == user.name
     end
+    it "should be able to get a list of accessible committees" do
+      committee = FactoryGirl.create(:committee)
+      user = FactoryGirl.create(:admin_user)
+      user.accessible_committees.should == [committee]
+    end
 
     it "should be able to see its committees" do
         cm = FactoryGirl.create(:committee_member)
