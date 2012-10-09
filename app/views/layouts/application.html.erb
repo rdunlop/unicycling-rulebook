@@ -45,7 +45,11 @@
 
         <%= yield %>
         <hr />
-        <p>Copyright &copy; 2012 International Unicycling Federation<br /></p>
+        <% if @config.nil? or @config.copyright.blank? %>
+          <p>Copyright &copy; 2012 International Unicycling Federation<br /></p>
+        <% else %>
+          <p>Copyright &copy; <%= @config.copyright %><br /></p>
+        <% end %>
         <%= debug(params) if Rails.env.development? %>
     </div>
 </body>

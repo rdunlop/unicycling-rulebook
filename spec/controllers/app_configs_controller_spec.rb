@@ -30,7 +30,8 @@ describe AppConfigsController do
   def valid_attributes
     { rulebook_name: "My Rulebook",
       front_page: "Something Interesting",
-      faq: "FAQ lives here"
+      faq: "FAQ lives here",
+      copyright: "Teh new Copyright"
     }
   end
   

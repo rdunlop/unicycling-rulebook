@@ -5,7 +5,8 @@ describe "app_configs/new" do
     assign(:app_config, stub_model(AppConfig,
       :rulebook_name => "MyString",
       :front_page => "MyString",
-      :faq => "MyString"
+      :faq => "MyString",
+      :copyright => "Robin Copy"
     ).as_new_record)
   end
 
@@ -17,6 +18,7 @@ describe "app_configs/new" do
       assert_select "input#app_config_rulebook_name", :name => "app_config[rulebook_name]"
       assert_select "textarea#app_config_front_page", :name => "app_config[front_page]"
       assert_select "textarea#app_config_faq", :name => "app_config[faq]"
+      assert_select "input#app_config_copyright", :name => "app_config[copyright]"
     end
   end
 end

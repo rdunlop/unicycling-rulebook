@@ -5,7 +5,8 @@ describe "app_configs/show" do
     @app_config = assign(:app_config, stub_model(AppConfig,
       :rulebook_name => "Rulebook Name",
       :front_page => "Front Page",
-      :faq => "Faq"
+      :faq => "Faq",
+      :copyright => "Some Copy"
     ))
   end
 
@@ -15,5 +16,6 @@ describe "app_configs/show" do
     rendered.should match(/Rulebook Name/)
     rendered.should match(/Front Page/)
     rendered.should match(/Faq/)
+    rendered.should match(/Some Copy/)
   end
 end
