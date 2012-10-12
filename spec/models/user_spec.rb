@@ -28,8 +28,8 @@ describe User do
             sign_up_email = deliveries.first
             new_applicant_email = deliveries.last
 
-            sign_up_email.to.count.should == 1
-            new_applicant_email.to.count.should == 1
+            sign_up_email.to.count.should == 1 # sent by devise
+            new_applicant_email.bcc.count.should == 1 # sent by after_create hook
         end
     end
 

@@ -20,7 +20,7 @@ describe UserMailer do
     end
     it "should only send to the normal admin" do
         mail = UserMailer.proposal_submitted(@proposal)
-        mail.to.should eq([@normal_admin_user.email])
+        mail.bcc.should eq([@normal_admin_user.email])
     end
   end
 
@@ -33,7 +33,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("New submission of " + @proposal_id_title_and_committee)
-      mail.to.should == [@admin_user.email, @admin_user2.email]
+      mail.bcc.should eq([@admin_user.email, @admin_user2.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
@@ -47,7 +47,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("Comment Added on " + @proposal_id_title_and_committee)
-      mail.to.should eq([@user.email, @other_cm_user.email])
+      mail.bcc.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
@@ -61,9 +61,9 @@ describe UserMailer do
         @other_cm_user.no_emails = true
         @other_cm_user.save
     end
-    it "should only e-mail to the normal user" do
+    it "should only e-mail.bcc the normal user" do
         mail = UserMailer.proposal_revised(@proposal)
-        mail.to.should eq([@user.email])
+        mail.bcc.should eq([@user.email])
     end
   end
 
@@ -72,7 +72,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("Revision to " + @proposal_id_title_and_committee)
-      mail.to.should eq([@user.email, @other_cm_user.email])
+      mail.bcc.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
@@ -86,7 +86,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("Proposal in Review: " + @proposal_id_title_and_committee)
-      mail.to.should eq([@user.email, @other_cm_user.email])
+      mail.bcc.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
@@ -100,7 +100,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("Vote Changed on " + @proposal_id_title_and_committee)
-      mail.to.should eq([@user.email, @other_cm_user.email])
+      mail.bcc.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
@@ -118,7 +118,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("New committee applicant")
-      mail.to.should eq([@admin_user.email])
+      mail.bcc.should eq([@admin_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
@@ -137,7 +137,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("Vote Submitted on " + @proposal_id_title_and_committee)
-      mail.to.should eq([@user.email, @other_cm_user.email])
+      mail.bcc.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
@@ -152,7 +152,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("Review Period has concluded for " + @proposal_id_title_and_committee)
-      mail.to.should eq([@proposal.owner.email])
+      mail.bcc.should eq([@proposal.owner.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
@@ -166,7 +166,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("Call for Voting on " + @proposal_id_title_and_committee)
-      mail.to.should eq([@user.email, @other_cm_user.email])
+      mail.bcc.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
@@ -180,7 +180,7 @@ describe UserMailer do
 
     it "renders the headers" do
       mail.subject.should eq("Voting Completed for " + @proposal_id_title_and_committee)
-      mail.to.should eq([@user.email, @other_cm_user.email])
+      mail.bcc.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
     end
 
