@@ -18,6 +18,8 @@ class CommitteeMembersController < ApplicationController
   # GET /committee_members/new.json
   def new
     @committee_member = CommitteeMember.new
+    @users = User.all
+    @users -= @committee.committee_members.map{|member| member.user}
 
     respond_to do |format|
       format.html # new.html.erb
@@ -28,6 +30,7 @@ class CommitteeMembersController < ApplicationController
   # GET /committee_members/1/edit
   def edit
     @committee_member = CommitteeMember.find(params[:id])
+    @users = User.all
   end
 
   # POST /committee_members

@@ -4,6 +4,7 @@ describe "committee_members/new" do
   before(:each) do
     @cm = assign(:committee_member, FactoryGirl.create(:committee_member))
     @committee = @cm.committee
+    @users = [FactoryGirl.create(:user)]
   end
 
   it "renders new committee Member form" do

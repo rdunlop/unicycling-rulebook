@@ -81,11 +81,29 @@ describe CommitteeMembersController do
       response.should redirect_to(root_path)
     end
 
-    it "assigns a new committee_member as @committee_member" do
-      sign_out @user
-      sign_in @admin_user
-      get :new, {:committee_id => @committee.id}
-      assigns(:committee_member).should be_a_new(CommitteeMember)
+    describe "as a super-admin" do
+      before(:each) do
+        sign_out @user
+        sign_in @admin_user
+      end
+      it "can access the :new page" do
+        get :new, {:committee_id => @committee.id}
+        response.should be_success
+      end
+
+      it "assigns a new committee_member as @committee_member" do
+        get :new, {:committee_id => @committee.id}
+        assigns(:committee_member).should be_a_new(CommitteeMember)
+      end
+      it "assigns all users to @users" do
+        get :new, {:committee_id => @committee.id}
+        assigns(:users).should =~ [@user, @admin_user]
+      end
+      it "only assigns new members to @users" do
+        FactoryGirl.create(:committee_member, :committee => @committee, :user => @admin_user)
+        get :new, {:committee_id => @committee.id}
+        assigns(:users).should =~ [@user]
+      end
     end
   end
 
