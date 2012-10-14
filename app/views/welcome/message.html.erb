@@ -1,0 +1,24 @@
+<h1>Send message</h1>
+
+<%= form_tag(welcome_send_message_path, :method => "POST") do %>
+    <h3>Committees</h3>
+    <% @committees.each do |c| %>
+      <%= label_tag("committee#{c.id}", c.name) %>
+      <%= check_box_tag("committees[]", c.id, false, {:id => "committee#{c.id}"}) %>
+      <br />
+    <% end %>
+
+    <br />
+    <h3>Message Contents</h3>
+    <%= label_tag("from", "From") %>
+    <%= @from %>
+    <br />
+    <%= label_tag("subject", "Subject") %>
+    <%= text_field_tag("subject", nil, {:id => "subject"}) %>
+    <br />
+    <%= label_tag("body", "Body") %>
+    <%= text_area_tag("body", nil, {:id => "body"}) %>
+    <br />
+    <%= submit_tag %>
+<% end %>
+

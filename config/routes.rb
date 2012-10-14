@@ -30,6 +30,8 @@ Rulebook::Application.routes.draw do
 
   get "welcome/index"
   get "welcome/help"
+  get "welcome/message"
+  post "welcome/send_message"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

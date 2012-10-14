@@ -31,4 +31,36 @@ class WelcomeController < ApplicationController
     # else
     # @majority_text = $majority *100 + "%"
   end
+
+  def message
+    authorize! :send, Message
+    @committees = Committee.all
+    @from = current_user.name
+  end
+
+  def send_message
+    authorize! :send, Message
+
+    @committee_numbers = params[:committees]
+    @committees = []
+    if not @committee_numbers.nil?
+      @committee_numbers.each do |cn|
+        @committees << Committee.find(cn)
+      end
+    end
+    @subject = params[:subject]
+    @body = params[:body]
+
+    if @committees.empty?
+      flash[:alert] = "No Target Selected"
+    else
+      if UserMailer.mass_email(@committees, @subject, @body).deliver
+        flash[:notice] = "Message Successfully Sent"
+      else
+        flash[:alert] = "Message Send Error"
+      end
+    end
+
+    redirect_to welcome_message_path
+  end
 end

@@ -32,6 +32,46 @@ describe WelcomeController do
   def valid_attributes
     { }
   end
+
+  describe "GET message" do
+    describe "as a normal user" do
+      it "cannot send a message" do
+        get :message, {}
+        response.should redirect_to(root_path)
+      end
+    end
+    describe "as a super-user" do
+      before(:each) do
+        sign_out @user
+        @admin = FactoryGirl.create(:admin_user)
+        sign_in @admin
+      end
+      it "can send a message" do
+        get :message, {}
+        response.should be_success
+      end
+      it "sets the username to the current-signed-in-user" do
+        get :message, {}
+        assigns(:from).should == @admin.name
+      end
+    end
+  end
+
+  describe "POST send_message" do
+    before(:each) do
+      sign_out @user
+      sign_in FactoryGirl.create(:admin_user)
+    end
+    it "should fail if no committees are selected" do
+      post :send_message, {}
+      flash[:alert].should == "No Target Selected"
+    end
+    it "should succeed if a committees is selected" do
+      @com = FactoryGirl.create(:committee)
+      post :send_message, {:committees => [@com.id]}
+      flash[:notice].should == "Message Successfully Sent"
+    end
+  end
   
   describe "GET index" do
     it "assigns all MY proposals as @proposals" do

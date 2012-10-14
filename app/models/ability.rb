@@ -32,6 +32,7 @@ class Ability
         can :manage, Comment
         can :manage, User
         can :manage, AppConfig
+        can :send, Message
     end
 
     # Can only create comments if I am in the committee
