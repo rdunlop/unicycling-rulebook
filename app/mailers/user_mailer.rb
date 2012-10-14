@@ -46,7 +46,7 @@ class UserMailer < ActionMailer::Base
   def proposal_comment_added(proposal, comment, user)
     @heading = "Re: (Proposal " + proposal.id.to_s + ") " + proposal.title
     @comment = comment.comment
-    @user = user.email
+    @user = user
     @voting_status = user.voting_text(proposal.committee)
     @proposal = proposal
 
