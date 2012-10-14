@@ -5,4 +5,4 @@ end
 %>
 <h4>Comments <% if can? :read_usernames, comment.proposal %> by <b><%= comment.user.to_s %></b><% end %>
     on <i><b><%= comment.created_at.to_s %></b></i></h4>
-<p><blockquote><%= comment.comment %></blockquote></p>
+<p><blockquote><pre><%= comment.comment %></pre></blockquote></p>
