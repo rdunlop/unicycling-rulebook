@@ -8,6 +8,7 @@ gem 'therubyracer'
 gem 'rake'
 gem 'devise'
 gem 'cancan'
+gem 'exception_notification'
 
 #gem 'sqlite3'
 gem 'pg'
