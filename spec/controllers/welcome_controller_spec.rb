@@ -55,6 +55,18 @@ describe WelcomeController do
         assigns(:from).should == @admin.name
       end
     end
+    describe "as a committee-admin" do
+      before(:each) do
+        sign_out @user
+        @ca = FactoryGirl.create(:user)
+        FactoryGirl.create(:committee_member, :user => @ca, :admin => true)
+        sign_in @ca
+      end
+      it "can send a message" do
+        get :message, {}
+        response.should be_success
+      end
+    end
   end
 
   describe "POST send_message" do

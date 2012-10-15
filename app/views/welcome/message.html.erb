@@ -1,5 +1,9 @@
 <h1>Send message</h1>
 
+<p>Using this form, you can send e-mail messages to all Members of a Committee. If you select Multiple committees, all members in all of those committees will receive the e-mail.</p>
+
+<p>The e-mail will originate from <%= ENV['MAIL_FULL_EMAIL'] %> and all e-mail addresses will be BCC'd</p>
+
 <%= form_tag(welcome_send_message_path, :method => "POST") do %>
     <h3>Committees</h3>
     <% @committees.each do |c| %>
@@ -19,6 +23,6 @@
     <%= label_tag("body", "Body") %>
     <%= text_area_tag("body", nil, {:id => "body"}) %>
     <br />
-    <%= submit_tag %>
+    <%= submit_tag 'Send Message' %>
 <% end %>
 

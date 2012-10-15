@@ -19,7 +19,8 @@
   <%= f.password_field :current_password %></div>
 
   <div><%= f.label :no_emails %> <i>Disable All E-mails</i>
-  <%= f.check_box :no_emails %></div>
+    <%= f.check_box :no_emails %> (You will still receive e-mails from Moderators/Administrators)
+  </div>
 
   <div><%= f.submit "Update" %></div>
 <% end %>

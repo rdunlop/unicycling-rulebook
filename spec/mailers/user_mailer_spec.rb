@@ -189,4 +189,19 @@ describe UserMailer do
     end
   end
 
+  describe "mass_email" do
+    let(:mail) { UserMailer.mass_email([@committee], 'Some Subject', 'Some text') }
+
+    it "uses bcc for all committee members" do
+      mail.subject.should eq("Some Subject")
+      mail.bcc.should eq([@user.email, @other_cm_user.email])
+    end
+    it "sends e-mail even when the user is set to 'no-email'" do
+      @user3 = FactoryGirl.create(:user, :no_emails => true)
+      @cm = FactoryGirl.create(:committee_member, :committee => @committee, :user => @user3)
+      mail.subject.should eq("Some Subject")
+      mail.bcc.should eq([@user.email, @other_cm_user.email, @user3.email])
+    end
+  end
+
 end

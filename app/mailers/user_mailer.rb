@@ -11,11 +11,11 @@ class UserMailer < ActionMailer::Base
     emails
   end
 
-  def create_committee_email(committee)
+  def create_committee_email(committee, honor_no_email = true)
     emails = []
     CommitteeMember.all.each do |cm|
         if cm.committee == committee
-            emails << cm.user.email unless cm.user.no_emails
+            emails << cm.user.email unless (honor_no_email and cm.user.no_emails)
         end
     end
     emails
@@ -168,7 +168,7 @@ class UserMailer < ActionMailer::Base
 
     emails = []
     committees.each do |c|
-        emails += create_committee_email(c)
+        emails += create_committee_email(c, false)
     end
     @body = body
 

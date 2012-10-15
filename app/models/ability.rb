@@ -35,6 +35,8 @@ class Ability
         can :send, Message
     end
 
+    can :send, Message if user.is_committee_admin(nil)
+
     # Can only create comments if I am in the committee
     can :create, Comment do |comment|
         user.is_in_committee(comment.proposal.committee)
