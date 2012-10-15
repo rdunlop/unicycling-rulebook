@@ -71,6 +71,8 @@ class ProposalsController < ApplicationController
     @revision = Revision.new(params[:revision])
     @revision.user = current_user
 
+    @committees = current_user.accessible_committees
+
     respond_to do |format|
       if @proposal.valid? and @revision.valid?
         @proposal.save

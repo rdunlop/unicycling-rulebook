@@ -222,6 +222,7 @@ describe ProposalsController do
         Proposal.any_instance.stub(:save).and_return(false)
         post :create, {:proposal => {}}
         assigns(:proposal).should be_a_new(Proposal)
+        assigns(:committees).should == [@committee]
       end
 
       it "re-renders the 'new' template" do
