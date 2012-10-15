@@ -30,7 +30,7 @@ describe CommitteeMembersController do
   # Event. As you add validations to Event, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { user_id: @user.id,
+    { user_id: [@user.id],
       admin: false,
       voting: true
     }
@@ -147,6 +147,12 @@ describe CommitteeMembersController do
           post :create, {:committee_member => valid_attributes, :committee_id => @committee.id}
         }.to change(CommitteeMember, :count).by(1)
       end
+      it "creates multiple committee Members" do
+        @user2 = FactoryGirl.create(:user)
+        expect {
+          post :create, {:committee_member => {:user_id => [@user.id, @user2.id], :admin => false, :voting => false}, :committee_id => @committee.id}
+        }.to change(CommitteeMember, :count).by(2)
+      end
 
       it "assigns a newly created committee_member as @committee_member" do
         post :create, {:committee_member => valid_attributes, :committee_id => @committee.id}
@@ -155,7 +161,7 @@ describe CommitteeMembersController do
         assigns(:committee_member).admin.should == false
       end
       it "sets the admin status correctly" do
-        post :create, {:committee_member => {user_id: @user.id, admin: true, voting: false }, :committee_id => @committee.id}
+        post :create, {:committee_member => {user_id: [@user.id], admin: true, voting: false }, :committee_id => @committee.id}
         assigns(:committee_member).admin.should == true
       end
 
@@ -211,13 +217,13 @@ describe CommitteeMembersController do
 
       it "assigns the requested committee_member as @committee" do
         committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
-        put :update, {:id => committee_member.to_param, :committee_member => valid_attributes, :committee_id => @committee.id}
+        put :update, {:id => committee_member.to_param, :committee_member => {:user_id => @user.id, :admin => false, :voting => true }, :committee_id => @committee.id}
         assigns(:committee_member).should eq(committee_member)
       end
 
       it "redirects to the committee" do
         committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
-        put :update, {:id => committee_member.to_param, :committee_member => valid_attributes, :committee_id => @committee.id}
+        put :update, {:id => committee_member.to_param, :committee_member => {:user_id => @user.id, :admin => false, :voting => true}, :committee_id => @committee.id}
         response.should redirect_to(committee_committee_members_path(@committee))
       end
     end

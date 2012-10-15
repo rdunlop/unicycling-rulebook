@@ -36,13 +36,24 @@ class CommitteeMembersController < ApplicationController
   # POST /committee_members
   # POST /committee_members.json
   def create
-    @committee_member = CommitteeMember.new(params[:committee_member])
-    @committee_member.committee = @committee
+    @success = true
+    if params[:committee_member][:user_id]
+      params[:committee_member][:user_id].each do |user|
+        next if user.blank?
+        @committee_member = CommitteeMember.new(:user_id => user, :voting => params[:committee_member][:voting], :admin => params[:committee_member][:admin]) #params[:committee_member])
+        @committee_member.committee = @committee
+        unless @committee_member.save
+          @success = false
+        end
+      end
+    else
+      @success = false
+    end
 
     respond_to do |format|
-      if @committee_member.save
+      if @success
         format.html { redirect_to committee_committee_members_path(@committee), notice: 'Committee member was successfully created.' }
-        format.json { render json: [@committee, @committee_member], status: :created, location: committee_committee_members_path(@committee) }
+        format.json { render json: @committee, status: :created, location: committee_committee_members_path(@committee) }
       else
         format.html { render action: "new" }
         format.json { render json: @committee_member.errors, status: :unprocessable_entity }
