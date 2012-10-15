@@ -208,6 +208,8 @@ class ProposalsController < ApplicationController
         format.html { redirect_to @proposal, notice: 'Proposal has been Set-Aside' }
         format.json { head :no_content }
       else
+        @proposal.status = @proposal.status_was
+        flash[:alert] = "Unable to set status to Tabled unless in 'Pre-Voting' or 'Review' state"
         format.html { render action: "show" }
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
       end

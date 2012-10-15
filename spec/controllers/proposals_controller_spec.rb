@@ -541,6 +541,8 @@ describe ProposalsController do
         response.should render_template("show")
         proposal = Proposal.find(proposal.id)
         proposal.status.should == "Voting"
+        assigns(:proposal).status.should == "Voting"
+        flash[:alert].should == "Unable to set status to Tabled unless in 'Pre-Voting' or 'Review' state"
     end
   end
 end
