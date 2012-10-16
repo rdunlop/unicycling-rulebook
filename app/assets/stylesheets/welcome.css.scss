@@ -50,11 +50,11 @@ strong {
 
 // Form formatting:
 textarea {
-    height: 100px;
-    width: 400px
+    height: 400px;
+    width: 60%;
 }
 #subject {
-    width: 400px
+    width: 60%;
 }
 
 /* Taken from http://www.alistapart.com/articles/prettyaccessibleforms/ */
@@ -65,8 +65,11 @@ form legend {
   padding: 0 2px;
   font-weight: bold;
 }
+.field label {
+  width: 20%;
+}
 .detail {
-  width: 120px;
+  width: 20%;
   word-wrap: normal;
   vertical-align: top;
   display: inline-block;
