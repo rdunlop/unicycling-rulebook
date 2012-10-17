@@ -32,4 +32,15 @@ describe Committee do
         committee = Committee.new
         committee.preliminary.should == false
     end
+    it "should list the members alphabetically" do
+      committee = FactoryGirl.create(:committee)
+      user_b = FactoryGirl.create(:user, :name => "Bravo")
+      user_a = FactoryGirl.create(:user, :name => "Alpha")
+      user_c = FactoryGirl.create(:user, :name => "Charlie")
+      cm_b = FactoryGirl.create(:committee_member, :committee => committee, :user => user_b)
+      cm_a = FactoryGirl.create(:committee_member, :committee => committee, :user => user_a)
+      cm_c = FactoryGirl.create(:committee_member, :committee => committee, :user => user_c)
+
+      committee.committee_members.should == [cm_a, cm_b, cm_c]
+    end
 end
