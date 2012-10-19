@@ -1,14 +1,14 @@
 <h3>Background</h3>
-<p><pre><%= revision.background %></pre></p>
+<%= simple_format revision.background %>
 
 <% # XXX must be admin?
 %>
 <h3>Additional Notes</h3>
-<p><pre><%= proposal.summary %></pre></p>
+<%= simple_format proposal.summary %>
 
 <h3>Proposal</h3>
-<p><pre><%= revision.body %></pre></p>
+<%= simple_format revision.body %>
 
 <h3>References</h3>
-<p><pre><%= revision.references %></pre></p>
+<%= simple_format revision.references %>
 
