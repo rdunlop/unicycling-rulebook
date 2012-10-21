@@ -48,6 +48,17 @@ class User < ActiveRecord::Base
     return false
   end
 
+  def is_committee_editor(committee = nil)
+    committee_members.each do |cm|
+        if cm.committee == committee or committee == nil
+            if cm.editor
+                return true
+            end
+        end
+    end
+    return false
+  end
+
   def is_in_committee(committee)
     committee_members.each do |cm|
         if cm.committee == committee

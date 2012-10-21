@@ -15,6 +15,7 @@ describe "committee_members/new" do
       assert_select "select#committee_member_user_id", :name => "committee_member[user_id]"
       assert_select "input#committee_member_voting", :name => "committee_member[voting]"
       assert_select "input#committee_member_admin", :name => "committee_member[admin]"
+      assert_select "input#committee_member_editor", :name => "committee_member[editor]"
     end
   end
 end

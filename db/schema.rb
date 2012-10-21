@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121009135538) do
+ActiveRecord::Schema.define(:version => 20121021012242) do
 
   create_table "app_configs", :force => true do |t|
     t.string   "rulebook_name"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20121009135538) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.boolean  "admin",        :default => false
+    t.boolean  "editor",       :default => false
   end
 
   create_table "committees", :force => true do |t|

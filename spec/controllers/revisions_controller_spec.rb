@@ -51,6 +51,19 @@ describe RevisionsController do
       response.should be_success
       response.should render_template("show")
     end
+    describe "as an editor" do
+      before(:each) do
+        @editor = FactoryGirl.create(:user)
+        FactoryGirl.create(:committee_member, :committee => @proposal.committee, :user => @proposal.owner)
+        FactoryGirl.create(:committee_member, :committee => @proposal.committee, :user => @editor, :editor => true)
+        sign_out @admin
+      end
+      it "can view revisions" do
+        sign_in @editor
+        get :show, {:id => @revision.to_param, :proposal_id => @proposal.id}
+        assigns(:revision).should eq(@revision)
+      end
+    end
   end
 
   describe "GET new" do
@@ -86,6 +99,23 @@ describe RevisionsController do
             assigns(:revision).should be_persisted
             response.should redirect_to([@prop, Revision.last])
         end
+      end
+      describe "as an editor" do
+        before(:each) do
+            sign_out @admin
+            @user = FactoryGirl.create(:user)
+            @editor = FactoryGirl.create(:user)
+            @prop = FactoryGirl.create(:proposal, :owner => @user, :status => 'Review')
+            cm = FactoryGirl.create(:committee_member, :user => @user, :committee => @prop.committee)
+            cm = FactoryGirl.create(:committee_member, :user => @editor, :editor => true, :committee => @prop.committee)
+            sign_in @editor
+        end
+        it "can create a revision to another proposal" do
+            post :create, {:revision => valid_attributes, :proposal_id => @prop.id}
+            assigns(:revision).should be_persisted
+            response.should redirect_to([@prop, Revision.last])
+        end
+
       end
 
       it "assigns a newly created revision as @revision" do

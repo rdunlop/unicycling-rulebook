@@ -32,6 +32,7 @@ describe CommitteeMembersController do
   def valid_attributes
     { user_id: [@user.id],
       admin: false,
+      editor: false,
       voting: true
     }
   end
@@ -164,6 +165,10 @@ describe CommitteeMembersController do
         post :create, {:committee_member => {user_id: [@user.id], admin: true, voting: false }, :committee_id => @committee.id}
         assigns(:committee_member).admin.should == true
       end
+      it "sets the editor status correctly" do
+        post :create, {:committee_member => {user_id: [@user.id], admin: false, editor: true, voting: false }, :committee_id => @committee.id}
+        assigns(:committee_member).editor.should == true
+      end
 
       it "redirects to the created committee_member" do
         post :create, {:committee_member => valid_attributes, :committee_id => @committee.id}
@@ -225,6 +230,13 @@ describe CommitteeMembersController do
         committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         put :update, {:id => committee_member.to_param, :committee_member => {:user_id => @user.id, :admin => false, :voting => true}, :committee_id => @committee.id}
         response.should redirect_to(committee_committee_members_path(@committee))
+      end
+
+      it "sets the editor flag" do
+        committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
+        put :update, {:id => committee_member.to_param, :committee_member => {:user_id => @user.id, :editor => true, :voting => true}, :committee_id => @committee.id}
+        cm = CommitteeMember.find(committee_member.id)
+        cm.editor.should == true
       end
     end
 

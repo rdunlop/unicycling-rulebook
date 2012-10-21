@@ -7,7 +7,11 @@
 
 <b>Committee:</b> <%= @proposal.committee %><br />
 <% if can? :read_usernames, @proposal %>
-    <b>Owner:</b> <%= @proposal.owner %><br />
+  <b>Owner:</b> <%= @proposal.owner %>
+  <% if can? :read_email, @proposal %>
+    (<%= @proposal.owner.email %>)
+  <% end %>
+  <br />
 <% end %>
 <b>Submitted</b> on <%= @proposal.submit_date %><br />
 <b>Status:</b> <strong><%= @proposal.status_string %></strong><br />

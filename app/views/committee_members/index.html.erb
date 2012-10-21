@@ -1,10 +1,36 @@
 <h1>Listing Members for <%= @committee.to_s %></h1>
 
+<p>Admin members are allowed to:
+<ul>
+  <li>Send E-mail messages to ANY committee group</li>
+  <li>Read proposals that are in the "Submitted" status (hidden from normal committee members)</li>
+  <li>See Committee Details</li>
+  <li>Update Committee Members (admin/voting)</li>
+  <li>Update Proposals</li>
+  <li>Read Votes</li>
+</ul>
+</p>
+
+<p>Voting Members are allowed to:
+<ul>
+  <li>Vote on proposals during the 'Voting' phase</li>
+</ul>
+</p>
+
+<p>Editors are allowed to:
+<ul>
+  <li>Read proposals that are in the "Submitted" status (hidden from normal committee members)</li>
+  <li>Revise the text of any proposal in the committee</li>
+  <li>See the e-mail address of the owner of the proposal</li>
+</ul>
+</p>
+
 <table>
   <tr>
     <th>User</th>
     <th>Email</th>
     <th>Admin</th>
+    <th>Editor</th>
     <th>Voting</th>
     <th></th>
     <th></th>
@@ -15,6 +41,7 @@
     <td><%= committee_member.user %></td>
     <td><%= committee_member.user.email %></td>
     <td><%= committee_member.admin %></td>
+    <td><%= committee_member.editor %></td>
     <td><%= committee_member.voting %></td>
     <td><%= link_to 'Edit', edit_committee_committee_member_path(@committee, committee_member) %></td>
     <td>

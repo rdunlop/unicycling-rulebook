@@ -545,5 +545,18 @@ describe ProposalsController do
         assigns(:proposal).status.should == "Voting"
         flash[:alert].should == "Unable to set status to Tabled unless in 'Pre-Voting' or 'Review' state"
     end
+    describe "as proposal owner" do
+      before(:each) do
+        sign_out @admin_user
+        sign_in @user
+      end
+      it "can table a Submitted proposal" do
+        proposal = FactoryGirl.create(:proposal, :owner => @user, :status => "Pre-Voting")
+
+        put :table, {:id => proposal.to_param}
+        proposal.reload
+        proposal.status.should == "Tabled"
+      end
+    end
   end
 end

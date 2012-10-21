@@ -6,5 +6,5 @@ class CommitteeMember < ActiveRecord::Base
     validates :user, :presence => true
     validates :user_id, :uniqueness => {:scope => [:committee_id]}
 
-    attr_accessible :committee_id, :admin, :voting, :user_id
+    attr_accessible :committee_id, :admin, :editor, :voting, :user_id
 end

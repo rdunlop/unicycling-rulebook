@@ -40,7 +40,11 @@ class CommitteeMembersController < ApplicationController
     if params[:committee_member][:user_id]
       params[:committee_member][:user_id].each do |user|
         next if user.blank?
-        @committee_member = CommitteeMember.new(:user_id => user, :voting => params[:committee_member][:voting], :admin => params[:committee_member][:admin]) #params[:committee_member])
+        @committee_member = CommitteeMember.new(
+          :user_id => user,
+          :voting => params[:committee_member][:voting],
+          :admin => params[:committee_member][:admin],
+          :editor => params[:committee_member][:editor])
         @committee_member.committee = @committee
         unless @committee_member.save
           @success = false

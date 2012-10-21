@@ -58,9 +58,14 @@ class Ability
         user.is_in_committee(proposal.committee)
     end
 
+    # allows editors and admins to see the e-mail address of the proposal owner (for out-of-band communication)
+    can :read_email, Proposal do |proposal|
+      user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user or user.is_committee_editor(proposal.committee)
+    end
+
     can [:read], Proposal do |proposal|
         if proposal.status == 'Submitted'
-            user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
+            user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user or user.is_committee_editor(proposal.committee)
         else
             user.is_in_committee(proposal.committee)
         end
@@ -96,12 +101,17 @@ class Ability
     # Owner-specific
     # Committee-admin-specific
 
-    can [:revise, :set_voting], Proposal do |proposal|
+    can [:set_voting], Proposal do |proposal|
         user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
     end
+    # editors can revise and table
+    can [:revise, :table], Proposal do |proposal|
+        user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user or user.is_committee_editor(proposal.committee)
+    end
+
     can :create, Revision
     can :read, Revision do |revision|
-        user.is_committee_admin(revision.try(:proposal).try(:committee)) or revision.try(:proposal).try(:owner) == user
+        user.is_committee_admin(revision.try(:proposal).try(:committee)) or revision.try(:proposal).try(:owner) == user or user.is_committee_editor(revision.try(:proposal).try(:committee))
     end
 
     # Define abilities for the passed in user here. For example:
