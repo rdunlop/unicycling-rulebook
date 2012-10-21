@@ -72,7 +72,8 @@ describe WelcomeController do
   describe "POST send_message" do
     before(:each) do
       sign_out @user
-      sign_in FactoryGirl.create(:admin_user)
+      @admin_user = FactoryGirl.create(:admin_user)
+      sign_in @admin_user
     end
     it "should fail if no committees are selected" do
       post :send_message, {}
@@ -82,6 +83,14 @@ describe WelcomeController do
       @com = FactoryGirl.create(:committee)
       post :send_message, {:committees => [@com.id]}
       flash[:notice].should == "Message Successfully Sent"
+    end
+    it "should set the reply_to address to the user's email" do
+      @com = FactoryGirl.create(:committee)
+      ActionMailer::Base.deliveries.clear
+      post :send_message, {:committees => [@com.id]}
+      num_deliveries = ActionMailer::Base.deliveries.size
+      note = ActionMailer::Base.deliveries.first
+      note.reply_to.should == [@admin_user.email]
     end
   end
   

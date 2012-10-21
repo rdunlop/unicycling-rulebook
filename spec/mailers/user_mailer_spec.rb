@@ -190,7 +190,7 @@ describe UserMailer do
   end
 
   describe "mass_email" do
-    let(:mail) { UserMailer.mass_email([@committee], 'Some Subject', 'Some text') }
+    let(:mail) { UserMailer.mass_email([@committee], 'Some Subject', 'Some text', "some@dunlopweb.com") }
 
     it "uses bcc for all committee members" do
       mail.subject.should eq("Some Subject")
@@ -201,6 +201,9 @@ describe UserMailer do
       @cm = FactoryGirl.create(:committee_member, :committee => @committee, :user => @user3)
       mail.subject.should eq("Some Subject")
       mail.bcc.should eq([@user.email, @other_cm_user.email, @user3.email])
+    end
+    it "should be sent with the specified 'reply-to' address" do
+      mail.reply_to.should eq(["some@dunlopweb.com"])
     end
   end
 

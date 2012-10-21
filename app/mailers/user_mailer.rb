@@ -164,7 +164,7 @@ class UserMailer < ActionMailer::Base
     mail bcc: create_committee_email(@proposal.committee), subject: 'Voting Completed for ' + create_proposal_subject(@proposal)
   end
 
-  def mass_email(committees, subject, body)
+  def mass_email(committees, subject, body, reply_email)
 
     emails = []
     committees.each do |c|
@@ -172,6 +172,6 @@ class UserMailer < ActionMailer::Base
     end
     @body = body
 
-    mail bcc: emails, subject: subject
+    mail bcc: emails, subject: subject, reply_to: reply_email
   end
 end

@@ -17,6 +17,10 @@
     <%= label_tag("from", "From") %>
     <%= @from %>
     <br />
+    <%= label_tag("reply-address", "Reply Address") %>
+    <%= @from_email %>
+    <br />
+
     <%= label_tag("subject", "Subject") %>
     <%= text_field_tag("subject", nil, {:id => "subject"}) %>
     <br />

@@ -36,6 +36,7 @@ class WelcomeController < ApplicationController
     authorize! :send, Message
     @committees = Committee.all
     @from = current_user.name
+    @from_email = current_user.email
   end
 
   def send_message
@@ -50,11 +51,12 @@ class WelcomeController < ApplicationController
     end
     @subject = params[:subject]
     @body = params[:body]
+    @reply_email = current_user.email
 
     if @committees.empty?
       flash[:alert] = "No Target Selected"
     else
-      if UserMailer.mass_email(@committees, @subject, @body).deliver
+      if UserMailer.mass_email(@committees, @subject, @body, @reply_email).deliver
         flash[:notice] = "Message Successfully Sent"
       else
         flash[:alert] = "Message Send Error"
