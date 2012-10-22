@@ -20,6 +20,10 @@ Done - Don't allow the same user to be added to a committee 2x.
 
 - "Do not send me e-mails"
 - "send me e-mail once a week"
+
+- Can I pull the "e-mail list creation logit" into  the controller, so that I can prevent the problem of trying to send to no-one.
+- Can I change it so that the system sends e-mails based on the 'read-ability' of objects, instead of the relationship. (thus all super-admin would get ALL e-mails).
+
 - Add interface to allow people to modify these settings for themselves easily.
 - Update the e-mails with a footer which talks about how to modify these settings
  - Receive e-mails for comments/proposals/votes options
