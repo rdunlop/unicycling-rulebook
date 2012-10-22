@@ -11,11 +11,13 @@ class UserMailer < ActionMailer::Base
     emails
   end
 
-  def create_committee_email(committee, honor_no_email = true)
+  def create_committee_email(proposal, committee, honor_no_email = true)
     emails = []
     CommitteeMember.all.each do |cm|
         if cm.committee == committee
+          if proposal.nil? or cm.user.can? :read, proposal
             emails << cm.user.email unless (honor_no_email and cm.user.no_emails)
+          end
         end
     end
     emails
@@ -52,7 +54,7 @@ class UserMailer < ActionMailer::Base
 
     subject = "Comment Added on " + create_proposal_subject(proposal)
 
-    mail bcc: create_committee_email(proposal.committee), subject: subject
+    mail bcc: create_committee_email(proposal, proposal.committee), subject: subject
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -65,7 +67,7 @@ class UserMailer < ActionMailer::Base
     @change_description = proposal.latest_revision.change_description
     @body = proposal.latest_revision.body
 
-    mail bcc: create_committee_email(@proposal.committee), subject: 'Revision to ' + create_proposal_subject(proposal)
+    mail bcc: create_committee_email(@proposal, @proposal.committee, true), subject: 'Revision to ' + create_proposal_subject(proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -78,7 +80,7 @@ class UserMailer < ActionMailer::Base
     @set_aside_message = was_tabled ? "This proposal was Set-Aside, but has been put back into the review stage." : ""
     @body = @proposal.latest_revision.body
 
-    mail bcc: create_committee_email(@proposal.committee), subject: "Proposal in Review: " + create_proposal_subject(@proposal)
+    mail bcc: create_committee_email(@proposal, @proposal.committee), subject: "Proposal in Review: " + create_proposal_subject(@proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -91,7 +93,7 @@ class UserMailer < ActionMailer::Base
     @old_vote = old_vote_string
     @new_vote = new_vote_string
 
-    mail bcc: create_committee_email(proposal.committee), subject: "Vote Changed on " + create_proposal_subject(proposal)
+    mail bcc: create_committee_email(proposal, proposal.committee), subject: "Vote Changed on " + create_proposal_subject(proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -122,7 +124,7 @@ class UserMailer < ActionMailer::Base
     @vote_text = vote.vote
     @comments = vote.comment
 
-    mail bcc: create_committee_email(committee), subject: "Vote Submitted on " + create_proposal_subject(@proposal)
+    mail bcc: create_committee_email(vote.proposal, committee), subject: "Vote Submitted on " + create_proposal_subject(@proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -146,7 +148,7 @@ class UserMailer < ActionMailer::Base
     @proposal = proposal
     @vote_end = proposal.vote_end_date.to_s
 
-    mail bcc: create_committee_email(@proposal.committee), subject: 'Call for Voting on ' + create_proposal_subject(@proposal)
+    mail bcc: create_committee_email(@proposal, @proposal.committee), subject: 'Call for Voting on ' + create_proposal_subject(@proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -161,14 +163,14 @@ class UserMailer < ActionMailer::Base
     @num_disagree = proposal.disagree_votes
     @num_abstain = proposal.abstain_votes
 
-    mail bcc: create_committee_email(@proposal.committee), subject: 'Voting Completed for ' + create_proposal_subject(@proposal)
+    mail bcc: create_committee_email(@proposal, @proposal.committee), subject: 'Voting Completed for ' + create_proposal_subject(@proposal)
   end
 
   def mass_email(committees, subject, body, reply_email)
 
     emails = []
     committees.each do |c|
-        emails += create_committee_email(c, false)
+        emails += create_committee_email(nil, c, false)
     end
     @body = body
 

@@ -17,10 +17,16 @@ class User < ActiveRecord::Base
 
   after_create :send_email_to_admins
 
+  delegate :can?, :cannot?, :to => :ability
+
   after_initialize :init
 
   def init
     self.no_emails = false if self.no_emails.nil?
+  end
+
+  def ability
+    @ability ||= Ability.new(self)
   end
 
   def send_email_to_admins

@@ -13,4 +13,8 @@ class ApplicationController < ActionController::Base
       @config = AppConfig.first
     end
   end
+
+  def current_ablity
+    current_user.ability
+  end
 end

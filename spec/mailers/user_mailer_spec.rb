@@ -2,8 +2,8 @@ require "spec_helper"
 
 describe UserMailer do
   before(:each) do
-      @comment = FactoryGirl.create(:comment)
-      @proposal = @comment.proposal
+      @proposal = FactoryGirl.create(:proposal, :status => "Review")
+      @comment = FactoryGirl.create(:comment, :proposal => @proposal)
       FactoryGirl.create(:revision, :proposal => @proposal)
       @user = @comment.user
 
@@ -55,6 +55,18 @@ describe UserMailer do
       mail.body.encoded.should match(@comment.comment)
     end
   end
+  describe "'Submitted' Proposal commented on" do
+    before (:each) do
+      @proposal.status = "Submitted"
+      @proposal.save
+    end
+    let(:mail) { UserMailer.proposal_comment_added(@proposal, @comment, @user) }
+
+    it "should not send e-mail to members if the proposal is in 'Submitted' state" do
+      @proposal.status.should == "Submitted"
+      mail.bcc.should eq([])
+    end
+  end
 
   describe "with a no_emails committee member" do
     before(:each) do
@@ -67,7 +79,20 @@ describe UserMailer do
     end
   end
 
-  describe "proposal_revised" do
+  describe "'Submitted' Proposal Revised" do
+    before (:each) do
+      @proposal.status = "Submitted"
+      @proposal.save
+    end
+    let(:mail) { UserMailer.proposal_revised(@proposal) }
+
+    it "should not send e-mail to members if the proposal is in 'Submitted' state" do
+      @proposal.status.should == "Submitted"
+      mail.bcc.should eq([])
+    end
+  end
+
+  describe "'Review' proposal_revised" do
     let(:mail) { UserMailer.proposal_revised(@proposal) }
 
     it "renders the headers" do
