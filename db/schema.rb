@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121021012242) do
+ActiveRecord::Schema.define(:version => 20121025022144) do
 
   create_table "app_configs", :force => true do |t|
     t.string   "rulebook_name"
@@ -58,7 +58,6 @@ ActiveRecord::Schema.define(:version => 20121021012242) do
     t.date     "tabled_date"
     t.boolean  "transition_straight_to_vote"
     t.integer  "owner_id"
-    t.text     "summary"
     t.text     "title"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
@@ -74,6 +73,7 @@ ActiveRecord::Schema.define(:version => 20121021012242) do
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.integer  "num"
+    t.text     "rule_text"
   end
 
   create_table "users", :force => true do |t|

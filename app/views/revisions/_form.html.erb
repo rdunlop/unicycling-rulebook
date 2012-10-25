@@ -5,8 +5,14 @@
     </div>
 
     <div class="field">
+        <%= form.label :rule_text, 'Proposal' %><br />
+        <div class="detail">(old and new rule with chapter number)</div>
+        <%= form.text_area :rule_text %>
+    </div>
+
+    <div class="field">
         <%= form.label :body %><br />
-        <div class="detail">(Please outline your proposal as clearly as possible)</div>
+        <div class="detail">(more detailed explanation, max 500 characters)</div>
         <%= form.text_area :body %>
     </div>
 

@@ -32,6 +32,7 @@ describe RevisionsController do
   # update the return value of this method accordingly.
   def valid_attributes
     { body: "blah",
+      rule_text: 'Something',
       change_description: "blaa"}
   end
   
@@ -75,6 +76,7 @@ describe RevisionsController do
       get :new, {:proposal_id => @proposal.id}
       assigns(:revision).background.should == @proposal.latest_revision.background
       assigns(:revision).body.should == @proposal.latest_revision.body
+      assigns(:revision).rule_text.should == @proposal.latest_revision.rule_text
       assigns(:revision).references.should == @proposal.latest_revision.references
     end
   end

@@ -1,12 +1,10 @@
 <h3>Background</h3>
 <%= simple_format revision.background %>
 
-<% # XXX must be admin?
-%>
-<h3>Additional Notes</h3>
-<%= simple_format proposal.summary %>
-
 <h3>Proposal</h3>
+<%= simple_format revision.rule_text %>
+
+<h3>Body</h3>
 <%= simple_format revision.body %>
 
 <h3>References</h3>

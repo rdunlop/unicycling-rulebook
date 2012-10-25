@@ -22,6 +22,7 @@ class RevisionsController < ApplicationController
     @revision.background = @proposal.latest_revision.background
     @revision.body = @proposal.latest_revision.body
     @revision.references = @proposal.latest_revision.references
+    @revision.rule_text = @proposal.latest_revision.rule_text
     authorize! :revise, @proposal
 
     respond_to do |format|

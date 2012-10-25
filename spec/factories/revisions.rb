@@ -3,6 +3,7 @@
 FactoryGirl.define do
   factory :revision do
     proposal # FactoryGirl
+    rule_text "Rule Text"
     body "MyText1"
     background "MyText2"
     references "MyText3"

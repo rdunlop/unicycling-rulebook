@@ -12,7 +12,6 @@ FactoryGirl.define do
     tabled_date "2011-08-29 14:43:59"
     transition_straight_to_vote false
     owner
-    summary "MyText"
     sequence(:title) {|e| "Proposal Title #{e}" }
   end
 end

@@ -35,7 +35,6 @@ describe ProposalsController do
   def valid_attributes
     {
         title: "My Title",
-        summary: "my summary",
         committee_id: @committee.id}
   end
   

@@ -17,6 +17,7 @@ describe "revisions/show" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     rendered.should match(/MyText1/)
+    rendered.should match(/Rule Text/)
     rendered.should match(/MyText2/)
     rendered.should match(/MyText3/)
   end
