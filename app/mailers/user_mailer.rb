@@ -35,6 +35,7 @@ class UserMailer < ActionMailer::Base
   def proposal_submitted(proposal)
     @proposal = proposal
     @body = proposal.latest_revision.body
+    @rule_text = proposal.latest_revision.rule_text
     @title = proposal.title
 
     mail bcc: create_admin_email, subject: 'New submission of ' + create_proposal_subject(proposal)
@@ -66,6 +67,7 @@ class UserMailer < ActionMailer::Base
     @proposal = proposal
     @change_description = proposal.latest_revision.change_description
     @body = proposal.latest_revision.body
+    @rule_text = proposal.latest_revision.rule_text
 
     mail bcc: create_committee_email(@proposal, @proposal.committee, true), subject: 'Revision to ' + create_proposal_subject(proposal)
   end
@@ -79,6 +81,7 @@ class UserMailer < ActionMailer::Base
     @proposal = proposal
     @set_aside_message = was_tabled ? "This proposal was Set-Aside, but has been put back into the review stage." : ""
     @body = @proposal.latest_revision.body
+    @rule_text = @proposal.latest_revision.rule_text
 
     mail bcc: create_committee_email(@proposal, @proposal.committee), subject: "Proposal in Review: " + create_proposal_subject(@proposal)
   end
