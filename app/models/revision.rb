@@ -19,6 +19,9 @@ class Revision < ActiveRecord::Base
 
 
     def change_description_required_for_updates
+        if not self.new_record?
+            return
+        end
         if self.change_description.blank?
             if self.proposal
                 if self.proposal.revisions.count > 0
