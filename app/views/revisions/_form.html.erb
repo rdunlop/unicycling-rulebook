@@ -1,7 +1,11 @@
+<% $MAX_CHARACTERS = 500 %>
     <div class="field">
         <%= form.label :background %><br />
-        <div class="detail">(tell us a bit about what you're proposing)</div>
-        <%= form.text_area :background %>
+        <div class="detail">(short overview what will be changed, max 500 characters)<br />
+          You have <input readonly type="text" name="countdown" size="3" value="<%= $MAX_CHARACTERS %>"> characters left.
+        </div>
+        <%= form.text_area :background, {:onKeyDown => "limitText(this.form.revision_background, this.form.countdown, " + $MAX_CHARACTERS.to_s + ");",
+          :onKeyUp => "limitText(this.form.revision_background, this.form.countdown, " + $MAX_CHARACTERS.to_s + ");"}  %>
     </div>
 
     <div class="field">
@@ -12,14 +16,14 @@
 
     <div class="field">
         <%= form.label :body %><br />
-        <div class="detail">(more detailed explanation, max 500 characters)</div>
+        <div class="detail">(more detailed explanation)</div>
         <%= form.text_area :body %>
     </div>
 
     <div class="field">
         <%= form.label :references %><br />
         <div class="detail">
-        (add here the old rule or a URLs to previous proposals or other documents if it is a new rule, separate with return)
+          (additional references if needed)
         </div>
         <%= form.text_area :references %>
     </div>
