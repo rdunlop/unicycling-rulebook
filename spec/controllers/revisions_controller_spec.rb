@@ -61,6 +61,8 @@ describe RevisionsController do
       end
       it "can view revisions" do
         sign_in @editor
+        @proposal.status = 'Review'
+        @proposal.save
         get :show, {:id => @revision.to_param, :proposal_id => @proposal.id}
         assigns(:revision).should eq(@revision)
       end

@@ -65,7 +65,7 @@ class Ability
 
     can [:read], Proposal do |proposal|
         if proposal.status == 'Submitted'
-            user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user or user.is_committee_editor(proposal.committee)
+            user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
         else
             user.is_in_committee(proposal.committee)
         end
