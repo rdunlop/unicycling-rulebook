@@ -23,8 +23,15 @@ class UserMailer < ActionMailer::Base
     emails
   end
 
+  def set_threading_header(proposal)
+    if not proposal.mail_messageid.nil?
+      headers['In-Reply-To'] = proposal.mail_messageid
+    end
+  end
+
+
   def create_proposal_subject(proposal)
-    "Proposal " + proposal.id.to_s + " - " + proposal.title + " for " + proposal.committee.to_s
+    "[" + proposal.committee.to_s + "] " + proposal.title + " (" + proposal.id.to_s + ")"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -38,7 +45,7 @@ class UserMailer < ActionMailer::Base
     @rule_text = proposal.latest_revision.rule_text
     @title = proposal.title
 
-    mail bcc: create_admin_email, subject: 'New submission of ' + create_proposal_subject(proposal)
+    mail bcc: create_admin_email, subject: create_proposal_subject(proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -47,15 +54,14 @@ class UserMailer < ActionMailer::Base
   #   en.user_mailer.proposal_comment_added.subject
   #
   def proposal_comment_added(proposal, comment, user)
-    @heading = "Re: (Proposal " + proposal.id.to_s + ") " + proposal.title
     @comment = comment.comment
     @user = user
     @voting_status = user.voting_text(proposal.committee)
     @proposal = proposal
 
-    subject = "Comment Added on " + create_proposal_subject(proposal)
+    set_threading_header(proposal)
 
-    mail bcc: create_committee_email(proposal, proposal.committee), subject: subject
+    mail bcc: create_committee_email(proposal, proposal.committee), subject: create_proposal_subject(proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -69,7 +75,9 @@ class UserMailer < ActionMailer::Base
     @body = proposal.latest_revision.body
     @rule_text = proposal.latest_revision.rule_text
 
-    mail bcc: create_committee_email(@proposal, @proposal.committee, true), subject: 'Revision to ' + create_proposal_subject(proposal)
+    set_threading_header(proposal)
+
+    mail bcc: create_committee_email(@proposal, @proposal.committee, true), subject: create_proposal_subject(proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -83,7 +91,9 @@ class UserMailer < ActionMailer::Base
     @body = @proposal.latest_revision.body
     @rule_text = @proposal.latest_revision.rule_text
 
-    mail bcc: create_committee_email(@proposal, @proposal.committee), subject: "Proposal in Review: " + create_proposal_subject(@proposal)
+    set_threading_header(proposal)
+
+    mail bcc: create_committee_email(@proposal, @proposal.committee), subject: create_proposal_subject(@proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -96,7 +106,9 @@ class UserMailer < ActionMailer::Base
     @old_vote = old_vote_string
     @new_vote = new_vote_string
 
-    mail bcc: create_committee_email(proposal, proposal.committee), subject: "Vote Changed on " + create_proposal_subject(proposal)
+    set_threading_header(proposal)
+
+    mail bcc: create_committee_email(proposal, proposal.committee), subject: create_proposal_subject(proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -127,7 +139,9 @@ class UserMailer < ActionMailer::Base
     @vote_text = vote.vote
     @comments = vote.comment
 
-    mail bcc: create_committee_email(vote.proposal, committee), subject: "Vote Submitted on " + create_proposal_subject(@proposal)
+    set_threading_header(vote.proposal)
+
+    mail bcc: create_committee_email(vote.proposal, committee), subject: create_proposal_subject(@proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -139,7 +153,9 @@ class UserMailer < ActionMailer::Base
     @REVISIONTIME_TEXT = "3 days"
     @proposal = proposal
 
-    mail bcc: proposal.owner.email, subject: "Review Period has concluded for " + create_proposal_subject(@proposal)
+    set_threading_header(proposal)
+
+    mail bcc: proposal.owner.email, subject: create_proposal_subject(@proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -151,7 +167,9 @@ class UserMailer < ActionMailer::Base
     @proposal = proposal
     @vote_end = proposal.vote_end_date.to_s
 
-    mail bcc: create_committee_email(@proposal, @proposal.committee), subject: 'Call for Voting on ' + create_proposal_subject(@proposal)
+    set_threading_header(proposal)
+
+    mail bcc: create_committee_email(@proposal, @proposal.committee), subject: create_proposal_subject(@proposal)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -166,7 +184,9 @@ class UserMailer < ActionMailer::Base
     @num_disagree = proposal.disagree_votes
     @num_abstain = proposal.abstain_votes
 
-    mail bcc: create_committee_email(@proposal, @proposal.committee), subject: 'Voting Completed for ' + create_proposal_subject(@proposal)
+    set_threading_header(proposal)
+
+    mail bcc: create_committee_email(@proposal, @proposal.committee), subject: create_proposal_subject(@proposal)
   end
 
   def mass_email(committees, subject, body, reply_email)

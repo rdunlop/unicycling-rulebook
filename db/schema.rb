@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121025022144) do
+ActiveRecord::Schema.define(:version => 20121028021603) do
 
   create_table "app_configs", :force => true do |t|
     t.string   "rulebook_name"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20121025022144) do
     t.text     "title"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
+    t.string   "mail_messageid"
   end
 
   create_table "revisions", :force => true do |t|
