@@ -2,9 +2,9 @@ require "spec_helper"
 
 describe UserMailer do
   before(:each) do
-      @proposal = FactoryGirl.create(:proposal, :status => "Review")
+      @proposal = FactoryGirl.create(:proposal, :status => "Review", :title => 'A "very" strange title')
       @comment = FactoryGirl.create(:comment, :proposal => @proposal)
-      FactoryGirl.create(:revision, :proposal => @proposal)
+      FactoryGirl.create(:revision, :proposal => @proposal, :rule_text => "This is what I \"Like\" to do", :body => "Sometimes I <link> somewhere")
       @user = @comment.user
 
       @committee = @proposal.committee
@@ -39,6 +39,11 @@ describe UserMailer do
 
     it "renders the body" do
       mail.body.encoded.should match("following proposal has been submitted")
+    end
+    it "renders the body without screwing up quotes" do
+      mail.body.encoded.should match('A "very" strange title')
+      mail.body.encoded.should match('This is what I "Like" to do')
+      mail.body.encoded.should match("Sometimes I <link> somewhere")
     end
   end
 
@@ -104,6 +109,10 @@ describe UserMailer do
     it "renders the body" do
       mail.body.encoded.should match("proposal has been revised")
     end
+    it "renders the body without screwing up quotes" do
+      mail.body.encoded.should match('This is what I "Like" to do')
+      mail.body.encoded.should match("Sometimes I <link> somewhere")
+    end
   end
 
   describe "proposal_status_review" do
@@ -117,6 +126,10 @@ describe UserMailer do
 
     it "renders the body" do
       mail.body.encoded.should match("was Set-Aside,")
+    end
+    it "renders the body without screwing up quotes" do
+      mail.body.encoded.should match('This is what I "Like" to do')
+      mail.body.encoded.should match("Sometimes I <link> somewhere")
     end
   end
 
