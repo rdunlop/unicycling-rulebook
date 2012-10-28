@@ -12,7 +12,7 @@ describe UserMailer do
       @cm = FactoryGirl.create(:committee_member, :committee => @committee, :user => @user)
       @other_cm_user = FactoryGirl.create(:user)
       @cm2 = FactoryGirl.create(:committee_member, :committee => @committee, :user => @other_cm_user)
-      @proposal_id_title_and_committee = "[" + @committee.name + "] " + @proposal.title + " (" + @proposal.id.to_s + ")"
+      @proposal_id_title_and_committee = "[" + @committee.name + "] " + @proposal.title + " (#" + @proposal.id.to_s + ")"
   end
   describe "when we have a one no-email super-admin and one normal super-admin" do
     before(:each) do

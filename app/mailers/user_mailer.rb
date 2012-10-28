@@ -31,7 +31,7 @@ class UserMailer < ActionMailer::Base
 
 
   def create_proposal_subject(proposal)
-    "[" + proposal.committee.to_s + "] " + proposal.title + " (" + proposal.id.to_s + ")"
+    "[" + proposal.committee.to_s + "] " + proposal.title + " (#" + proposal.id.to_s + ")"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
