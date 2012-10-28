@@ -1,6 +1,16 @@
 class UserMailer < ActionMailer::Base
   default from: (ENV['MAIL_FULL_EMAIL'] || "unicycling@dunlopweb.com")
 
+  def send_mail(bcc_list, proposal, from_name)
+    email = (ENV['MAIL_FULL_EMAIL'] || "unicycling@dunlopweb.com")
+    if from_name.nil?
+      from_string  = email
+    else
+      from_string = "\"#{from_name}\" <#{email}>"
+    end
+    mail bcc: bcc_list, subject: create_proposal_subject(proposal), from: from_string
+  end
+
   def create_admin_email
     emails = []
     User.all.each do |u|
@@ -45,7 +55,7 @@ class UserMailer < ActionMailer::Base
     @rule_text = proposal.latest_revision.rule_text
     @title = proposal.title
 
-    mail bcc: create_admin_email, subject: create_proposal_subject(proposal)
+    send_mail(create_admin_email, proposal, proposal.owner.name)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -61,7 +71,7 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(proposal)
 
-    mail bcc: create_committee_email(proposal, proposal.committee), subject: create_proposal_subject(proposal)
+    send_mail(create_committee_email(proposal, proposal.committee), proposal, user.name)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -77,7 +87,7 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(proposal)
 
-    mail bcc: create_committee_email(@proposal, @proposal.committee, true), subject: create_proposal_subject(proposal)
+    send_mail(create_committee_email(@proposal, @proposal.committee), @proposal, @proposal.latest_revision.user.name)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -93,7 +103,7 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(proposal)
 
-    mail bcc: create_committee_email(@proposal, @proposal.committee), subject: create_proposal_subject(@proposal)
+    send_mail(create_committee_email(@proposal, @proposal.committee), @proposal, nil)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -108,7 +118,7 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(proposal)
 
-    mail bcc: create_committee_email(proposal, proposal.committee), subject: create_proposal_subject(proposal)
+    send_mail(create_committee_email(proposal, proposal.committee), proposal, nil)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -141,7 +151,7 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(vote.proposal)
 
-    mail bcc: create_committee_email(vote.proposal, committee), subject: create_proposal_subject(@proposal)
+    send_mail(create_committee_email(vote.proposal, committee), vote.proposal, nil)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -169,7 +179,7 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(proposal)
 
-    mail bcc: create_committee_email(@proposal, @proposal.committee), subject: create_proposal_subject(@proposal)
+    send_mail(create_committee_email(@proposal, @proposal.committee), @proposal, nil)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -186,7 +196,7 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(proposal)
 
-    mail bcc: create_committee_email(@proposal, @proposal.committee), subject: create_proposal_subject(@proposal)
+    send_mail(create_committee_email(@proposal, @proposal.committee), @proposal, nil)
   end
 
   def mass_email(committees, subject, body, reply_email)
