@@ -1,10 +1,10 @@
 The following proposal has been revised:
-Title: <%= @proposal.title %>
+Title: <%= raw @proposal.title %>
 URL: <%= proposal_url(@proposal) %>
 
 
 Changes made: 
-<%= @change_description %>
+<%= raw @change_description %>
 
 PROPOSAL:
 <%= raw @rule_text %>

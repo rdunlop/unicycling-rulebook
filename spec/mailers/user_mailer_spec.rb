@@ -4,7 +4,7 @@ describe UserMailer do
   before(:each) do
       @proposal = FactoryGirl.create(:proposal, :status => "Review", :title => 'A "very" strange title')
       @proposal.mail_messageid = "mymessageid"
-      @comment = FactoryGirl.create(:comment, :proposal => @proposal)
+      @comment = FactoryGirl.create(:comment, :proposal => @proposal, :comment => 'This is what I "Said"')
       FactoryGirl.create(:revision, :proposal => @proposal, :rule_text => "This is what I \"Like\" to do", :body => "Sometimes I <link> somewhere")
       @user = @comment.user
 
@@ -62,6 +62,7 @@ describe UserMailer do
 
     it "renders the body" do
       mail.body.encoded.should match("Comment Added")
+      mail.body.encoded.should match('This is what I "Said"')
       mail.body.encoded.should match(@comment.comment)
     end
     it "should have a in-reply-to set" do
