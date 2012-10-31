@@ -48,14 +48,33 @@ describe Proposal do
 
     prop.votes.count.should == 1
   end
+  it "orders the votes by created_at date" do
+    proposal = FactoryGirl.create(:proposal)
+    vote2 = FactoryGirl.create(:vote, :proposal => proposal, :created_at => 1.second.ago)
+    vote1 = FactoryGirl.create(:vote, :proposal => proposal, :created_at => 2.seconds.ago)
+
+    prop = Proposal.find(proposal.id)
+
+    prop.votes.should == [vote1, vote2]
+  end
 
   it "should have associated comments" do
     proposal = FactoryGirl.create(:proposal)
-    vote = FactoryGirl.create(:comment, :proposal => proposal)
+    comment = FactoryGirl.create(:comment, :proposal => proposal)
 
     prop = Proposal.find(proposal.id)
 
     prop.comments.count.should == 1
+  end
+  it "should order the comments by created date" do
+    proposal = FactoryGirl.create(:proposal)
+    comment2 = FactoryGirl.create(:comment, :proposal => proposal, :created_at => 2.seconds.ago)
+    comment3 = FactoryGirl.create(:comment, :proposal => proposal, :created_at => 1.second.ago)
+    comment1 = FactoryGirl.create(:comment, :proposal => proposal, :created_at => 3.seconds.ago)
+
+    prop = Proposal.find(proposal.id)
+
+    prop.comments.should == [comment1, comment2, comment3]
   end
 
   it "should only allow certain status values" do

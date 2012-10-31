@@ -1,8 +1,8 @@
 class Proposal < ActiveRecord::Base
     belongs_to :owner, :class_name => "User"
     belongs_to :committee
-    has_many :votes
-    has_many :comments
+    has_many :votes, :order => "created_at ASC"
+    has_many :comments, :order => "created_at ASC"
     has_many :revisions, :order => "id DESC"
 
     validates :owner, :presence => true
