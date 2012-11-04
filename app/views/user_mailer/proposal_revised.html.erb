@@ -1,0 +1,14 @@
+<b>The following proposal has been revised:</b>
+
+<h2>Title: <%= @proposal.title %></h2>
+<%= link_to proposal_url(@proposal), proposal_url(@proposal) %>
+
+
+<h2>Changes made: </h2>
+<%= simple_format @change_description %>
+
+<h2>Proposal:</h2>
+<%= simple_format @rule_text %>
+
+<h2>Body:</h2>
+<%= simple_format @body %>

@@ -1,0 +1,12 @@
+<b>Comment Added:</b>
+
+<%= simple_format @comment %>
+
+
+<br />
+<%= @user %> - <%= @voting_status %>
+<hr />
+
+Proposal <%= @proposal.id.to_s %> can be viewed at:
+
+<%= link_to proposal_url(@proposal), proposal_url(@proposal) %>

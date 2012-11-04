@@ -1,0 +1,12 @@
+<b>The following proposal has been submitted:</b>
+
+<h1>Title: <%= @title %></h1>
+
+<br />
+<%= link_to 'Link to proposal', proposal_url(@proposal) %>
+
+<h2>Proposal:</h2>
+<%= simple_format @rule_text %>
+
+<h2>Body:</h2>
+<%= simple_format @body %>
