@@ -59,4 +59,9 @@ describe Vote do
     @vote2 = FactoryGirl.build(:vote, :proposal => @vote1.proposal, :user => @vote1.user)
     @vote2.valid?.should == false
   end
+  it "can vote on the same proposal with 2 people" do
+    @vote1 = FactoryGirl.create(:vote)
+    @vote2 = FactoryGirl.build(:vote, :proposal => @vote1.proposal) # new user
+    @vote2.valid?.should == true
+  end
 end
