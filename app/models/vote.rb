@@ -4,6 +4,7 @@ class Vote < ActiveRecord::Base
 
     validates :proposal, :presence => true
     validates :user, :presence => true
+    validates :user_id, :uniqueness => {:scope => [:proposal_id]}
     validates :vote, :inclusion => { :in => [ 'agree', 'disagree', 'abstain' ] }
 
     attr_accessible :vote, :comment

@@ -54,4 +54,9 @@ describe Vote do
     :created_at => date)
     vote.to_s.should == "Robin Dunlop voted agree on January 10, 2012, 11:45 AM (my comment)"
   end
+  it "can't vote twice on the same proposal by the same user" do
+    @vote1 = FactoryGirl.create(:vote)
+    @vote2 = FactoryGirl.build(:vote, :proposal => @vote1.proposal, :user => @vote1.user)
+    @vote2.valid?.should == false
+  end
 end
