@@ -219,6 +219,11 @@ describe UserMailer do
     it "should have a in-reply-to set" do
       mail['In-Reply-To'].to_s.should == @proposal.mail_messageid
     end
+
+    it "should not send e-mail to people who have voted" do
+      @my_vote = FactoryGirl.create(:vote, :proposal => @proposal, :user => @user)
+      mail.bcc.should eq([@other_cm_user.email])
+    end
   end
 
   describe "proposal_finished_review" do

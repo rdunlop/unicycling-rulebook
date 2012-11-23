@@ -151,7 +151,13 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(vote.proposal)
 
-    send_mail(create_committee_email(vote.proposal, committee), vote.proposal, nil)
+    # don't send e-mails to people who have already voted
+    all_possible_emails = create_committee_email(vote.proposal, committee)
+    already_voted_emails = @proposal.votes.map {|v| v.user.email }
+
+    emails = all_possible_emails - already_voted_emails
+
+    send_mail(emails, vote.proposal, nil)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
