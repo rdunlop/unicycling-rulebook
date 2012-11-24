@@ -13,7 +13,6 @@ body {
     height: 100%;
 }
 .top_nav {
-    float: left;
     overflow: hidden;
     text-align: center;
     width: 100%;
@@ -21,7 +20,6 @@ body {
 }
 
 .left_nav {
-    float: left;
     overflow: auto;
     top: $top_height;
     padding: 5px;
@@ -34,14 +32,6 @@ body {
 }
 
 .main_nav {
-    clear: both;
-    float: left;
-}
-
-.judge_events {
-    float: left;
-    padding: 10px;
-    margin: 10px;
 }
 
 strong {
