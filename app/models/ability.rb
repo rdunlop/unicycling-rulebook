@@ -98,6 +98,10 @@ class Ability
         user.is_committee_admin(proposal.committee)
     end
 
+    can [:set_pre_voting], Proposal do |proposal|
+      user.is_committee_admin(proposal.committee)
+    end
+
     # Owner-specific
     # Committee-admin-specific
 

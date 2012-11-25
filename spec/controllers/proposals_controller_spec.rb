@@ -499,6 +499,23 @@ describe ProposalsController do
         proposal = Proposal.find(proposal.id)
         proposal.status.should == "Tabled"
     end
+    describe "as a committee admin" do
+      before(:each) do
+        @proposal = FactoryGirl.create(:proposal, :status => "Voting")
+        sign_out @admin_user
+        cm = FactoryGirl.create(:committee_member, :committee => @proposal.committee, :admin => true)
+        @cm_admin_user = cm.user
+        sign_in @cm_admin_user
+      end
+      it "can set pre voting" do
+
+        put :set_pre_voting, {:id => @proposal.to_param}
+
+        response.should redirect_to(proposal_path(@proposal))
+        @proposal.reload
+        @proposal.status.should == "Pre-Voting"
+      end
+    end
   end
   describe "PUT table" do
     before(:each) do
