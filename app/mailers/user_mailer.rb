@@ -142,17 +142,18 @@ class UserMailer < ActionMailer::Base
   #
   def vote_submitted(vote)
     @proposal = vote.proposal
+    @proposal.reload # get new vote associations
     @name = vote.user.to_s
 
-    committee = vote.proposal.committee
+    committee = @proposal.committee
     @committee_name = committee.to_s
     @vote_text = vote.vote
     @comments = vote.comment
 
-    set_threading_header(vote.proposal)
+    set_threading_header(@proposal)
 
     # don't send e-mails to people who have already voted
-    all_possible_emails = create_committee_email(vote.proposal, committee)
+    all_possible_emails = create_committee_email(@proposal, committee)
     already_voted_emails = @proposal.votes.map {|v| v.user.email }
 
     emails = all_possible_emails - already_voted_emails
