@@ -28,7 +28,7 @@
     <% elsif @proposal.status == 'Voting' %>
         <%= link_to('Modify Votes', proposal_votes_path(@proposal)) %>
         |
-        <%= link_to('Change Back to Pre-Voting', set_pre_voting_proposal_path(@proposal), confirm: 'Doing this will remove all votes and revert the proposal back to Pre-Voting. (You MUST change the Dates too, or else it will move back to Voting again tonight)') %>
+        <%= link_to('Change Back to Pre-Voting', set_pre_voting_proposal_path(@proposal), :method => :put, confirm: 'Doing this will remove all votes and revert the proposal back to Pre-Voting. (You MUST change the Dates too, or else it will move back to Voting again tonight)') %>
         |
     <% end %>
 
