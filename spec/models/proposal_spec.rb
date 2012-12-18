@@ -154,6 +154,28 @@ describe Proposal do
         prop.status_string.should == "Failed on February  1, 2012"
     end
   end
+  describe "when checking the last_update_time" do
+    before(:each) do
+        @prop = FactoryGirl.create(:proposal, :status => 'Failed', 
+                                             :vote_end_date => Date.new(2012, 2, 1))
+        @rev1 = FactoryGirl.create(:revision, :proposal => @prop, :created_at => 1.hour.ago)
+    end
+    it "describes when the proposal was last revised" do
+      @rev1.reload
+      @prop.last_update_time.should == @rev1.created_at
+    end
+    it "describes when the latest comment was added" do
+      @comment = FactoryGirl.create(:comment, :proposal => @prop, :created_at => 30.minutes.ago)
+      @comment.reload
+      @prop.last_update_time.should == @comment.created_at
+    end
+    it "chooses the revision, if it came after the last vote" do
+      @comment = FactoryGirl.create(:comment, :proposal => @prop, :created_at => 30.minutes.ago)
+      @rev1 = FactoryGirl.create(:revision, :proposal => @prop, :created_at => 1.minute.ago)
+      @rev1.reload
+      @prop.last_update_time.should == @rev1.created_at
+    end
+  end
 
   describe "with 2 revisions" do
     before(:each) do

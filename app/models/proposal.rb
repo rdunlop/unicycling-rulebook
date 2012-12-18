@@ -155,6 +155,17 @@ public
         end
     end
 
+    def last_update_time
+      last_time = self.latest_revision.created_at
+      if self.comments.count > 0
+        last_comment = self.comments.last
+        if last_time < last_comment.created_at
+          last_time = last_comment.created_at
+        end
+      end
+      last_time
+    end
+
     def to_s
         title
     end

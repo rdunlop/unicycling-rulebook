@@ -29,6 +29,7 @@ proposals.each do |p|
       <% else %>
         <small><i><%= p.status_summary %></i></small>
         <strong><%= p.vote_detail(votes) %></strong>
+        <small>Last revision/comment: <%= distance_of_time_in_words(Time.now, p.last_update_time) %> ago</small>
       <% end %>
     </div>
     <hr />
