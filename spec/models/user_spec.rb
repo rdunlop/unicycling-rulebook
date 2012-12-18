@@ -4,32 +4,40 @@ describe User do
 
     it "sends an e-mail when a new user is created" do
         ActionMailer::Base.deliveries.clear
-        user = FactoryGirl.create(:user)
+        user = FactoryGirl.create(:user, :confirmed_at => nil)
+        user.confirm!
         num_deliveries = ActionMailer::Base.deliveries.size
         # Note: devise sends a confirmation e-mail,
         # without having an admin user in the system, it will not send one there too.
+
+        deliveries = ActionMailer::Base.deliveries
+        num_deliveries = ActionMailer::Base.deliveries.size
+
         num_deliveries.should == 1
+        sign_up_email = deliveries.first
+        sign_up_email.to.count.should == 1 # sent by devise
     end
 
     describe "with an admin user existing" do
         before(:each) do
-            FactoryGirl.create(:admin_user)
+            @admin = FactoryGirl.create(:admin_user)
         end
-        it "should have a to: address in both e-mails" do
+        it "should have a to: address in new_applicant_email" do
+
             ActionMailer::Base.deliveries.clear
+
             user = FactoryGirl.create(:user)
+            # doesn't send the devise e-mail, because it's already confirmed
+
             deliveries = ActionMailer::Base.deliveries
             num_deliveries = ActionMailer::Base.deliveries.size
-            # Note: devise sends a confirmation e-mail, I ALSO want
-            # one sent to the admins
 
-            num_deliveries.should == 2
+            num_deliveries.should == 1
 
-            sign_up_email = deliveries.first
             new_applicant_email = deliveries.last
 
-            sign_up_email.to.count.should == 1 # sent by devise
             new_applicant_email.bcc.count.should == 1 # sent by after_create hook
+            new_applicant_email.bcc.should == [@admin.email] # sent by after_create hook
         end
     end
 

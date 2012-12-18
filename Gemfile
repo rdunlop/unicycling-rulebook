@@ -1,15 +1,17 @@
 source 'https://rubygems.org'
 
 ruby "1.9.3"
-gem 'rails', '3.2.2'
+gem 'rails', '3.2.8'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-gem 'therubyracer'
+#gem 'therubyracer'
+gem 'libv8', '~> 3.11.8'
 gem 'rake'
 gem 'devise'
 gem 'cancan'
 gem 'exception_notification'
+gem 'brakeman'
 
 #gem 'sqlite3'
 gem 'pg'
