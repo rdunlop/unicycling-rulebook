@@ -1,18 +1,7 @@
 Friday To-Do:
-
-Done - Get heroku scheduler to run every hour
-Done  - Determine delayed-send heroku? for auto-advancing of the proposals.
-
-Done - Look at the old implementation of date-time to see if it should be rounded to the next-day, or not.
+- Upgrade Rails to 3.2.10 for security.
 
 #####- Add ability for Admin to adjust the admin status of another user.
-Done - Add ability for a user to be set as an "admin" for a committee
-
-Done - The New Proposal "Comittee" selection should ONLY be the committees that I am a member of.
-
-Done - Allow Tabling of proposals
-
-Done - Don't allow the same user to be added to a committee 2x.
 
 - Add option to "auto-enroll" people to a given group (include option about whether they are a voting member by default or not)
 
@@ -21,7 +10,7 @@ Done - Don't allow the same user to be added to a committee 2x.
 - "Do not send me e-mails"
 - "send me e-mail once a week"
 
-- Can I pull the "e-mail list creation logit" into  the controller, so that I can prevent the problem of trying to send to no-one.
+- Can I pull the "e-mail list creation logic" into  the controller, so that I can prevent the problem of trying to send to no-one.
 - Can I change it so that the system sends e-mails based on the 'read-ability' of objects, instead of the relationship. (thus all super-admin would get ALL e-mails).
 
 - Add interface to allow people to modify these settings for themselves easily.
@@ -49,8 +38,6 @@ Done - Don't allow the same user to be added to a committee 2x.
 
 - REVOKE my gmail password, and create a new gmail account for using?
 
-
-- Olaf, should I remove the requirement that a "disagree" vote have a comment? (this conflicts slightly with the 'should not know who voted what' requirement)
 
 - Ask Olaf which statuses should "PUBLIC" be allowed to see proposals....Passed? Other?
 - Ability for public to "read" proposals that have "passed".

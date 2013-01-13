@@ -95,7 +95,9 @@ class Ability
     end
 
     can [:set_review], Proposal do |proposal|
-        user.is_committee_admin(proposal.committee)
+      # allow owner to change from Tabled back to Review.
+      # Allow committee admin to change from ALL STATES to review
+      ((proposal.status == 'Tabled') and (proposal.try(:owner) == user)) or user.is_committee_admin(proposal.committee)
     end
 
     can [:set_pre_voting], Proposal do |proposal|

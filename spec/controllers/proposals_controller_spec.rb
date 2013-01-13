@@ -458,6 +458,23 @@ describe ProposalsController do
             response.should redirect_to(proposal_path(@proposal))
         end
     end
+    describe "as owner of a proposal" do
+      before(:each) do
+        sign_out @admin_user
+        sign_in @proposal.owner
+      end
+      it "can put a tabled proposal into review" do
+        @proposal.status = 'Tabled'
+        @proposal.save
+        proposal = @proposal
+
+        put :set_review, {:id => proposal.to_param}
+
+        response.should redirect_to(proposal_path(proposal))
+        proposal.reload
+        proposal.status.should == "Review"
+      end
+    end
   end
 
   describe "PUT set_pre_voting" do
@@ -533,6 +550,7 @@ describe ProposalsController do
         proposal.status.should == "Tabled"
         proposal.tabled_date == Date.today
     end
+
     it "changes the status to Tabled from Pre-Voting" do
         proposal = FactoryGirl.create(:proposal, :status => "Pre-Voting")
 
