@@ -155,8 +155,11 @@ class UserMailer < ActionMailer::Base
     # don't send e-mails to people who have already voted
     all_possible_emails = create_committee_email(@proposal, committee)
     already_voted_emails = @proposal.votes.map {|v| v.user.email }
+    # don't include non-voting members in the e-mail list
+    non_voting_emails = @proposal.committee.committee_members.select { |cm| cm.voting == false}.map {|cm| cm.user.email}
 
     emails = all_possible_emails - already_voted_emails
+    emails = emails - non_voting_emails
 
     send_mail(emails, vote.proposal, nil)
   end

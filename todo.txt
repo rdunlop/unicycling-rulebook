@@ -1,5 +1,6 @@
 Friday To-Do:
 - Upgrade Rails to 3.2.10 for security.
+- Create scopes for the "vote_submitted" mailer search lists (like: voting_members, voted_members, etc)
 
 #####- Add ability for Admin to adjust the admin status of another user.
 

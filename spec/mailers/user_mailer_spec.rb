@@ -223,6 +223,10 @@ describe UserMailer do
       @my_vote = FactoryGirl.create(:vote, :proposal => @proposal, :user => @user)
       mail.bcc.should eq([@other_cm_user.email])
     end
+    it "should not send e-mail to people who are not voting members" do
+      @non_voting_member = FactoryGirl.create(:committee_member, :committee => @proposal.committee, :voting => false).user
+      mail.bcc.should eq([@user.email, @other_cm_user.email])
+    end
   end
 
   describe "proposal_finished_review" do
