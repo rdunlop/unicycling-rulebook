@@ -18,7 +18,7 @@
 
 <!-- options -->
 <% if can? :set_review, @proposal %>
-    <b><i>Options to admin:</i></b>
+  <b><i>Options:</i></b>
     <% if @proposal.status == 'Submitted' %>
         <%= link_to('Approve', set_review_proposal_path(@proposal), :method => :put) %>
         |
@@ -32,15 +32,17 @@
         |
     <% end %>
 
-    <%= link_to('Modify Proposal Title/Committee/Status/Dates', edit_proposal_path(@proposal)) %>
-    |
+    <% if can? :edit, @proposal %>
+      <%= link_to('Modify Proposal Title/Committee/Status/Dates', edit_proposal_path(@proposal)) %>
+      |
+    <% end %>
     <% #= link_to('Change Committee', modify_dates_proposal_path(@proposal)) 
     %>
     <br />
 <% end %>
 
 <% if can? :revise, @proposal %>
-    <b><i>Options to owner:</i></b>
+  <b><i>Options:</i></b>
     <% if @proposal.status == 'Pre-Voting' %>
           <%= link_to 'Call for Votes', set_voting_proposal_path(@proposal), :method => :put %>
           |
@@ -55,8 +57,6 @@
           <% if can? :revise, @proposal %>
             <%= link_to 'Revise', new_proposal_revision_path(@proposal) %> |
           <% end %>
-    <% else %>
-        No Options in this stage.
     <% end %>
 <% end %>
 <br />
