@@ -21,7 +21,7 @@ require 'spec_helper'
 describe RevisionsController do
   before(:each) do
     @proposal = FactoryGirl.create(:proposal)
-    @revision = FactoryGirl.create(:revision, :proposal => @proposal, :user_id => @proposal.owner)
+    @revision = FactoryGirl.create(:revision, :proposal => @proposal, :user_id => @proposal.owner.id)
 
     @admin = FactoryGirl.create(:admin_user)
     sign_in @admin

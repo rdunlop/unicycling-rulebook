@@ -1,4 +1,8 @@
 Friday To-Do:
+-Brakeman
+- Update FAQ to describe that "you do not get e-mails for votes when you have submitted your vote"
+ - Only Voting members receive e-mail about voting?
+ - Update "Table" to include a description?
 - Upgrade Rails to 3.2.10 for security.
 - Create scopes for the "vote_submitted" mailer search lists (like: voting_members, voted_members, etc)
 

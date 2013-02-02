@@ -1,7 +1,13 @@
 class CommitteeMembersController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource :committee
-  load_and_authorize_resource :committee_member, :through => :committee
+  #load_and_authorize_resource :committee_member, :through => :committee
+
+  def load_committee_new
+    @committee_member = CommitteeMember.new
+    @users = User.all
+    @users -= @committee.committee_members.map{|member| member.user}
+  end
 
   # GET /committee_members
   # GET /committee_members.json
@@ -17,9 +23,7 @@ class CommitteeMembersController < ApplicationController
   # GET /committee_members/new
   # GET /committee_members/new.json
   def new
-    @committee_member = CommitteeMember.new
-    @users = User.all
-    @users -= @committee.committee_members.map{|member| member.user}
+    load_committee_new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -59,6 +63,7 @@ class CommitteeMembersController < ApplicationController
         format.html { redirect_to committee_committee_members_path(@committee), notice: 'Committee member was successfully created.' }
         format.json { render json: @committee, status: :created, location: committee_committee_members_path(@committee) }
       else
+        load_committee_new
         format.html { render action: "new" }
         format.json { render json: @committee_member.errors, status: :unprocessable_entity }
       end

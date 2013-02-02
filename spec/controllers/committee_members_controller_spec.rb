@@ -183,6 +183,11 @@ describe CommitteeMembersController do
         post :create, {:committee_member => {}, :committee_id => @committee.id}
         assigns(:committee_member).should be_a_new(CommitteeMember)
       end
+      it "loads the list of users" do
+        CommitteeMember.any_instance.stub(:save).and_return(false)
+        post :create, {:committee_member => {}, :committee_id => @committee.id}
+        assigns(:users).should =~ [@user, @admin_user]
+      end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted

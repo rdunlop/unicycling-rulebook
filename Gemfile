@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 ruby "1.9.3"
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -17,6 +17,7 @@ gem 'brakeman'
 gem 'pg'
 
 group :development, :test, :cucumber do
+    gem 'brakeman'
     gem 'factory_girl_rails'
     gem 'rspec-rails'
     gem 'capybara'
