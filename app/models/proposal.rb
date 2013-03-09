@@ -10,7 +10,7 @@ class Proposal < ActiveRecord::Base
     validates :committee, :presence => true
     validates :status, :inclusion => { :in => [ 'Submitted', 'Review', 'Pre-Voting', 'Voting', 'Tabled', 'Passed', 'Failed' ] }
 
-    attr_accessible :title, :committee_id, :status, :review_start_date, :review_end_date, :vote_start_date, :vote_end_date
+    attr_accessible :title, :committee_id, :status, :review_start_date, :review_end_date, :vote_start_date, :vote_end_date, :tabled_date
 
     # This is the auto-updated function CLASS METHOD
     def self.update_states
