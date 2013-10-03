@@ -1,8 +1,11 @@
 == Welcome to the Rulebook Application.
 - Need to deal with first-sign-up, since the mailer chokes because there are NO administrators yet -
 
+Build Status on TravisCI: [![Build Status](https://travis-ci.org/rdunlop/unicycling-rulebook.png?branch=master)](https://travis-ci.org/rdunlop/unicycling-rulebook) [![Dependency Status](https://gemnasium.com/rdunlop/unicycling-rulebook.png)](https://gemnasium.com/rdunlop/unicycling-rulebook)
+
 
 == Set the configuration variables (for local work)
+
 echo "RACK_ENV=development" > .env
 echo "PORT=9292" >> .env
 
@@ -16,6 +19,7 @@ echo "DOMAIN=localhost:9292" >> .env
 
 
 == Set up the configuration variables (on heroku)
+
 heroku config:add MAIL_SERVER=smtp.gmail.com
 heroku config:add MAIL_PORT=587
 heroku config:add MAIL_DOMAIN=uniusa.org
@@ -37,14 +41,17 @@ MAIL_TLS=false
 DOMAIN=rulebook.unicycling.org
 
 == Starting With Vagrant
+
 1. Create the vagrant instance
-cd vagrant_postgres91_utf8_rails
-vagrant up
-vagrant ssh
-cd workspace
+
+    cd vagrant_postgres91_utf8_rails
+    vagrant up
+    vagrant ssh
+    cd workspace
 
 2. Start server
-foreman start
+
+    foreman start
 
 3. Install the heroku toolchain
 4. heroku login
