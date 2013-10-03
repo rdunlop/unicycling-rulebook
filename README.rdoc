@@ -1,44 +1,45 @@
 == Welcome to the Rulebook Application.
 - Need to deal with first-sign-up, since the mailer chokes because there are NO administrators yet -
 
-Build Status on TravisCI: [![Build Status](https://travis-ci.org/rdunlop/unicycling-rulebook.png?branch=master)](https://travis-ci.org/rdunlop/unicycling-rulebook) [![Dependency Status](https://gemnasium.com/rdunlop/unicycling-rulebook.png)](https://gemnasium.com/rdunlop/unicycling-rulebook)
+Build Status on TravisCI: {<img src="https://travis-ci.org/rdunlop/unicycling-rulebook.png?branch=master" />}[https://travis-ci.org/rdunlop/unicycling-rulebook] {<img src="https://gemnasium.com/rdunlop/unicycling-rulebook.png" />}[https://gemnasium.com/rdunlop/unicycling-rulebook]
 
 
 == Set the configuration variables (for local work)
 
-echo "RACK_ENV=development" > .env
-echo "PORT=9292" >> .env
+    echo "RACK_ENV=development" > .env
+    echo "PORT=9292" >> .env
 
-echo "MAIL_SERVER=smtp.gmail.com" >> .env
-echo "MAIL_PORT=587" >> .env
-echo "MAIL_DOMAIN=uniusa.org" >> .env
-echo "MAIL_USERNAME=rulebook-do-not-reply@uniusa.org" >> .env
-echo "MAIL_PASSWORD=something" >> .env
-echo "MAIL_FULL_EMAIL=rulebook-do-not-reply@uniusa.org" >> .env
-echo "DOMAIN=localhost:9292" >> .env
+    echo "MAIL_SERVER=smtp.gmail.com" >> .env
+    echo "MAIL_PORT=587" >> .env
+    echo "MAIL_DOMAIN=uniusa.org" >> .env
+    echo "MAIL_USERNAME=rulebook-do-not-reply@uniusa.org" >> .env
+    echo "MAIL_PASSWORD=something" >> .env
+    echo "MAIL_FULL_EMAIL=rulebook-do-not-reply@uniusa.org" >> .env
+    echo "DOMAIN=localhost:9292" >> .env
 
 
 == Set up the configuration variables (on heroku)
 
-heroku config:add MAIL_SERVER=smtp.gmail.com
-heroku config:add MAIL_PORT=587
-heroku config:add MAIL_DOMAIN=uniusa.org
-heroku config:add MAIL_USERNAME=rulebook-do-not-reply@uniusa.org
-heroku config:add MAIL_PASSWORD=something
-heroku config:add MAIL_FULL_EMAIL=rulebook-do-not-reply@uniusa.org
-heroku config:add DOMAIN=usarulebook2012.herokuapp.com
+    heroku config:add MAIL_SERVER=smtp.gmail.com
+    heroku config:add MAIL_PORT=587
+    heroku config:add MAIL_DOMAIN=uniusa.org
+    heroku config:add MAIL_USERNAME=rulebook-do-not-reply@uniusa.org
+    heroku config:add MAIL_PASSWORD=something
+    heroku config:add MAIL_FULL_EMAIL=rulebook-do-not-reply@uniusa.org
+    heroku config:add DOMAIN=usarulebook2012.herokuapp.com
 
 == On Non-GMail systems, you may need to set the MAIL_TLS=false variable too (see initializers/mailer.rb)
 
-Current values for Unicycling.org rulebook are:
-MAIL_SERVER=unicycling.org
-MAIL_PORT=25
-MAIL_DOMAIN=unicycling.org
-MAIL_USERNAME=rulebook@unicycling.org
-MAIL_PASSWORD=********
-MAIL_FULL_EMAIL=rulebook@unicycling.org
-MAIL_TLS=false
-DOMAIN=rulebook.unicycling.org
+    Current values for Unicycling.org rulebook are:
+
+    MAIL_SERVER=unicycling.org
+    MAIL_PORT=25
+    MAIL_DOMAIN=unicycling.org
+    MAIL_USERNAME=rulebook@unicycling.org
+    MAIL_PASSWORD=********
+    MAIL_FULL_EMAIL=rulebook@unicycling.org
+    MAIL_TLS=false
+    DOMAIN=rulebook.unicycling.org
 
 == Starting With Vagrant
 
