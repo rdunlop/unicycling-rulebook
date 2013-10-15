@@ -83,6 +83,9 @@ Build Status on TravisCI: {<img src="https://travis-ci.org/rdunlop/unicycling-ru
 3. Upload the code
         <tt>git push heroku master</tt>
 
+3a. Set the config variables (see above).
+        Especially the SECRET key
+
 4. Load the database
         <tt>heroku run rake db:schema:load --app usarulebook2013</tt>
   
