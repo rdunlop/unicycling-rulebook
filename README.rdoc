@@ -74,14 +74,23 @@ Build Status on TravisCI: {<img src="https://travis-ci.org/rdunlop/unicycling-ru
 
 1. Create a new heroku instance
         <tt>heroku create cedar,.....something</tt>
+        <tt>Example: heroku create usarulebook2013</tt>
 
-2. Upload the code
+2. Add the heroku instance to the git remote list
+        <tt>heroku git:remote -a <name of new heroku instance> -r <alias_that you want to use></tt>
+        <tt>Example: heroku git:remote -a usarulebook2013 -r heroku</tt>
+
+3. Upload the code
         <tt>git push heroku master</tt>
 
-3. Install the scheduling addon:
+4. Load the database
+        <tt>heroku run rake db:schema:load --app usarulebook2013</tt>
+  
+
+5. Install the scheduling addon:
         <tt>heroku addons:add scheduler:standard</tt>
 
-4. Configure the scheduler via the webpage interface:
+6. Configure the scheduler via the webpage interface:
         <tt>heroku addons:open scheduler</tt>
         Add Job: "rake update_proposal_states" - Daily - 05:00 UTC
 

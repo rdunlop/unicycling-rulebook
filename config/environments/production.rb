@@ -66,6 +66,8 @@ Rulebook::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 end
 
-Rulebook::Application.config.middleware.use ExceptionNotifier,
-  :email_prefix => "[Rulebook Exception] ",
-  :exception_recipients => %w{robin@dunlopweb.com}
+Rulebook::Application.config.middleware.use ExceptionNotifier::Rack,
+  :email => {
+      :email_prefix => "[Rulebook Exception] ",
+      :exception_recipients => %w{robin@dunlopweb.com}
+  }
