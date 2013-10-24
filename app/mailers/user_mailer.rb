@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: (ENV['MAIL_FULL_EMAIL'] || "unicycling@dunlopweb.com")
+  default :from => (ENV['MAIL_FULL_EMAIL'] || "unicycling@dunlopweb.com"), :return_path => "unicycling@dunlopweb.com"
 
   def send_mail(bcc_list, proposal, from_name)
     email = (ENV['MAIL_FULL_EMAIL'] || "unicycling@dunlopweb.com")
