@@ -15,6 +15,7 @@ Build Status on TravisCI: {<img src="https://travis-ci.org/rdunlop/unicycling-ru
     echo "MAIL_USERNAME=rulebook-do-not-reply@uniusa.org" >> .env
     echo "MAIL_PASSWORD=something" >> .env
     echo "MAIL_FULL_EMAIL=rulebook-do-not-reply@uniusa.org" >> .env
+    echo "MAIL_FROM_NAME='Uni Rulebook'" >> .env
     echo "DOMAIN=localhost:9292" >> .env
 
 
@@ -26,6 +27,7 @@ Build Status on TravisCI: {<img src="https://travis-ci.org/rdunlop/unicycling-ru
     heroku config:add MAIL_USERNAME=rulebook-do-not-reply@uniusa.org
     heroku config:add MAIL_PASSWORD=something
     heroku config:add MAIL_FULL_EMAIL=rulebook-do-not-reply@uniusa.org
+    heroku config:add MAIL_FROM_NAME="Uni Rulebook"
     heroku config:add DOMAIN=usarulebook2012.herokuapp.com
 
 == On Non-GMail systems, you may need to set the MAIL_TLS=false variable too (see initializers/mailer.rb)
@@ -38,6 +40,7 @@ Build Status on TravisCI: {<img src="https://travis-ci.org/rdunlop/unicycling-ru
     MAIL_USERNAME=rulebook@unicycling.org
     MAIL_PASSWORD=********
     MAIL_FULL_EMAIL=rulebook@unicycling.org
+    MAIL_FROM_NAME="Uni Rulebook"
     MAIL_TLS=false
     DOMAIN=rulebook.unicycling.org
 

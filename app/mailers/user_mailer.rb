@@ -1,14 +1,20 @@
 class UserMailer < ActionMailer::Base
-  default :from => (ENV['MAIL_FULL_EMAIL'] || "unicycling@dunlopweb.com"), :return_path => "unicycling@dunlopweb.com"
+  default :return_path => (ENV['MAIL_FULL_EMAIL'] || "unicycling@dunlopweb.com")
+
+  def create_from(from_name = ENV['MAIL_FROM_NAME'], from_email = ENV['MAIL_FULL_EMAIL'])
+    if from_email.nil?
+      from_email = "unicycling@dunlopweb.com"
+    end
+    if from_name.nil?
+      from_string = from_email
+    else
+      from_string = "\"#{from_name}\" <#{from_email}>"
+    end
+    from_string
+  end
 
   def send_mail(bcc_list, proposal, from_name)
-    email = (ENV['MAIL_FULL_EMAIL'] || "unicycling@dunlopweb.com")
-    if from_name.nil?
-      from_string  = email
-    else
-      from_string = "\"#{from_name}\" <#{email}>"
-    end
-    mail bcc: bcc_list, subject: create_proposal_subject(proposal), from: from_string
+    mail bcc: bcc_list, subject: create_proposal_subject(proposal), from: create_from(from_name)
   end
 
   def create_admin_email
@@ -132,7 +138,7 @@ class UserMailer < ActionMailer::Base
     @location = user.location
     @comments = user.comments
 
-    mail bcc: create_admin_email
+    mail bcc: create_admin_email, from: create_from
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -175,7 +181,7 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(proposal)
 
-    mail bcc: proposal.owner.email, subject: create_proposal_subject(@proposal)
+    mail bcc: proposal.owner.email, subject: create_proposal_subject(@proposal), from: create_from
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -217,6 +223,6 @@ class UserMailer < ActionMailer::Base
     end
     @body = body
 
-    mail bcc: emails, subject: subject, reply_to: reply_email
+    mail bcc: emails, subject: subject, reply_to: reply_email, from: create_from
   end
 end

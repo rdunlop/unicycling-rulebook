@@ -35,6 +35,7 @@ describe UserMailer do
       mail.subject.should eq(@proposal_id_title_and_committee)
       mail.bcc.should eq([@admin_user.email, @admin_user2.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
+      mail.header[:from].to_s.should == "#{@proposal.owner.name} <unicycling@dunlopweb.com>"
     end
 
     it "renders the body" do
@@ -57,6 +58,7 @@ describe UserMailer do
       mail.subject.should eq(@proposal_id_title_and_committee)
       mail.bcc.should eq([@user.email, @other_cm_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
+      mail.header[:from].to_s.should == "#{@user.name} <unicycling@dunlopweb.com>"
     end
 
     it "renders the body" do
@@ -190,6 +192,7 @@ describe UserMailer do
       mail.subject.should eq("New committee applicant")
       mail.bcc.should eq([@admin_user.email])
       mail.from.should eq(["unicycling@dunlopweb.com"])
+      mail.header[:from].to_s.should == "Uni Rulebook <unicycling@dunlopweb.com>"
     end
 
     it "renders the body" do
