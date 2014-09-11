@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: committee_members
+#
+#  id           :integer          not null, primary key
+#  committee_id :integer
+#  user_id      :integer
+#  voting       :boolean
+#  created_at   :datetime
+#  updated_at   :datetime
+#  admin        :boolean          default(FALSE)
+#  editor       :boolean          default(FALSE)
+#
+
 class CommitteeMember < ActiveRecord::Base
     belongs_to :committee
     belongs_to :user

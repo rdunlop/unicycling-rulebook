@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: revisions
+#
+#  id                 :integer          not null, primary key
+#  proposal_id        :integer
+#  body               :text
+#  background         :text
+#  references         :text
+#  change_description :text
+#  user_id            :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#  num                :integer
+#  rule_text          :text
+#
+
 class Revision < ActiveRecord::Base
     belongs_to :proposal
     belongs_to :user

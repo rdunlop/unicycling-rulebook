@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: proposals
+#
+#  id                          :integer          not null, primary key
+#  committee_id                :integer
+#  status                      :string(255)
+#  submit_date                 :date
+#  review_start_date           :date
+#  review_end_date             :date
+#  vote_start_date             :date
+#  vote_end_date               :date
+#  tabled_date                 :date
+#  transition_straight_to_vote :boolean
+#  owner_id                    :integer
+#  title                       :text
+#  created_at                  :datetime
+#  updated_at                  :datetime
+#  mail_messageid              :string(255)
+#
+
 class Proposal < ActiveRecord::Base
     belongs_to :owner, :class_name => "User"
     belongs_to :committee

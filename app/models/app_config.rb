@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: app_configs
+#
+#  id            :integer          not null, primary key
+#  rulebook_name :string(255)
+#  front_page    :text
+#  faq           :text
+#  created_at    :datetime
+#  updated_at    :datetime
+#  copyright     :string(255)
+#
+
 class AppConfig < ActiveRecord::Base
   attr_accessible :rulebook_name, :front_page, :faq, :copyright
 

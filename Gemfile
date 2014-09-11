@@ -20,6 +20,7 @@ gem 'pg'
 
 group :development, :test, :cucumber do
     gem 'brakeman'
+    gem 'annotate'
     gem 'factory_girl_rails'
     gem 'rspec-rails'
     gem 'capybara'
