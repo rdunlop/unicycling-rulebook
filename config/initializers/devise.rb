@@ -213,5 +213,9 @@ Devise.setup do |config|
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
-  config.secret_key = ENV['SECRET']
+  if Rails.env.development? or Rails.env.test?
+     config.secret_key = ('x' * 30)
+  else
+    config.secret_key = ENV['SECRET']
+  end
 end
