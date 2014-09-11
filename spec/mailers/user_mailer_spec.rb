@@ -15,8 +15,8 @@ describe UserMailer do
   end
   describe "when we have a one no-email super-admin and one normal super-admin" do
     before(:each) do
-        @no_email_admin_user = FactoryGirl.create(:admin_user, :no_emails => true)
         @normal_admin_user = FactoryGirl.create(:admin_user)
+        @no_email_admin_user = FactoryGirl.create(:admin_user, :no_emails => true)
     end
     it "should only send to the normal admin" do
         mail = UserMailer.proposal_submitted(@proposal)

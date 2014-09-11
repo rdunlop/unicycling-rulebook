@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe "app_configs/new" do
   before(:each) do
-    assign(:app_config, stub_model(AppConfig,
+    assign(:app_config, FactoryGirl.build_stubbed(:app_config,
       :rulebook_name => "MyString",
       :front_page => "MyString",
       :faq => "MyString",
       :copyright => "Robin Copy"
-    ).as_new_record)
+    ))
   end
 
   it "renders new app_config form" do

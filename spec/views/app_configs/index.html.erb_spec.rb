@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "app_configs/index" do
   before(:each) do
     assign(:app_configs, [
-      stub_model(AppConfig,
+      FactoryGirl.build_stubbed(:app_config,
         :rulebook_name => "Rulebook Name",
         :front_page => "Front Page",
         :faq => "Faq",

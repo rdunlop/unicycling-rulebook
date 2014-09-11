@@ -20,7 +20,7 @@ require 'spec_helper'
 
 describe RevisionsController do
   before(:each) do
-    @proposal = FactoryGirl.create(:proposal)
+    @proposal = FactoryGirl.create(:proposal, :with_admin)
     @revision = FactoryGirl.create(:revision, :proposal => @proposal, :user_id => @proposal.owner.id)
 
     @admin = FactoryGirl.create(:admin_user)
@@ -35,7 +35,7 @@ describe RevisionsController do
       rule_text: 'Something',
       change_description: "blaa"}
   end
-  
+
   describe "GET show" do
     it "assigns the requested revision as @revision" do
       revision = FactoryGirl.create(:revision, :proposal => @proposal)

@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
   validates :name, :presence => true
 
-  scope :super_admin, where(:admin => true)
+  scope :super_admin, -> { where(admin: true) }
 
   after_create :send_email_to_admins
 

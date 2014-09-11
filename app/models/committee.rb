@@ -1,7 +1,7 @@
 class Committee < ActiveRecord::Base
     validates :name, :presence => true, :uniqueness => true
 
-    has_many :committee_members, :include => :user, :order => "users.name"
+    has_many :committee_members, -> { includes(:user).order("users.name") }
     has_many :proposals
 
     attr_accessible :name, :preliminary

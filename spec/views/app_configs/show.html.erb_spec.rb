@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "app_configs/show" do
   before(:each) do
-    @app_config = assign(:app_config, stub_model(AppConfig,
+    @app_config = assign(:app_config, FactoryGirl.build_stubbed(:app_config,
       :rulebook_name => "Rulebook Name",
       :front_page => "Front Page",
       :faq => "Faq",

@@ -20,7 +20,7 @@ require 'spec_helper'
 
 describe VotesController do
   before(:each) do
-    @proposal = FactoryGirl.create(:proposal, :status => 'Voting')
+    @proposal = FactoryGirl.create(:proposal, :with_admin, :status => 'Voting')
     @admin_user = FactoryGirl.create(:admin_user)
     @user = FactoryGirl.create(:user)
     FactoryGirl.create(:committee_member, :committee => @proposal.committee, :voting => true, :user => @user)
@@ -36,7 +36,7 @@ describe VotesController do
       comment: ''
     }
   end
-  
+
   describe "GET index" do
     before(:each) do
         sign_out @user

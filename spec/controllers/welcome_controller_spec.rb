@@ -81,11 +81,13 @@ describe WelcomeController do
     end
     it "should succeed if a committees is selected" do
       @com = FactoryGirl.create(:committee)
+      FactoryGirl.create(:committee_member, committee: @com, :admin => true)
       post :send_message, {:committees => [@com.id]}
       flash[:notice].should == "Message Successfully Sent"
     end
     it "should set the reply_to address to the user's email" do
       @com = FactoryGirl.create(:committee)
+      FactoryGirl.create(:committee_member, committee: @com, :admin => true)
       ActionMailer::Base.deliveries.clear
       post :send_message, {:committees => [@com.id]}
       num_deliveries = ActionMailer::Base.deliveries.size
@@ -93,7 +95,7 @@ describe WelcomeController do
       note.reply_to.should == [@admin_user.email]
     end
   end
-  
+
   describe "GET index" do
     it "assigns all MY proposals as @proposals" do
       cm = FactoryGirl.create(:committee_member, :user => @user)

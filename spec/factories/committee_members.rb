@@ -6,5 +6,9 @@ FactoryGirl.define do
     user #FactoryGirl
     admin false
     voting true
+
+    trait :admin do
+      admin true
+    end
   end
 end

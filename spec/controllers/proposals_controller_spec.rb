@@ -37,7 +37,7 @@ describe ProposalsController do
         title: "My Title",
         committee_id: @committee.id}
   end
-  
+
   describe "GET passed" do
     before(:each) do
       com = FactoryGirl.create(:committee, :preliminary => true)
@@ -341,7 +341,7 @@ describe ProposalsController do
 
   describe "PUT set_voting" do
     it "changes the status to voting" do
-        proposal = FactoryGirl.create(:proposal, :status => "Pre-Voting")
+        proposal = FactoryGirl.create(:proposal, :with_admin, :status => "Pre-Voting")
 
         put :set_voting, {:id => proposal.to_param}
 
@@ -353,7 +353,7 @@ describe ProposalsController do
     end
 
     it "should not be allowed to change unless the status is Pre-Voting" do
-        proposal = FactoryGirl.create(:proposal, :status => "Tabled")
+        proposal = FactoryGirl.create(:proposal, :with_admin, :status => "Tabled")
 
         put :set_voting, {:id => proposal.to_param}
 
@@ -362,7 +362,7 @@ describe ProposalsController do
         proposal.status.should == "Tabled"
     end
     it "sholud send an e-mail" do
-        proposal = FactoryGirl.create(:proposal, :status => "Pre-Voting")
+        proposal = FactoryGirl.create(:proposal, :with_admin, :status => "Pre-Voting")
         ActionMailer::Base.deliveries.clear
 
         put :set_voting, {:id => proposal.to_param}
@@ -371,7 +371,7 @@ describe ProposalsController do
     end
     describe "as a committee-admin for the same committee" do
         before(:each) do
-            @proposal = FactoryGirl.create(:proposal, :status => "Pre-Voting")
+            @proposal = FactoryGirl.create(:proposal, :with_admin, :status => "Pre-Voting")
             sign_out @admin_user
             cm = FactoryGirl.create(:committee_member, :committee => @proposal.committee, :admin => true)
             @cm_admin_user = cm.user
@@ -387,7 +387,7 @@ describe ProposalsController do
 
   describe "PUT set_review" do
     before(:each) do
-        @proposal = FactoryGirl.create(:proposal, :status => "Submitted")
+        @proposal = FactoryGirl.create(:proposal, :with_admin, :status => "Submitted")
         @revision = FactoryGirl.create(:revision, :proposal => @proposal)
     end
 

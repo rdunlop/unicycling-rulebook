@@ -179,13 +179,14 @@ class ProposalsController < ApplicationController
 
     if (@proposal.status == "Voting")
         proceed = true
+        @proposal.votes.delete_all
     else
         proceed = false
     end
     @proposal.status = "Pre-Voting"
 
     respond_to do |format|
-      if proceed and @proposal.votes.delete_all and @proposal.save
+      if proceed && @proposal.save
         format.html { redirect_to @proposal, notice: 'Proposal is now in the Pre-Voting stage. All votes have been deleted' }
         format.json { head :no_content }
       else

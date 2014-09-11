@@ -14,5 +14,11 @@ FactoryGirl.define do
     owner
     sequence(:title) {|e| "Proposal Title #{e}" }
     mail_messageid nil
+
+    trait :with_admin do
+      after(:create) do |proposal|
+        FactoryGirl.create(:committee_member, :admin, committee: proposal.committee)
+      end
+    end
   end
 end
