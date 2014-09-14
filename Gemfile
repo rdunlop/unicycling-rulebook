@@ -19,6 +19,9 @@ gem 'protected_attributes'
 gem 'pg'
 
 group :development, :test, :cucumber do
+    gem 'consistency_fail'
+    gem 'better_errors'
+    gem "binding_of_caller"
     gem 'brakeman'
     gem 'annotate'
     gem 'factory_girl_rails'

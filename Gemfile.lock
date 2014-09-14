@@ -32,6 +32,12 @@ GEM
       rake (>= 0.8.7)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
+    better_errors (2.0.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+      rack (>= 0.9.0)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     brakeman (2.6.2)
       erubis (~> 2.6)
       fastercsv (~> 1.5)
@@ -59,6 +65,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
+    consistency_fail (0.3.2)
+    debug_inspector (0.0.2)
     devise (3.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -198,10 +206,13 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  better_errors
+  binding_of_caller
   brakeman
   cancancan (~> 1.7)
   capybara
   coffee-rails
+  consistency_fail
   devise
   exception_notification
   factory_girl_rails
