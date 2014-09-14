@@ -33,7 +33,7 @@ describe CommitteesController do
       preliminary: false
     }
   end
-  
+
   describe "GET index" do
     it "fails when not logged in" do
       sign_out @user
@@ -41,24 +41,20 @@ describe CommitteesController do
       response.should redirect_to(new_user_session_path)
     end
     describe "for a committee_admin" do
-        before(:each) do
-            @committee_admin = FactoryGirl.create(:user)
-            @cm = FactoryGirl.create(:committee_member, :admin => true, :user => @committee_admin)
-            sign_out @user
-            sign_in @committee_admin
-        end
-        it "succeeds for committee_admin" do
-            get :index
-            response.should be_success
-        end
-        it "only shows MY committees" do
-            get :index
-            assigns(:committees).should eq([@cm.committee])
-        end
-    end
-    it "fails for non-special user" do
-      get :index
-      response.should redirect_to(root_path)
+      before(:each) do
+        @committee_admin = FactoryGirl.create(:user)
+        @cm = FactoryGirl.create(:committee_member, :admin => true, :user => @committee_admin)
+        sign_out @user
+        sign_in @committee_admin
+      end
+      it "succeeds for committee_admin" do
+        get :index
+        response.should be_success
+      end
+      it "only shows MY committees" do
+        get :index
+        assigns(:committees).should eq([@cm.committee])
+      end
     end
 
     it "assigns all committees as @committees when admin user" do
@@ -67,6 +63,22 @@ describe CommitteesController do
       committee = Committee.create! valid_attributes
       get :index, {}
       assigns(:committees).should eq([committee])
+    end
+  end
+
+  describe "GET show" do
+    describe "when not signed in" do
+      before(:each) do
+        sign_out @user
+      end
+
+      it "should show all proposals that are not 'Submitted'" do
+        # @proposal is 'Submitted'
+        committee = FactoryGirl.create(:committee)
+        proposal = FactoryGirl.create(:proposal, :status => 'Review', committee: committee)
+        get :show, { id: committee.id }
+        assigns(:proposals).should eq([proposal])
+      end
     end
   end
 
@@ -139,7 +151,7 @@ describe CommitteesController do
         response.should render_template("new")
       end
     end
-    
+
     describe "with non-admin user" do
     before (:each) do
       sign_out @admin_user

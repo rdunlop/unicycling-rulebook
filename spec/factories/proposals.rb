@@ -15,6 +15,14 @@ FactoryGirl.define do
     sequence(:title) {|e| "Proposal Title #{e}" }
     mail_messageid nil
 
+    trait :submitted do
+      status "Submitted"
+    end
+
+    trait :review do
+      status "Review"
+    end
+
     trait :with_admin do
       after(:create) do |proposal|
         FactoryGirl.create(:committee_member, :admin, committee: proposal.committee)

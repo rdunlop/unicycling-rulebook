@@ -1,5 +1,5 @@
 class CommitteesController < ApplicationController
-  before_filter :authenticate_user!, :except => [:membership]
+  before_filter :authenticate_user!, :except => [:membership, :show]
   load_and_authorize_resource
 
   # GET /committees
@@ -10,6 +10,21 @@ class CommitteesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @committees }
+    end
+  end
+
+  def show
+    @committee = Committee.find(params[:id])
+    @proposals = []
+    @committee.proposals.each do |p|
+      if can? :read, p
+        @proposals += [p]
+      end
+    end
+    if user_signed_in?
+      @user_votes = current_user.votes
+    else
+      @user_votes = []
     end
   end
 

@@ -10,20 +10,22 @@
 #
 
 class Committee < ActiveRecord::Base
-    validates :name, :presence => true, :uniqueness => true
+  validates :name, :presence => true, :uniqueness => true
 
-    has_many :committee_members, -> { includes(:user).order("users.name") }
-    has_many :proposals
+  has_many :committee_members, -> { includes(:user).order("users.name") }
+  has_many :proposals
 
-    attr_accessible :name, :preliminary
+  attr_accessible :name, :preliminary
 
-    after_initialize :init
+  after_initialize :init
 
-    def init
-        self.preliminary = false if self.preliminary.nil?
-    end
+  scope :ordered, -> { order("preliminary, name") }
 
-    def to_s
-        name
-    end
+  def init
+    self.preliminary = false if self.preliminary.nil?
+  end
+
+  def to_s
+    name
+  end
 end

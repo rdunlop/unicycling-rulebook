@@ -2,13 +2,14 @@
 #
 # Table name: discussions
 #
-#  id          :integer          not null, primary key
-#  proposal_id :integer
-#  title       :string(255)
-#  status      :string(255)
-#  owner_id    :integer
-#  created_at  :datetime
-#  updated_at  :datetime
+#  id           :integer          not null, primary key
+#  proposal_id  :integer
+#  title        :string(255)
+#  status       :string(255)
+#  owner_id     :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#  committee_id :integer
 #
 
 class Discussion < ActiveRecord::Base

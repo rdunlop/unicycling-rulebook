@@ -20,7 +20,7 @@ Rulebook::Application.routes.draw do
      resources :comments, :only => [:create]
   end
 
-  resources :committees, :except => [:show] do
+  resources :committees do
     collection do
         get 'membership'
     end

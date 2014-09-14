@@ -35,7 +35,9 @@
       %td= committee_member.admin
       %td= committee_member.editor
       %td= committee_member.voting
-      %td= link_to 'Edit', edit_committee_committee_member_path(@committee, committee_member)
+      %td
+        - if can? :edit, committee_member
+          = link_to 'Edit', edit_committee_committee_member_path(@committee, committee_member)
       %td
         - if can? :destroy, committee_member
           = link_to 'Destroy', [@committee, committee_member], confirm: 'Are you sure?', method: :delete
