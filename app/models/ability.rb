@@ -22,23 +22,23 @@ class Ability
 
     # SUPER ADMIN can do anything
     if user.admin
-        can :manage, Committee
-        can :manage, CommitteeMember
+      can :manage, Committee
+      can :manage, CommitteeMember
 
-        can :manage, Proposal
-            #includes :set_pre_voting
-            # and :set_review, :set_voting, :administer
+      can :manage, Proposal
+          #includes :set_pre_voting
+          # and :set_review, :set_voting, :administer
 
-        # remove 'vote' from the 'all' set
-        # (even administrators can't vote if not a voting member with proposal in 'voting' status)
-        cannot :vote, Proposal
+      # remove 'vote' from the 'all' set
+      # (even administrators can't vote if not a voting member with proposal in 'voting' status)
+      cannot :vote, Proposal
 
-        can :manage, Vote
-        can :manage, Revision
-        can :manage, Comment
-        can :manage, User
-        can :manage, AppConfig
-        can :send, Message
+      can :manage, Vote
+      can :manage, Revision
+      can :manage, Comment
+      can :manage, User
+      can :manage, AppConfig
+      can :send, Message
     end
 
     can :send, Message if user.is_committee_admin(nil)
@@ -47,15 +47,15 @@ class Ability
 
     # Can only create comments if I am in the committee
     can :create, Comment do |comment|
-        user.is_in_committee(comment.discussion.proposal.committee)
+      user.is_in_committee(comment.discussion.committee)
     end
 
     # Only voting members can vote
     can :vote, Proposal do |proposal|
-        proposal.status == 'Voting' and user.voting_member(proposal.committee)
+      proposal.status == 'Voting' and user.voting_member(proposal.committee)
     end
     can :create, Vote do |vote|
-        vote.proposal.status == 'Voting' and user.voting_member(vote.proposal.committee)
+      vote.proposal.status == 'Voting' and user.voting_member(vote.proposal.committee)
     end
 
     # You must be in a committee in order to be able to create a Proposal
@@ -63,7 +63,7 @@ class Ability
 
     # only allow people to see the usernames if they are in the committee
     can :read_usernames, Proposal do |proposal|
-        user.is_in_committee(proposal.committee)
+      user.is_in_committee(proposal.committee)
     end
 
     # allows editors and admins to see the e-mail address of the proposal owner (for out-of-band communication)
@@ -72,11 +72,11 @@ class Ability
     end
 
     can [:read], Proposal do |proposal|
-        if proposal.status == 'Submitted'
-            user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
-        else
-            user.is_in_committee(proposal.committee)
-        end
+      if proposal.status == 'Submitted'
+        user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
+      else
+        user.is_in_committee(proposal.committee)
+      end
     end
 
     # Committee-Admin
@@ -90,15 +90,15 @@ class Ability
     end
 
     can :update, CommitteeMember do |committee_member|
-        user.is_committee_admin(committee_member.committee)
+      user.is_committee_admin(committee_member.committee)
     end
 
     can :update, Proposal do |proposal|
-        user.is_committee_admin(proposal.committee)
+      user.is_committee_admin(proposal.committee)
     end
 
     can :read, Vote do |vote|
-        user.is_committee_admin(vote.proposal.committee)
+      user.is_committee_admin(vote.proposal.committee)
     end
 
     can [:set_review], Proposal do |proposal|
@@ -115,16 +115,16 @@ class Ability
     # Committee-admin-specific
 
     can [:set_voting], Proposal do |proposal|
-        user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
+      user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
     end
     # editors can revise and table
     can [:revise, :table], Proposal do |proposal|
-        user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user or user.is_committee_editor(proposal.committee)
+      user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user or user.is_committee_editor(proposal.committee)
     end
 
     can :create, Revision
     can :read, Revision do |revision|
-        user.is_committee_admin(revision.try(:proposal).try(:committee)) or revision.try(:proposal).try(:owner) == user or user.is_committee_editor(revision.try(:proposal).try(:committee))
+      user.is_committee_admin(revision.try(:proposal).try(:committee)) or revision.try(:proposal).try(:owner) == user or user.is_committee_editor(revision.try(:proposal).try(:committee))
     end
 
     # Define abilities for the passed in user here. For example:

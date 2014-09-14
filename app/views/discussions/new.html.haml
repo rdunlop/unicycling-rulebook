@@ -1,1 +1,23 @@
-new.html.haml
+= form_for([@committee, @discussion]) do |f|
+  - if @discussion.errors.any?
+    #error_explanation
+      - if @discussion.errors.any?
+        %h2
+          = pluralize(@discussion.errors.count, "error")
+          prohibited this discussion from being saved:
+        %ul
+          - @discussion.errors.full_messages.each do |msg|
+            %li= msg
+  .field
+    = f.label :title
+    %br
+    .detail
+      (displayed title)
+    = f.text_field :title
+  .field
+    = f.label :body
+    %br
+    .detail (Start the discussion)
+    = f.text_area :body
+  .actions
+    = f.submit

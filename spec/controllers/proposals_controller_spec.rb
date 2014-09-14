@@ -63,12 +63,6 @@ describe ProposalsController do
       assigns(:proposal).should eq(proposal)
     end
 
-    it "should have a blank comment object" do
-      proposal = FactoryGirl.create(:proposal)
-      discussion = FactoryGirl.create(:discussion, proposal: proposal)
-      get :show, {:id => proposal.to_param}
-      assigns(:comment).should be_a_new(Comment)
-    end
     it "should not have a vote object by default" do
       proposal = FactoryGirl.create(:proposal)
       get :show, {:id => proposal.to_param}

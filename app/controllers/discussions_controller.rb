@@ -7,6 +7,10 @@ class DiscussionsController < ApplicationController
 
   # GET /discussions/1
   def show
+    if can?(:create, Comment)
+      @comment = @discussion.comments.new
+    end
+
     respond_to do |format|
       format.html # show.html.erb
     end

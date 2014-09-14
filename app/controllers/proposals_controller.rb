@@ -19,19 +19,16 @@ class ProposalsController < ApplicationController
   # GET /proposals/1.json
   def show
     @proposal = Proposal.find(params[:id])
-    if can?(:create, Comment) && @proposal.discussion
-        @comment = @proposal.discussion.comments.new
-    end
 
     @proposal.votes.each do |v|
-        if v.user == current_user
-            @vote = v
-        end
+      if v.user == current_user
+        @vote = v
+      end
     end
     if can? :vote, @proposal
-        if @vote.nil?
-            @vote = @proposal.votes.new
-        end
+      if @vote.nil?
+        @vote = @proposal.votes.new
+      end
     end
 
     respond_to do |format|
@@ -141,9 +138,9 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.find(params[:id])
 
     if @proposal.status == "Pre-Voting"
-        proceed = true
+      proceed = true
     else
-        proceed = false
+      proceed = false
     end
     @proposal.status = "Voting"
     @proposal.vote_start_date = Date.today()
@@ -167,9 +164,9 @@ class ProposalsController < ApplicationController
 
     was_tabled = @proposal.status == 'Tabled'
     if (@proposal.status == "Submitted") or (@proposal.status == "Tabled")
-        proceed = true
+      proceed = true
     else
-        proceed = false
+      proceed = false
     end
     @proposal.status = "Review"
     @proposal.review_start_date = Date.today()
@@ -192,10 +189,10 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.find(params[:id])
 
     if (@proposal.status == "Voting")
-        proceed = true
-        @proposal.votes.delete_all
+      proceed = true
+      @proposal.votes.delete_all
     else
-        proceed = false
+      proceed = false
     end
     @proposal.status = "Pre-Voting"
 
@@ -215,9 +212,9 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.find(params[:id])
 
     if (@proposal.status == "Pre-Voting" or @proposal.status == "Review")
-        proceed = true
+      proceed = true
     else
-        proceed = false
+      proceed = false
     end
     @proposal.status = "Tabled"
     @proposal.tabled_date = Date.today()

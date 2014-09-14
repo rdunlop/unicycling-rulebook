@@ -1,10 +1,10 @@
 Comment Added:
 
-\#{raw @comment}
+\#{raw strip_tags @comment}
 
 
 \--
 \#{@user} - #{@voting_status}__________________________________________________________
-Proposal #{@proposal.id.to_s} can be viewed at:
+Discussion #{@discussion.id.to_s} can be viewed at:
 
-= proposal_url(@proposal)
+= discussion_url(@discussion)

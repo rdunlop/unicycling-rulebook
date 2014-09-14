@@ -4,8 +4,8 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.proposal_submitted(proposal)
   end
 
-  def proposal_comment_added
-    UserMailer.proposal_comment_added(proposal, comment, user)
+  def discussion_comment_added
+    UserMailer.discussion_comment_added(discussion, comment, user)
   end
 
   def proposal_revised
@@ -85,6 +85,11 @@ class UserMailerPreview < ActionMailer::Preview
     @user.name = "Robin"
     @user.password = "password"
     @user
+  end
+
+  def discussion
+    return @discussion if @discussion
+    @discussion = Discussio.new(title: "this is the discussion", body: "<p>This is the <b>Discussion body</b></p")
   end
 
   def user_number

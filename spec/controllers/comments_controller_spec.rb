@@ -21,8 +21,8 @@ require 'spec_helper'
 describe CommentsController do
   before(:each) do
 
-    @discussion = FactoryGirl.create(:discussion, :status => 'active')
     @proposal = FactoryGirl.create(:proposal, discussion: @discussion, status: "Review")
+    @discussion = FactoryGirl.create(:discussion, :status => 'active', committee: @proposal.committee)
 
     @user = FactoryGirl.create(:user)
     FactoryGirl.create(:committee_member, :committee => @proposal.committee, :user => @user)
@@ -53,7 +53,7 @@ describe CommentsController do
 
       it "redirects to the created comment" do
         post :create, {:comment => valid_attributes, discussion_id: @discussion.id }
-        response.should redirect_to(@proposal)
+        response.should redirect_to(@discussion)
       end
 
       it "sends an e-mail" do

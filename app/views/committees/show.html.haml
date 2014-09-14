@@ -1,5 +1,13 @@
 %h2 Committee: #{@committee}
 %hr
+%h2 Discussions
+%ul
+  - @committee.discussions.each do |discussion|
+    %li
+      = link_to discussion.title, discussion_path(discussion)
+      Last updated #{discussion.updated_at}
+= link_to "New Discussion", new_committee_discussion_path(@committee)
+%hr
 
 - if @proposals.empty?
   %h2

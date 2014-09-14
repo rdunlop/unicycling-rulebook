@@ -20,9 +20,9 @@ class UserMailer < ActionMailer::Base
   def create_admin_email
     emails = []
     User.all.each do |u|
-        if u.admin
-            emails << u.email unless u.no_emails
-        end
+      if u.admin
+        emails << u.email unless u.no_emails
+      end
     end
     emails
   end
@@ -30,11 +30,11 @@ class UserMailer < ActionMailer::Base
   def create_committee_email(proposal, committee, honor_no_email = true)
     emails = []
     CommitteeMember.all.each do |cm|
-        if cm.committee == committee
-          if proposal.nil? or cm.user.can? :read, proposal
-            emails << cm.user.email unless (honor_no_email and cm.user.no_emails)
-          end
+      if cm.committee == committee
+        if proposal.nil? or cm.user.can? :read, proposal
+          emails << cm.user.email unless (honor_no_email and cm.user.no_emails)
         end
+      end
     end
     emails
   end
@@ -67,17 +67,17 @@ class UserMailer < ActionMailer::Base
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
-  #   en.user_mailer.proposal_comment_added.subject
+  #   en.user_mailer.discussion_comment_added.subject
   #
-  def proposal_comment_added(proposal, comment, user)
+  def discussion_comment_added(discussion, comment, user)
     @comment = comment.comment
     @user = user
-    @voting_status = user.voting_text(proposal.committee)
-    @proposal = proposal
+    @voting_status = user.voting_text(discussion.committee)
+    @discussion = discussion
 
-    set_threading_header(proposal)
+    #set_threading_header(proposal)
 
-    send_mail(create_committee_email(proposal, proposal.committee), proposal, user.name)
+    send_mail(create_committee_email(nil, discussion.committee), discussion, user.name)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -219,7 +219,7 @@ class UserMailer < ActionMailer::Base
 
     emails = []
     committees.each do |c|
-        emails += create_committee_email(nil, c, false)
+      emails += create_committee_email(nil, c, false)
     end
     @body = body
 

@@ -1,0 +1,9 @@
+%b Comment Added:
+= @comment.to_s.html_safe
+%br
+= @user
+\- #{@voting_status}
+%hr
+Discussion #{@discussion.id.to_s} can be viewed at:
+
+= link_to discussion_url(@discussion), discussion_url(@discussion)

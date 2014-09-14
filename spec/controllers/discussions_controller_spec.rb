@@ -24,6 +24,13 @@ describe DiscussionsController do
 
       assigns(:discussion).should eq(discussion)
     end
+    it "should have a blank comment object" do
+      discussion = FactoryGirl.create(:discussion)
+
+      get :show, {:id => discussion.to_param}
+
+      assigns(:comment).should be_a_new(Comment)
+    end
   end
 
   describe "GET new" do

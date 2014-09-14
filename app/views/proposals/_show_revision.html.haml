@@ -88,11 +88,4 @@ on #{@proposal.submit_date}
     - @proposal.votes.each do |v|
       - if can? :read, v
         = render :partial => "/votes/show", :object => v
-- @comments = @proposal.discussion.try(:comments)
-- if @proposal.discussion && @comments.any?
-  %hr
-  %h3 Comments about this proposal:
-  - @comments.each do |comment|
-    = render :partial => "/comments/show", :object => comment
-- if can? :create, @comment
-  = render :partial => "/comments/form", :object => @comment
+= link_to "Discussion", discussion_path(@proposal.discussion)

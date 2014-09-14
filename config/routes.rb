@@ -4,25 +4,25 @@ Rulebook::Application.routes.draw do
 
   resources :proposals, :except => [:index] do
     collection do
-        get 'passed'
+      get 'passed'
     end
     member do
-        put 'set_voting'
-        put 'set_review'
-        put 'set_pre_voting'
-        put 'table'
+      put 'set_voting'
+      put 'set_review'
+      put 'set_pre_voting'
+      put 'table'
     end
     resources :votes, :except => [:show]
     resources :revisions, :except => [:edit, :index, :put, :destroy]
   end
 
   resources :discussions, only: [] do
-     resources :comments, :only => [:create]
+   resources :comments, :only => [:create]
   end
 
   resources :committees do
     collection do
-        get 'membership'
+      get 'membership'
     end
     resources :committee_members, :except => [:show]
     resources :discussions, only: [:index, :create, :new]

@@ -21,15 +21,17 @@ describe "proposals/show" do
   end
   describe "with a voting-state proposal" do
     before(:each) do
-        @proposal = FactoryGirl.create(:proposal, :title => "thetitle", :status => "Voting")
-        @revision = FactoryGirl.create(:revision, :proposal => @proposal, :background => "thebackground")
-        @comment = @proposal.comments.new
-        @vote = @proposal.votes.new
+      @proposal = FactoryGirl.create(:proposal, :title => "thetitle", :status => "Voting")
+      @revision = FactoryGirl.create(:revision, :proposal => @proposal, :background => "thebackground")
+      @discussion = FactoryGirl.create(:discussion, proposal: @proposal)
+
+      @comment = @proposal.comments.new
+      @vote = @proposal.votes.new
     end
     it "renders vote when in correct state" do
-        render
+      render
 
-        rendered.should match(/thetitle/)
+      rendered.should match(/thetitle/)
     end
   end
 end
