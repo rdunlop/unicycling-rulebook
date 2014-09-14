@@ -6,6 +6,7 @@ describe Proposal do
     discussion.title = "Hello People"
     discussion.status = "active"
     discussion.valid?.should == false
+    discussion.committee = FactoryGirl.create(:committee)
 
     discussion.owner = FactoryGirl.create(:user)
     discussion.valid?.should == true
@@ -16,6 +17,7 @@ describe Proposal do
     discussion.status = 'active'
     discussion.owner = FactoryGirl.create(:user)
     discussion.valid?.should == false
+    discussion.committee = FactoryGirl.create(:committee)
 
     discussion.title = "Hi there"
     discussion.valid?.should == true

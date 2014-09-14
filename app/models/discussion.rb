@@ -13,28 +13,28 @@
 #
 
 class Discussion < ActiveRecord::Base
-    belongs_to :owner, :class_name => "User"
-    belongs_to :proposal
-    has_many :comments, -> { order("created_at ASC") }
+  belongs_to :owner, :class_name => "User"
+  belongs_to :proposal
+  belongs_to :committee
+  has_many :comments, -> { order("created_at ASC") }
 
-    validates :owner, :presence => true
-    validates :title, :presence => true
-    validates :status, :inclusion => { :in => [ 'active', 'closed' ] }
+  validates :owner, :title, :committee, :presence => true
+  validates :status, :inclusion => { :in => [ 'active', 'closed' ] }
 
-    attr_accessible :title, :owner_id, :proposal_id, :status
+  attr_accessible :title, :owner_id, :proposal_id, :status
 
-    def last_update_time
-      last_time = self.created_at
-      if self.comments.count > 0
-        last_comment = self.comments.last
-        if last_time < last_comment.created_at
-          last_time = last_comment.created_at
-        end
+  def last_update_time
+    last_time = self.created_at
+    if self.comments.count > 0
+      last_comment = self.comments.last
+      if last_time < last_comment.created_at
+        last_time = last_comment.created_at
       end
-      last_time
     end
+    last_time
+  end
 
-    def to_s
-        title
-    end
+  def to_s
+    title
+  end
 end

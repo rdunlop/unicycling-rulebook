@@ -3,6 +3,7 @@
 FactoryGirl.define do
   factory :discussion do
     #proposal # FactoryGirl
+    committee
     status "active"
     owner
     sequence(:title) {|e| "Discussion Title #{e}" }

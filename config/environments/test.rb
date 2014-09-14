@@ -14,6 +14,8 @@ Rulebook::Application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
+  config.active_record.maintain_test_schema = true
+
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
