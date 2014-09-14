@@ -22,6 +22,7 @@ describe RevisionsController do
   before(:each) do
     @proposal = FactoryGirl.create(:proposal, :with_admin)
     @revision = FactoryGirl.create(:revision, :proposal => @proposal, :user_id => @proposal.owner.id)
+    @discussion = FactoryGirl.create(:discussion, proposal: @proposal, owner_id: @proposal.owner.id, committee: @proposal.committee)
 
     @admin = FactoryGirl.create(:admin_user)
     sign_in @admin

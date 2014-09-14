@@ -4,6 +4,6 @@
 %br
 = link_to 'Link to proposal', proposal_url(@proposal)
 %h2 Proposal:
-= @rule_text.html_safe
+= @rule_text.try(:html_safe)
 %h2 Body:
-= @body.html_safe
+= @body.try(:html_safe)
