@@ -3,8 +3,8 @@
   Title: #{@proposal.title}
 = link_to proposal_url(@proposal), proposal_url(@proposal)
 %h2 Changes made:
-= simple_format @change_description
+= @change_description.html_safe
 %h2 Proposal:
-= simple_format @rule_text
+= @rule_text.html_safe
 %h2 Body:
-= simple_format @body
+= @body.html_safe

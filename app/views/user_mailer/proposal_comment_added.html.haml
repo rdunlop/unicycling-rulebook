@@ -1,5 +1,5 @@
 %b Comment Added:
-= simple_format @comment
+= @comment.to_s.html_safe
 %br
 = @user
 \- #{@voting_status}

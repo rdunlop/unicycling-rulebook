@@ -9,4 +9,4 @@
   %i
     %b= comment.created_at.to_s
 %p
-  %blockquote= simple_format comment.comment
+  = comment.comment.html_safe

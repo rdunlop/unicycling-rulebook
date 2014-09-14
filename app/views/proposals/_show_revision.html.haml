@@ -17,7 +17,7 @@
 on #{@proposal.submit_date}
 %br
 %b Status:
-%strong= @proposal.status_string
+%strong.status_message= @proposal.status_string
 %br
 / options
 - if can? :set_review, @proposal
@@ -58,7 +58,7 @@ on #{@proposal.submit_date}
   - if not @vote.new_record?
     - # if vote already exists for this user
     %b You have already voted:
-    %strong
+    %strong.status_message
       = @vote.vote
     %br
   - else
@@ -80,7 +80,7 @@ on #{@proposal.submit_date}
           %i= rev.user.to_s
           on
           %i= rev.created_at.to_s(:long)
-      %dd= rev.change_description
+      %dd= rev.change_description.try(:html_safe)
 - if @proposal.votes.count > 0
   %hr
   = render :partial => "/proposals/vote_summary", :object => @proposal
