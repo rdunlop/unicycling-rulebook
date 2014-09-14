@@ -13,8 +13,11 @@ Rulebook::Application.routes.draw do
         put 'table'
     end
     resources :votes, :except => [:show]
-    resources :comments, :only => [:create]
     resources :revisions, :except => [:edit, :index, :put, :destroy]
+  end
+
+  resources :discussions, only: [] do
+     resources :comments, :only => [:create]
   end
 
   resources :committees, :except => [:show] do

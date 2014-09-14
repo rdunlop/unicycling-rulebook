@@ -1,19 +1,19 @@
 require 'spec_helper'
 
 describe Comment do
-    it "should have an associated proposal" do
+    it "should have an associated discussion" do
         comment = Comment.new
         comment.user = FactoryGirl.create(:user)
         comment.comment = "hi"
         comment.valid?.should == false
 
-        comment.proposal = FactoryGirl.create(:proposal)
+        comment.discussion = FactoryGirl.create(:discussion)
         comment.valid?.should == true
     end
 
     it "should have an associated user" do
         comment = Comment.new
-        comment.proposal = FactoryGirl.create(:proposal)
+        comment.discussion = FactoryGirl.create(:discussion)
         comment.comment = "hi"
         comment.valid?.should == false
 
@@ -23,7 +23,7 @@ describe Comment do
 
     it "should have text in the comment" do
         comment = Comment.new
-        comment.proposal = FactoryGirl.create(:proposal)
+        comment.discussion = FactoryGirl.create(:discussion)
         comment.user = FactoryGirl.create(:user)
         comment.valid?.should == false
 

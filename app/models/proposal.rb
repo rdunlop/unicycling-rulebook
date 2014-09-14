@@ -23,7 +23,8 @@ class Proposal < ActiveRecord::Base
     belongs_to :owner, :class_name => "User"
     belongs_to :committee
     has_many :votes, -> { order("created_at ASC") }
-    has_many :comments, -> { order("created_at ASC") }
+    has_many :comments, through: :discussion
+    has_one :discussion
     has_many :revisions, -> { order("id DESC") }
 
     validates :owner, :presence => true
@@ -178,10 +179,9 @@ public
 
     def last_update_time
       last_time = self.latest_revision.created_at
-      if self.comments.count > 0
-        last_comment = self.comments.last
-        if last_time < last_comment.created_at
-          last_time = last_comment.created_at
+      if self.discussion
+        if last_time < discussion.last_update_time
+            last_time = discussion.last_update_time
         end
       end
       last_time

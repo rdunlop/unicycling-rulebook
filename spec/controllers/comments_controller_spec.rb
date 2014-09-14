@@ -21,7 +21,8 @@ require 'spec_helper'
 describe CommentsController do
   before(:each) do
 
-    @proposal = FactoryGirl.create(:proposal, :status => 'Review')
+    @discussion = FactoryGirl.create(:discussion, :status => 'active')
+    @proposal = FactoryGirl.create(:proposal, discussion: @discussion, status: "Review")
 
     @user = FactoryGirl.create(:user)
     FactoryGirl.create(:committee_member, :committee => @proposal.committee, :user => @user)
@@ -35,29 +36,29 @@ describe CommentsController do
   def valid_attributes
     { comment: "hi"}
   end
-  
+
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Comment" do
         expect {
-          post :create, {:comment => valid_attributes, :proposal_id => @proposal.id}
+          post :create, {:comment => valid_attributes, discussion_id: @discussion.id }
         }.to change(Comment, :count).by(1)
       end
 
       it "assigns a newly created comment as @comment" do
-        post :create, {:comment => valid_attributes, :proposal_id => @proposal.id}
+        post :create, {:comment => valid_attributes, discussion_id: @discussion.id }
         assigns(:comment).should be_a(Comment)
         assigns(:comment).should be_persisted
       end
 
       it "redirects to the created comment" do
-        post :create, {:comment => valid_attributes, :proposal_id => @proposal.id}
+        post :create, {:comment => valid_attributes, discussion_id: @discussion.id }
         response.should redirect_to(@proposal)
       end
 
       it "sends an e-mail" do
         ActionMailer::Base.deliveries.clear
-        post :create, {:comment => valid_attributes, :proposal_id => @proposal.id}
+        post :create, {:comment => valid_attributes, discussion_id: @discussion.id }
         num_deliveries = ActionMailer::Base.deliveries.size
         num_deliveries.should == 1
       end
@@ -67,14 +68,14 @@ describe CommentsController do
       it "assigns a newly created but unsaved comment as @comment" do
         # Trigger the behavior that occurs when invalid params are submitted
         Comment.any_instance.stub(:save).and_return(false)
-        post :create, {:comment => {}, :proposal_id => @proposal.id}
+        post :create, {:comment => {}, discussion_id: @discussion.id }
         assigns(:comment).should be_a_new(Comment)
       end
 
       #it "re-renders the 'proposals/show' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         #Comment.any_instance.stub(:save).and_return(false)
-        #post :create, {:comment => {}, :proposal_id => @proposal.id}
+        #post :create, {:comment => {}, discussion_id: @discussion.id }
         #response.should render_template("propsals/show, layouts/application")
       #end
     end

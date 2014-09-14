@@ -65,6 +65,7 @@ describe ProposalsController do
 
     it "should have a blank comment object" do
       proposal = FactoryGirl.create(:proposal)
+      discussion = FactoryGirl.create(:discussion, proposal: proposal)
       get :show, {:id => proposal.to_param}
       assigns(:comment).should be_a_new(Comment)
     end

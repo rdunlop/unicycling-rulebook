@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :comment do
-    proposal # FactoryGirl
+    discussion # FactoryGirl
     user # FactoryGirl
     comment "MyText"
   end

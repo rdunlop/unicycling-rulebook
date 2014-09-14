@@ -23,7 +23,7 @@ class Ability
             #includes :set_pre_voting
             # and :set_review, :set_voting, :administer
 
-        # remove 'vote' from the 'all' set 
+        # remove 'vote' from the 'all' set
         # (even administrators can't vote if not a voting member with proposal in 'voting' status)
         cannot :vote, Proposal
 
@@ -37,9 +37,11 @@ class Ability
 
     can :send, Message if user.is_committee_admin(nil)
 
+    can :read, Discussion
+
     # Can only create comments if I am in the committee
     can :create, Comment do |comment|
-        user.is_in_committee(comment.proposal.committee)
+        user.is_in_committee(comment.discussion.proposal.committee)
     end
 
     # Only voting members can vote

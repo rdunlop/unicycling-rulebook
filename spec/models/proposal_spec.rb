@@ -58,25 +58,6 @@ describe Proposal do
     prop.votes.should == [vote1, vote2]
   end
 
-  it "should have associated comments" do
-    proposal = FactoryGirl.create(:proposal)
-    comment = FactoryGirl.create(:comment, :proposal => proposal)
-
-    prop = Proposal.find(proposal.id)
-
-    prop.comments.count.should == 1
-  end
-  it "should order the comments by created date" do
-    proposal = FactoryGirl.create(:proposal)
-    comment2 = FactoryGirl.create(:comment, :proposal => proposal, :created_at => 2.seconds.ago)
-    comment3 = FactoryGirl.create(:comment, :proposal => proposal, :created_at => 1.second.ago)
-    comment1 = FactoryGirl.create(:comment, :proposal => proposal, :created_at => 3.seconds.ago)
-
-    prop = Proposal.find(proposal.id)
-
-    prop.comments.should == [comment1, comment2, comment3]
-  end
-
   it "should only allow certain status values" do
     proposal = FactoryGirl.create(:proposal)
     proposal.valid?.should == true
@@ -119,44 +100,44 @@ describe Proposal do
         prop.status_string.should == "Submitted"
     end
     it "should print the review dates for a Review proposal" do
-        prop = FactoryGirl.create(:proposal, :status => 'Review', 
+        prop = FactoryGirl.create(:proposal, :status => 'Review',
                                              :review_start_date => Date.new(2012, 1, 1),
                                              :review_end_date   => Date.new(2012, 1, 10))
         prop.status_string.should == "Review from January  1, 2012 to January 10, 2012"
     end
 
     it "should print the review dates for a Pre-Voting proposal" do
-        prop = FactoryGirl.create(:proposal, :status => 'Pre-Voting', 
+        prop = FactoryGirl.create(:proposal, :status => 'Pre-Voting',
                                              :review_start_date => Date.new(2012, 1, 1),
                                              :review_end_date   => Date.new(2012, 1, 10))
         prop.status_string.should == "Pre-Voting (Reviewed from January  1, 2012 to January 10, 2012)"
     end
     it "should print the voting dates for a Voting proposal" do
-        prop = FactoryGirl.create(:proposal, :status => 'Voting', 
+        prop = FactoryGirl.create(:proposal, :status => 'Voting',
                                              :vote_start_date => Date.new(2012, 1, 1),
                                              :vote_end_date   => Date.new(2012, 1, 10))
         prop.status_string.should == "Voting from January  1, 2012 to January 10, 2012"
     end
     it "should print the review dates for a Tabled proposal" do
-        prop = FactoryGirl.create(:proposal, :status => 'Tabled', 
+        prop = FactoryGirl.create(:proposal, :status => 'Tabled',
                                              :review_start_date => Date.new(2012, 1, 1),
                                              :review_end_date   => Date.new(2012, 1, 10))
         prop.status_string.should == "Set-Aside (Reviewed from January  1, 2012 to January 10, 2012)"
     end
     it "should print the vote end dates for a Passed proposal" do
-        prop = FactoryGirl.create(:proposal, :status => 'Passed', 
+        prop = FactoryGirl.create(:proposal, :status => 'Passed',
                                              :vote_end_date => Date.new(2012, 2, 1))
         prop.status_string.should == "Passed on February  1, 2012"
     end
     it "should print the vote end dates for a Failde proposal" do
-        prop = FactoryGirl.create(:proposal, :status => 'Failed', 
+        prop = FactoryGirl.create(:proposal, :status => 'Failed',
                                              :vote_end_date => Date.new(2012, 2, 1))
         prop.status_string.should == "Failed on February  1, 2012"
     end
   end
   describe "when checking the last_update_time" do
     before(:each) do
-        @prop = FactoryGirl.create(:proposal, :status => 'Failed', 
+        @prop = FactoryGirl.create(:proposal, :status => 'Failed',
                                              :vote_end_date => Date.new(2012, 2, 1))
         @rev1 = FactoryGirl.create(:revision, :proposal => @prop, :created_at => 1.hour.ago)
     end
@@ -164,13 +145,7 @@ describe Proposal do
       @rev1.reload
       @prop.last_update_time.should == @rev1.created_at
     end
-    it "describes when the latest comment was added" do
-      @comment = FactoryGirl.create(:comment, :proposal => @prop, :created_at => 30.minutes.ago)
-      @comment.reload
-      @prop.last_update_time.should == @comment.created_at
-    end
     it "chooses the revision, if it came after the last vote" do
-      @comment = FactoryGirl.create(:comment, :proposal => @prop, :created_at => 30.minutes.ago)
       @rev1 = FactoryGirl.create(:revision, :proposal => @prop, :created_at => 1.minute.ago)
       @rev1.reload
       @prop.last_update_time.should == @rev1.created_at
@@ -241,7 +216,7 @@ describe Proposal do
               @prop.at_least_two_thirds_agree.should == false
             end
         end
-        
+
         describe "if there is a 3rd committee_members who hasn't voted" do
           before(:each) do
             FactoryGirl.create(:committee_member, :committee => @prop.committee)

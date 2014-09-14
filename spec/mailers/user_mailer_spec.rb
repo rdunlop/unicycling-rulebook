@@ -3,7 +3,8 @@ require "spec_helper"
 describe UserMailer do
   before(:each) do
       @proposal = FactoryGirl.create(:proposal, :status => "Review", :title => 'A "very" strange title', :mail_messageid => "mymessageid")
-      @comment = FactoryGirl.create(:comment, :proposal => @proposal, :comment => 'This is what I "Said"')
+      @discussion = FactoryGirl.create(:discussion, proposal: @proposal)
+      @comment = FactoryGirl.create(:comment, :discussion => @discussion, :comment => 'This is what I "Said"')
       FactoryGirl.create(:revision, :proposal => @proposal, :rule_text => "This is what I \"Like\" to do", :body => "Sometimes I <link> somewhere")
       @user = @comment.user
 

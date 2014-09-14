@@ -36,7 +36,7 @@
       <%= link_to('Modify Proposal Title/Committee/Status/Dates', edit_proposal_path(@proposal)) %>
       |
     <% end %>
-    <% #= link_to('Change Committee', modify_dates_proposal_path(@proposal)) 
+    <% #= link_to('Change Committee', modify_dates_proposal_path(@proposal))
     %>
     <br />
 <% end %>
@@ -61,7 +61,7 @@
 <% end %>
 <br />
 
-<% # Display Voting Options 
+<% # Display Voting Options
 %>
 <% if not @vote.nil? %>
     <% if not @vote.new_record? %>
@@ -107,8 +107,8 @@
     </p>
 <% end %>
 
-<% @comments = @proposal.comments %>
-<% if not @comments.empty? %>
+<% @comments = @proposal.discussion.try(:comments) %>
+<% if @proposal.discussion && @comments.any? %>
     <hr />
     <h3>Comments about this proposal:</h3>
     <% @comments.each do |comment| %>

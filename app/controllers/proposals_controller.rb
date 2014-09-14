@@ -19,8 +19,8 @@ class ProposalsController < ApplicationController
   # GET /proposals/1.json
   def show
     @proposal = Proposal.find(params[:id])
-    if can? :create, Comment
-        @comment = @proposal.comments.new
+    if can?(:create, Comment) && @proposal.discussion
+        @comment = @proposal.discussion.comments.new
     end
 
     @proposal.votes.each do |v|
@@ -76,6 +76,7 @@ class ProposalsController < ApplicationController
     respond_to do |format|
       if @proposal.valid? and @revision.valid?
         @proposal.save
+        create_discussion_for(@proposal)
         @revision.proposal = @proposal
         if @revision.save
           mail = UserMailer.proposal_submitted(@proposal).deliver
@@ -93,6 +94,19 @@ class ProposalsController < ApplicationController
       end
     end
   end
+
+  private
+
+  def create_discussion_for(proposal)
+    discussion = Discussion.new
+    discussion.proposal = proposal
+    discussion.title = proposal.title
+    discussion.owner = proposal.owner
+    discussion.status = "active"
+    discussion.save
+  end
+
+  public
 
   # PUT /proposals/1
   # PUT /proposals/1.json

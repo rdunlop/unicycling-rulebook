@@ -4,7 +4,8 @@ describe "proposals/show" do
   before(:each) do
     @proposal = FactoryGirl.create(:proposal, :title => "thetitle")
     @revision = FactoryGirl.create(:revision, :proposal => @proposal, :background => "thebackground")
-    @comment = @proposal.comments.new
+    @discussion = FactoryGirl.create(:discussion, proposal: @proposal)
+    @comment = @discussion.comments.new
     @vote = @proposal.votes.new
     @ability = Object.new
     @ability.extend(CanCan::Ability)
