@@ -1,0 +1,27 @@
+= form_for(@app_config) do |f|
+  - if @app_config.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@app_config.errors.count, "error")
+        prohibited this app_config from being saved:
+      %ul
+        - @app_config.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :rulebook_name
+    %br
+    = f.text_field :rulebook_name
+  .field
+    = f.label :front_page
+    %br
+    = f.text_area :front_page
+  .field
+    = f.label :faq
+    %br
+    = f.text_area :faq
+  .field
+    = f.label :copyright
+    %br
+    = f.text_field :copyright
+  .actions
+    = f.submit

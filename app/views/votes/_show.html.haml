@@ -1,0 +1,8 @@
+- return if show.new_record?
+%b= show.user
+voted
+on
+%i= show.created_at.strftime("%B %d, %Y, %I:%M %p")
+- if not show.comment.blank?
+  %blockquote= show.comment
+%br

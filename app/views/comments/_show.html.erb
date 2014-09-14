@@ -1,8 +1,0 @@
-<% comment = show
-if comment.new_record?
-    return
-end
-%>
-<h4>Comments <% if can? :read_usernames, comment.proposal %> by <b><%= comment.user.to_s %></b><% end %>
-    on <i><b><%= comment.created_at.to_s %></b></i></h4>
-<p><blockquote><%= simple_format comment.comment %></blockquote></p>

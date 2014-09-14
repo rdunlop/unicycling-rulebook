@@ -1,0 +1,30 @@
+- first_one = true
+- proposals.each do |p|
+  - next if p.status != status
+  - if first_one
+    - first_one = false
+    %hr
+    %div{:class => "#{status}_block"}
+      %h3= header
+      %p= status_text
+  %div{:class => "#{status}_block"}
+    = link_to('Proposal ' + p.id.to_s + ": " + p.to_s, p)
+    - if p.status == 'Submitted'
+      %h4
+      %blockquote
+        %b Committee:
+        = p.committee.to_s
+        %br
+        %b Owner:
+        = p.owner.to_s
+        %br
+        %b Submit Date:
+        = p.submit_date.to_s
+        %br
+    - else
+      %small
+        %i= p.status_summary
+      %strong= p.vote_detail(votes)
+      %small
+        Last revision/comment: #{distance_of_time_in_words(Time.now, p.last_update_time)} ago
+  %hr

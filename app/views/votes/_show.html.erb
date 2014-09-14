@@ -1,9 +1,0 @@
-<% if show.new_record? 
-    return 
-end %>
-<b><%= show.user %></b> voted
- on <i><%= show.created_at.strftime("%B %d, %Y, %I:%M %p") %></i>
-<% if not show.comment.blank? %>
-    <blockquote><%= show.comment %></blockquote>
-<% end %>
-<br />

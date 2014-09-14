@@ -1,0 +1,46 @@
+%h1
+  Listing Members for #{@committee.to_s}
+%p
+  Admin members are allowed to:
+  %ul
+    %li Send E-mail messages to ANY committee group
+    %li Read proposals that are in the "Submitted" status (hidden from normal committee members)
+    %li See Committee Details
+    %li Update Committee Members (admin/voting)
+    %li Update Proposals
+    %li Read Votes
+%p
+  Voting Members are allowed to:
+  %ul
+    %li Vote on proposals during the 'Voting' phase
+%p
+  Editors are allowed to:
+  %ul
+    %li Read proposals that are in the "Submitted" status (hidden from normal committee members)
+    %li Revise the text of any proposal in the committee
+    %li See the e-mail address of the owner of the proposal
+%table
+  %tr
+    %th User
+    %th Email
+    %th Admin
+    %th Editor
+    %th Voting
+    %th
+    %th
+  - @committee_members.each do |committee_member|
+    %tr
+      %td= committee_member.user
+      %td= committee_member.user.email
+      %td= committee_member.admin
+      %td= committee_member.editor
+      %td= committee_member.voting
+      %td= link_to 'Edit', edit_committee_committee_member_path(@committee, committee_member)
+      %td
+        - if can? :destroy, committee_member
+          = link_to 'Destroy', [@committee, committee_member], confirm: 'Are you sure?', method: :delete
+%br
+- if can? :create, CommitteeMember
+  = link_to 'New Committee member', new_committee_committee_member_path(@committee)
+  %br
+= link_to 'Back', committees_path

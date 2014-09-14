@@ -1,0 +1,25 @@
+%h1 Send message
+%p Using this form, you can send e-mail messages to all Members of a Committee. If you select Multiple committees, all members in all of those committees will receive the e-mail.
+%p
+  The e-mail will originate from #{ENV['MAIL_FULL_EMAIL']} and all e-mail addresses will be BCC'd
+= form_tag(welcome_send_message_path, :method => "POST") do
+  %h3 Committees
+  - @committees.each do |c|
+    = label_tag("committee#{c.id}", c.name)
+    = check_box_tag("committees[]", c.id, false, {:id => "committee#{c.id}"})
+    %br
+  %br
+  %h3 Message Contents
+  = label_tag("from", "From")
+  = @from
+  %br
+  = label_tag("reply-address", "Reply Address")
+  = @from_email
+  %br
+  = label_tag("subject", "Subject")
+  = text_field_tag("subject", nil, {:id => "subject"})
+  %br
+  = label_tag("body", "Body")
+  = text_area_tag("body", nil, {:id => "body"})
+  %br
+  = submit_tag 'Send Message'

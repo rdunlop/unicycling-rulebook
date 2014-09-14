@@ -1,0 +1,30 @@
+= form_for(@proposal) do |f|
+  - if @proposal.errors.any? or @revision.errors.any?
+    #error_explanation
+      - if @proposal.errors.any?
+        %h2
+          = pluralize(@proposal.errors.count, "error")
+          prohibited this proposal from being saved:
+        %ul
+          - @proposal.errors.full_messages.each do |msg|
+            %li= msg
+      - if @revision.errors.any?
+        %h2
+          = pluralize(@revision.errors.count, "error")
+          prohibited this proposal from being saved:
+        %ul
+          - @revision.errors.full_messages.each do |msg|
+            %li= msg
+  .field
+    = f.label :committee_id
+    = f.select(:committee_id, @committees.map{ |e| [e, e.id]})
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    %label{:for => "nothing"} Owner:
+    = @proposal.owner.to_s
+  = fields_for(@revision) do |g|
+    = render :partial => "/revisions/form", :object => g
+  .actions
+    = f.submit

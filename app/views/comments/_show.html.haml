@@ -1,0 +1,12 @@
+- comment = show
+- return if comment.new_record?
+%h4
+  Comments
+  - if can? :read_usernames, comment.proposal
+    by
+    %b= comment.user.to_s
+  on
+  %i
+    %b= comment.created_at.to_s
+%p
+  %blockquote= simple_format comment.comment

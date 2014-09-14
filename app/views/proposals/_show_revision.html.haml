@@ -1,0 +1,98 @@
+- @proposal = proposal
+- @revision = revision
+%h2
+  Proposal #{@proposal.id}: #{@proposal.title}
+  %small
+    [ Revision #{@revision.num} ]
+%b Committee:
+= @proposal.committee
+%br
+- if can? :read_usernames, @proposal
+  %b Owner:
+  = @proposal.owner
+  - if can? :read_email, @proposal
+    (#{@proposal.owner.email})
+  %br
+%b Submitted
+on #{@proposal.submit_date}
+%br
+%b Status:
+%strong= @proposal.status_string
+%br
+/ options
+- if can? :set_review, @proposal
+  %b
+    %i Options:
+  - if @proposal.status == 'Submitted'
+    = link_to('Approve', set_review_proposal_path(@proposal), :method => :put)
+    |
+  - elsif @proposal.status == 'Tabled'
+    = link_to('Un-Table (return to discussion)', set_review_proposal_path(@proposal), :method => :put)
+    |
+  - elsif @proposal.status == 'Voting'
+    = link_to('Modify Votes', proposal_votes_path(@proposal))
+    |
+    \#{link_to('Change Back to Pre-Voting', set_pre_voting_proposal_path(@proposal), :method => :put, confirm: 'Doing this will remove all votes and revert the proposal back to Pre-Voting. (You MUST change the Dates too, or else it will move back to Voting again tonight)')}
+    |
+  - if can? :edit, @proposal
+    = link_to('Modify Proposal Title/Committee/Status/Dates', edit_proposal_path(@proposal))
+    |
+  - #= link_to('Change Committee', modify_dates_proposal_path(@proposal))
+  %br
+- if can? :revise, @proposal
+  %b
+    %i Options:
+  - if @proposal.status == 'Pre-Voting'
+    = link_to 'Call for Votes', set_voting_proposal_path(@proposal), :method => :put
+    |
+  - #  XXX move into model?
+  - if @proposal.status == 'Submitted' or @proposal.status == 'Review' or @proposal.status == 'Pre-Voting'
+    = link_to('Table', table_proposal_path(@proposal), :method => :put)
+    |
+    - if can? :revise, @proposal
+      = link_to 'Revise', new_proposal_revision_path(@proposal)
+      |
+%br
+- # Display Voting Options
+- if not @vote.nil?
+  - if not @vote.new_record?
+    - # if vote already exists for this user
+    %b You have already voted:
+    %strong
+      = @vote.vote
+    %br
+  - else
+    = render :partial => "/votes/form", :object => @vote
+%hr
+= render :partial => "/proposals/proposal_details", :locals => {:proposal => @proposal, :revision => @revision }
+- if @proposal.revisions.count > 1
+  %hr
+  %h3 Change Log:
+  %dl
+    - @proposal.revisions.each do |rev|
+      %dt
+        %b
+          - if can? :read, rev
+            = link_to('Revision ' + rev.num.to_s, proposal_revision_path(@proposal, rev))
+          - else
+            = 'Revision ' + rev.num.to_s
+          changed by
+          %i= rev.user.to_s
+          on
+          %i= rev.created_at.to_s(:long)
+      %dd= rev.change_description
+- if @proposal.votes.count > 0
+  %hr
+  = render :partial => "/proposals/vote_summary", :object => @proposal
+  %p
+    - @proposal.votes.each do |v|
+      - if can? :read, v
+        = render :partial => "/votes/show", :object => v
+- @comments = @proposal.discussion.try(:comments)
+- if @proposal.discussion && @comments.any?
+  %hr
+  %h3 Comments about this proposal:
+  - @comments.each do |comment|
+    = render :partial => "/comments/show", :object => comment
+- if can? :create, @comment
+  = render :partial => "/comments/form", :object => @comment

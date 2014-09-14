@@ -1,0 +1,34 @@
+= form_for([@proposal, @vote]) do |f|
+  - if @vote.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@vote.errors.count, "error")
+        prohibited this vote from being saved:
+      %ul
+        - @vote.errors.full_messages.each do |msg|
+          %li= msg
+  %b Please choose how you would like to vote:
+  %br
+  Your name
+  %b will not
+  be displayed along with your vote.
+  %br
+  %span.minor_note After voting, you will not receive vote-reminder e-mails for this proposal
+  .field
+    = f.radio_button :vote, 'agree'
+    = f.label :vote, 'Agree', :value => 'agree'
+    %br
+    = f.radio_button :vote, 'disagree'
+    = f.label :vote, 'Disagree', :value => 'disagree'
+    %br
+    = f.radio_button :vote, 'abstain'
+    = f.label :vote, 'Abstain', :value => 'abstain'
+    %br
+    %b
+      = f.label :comment, 'Vote Comment'
+      \:
+    %br
+    = f.text_area :comment
+    %br
+  .actions
+    = f.submit

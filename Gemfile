@@ -19,6 +19,8 @@ gem 'protected_attributes'
 gem 'pg'
 
 group :development, :test, :cucumber do
+    gem 'haml'
+    gem 'html2haml'
     gem 'consistency_fail'
     gem 'better_errors'
     gem "binding_of_caller"

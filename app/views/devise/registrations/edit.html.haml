@@ -1,0 +1,28 @@
+%h2
+  Edit #{resource_name.to_s.humanize}
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+  = devise_error_messages!
+  %div
+    = f.label :name
+    = f.text_field :name
+  %div
+    = f.label :email
+    = f.email_field :email
+  %div
+    = f.label :password
+    %i (leave blank if you don't want to change it)
+    = f.password_field :password, :autocomplete => "off"
+  %div
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation
+  %div
+    = f.label :current_password
+    %i (we need your current password to confirm your changes)
+    = f.password_field :current_password
+  %div
+    = f.label :no_emails
+    %i Disable All E-mails
+    = f.check_box :no_emails
+    (You will still receive e-mails from Moderators/Administrators)
+  %div= f.submit "Update"
+= link_to "Back", :back

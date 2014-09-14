@@ -1,0 +1,10 @@
+%h3 Votes on this proposal:
+%b Agree:
+= succeed "," do
+  %strong= vote_summary.agree_votes
+%b Disagree:
+= succeed "," do
+  %strong= vote_summary.disagree_votes
+%b Abstain:
+= succeed "." do
+  %strong= vote_summary.abstain_votes
