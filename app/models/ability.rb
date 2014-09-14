@@ -8,9 +8,14 @@ class Ability
 
     # PUBLIC can:
     can [:read], Proposal do |proposal|
-        proposal.status != 'Submitted'
+      proposal.status != 'Submitted'
     end
     can [:read], Committee
+    can :read, Discussion
+    can :create, Discussion do |discussion|
+      user.is_in_committee(discussion.committee)
+    end
+
     can :passed, Proposal
     can :membership, Committee
 

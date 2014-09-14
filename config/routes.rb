@@ -25,8 +25,10 @@ Rulebook::Application.routes.draw do
         get 'membership'
     end
     resources :committee_members, :except => [:show]
+    resources :discussions, only: [:index, :create, :new]
   end
 
+  resources :discussions, only: [:show]
 
   devise_for :users
 

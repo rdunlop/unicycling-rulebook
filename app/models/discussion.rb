@@ -10,6 +10,7 @@
 #  created_at   :datetime
 #  updated_at   :datetime
 #  committee_id :integer
+#  body         :text
 #
 
 class Discussion < ActiveRecord::Base
@@ -21,7 +22,7 @@ class Discussion < ActiveRecord::Base
   validates :owner, :title, :committee, :presence => true
   validates :status, :inclusion => { :in => [ 'active', 'closed' ] }
 
-  attr_accessible :title, :owner_id, :proposal_id, :status
+  attr_accessible :title, :body, :owner_id, :proposal_id, :status
 
   def last_update_time
     last_time = self.created_at

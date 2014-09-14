@@ -14,6 +14,7 @@ class Committee < ActiveRecord::Base
 
   has_many :committee_members, -> { includes(:user).order("users.name") }
   has_many :proposals
+  has_many :discussions
 
   attr_accessible :name, :preliminary
 
