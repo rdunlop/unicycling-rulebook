@@ -17,9 +17,9 @@ gem 'protected_attributes'
 
 #gem 'sqlite3'
 gem 'pg'
+gem 'haml'
 
 group :development, :test, :cucumber do
-    gem 'haml'
     gem 'html2haml'
     gem 'consistency_fail'
     gem 'better_errors'
