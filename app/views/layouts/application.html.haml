@@ -19,7 +19,7 @@
         - if can? :passed, Proposal
           %li= link_to('View Approved Proposals', passed_proposals_path)
         - if can? :read, Committee
-          %li= link_to('Committees (Admin Pages)', committees_path)
+          %li= link_to('Committees', committees_path)
         - if can? :manage, AppConfig
           %li= link_to('App Config (Admin Pages)', app_configs_path)
         - if can? :send, Message

@@ -8,10 +8,10 @@
     %th
   - @committees.each do |committee|
     %tr
-      %td= committee.name
+      %td= link_to committee.name, committee
       %td= committee.preliminary ? 'yes' : 'no'
       %td
-        - if can? :read, committee
+        - if can? :read, CommitteeMember
           = link_to('Show Members', committee_committee_members_path(committee))
       %td
         - if can? :edit, committee
