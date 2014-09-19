@@ -40,4 +40,18 @@ describe "Ability" do
       it { should be_able_to(:read, review_proposal) }
     end
   end
+
+  describe "when not logged in" do
+    subject { @ability = Ability.new(nil) }
+
+    describe "with a set-aside proposal" do
+      let(:proposal) { FactoryGirl.build_stubbed :proposal, :set_aside }
+      it { should be_able_to(:read, proposal) }
+    end
+
+    describe "with a failed proposal" do
+      let(:proposal) { FactoryGirl.build_stubbed :proposal, :failed }
+      it { should be_able_to(:read, proposal) }
+    end
+  end
 end

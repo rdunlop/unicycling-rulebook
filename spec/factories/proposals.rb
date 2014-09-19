@@ -23,6 +23,14 @@ FactoryGirl.define do
       status "Review"
     end
 
+    trait :set_aside do
+      status "Tabled"
+    end
+
+    trait :failed do
+      status "Failed"
+    end
+
     trait :with_admin do
       after(:create) do |proposal|
         FactoryGirl.create(:committee_member, :admin, committee: proposal.committee)
