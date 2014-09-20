@@ -1,5 +1,6 @@
 class ProposalsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show, :passed]
+  before_action :authenticate_user!, :except => [:show, :passed]
+  before_action :load_committee, only: [:new, :create]
   load_and_authorize_resource
 
   # GET /proposals/passed
@@ -37,17 +38,14 @@ class ProposalsController < ApplicationController
     end
   end
 
-  # GET /proposals/new
-  # GET /proposals/new.json
+  # GET /committees/1/proposals/new
   def new
     @proposal = Proposal.new
-    @proposal.owner = current_user
     @revision = Revision.new
-    @committees = current_user.accessible_committees
+    @proposal_owner = current_user
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @proposal }
     end
   end
 
@@ -57,53 +55,26 @@ class ProposalsController < ApplicationController
     @committees = current_user.accessible_committees
   end
 
-  # POST /proposals
-  # POST /proposals.json
+  # POST /committees/2/proposals
   def create
     @proposal = Proposal.new(params[:proposal])
-    @proposal.status = 'Submitted'
-    @proposal.owner = current_user
-    @proposal.submit_date = Date.today()
-
+    @proposal.committee = @committee
     @revision = Revision.new(params[:revision])
-    @revision.user = current_user
-
-    @committees = current_user.accessible_committees
 
     respond_to do |format|
-      if @proposal.valid? and @revision.valid?
+      if ProposalCreator.new(@proposal, @revision, current_user).perform
+        mail = UserMailer.proposal_submitted(@proposal).deliver
+        @proposal.mail_messageid = mail.message_id
         @proposal.save
-        create_discussion_for(@proposal)
-        @revision.proposal = @proposal
-        if @revision.save
-          mail = UserMailer.proposal_submitted(@proposal).deliver
-          @proposal.mail_messageid = mail.message_id
-          @proposal.save
-          format.html { redirect_to @proposal, notice: 'Proposal was successfully created.' }
-          format.json { render json: @proposal, status: :created, location: @proposal }
-        else
-          format.html { render action: "new" }
-          format.json { render json: @proposal.errors, status: :unprocessable_entity }
-        end
+        format.html { redirect_to @proposal, notice: 'Proposal was successfully created.' }
+        format.json { render json: @proposal, status: :created, location: @proposal }
       else
+        @proposal_owner = current_user
         format.html { render action: "new" }
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
       end
     end
   end
-
-  private
-
-  def create_discussion_for(proposal)
-    discussion = Discussion.new
-    discussion.proposal = proposal
-    discussion.title = proposal.title
-    discussion.owner = proposal.owner
-    discussion.status = "active"
-    discussion.save
-  end
-
-  public
 
   # PUT /proposals/1
   # PUT /proposals/1.json
@@ -230,5 +201,11 @@ class ProposalsController < ApplicationController
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  private
+
+  def load_committee
+    @committee = Committee.find(params[:committee_id])
   end
 end

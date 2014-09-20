@@ -7,15 +7,6 @@ describe "committees/show" do
     controller.stub(:current_ability) { @ability }
   end
 
-
-  it "renders a link to create a new proposal when none exist" do
-    @committee = FactoryGirl.create(:committee)
-    @proposals = []
-    render
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/No proposals exist yet/)
-  end
-
   describe "when a proposal exists" do
     before(:each) do
       @committee = FactoryGirl.create(:committee)

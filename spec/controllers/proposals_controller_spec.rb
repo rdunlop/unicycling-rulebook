@@ -19,14 +19,13 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe ProposalsController do
+  let(:committee) { FactoryGirl.create(:committee) }
   before (:each) do
-    @committee = FactoryGirl.create(:committee)
-
     @user = FactoryGirl.create(:user)
     @admin_user = FactoryGirl.create(:admin_user)
     sign_in @admin_user
-    @cm = FactoryGirl.create(:committee_member, :committee => @committee, :user => @admin_user)
-    @cm2 = FactoryGirl.create(:committee_member, :committee => @committee, :user => @user)
+    @cm = FactoryGirl.create(:committee_member, :committee => committee, :user => @admin_user)
+    @cm2 = FactoryGirl.create(:committee_member, :committee => committee, :user => @user)
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -35,7 +34,7 @@ describe ProposalsController do
   def valid_attributes
     {
         title: "My Title",
-        committee_id: @committee.id}
+        committee_id: committee.id}
   end
 
   describe "GET passed" do
@@ -69,12 +68,12 @@ describe ProposalsController do
       assigns(:vote).should == nil
     end
     it "should have a blank vote object when in Voting" do
-      proposal = FactoryGirl.create(:proposal, :status => 'Voting', :committee => @committee)
+      proposal = FactoryGirl.create(:proposal, :status => 'Voting', :committee => committee)
       get :show, {:id => proposal.to_param}
       assigns(:vote).should be_a_new(Vote)
     end
     it "should have the existing vote object for this user" do
-      proposal = FactoryGirl.create(:proposal, :status => 'Voting', :committee => @committee)
+      proposal = FactoryGirl.create(:proposal, :status => 'Voting', :committee => committee)
       vote = FactoryGirl.create(:vote, :proposal => proposal, :user => @admin_user)
       get :show, {:id => proposal.to_param}
       assigns(:vote).should == vote
@@ -91,45 +90,26 @@ describe ProposalsController do
 
   describe "GET new" do
     it "assigns a new proposal as @proposal" do
-      get :new, {}
+      get :new, {committee_id: committee.id}
       assigns(:proposal).should be_a_new(Proposal)
     end
     it "should set the owner to be the current-logged-in user" do
-      get :new, {}
-      assigns(:proposal).owner.should == @admin_user
-      assigns(:committees).should == [@committee]
+      get :new, {committee_id: committee.id}
+      assigns(:proposal_owner).should == @admin_user
     end
     it "should also have a @revision" do
-      get :new, {}
+      get :new, {committee_id: committee.id}
       assigns(:revision).should be_a_new(Revision)
-    end
-    it "should not show committees I am not a member of" do
-      sign_out @admin_user
-      sign_in @user
-      FactoryGirl.create(:committee)
-      get :new, {}
-      assigns(:committees).should == [@committee]
-    end
-    describe "as a super-admin" do
-      before(:each) do
-        @new_super_user = FactoryGirl.create(:admin_user)
-        sign_out @admin_user
-        sign_in @new_super_user
-      end
-      it "should show me the committee" do
-        get :new, {}
-        assigns(:committees).should == [@committee]
-      end
     end
   end
 
   describe "GET edit" do
     it "assigns the requested proposal as @proposal" do
-      proposal = FactoryGirl.create(:proposal, :committee => @committee)
+      proposal = FactoryGirl.create(:proposal, :committee => committee)
       revision = FactoryGirl.create(:revision, :proposal => proposal)
       get :edit, {:id => proposal.to_param}
       assigns(:proposal).should eq(proposal)
-      assigns(:committees).should == [@committee]
+      assigns(:committees).should == [committee]
     end
     it "should not show committees that I am not an administrator of" do
       @other_committee = FactoryGirl.create(:committee)
@@ -145,11 +125,11 @@ describe ProposalsController do
       assigns(:committees).should == [@other_committee]
     end
     it "as super-admin, should show all of the committees" do
-      proposal = FactoryGirl.create(:proposal, :committee => @committee)
+      proposal = FactoryGirl.create(:proposal, :committee => committee)
       revision = FactoryGirl.create(:revision, :proposal => proposal)
       cm = FactoryGirl.create(:committee)
       get :edit, {:id => proposal.to_param}
-      assigns(:committees).should == [@committee, cm]
+      assigns(:committees).should == [committee, cm]
     end
     describe "as a committee-admin for the same committee" do
         before(:each) do
@@ -177,12 +157,12 @@ describe ProposalsController do
       end
       it "creates a new Proposal" do
         expect {
-          post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
+          post :create, {committee_id: committee.id, proposal: valid_attributes, revision: @valid_revision_attributes}
         }.to change(Proposal, :count).by(1)
       end
 
       it "assigns a newly created proposal as @proposal" do
-        post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
+        post :create, {committee_id: committee.id, proposal: valid_attributes, revision: @valid_revision_attributes}
         assigns(:proposal).should be_a(Proposal)
         assigns(:proposal).should be_persisted
         assigns(:revision).should be_a(Revision)
@@ -190,21 +170,21 @@ describe ProposalsController do
       end
 
       it "redirects to the created proposal" do
-        post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
+        post :create, {committee_id: committee.id, proposal: valid_attributes, revision: @valid_revision_attributes}
         response.should redirect_to(Proposal.last)
       end
       it "should increase revision count" do
         expect {
-          post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
+          post :create, {committee_id: committee.id, proposal: valid_attributes, revision: @valid_revision_attributes}
         }.to change(Revision, :count).by(1)
       end
       it "sets the submit_date when created" do
-        post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
+        post :create, {committee_id: committee.id, proposal: valid_attributes, revision: @valid_revision_attributes}
         assigns(:proposal).submit_date.should == Date.today
       end
       it "sends an e-mail when a new submission is created" do
         ActionMailer::Base.deliveries.clear
-        post :create, {:proposal => valid_attributes, :revision => @valid_revision_attributes}
+        post :create, {committee_id: committee.id, proposal: valid_attributes, revision: @valid_revision_attributes}
         num_deliveries = ActionMailer::Base.deliveries.size
         num_deliveries.should == 1
       end
@@ -214,15 +194,14 @@ describe ProposalsController do
       it "assigns a newly created but unsaved proposal as @proposal" do
         # Trigger the behavior that occurs when invalid params are submitted
         Proposal.any_instance.stub(:save).and_return(false)
-        post :create, {:proposal => {}}
+        post :create, {committee_id: committee.id, proposal: {}}
         assigns(:proposal).should be_a_new(Proposal)
-        assigns(:committees).should == [@committee]
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Proposal.any_instance.stub(:save).and_return(false)
-        post :create, {:proposal => {}}
+        post :create, {committee_id: committee.id, proposal: {}}
         response.should render_template("new")
       end
     end

@@ -292,7 +292,7 @@ describe UserMailer do
 
     it "uses bcc for all committee members" do
       mail.subject.should eq("Some Subject")
-      mail.bcc.should eq([@user.email, @other_cm_user.email])
+      mail.bcc.should match_array([@user.email, @other_cm_user.email])
     end
     it "sends e-mail even when the user is set to 'no-email'" do
       @user3 = FactoryGirl.create(:user, :no_emails => true)

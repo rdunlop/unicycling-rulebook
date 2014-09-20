@@ -11,7 +11,7 @@
 #
 
 class Comment < ActiveRecord::Base
-    belongs_to :discussion
+    belongs_to :discussion, touch: true
     belongs_to :user
 
     validates :discussion, :presence => true

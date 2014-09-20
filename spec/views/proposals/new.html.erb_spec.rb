@@ -2,9 +2,8 @@ require 'spec_helper'
 
 describe "proposals/new" do
   before(:each) do
-    @proposal = FactoryGirl.create(:proposal)
-    @revision = FactoryGirl.create(:revision, :proposal => @proposal)
-    @committees = [FactoryGirl.create(:committee)]
+    @proposal = FactoryGirl.build_stubbed(:proposal)
+    @revision = FactoryGirl.build_stubbed(:revision, :proposal => @proposal)
   end
 
   it "renders new proposal form" do
@@ -12,7 +11,6 @@ describe "proposals/new" do
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "form", :action => proposals_path, :method => "post" do
-      assert_select "select#proposal_committee_id", :name => "proposal[committee_id]"
       assert_select "input#proposal_title", :name => "proposal[title]"
 
       assert_select "textarea#revision_body", :name => "revision[body]"

@@ -5,6 +5,7 @@ describe "welcome/index" do
     @ability = Object.new
     @ability.extend(CanCan::Ability)
     controller.stub(:current_ability) { @ability }
+    @config = AppConfig.new
   end
 
 
