@@ -1,9 +1,9 @@
 class DiscussionsController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource :committee, except: :show
+  load_and_authorize_resource :committee, except: [:show, :close]
   before_action :load_new_discussion, only: :create
-  load_and_authorize_resource through: :committee, except: :show
-  load_and_authorize_resource only: :show
+  load_and_authorize_resource through: :committee, except: [:show, :close]
+  load_and_authorize_resource only: [:show, :close]
 
   # GET /discussions/1
   def show
@@ -33,6 +33,16 @@ class DiscussionsController < ApplicationController
         format.html { redirect_to [@discussion], notice: 'Discussion was successfully created.' }
       else
         format.html { render action: "new" }
+      end
+    end
+  end
+
+  def close
+    respond_to do |format|
+      if @discussion.close
+        format.html { redirect_to @discussion, notice: "Discussion has been closed." }
+      else
+        format.html { render action: "show" }
       end
     end
   end

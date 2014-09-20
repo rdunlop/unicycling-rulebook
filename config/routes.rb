@@ -16,7 +16,8 @@ Rulebook::Application.routes.draw do
     resources :revisions, :except => [:edit, :index, :put, :destroy]
   end
 
-  resources :discussions, only: [] do
+  resources :discussions, only: [:show] do
+    put :close, on: :member
    resources :comments, :only => [:create]
   end
 
@@ -28,8 +29,6 @@ Rulebook::Application.routes.draw do
     resources :discussions, only: [:index, :create, :new]
     resources :proposals, only: [:new, :create]
   end
-
-  resources :discussions, only: [:show]
 
   devise_for :users
 

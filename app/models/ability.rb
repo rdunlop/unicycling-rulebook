@@ -41,6 +41,10 @@ class Ability
       can :send, Message
     end
 
+    can :close, Discussion do |discussion|
+      discussion.active? && discussion.owner == user
+    end
+
     can :send, Message if user.is_committee_admin(nil)
 
     can :read, Discussion

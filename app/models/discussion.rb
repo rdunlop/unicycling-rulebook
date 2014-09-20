@@ -30,13 +30,21 @@ class Discussion < ActiveRecord::Base
     where(proposal: nil)
   end
 
+  def active?
+    status == "active"
+  end
+
   def is_open_for_comments?
-    status == "active" && proposal_commentable?
+    active? && proposal_commentable?
   end
 
   def proposal_commentable?
     return true if proposal.nil?
     proposal.is_open_for_comments?
+  end
+
+  def close
+    update!(status: "closed")
   end
 
   # this will change as the discussion becomes a proposal

@@ -6,6 +6,8 @@
   %div
     This discussion has an associated proposal.
     = link_to "View Proposal Details here", proposal_path(@discussion.proposal)
+- if can? :close, @discussion
+  = link_to "Close this discussion", close_discussion_path(@discussion), method: :put, data: { confirm: "This will prevent future comments and proposals based on this discussion. Continue?" }
 %hr
 %h3 Comments about this discussion:
 - @discussion.comments.each do |comment|
