@@ -17,9 +17,7 @@ class ApplicationController < ActionController::Base
   before_filter :load_config
 
   def load_config
-    if AppConfig.count > 0
-      @config = AppConfig.first
-    end
+    @config = AppConfig.first || AppConfig.new
   end
 
   def current_ablity

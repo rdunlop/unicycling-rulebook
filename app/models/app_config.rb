@@ -17,8 +17,16 @@ class AppConfig < ActiveRecord::Base
   validate :only_one_model_allowed
 
   def only_one_model_allowed
-    if self.new_record? and AppConfig.all.count > 0
+    if self.new_record? && AppConfig.all.count > 0
       errors[:base] << "Only a single App Config may exist"
     end
+  end
+
+  def rulebook
+    rulebook_name || "Generic IUF Rulebook"
+  end
+
+  def copyright_description
+    copyright || "#{Date.today.year} International Unicycling Federation"
   end
 end

@@ -1,7 +1,7 @@
-- if not @config.nil?
-  %h1
-    Welcome to the #{@config.rulebook_name}
-  = raw(@config.front_page)
+%h1
+  Welcome to the #{@config.rulebook_name}
+- if @config.front_page.present?
+  = @config.front_page.html_safe
 - else
   = render "default_welcome"
 

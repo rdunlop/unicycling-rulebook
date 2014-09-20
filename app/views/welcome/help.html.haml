@@ -1,6 +1,6 @@
 %h1 Frequently Asked Questions
-- if not @config.nil? and not @config.faq.blank?
-  = raw @config.faq
+- if @config.faq.present?
+  = @config.faq.html_safe
 - else
   %p
     If you have a question that's not already answered below about this web application and how this committee is being ran, please email
