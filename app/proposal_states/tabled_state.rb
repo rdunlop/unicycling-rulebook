@@ -11,8 +11,9 @@ class TabledState < BaseState
     "Set-Aside (Reviewed from " + review_start_date.to_date.to_s(:long) + " to " + review_end_date.to_date.to_s(:long) + ")"
   end
 
+  can_transition_to "Review"
+
   def on_enter
-    proposal.status = "Tabled"
     proposal.tabled_date = Date.today()
   end
 

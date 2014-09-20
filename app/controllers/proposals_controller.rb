@@ -112,17 +112,8 @@ class ProposalsController < ApplicationController
   def set_voting
     @proposal = Proposal.find(params[:id])
 
-    if @proposal.status == "Pre-Voting"
-      proceed = true
-    else
-      proceed = false
-    end
-    @proposal.status = "Voting"
-    @proposal.vote_start_date = Date.today()
-    @proposal.vote_end_date = @proposal.vote_start_date.next_day(7)
-
     respond_to do |format|
-      if proceed and @proposal.save
+      if @proposal.transition_to("Voting")
         UserMailer.proposal_call_for_voting(@proposal).deliver
         format.html { redirect_to @proposal, notice: 'Proposal is now in the voting stage.' }
         format.json { head :no_content }
@@ -138,17 +129,9 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.find(params[:id])
 
     was_tabled = @proposal.status == 'Tabled'
-    if (@proposal.status == "Submitted") or (@proposal.status == "Tabled")
-      proceed = true
-    else
-      proceed = false
-    end
-    @proposal.status = "Review"
-    @proposal.review_start_date = Date.today()
-    @proposal.review_end_date = @proposal.review_start_date.next_day(10)
 
     respond_to do |format|
-      if proceed and @proposal.save
+      if @proposal.transition_to("Review")
         UserMailer.proposal_status_review(@proposal, was_tabled).deliver
         format.html { redirect_to @proposal, notice: 'Proposal is now in the review stage.' }
         format.json { head :no_content }
@@ -163,16 +146,9 @@ class ProposalsController < ApplicationController
   def set_pre_voting
     @proposal = Proposal.find(params[:id])
 
-    if (@proposal.status == "Voting")
-      proceed = true
-      @proposal.votes.delete_all
-    else
-      proceed = false
-    end
-    @proposal.status = "Pre-Voting"
-
     respond_to do |format|
-      if proceed && @proposal.save
+      if @proposal.transition_to("Pre-Voting")
+        @proposal.votes.delete_all
         format.html { redirect_to @proposal, notice: 'Proposal is now in the Pre-Voting stage. All votes have been deleted' }
         format.json { head :no_content }
       else

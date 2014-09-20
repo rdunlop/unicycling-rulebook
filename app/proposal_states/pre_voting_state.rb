@@ -8,6 +8,7 @@ class PreVotingState < BaseState
   end
 
   can_transition_to "Tabled"
+  can_transition_to "Voting"
 
   def state_name
     "Pre-Voting"

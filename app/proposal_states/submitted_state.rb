@@ -7,6 +7,8 @@ class SubmittedState < BaseState
     "Submitted"
   end
 
+  can_transition_to "Review"
+
   def state_name
     "Submitted"
   end
