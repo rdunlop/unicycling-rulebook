@@ -16,6 +16,6 @@
       %td= app_config.copyright
       %td= link_to 'Show', app_config
       %td= link_to 'Edit', edit_app_config_path(app_config)
-      %td= link_to 'Destroy', app_config, confirm: 'Are you sure?', method: :delete
+      %td= link_to 'Destroy', app_config, data: { confirm: 'Are you sure?' }, method: :delete
 %br
 = link_to 'New App config', new_app_config_path

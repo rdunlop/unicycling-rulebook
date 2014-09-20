@@ -1,8 +1,6 @@
 .left_nav
   %ul
     %li= link_to('Home', welcome_index_path)
-    - if can? :create, Proposal
-      %li= link_to('Submit Proposal', new_proposal_path)
     %li= link_to('FAQ', welcome_help_path)
     - if can? :membership, Committee
       %li= link_to('Members', membership_committees_path)

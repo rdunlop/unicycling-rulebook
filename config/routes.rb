@@ -2,7 +2,7 @@ Rulebook::Application.routes.draw do
 
   resources :app_configs
 
-  resources :proposals, :except => [:index] do
+  resources :proposals, :except => [:index, :new, :create] do
     collection do
       get 'passed'
     end

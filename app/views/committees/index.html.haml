@@ -18,7 +18,7 @@
           = link_to 'Edit', edit_committee_path(committee)
       %td
         - if can? :destroy, committee
-          = link_to 'Destroy', committee, confirm: 'Are you sure?', method: :delete
+          = link_to 'Destroy', committee, data: {confirm: 'Are you sure?'}, method: :delete
 %br
 - if can? :create, Committee
   = link_to 'New Committee', new_committee_path

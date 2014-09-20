@@ -44,6 +44,7 @@ class Discussion < ActiveRecord::Base
   end
 
   def close
+    return false if proposal.present?
     update!(status: "closed")
   end
 

@@ -11,6 +11,6 @@
       %td= vote.user
       %td= vote.vote
       %td= link_to 'Edit', edit_proposal_vote_path(@proposal, vote)
-      %td= link_to 'Destroy', [@proposal, vote], confirm: 'Are you sure?', method: :delete
+      %td= link_to 'Destroy', [@proposal, vote], data: {confirm: 'Are you sure?'}, method: :delete
 %br
 = link_to 'New Vote', new_proposal_vote_path(@proposal)

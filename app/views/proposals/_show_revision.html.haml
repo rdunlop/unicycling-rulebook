@@ -32,7 +32,7 @@ on #{@proposal.submit_date}
   - elsif @proposal.status == 'Voting'
     = link_to('Modify Votes', proposal_votes_path(@proposal))
     |
-    \#{link_to('Change Back to Pre-Voting', set_pre_voting_proposal_path(@proposal), :method => :put, confirm: 'Doing this will remove all votes and revert the proposal back to Pre-Voting. (You MUST change the Dates too, or else it will move back to Voting again tonight)')}
+    \#{link_to('Change Back to Pre-Voting', set_pre_voting_proposal_path(@proposal), :method => :put, data: { confirm: 'Doing this will remove all votes and revert the proposal back to Pre-Voting. (You MUST change the Dates too, or else it will move back to Voting again tonight)' } )}
     |
   - if can? :edit, @proposal
     = link_to('Modify Proposal Title/Committee/Status/Dates', edit_proposal_path(@proposal))
