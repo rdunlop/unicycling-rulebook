@@ -186,16 +186,8 @@ class ProposalsController < ApplicationController
   def table
     @proposal = Proposal.find(params[:id])
 
-    if (@proposal.status == "Pre-Voting" or @proposal.status == "Review")
-      proceed = true
-    else
-      proceed = false
-    end
-    @proposal.status = "Tabled"
-    @proposal.tabled_date = Date.today()
-
     respond_to do |format|
-      if proceed and @proposal.save
+      if @proposal.transition_to("Tabled")
         format.html { redirect_to @proposal, notice: 'Proposal has been Set-Aside' }
         format.json { head :no_content }
       else

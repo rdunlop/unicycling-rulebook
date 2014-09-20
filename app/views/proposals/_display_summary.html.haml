@@ -26,5 +26,5 @@
         %i= p.status_summary
       %strong.status_message= p.vote_detail(votes)
       %small
-        Last revision/comment: #{distance_of_time_in_words(Time.now, p.last_update_time)} ago
+        Last revision/comment: #{distance_of_time_in_words(Time.now, p.updated_at)} ago
   %hr

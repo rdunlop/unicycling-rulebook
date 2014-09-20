@@ -81,8 +81,10 @@ class Proposal < ActiveRecord::Base
     state.is_open_for_comments?
   end
 
+  delegate :transition_to, to: :state
+
   def state
-    class_name = "#{status.underscore.classify}State".constantize
+    class_name = BaseState.get_state(status)
     class_name.new(self)
   end
 
@@ -155,16 +157,6 @@ public
 
   def status_string
     state.status_string
-  end
-
-  def last_update_time
-    last_time = self.latest_revision.created_at
-    if self.discussion
-      if last_time < discussion.last_update_time
-        last_time = discussion.last_update_time
-      end
-    end
-    last_time
   end
 
   def to_s

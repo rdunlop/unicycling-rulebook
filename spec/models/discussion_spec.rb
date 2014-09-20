@@ -38,18 +38,4 @@ describe Proposal do
 
     discussion.reload.comments.should == [comment1, comment2, comment3]
   end
-
-  describe "when checking the last_update_time" do
-    before(:each) do
-        @discussion = FactoryGirl.create(:discussion, created_at: 3.days.ago)
-    end
-    it "describes when the proposal was last revised" do
-      @discussion.last_update_time.should == @discussion.created_at
-    end
-    it "describes when the latest comment was added" do
-      @comment = FactoryGirl.create(:comment, discussion: @discussion, :created_at => 30.minutes.ago)
-      @comment.reload
-      @discussion.last_update_time.should == @comment.created_at
-    end
-  end
 end

@@ -10,4 +10,8 @@ class FailedState < BaseState
   def status_string
     "Failed on " + vote_end_date.to_date.to_s(:long)
   end
+
+  def state_name
+    "Failed"
+  end
 end

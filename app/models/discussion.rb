@@ -15,7 +15,7 @@
 
 class Discussion < ActiveRecord::Base
   belongs_to :owner, :class_name => "User"
-  belongs_to :proposal
+  belongs_to :proposal, touch: true
   belongs_to :committee
   has_many :comments, -> { order("created_at ASC") }
 
@@ -39,17 +39,6 @@ class Discussion < ActiveRecord::Base
   def proposal_commentable?
     return true if proposal.nil?
     proposal.is_open_for_comments?
-  end
-
-  def last_update_time
-    last_time = self.created_at
-    if self.comments.count > 0
-      last_comment = self.comments.last
-      if last_time < last_comment.created_at
-        last_time = last_comment.created_at
-      end
-    end
-    last_time
   end
 
   # this will change as the discussion becomes a proposal

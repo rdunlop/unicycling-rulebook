@@ -10,4 +10,8 @@ class PassedState < BaseState
   def status_string
     "Passed on " + vote_end_date.to_date.to_s(:long)
   end
+
+  def state_name
+    "Passed"
+  end
 end
