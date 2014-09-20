@@ -77,6 +77,10 @@ class Proposal < ActiveRecord::Base
         x.count
     end
 
+    def is_open_for_comments?
+        true
+    end
+
 public
     def all_voting_members_voted
         self.number_of_voting_members == self.votes.count

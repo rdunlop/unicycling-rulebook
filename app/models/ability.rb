@@ -47,7 +47,7 @@ class Ability
 
     # Can only create comments if I am in the committee
     can :create, Comment do |comment|
-      user.is_in_committee(comment.discussion.committee)
+      user.is_in_committee(comment.discussion.committee) && comment.discussion.is_open_for_comments?
     end
 
     # Only voting members can vote
