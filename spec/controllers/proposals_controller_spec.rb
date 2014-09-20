@@ -299,17 +299,18 @@ describe ProposalsController do
   end
 
   describe "DELETE destroy" do
+    let(:committee) { FactoryGirl.create(:committee) }
     it "destroys the requested proposal" do
-      proposal = FactoryGirl.create(:proposal)
+      proposal = FactoryGirl.create(:proposal, committee: committee)
       expect {
         delete :destroy, {:id => proposal.to_param}
       }.to change(Proposal, :count).by(-1)
     end
 
     it "redirects to the proposals list" do
-      proposal = FactoryGirl.create(:proposal)
+      proposal = FactoryGirl.create(:proposal, committee: committee)
       delete :destroy, {:id => proposal.to_param}
-      response.should redirect_to(proposals_url)
+      response.should redirect_to(committee_path(committee))
     end
   end
 

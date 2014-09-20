@@ -100,10 +100,11 @@ class ProposalsController < ApplicationController
   # DELETE /proposals/1.json
   def destroy
     @proposal = Proposal.find(params[:id])
+    committee = @proposal.committee
     @proposal.destroy
 
     respond_to do |format|
-      format.html { redirect_to proposals_url }
+      format.html { redirect_to committee_path(committee) }
       format.json { head :no_content }
     end
   end
