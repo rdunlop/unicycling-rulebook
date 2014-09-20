@@ -83,7 +83,7 @@ class Proposal < ActiveRecord::Base
 
   def state
     class_name = "#{status.underscore.classify}State".constantize
-    class_name.new
+    class_name.new(self)
   end
 
   def all_voting_members_voted
@@ -141,21 +141,7 @@ public
   end
 
   def status_summary
-    if self.status == 'Submitted'
-      ""
-    elsif self.status == 'Review'
-      "Ends " + self.review_end_date.to_date.to_s(:long)
-    elsif status == 'Pre-Voting'
-      "Ended " + self.review_end_date.to_date.to_s(:long)
-    elsif status == 'Voting'
-      "Ends " + self.vote_end_date.to_date.to_s(:long)
-    elsif status == 'Tabled'
-      "" + self.tabled_date.to_date.to_s(:long)
-    elsif status == 'Passed'
-      "" + self.vote_end_date.to_date.to_s(:long)
-    elsif status == 'Failed'
-      "" + self.vote_end_date.to_date.to_s(:long)
-    end
+    state.status_summary
   end
 
   def vote_detail(user_votes)
@@ -168,21 +154,7 @@ public
   end
 
   def status_string
-    if self.status == 'Submitted'
-      "Submitted"
-    elsif self.status == 'Review'
-      "Review from " + self.review_start_date.to_date.to_s(:long) + " to " + self.review_end_date.to_date.to_s(:long)
-    elsif status == 'Pre-Voting'
-      "Pre-Voting (Reviewed from " + self.review_start_date.to_date.to_s(:long) + " to " + self.review_end_date.to_date.to_s(:long) + ")"
-    elsif status == 'Voting'
-      "Voting from " + self.vote_start_date.to_date.to_s(:long) + " to " + self.vote_end_date.to_date.to_s(:long)
-    elsif status == 'Tabled'
-      "Set-Aside (Reviewed from " + self.review_start_date.to_date.to_s(:long) + " to " + self.review_end_date.to_date.to_s(:long) + ")"
-    elsif status == 'Passed'
-      "Passed on " + self.vote_end_date.to_date.to_s(:long)
-    elsif status == 'Failed'
-      "Failed on " + self.vote_end_date.to_date.to_s(:long)
-    end
+    state.status_string
   end
 
   def last_update_time
