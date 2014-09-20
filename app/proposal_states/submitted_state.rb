@@ -1,0 +1,2 @@
+class SubmittedState < BaseState
+end

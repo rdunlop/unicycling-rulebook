@@ -1,0 +1,2 @@
+class ReviewState < BaseState
+end

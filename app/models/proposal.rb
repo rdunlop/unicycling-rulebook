@@ -78,10 +78,14 @@ class Proposal < ActiveRecord::Base
   end
 
   def is_open_for_comments?
-    true
+    state.is_open_for_comments?
   end
 
-public
+  def state
+    class_name = "#{status.underscore.classify}State".constantize
+    class_name.new
+  end
+
   def all_voting_members_voted
     self.number_of_voting_members == self.votes.count
   end
