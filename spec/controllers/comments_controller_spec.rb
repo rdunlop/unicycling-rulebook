@@ -68,7 +68,7 @@ describe CommentsController do
       it "assigns a newly created but unsaved comment as @comment" do
         # Trigger the behavior that occurs when invalid params are submitted
         Comment.any_instance.stub(:save).and_return(false)
-        post :create, {:comment => {}, discussion_id: @discussion.id }
+        post :create, {:comment => {comment: "None"}, discussion_id: @discussion.id }
         assigns(:comment).should be_a_new(Comment)
       end
 

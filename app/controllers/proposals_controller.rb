@@ -58,9 +58,9 @@ class ProposalsController < ApplicationController
 
   # POST /committees/2/proposals
   def create
-    @proposal = Proposal.new(params[:proposal])
+    @proposal = Proposal.new(proposal_params)
     @proposal.committee = @committee
-    @revision = Revision.new(params[:revision])
+    @revision = Revision.new(revision_params)
 
     @discussion = Discussion.find(params[:discussion_id]) if params[:discussion_id].present?
 
@@ -86,7 +86,7 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.find(params[:id])
 
     respond_to do |format|
-      if @proposal.update_attributes(params[:proposal])
+      if @proposal.update_attributes(update_params)
         format.html { redirect_to @proposal, notice: 'Proposal was successfully updated.' }
         format.json { head :no_content }
       else
@@ -180,4 +180,18 @@ class ProposalsController < ApplicationController
   def load_committee
     @committee = Committee.find(params[:committee_id])
   end
+
+  def proposal_params
+    params.require(:proposal).permit(:title)
+  end
+
+  def update_params
+    params.require(:proposal).permit(:title, :committee_id, :status, :review_start_date, :review_end_date, :vote_start_date, :vote_end_date, :tabled_date)
+  end
+
+  # XXX should be in revision-controller?
+  def revision_params
+    params.require(:revision).permit(:rule_text, :body, :change_description, :background, :references)
+  end
+
 end

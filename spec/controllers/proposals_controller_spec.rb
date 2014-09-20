@@ -193,15 +193,15 @@ describe ProposalsController do
     describe "with invalid params" do
       it "assigns a newly created but unsaved proposal as @proposal" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Proposal.any_instance.stub(:save).and_return(false)
-        post :create, {committee_id: committee.id, proposal: {}}
+        Proposal.any_instance.stub(:valid?).and_return(false)
+        post :create, {committee_id: committee.id, proposal: {title: 'the prop'}, revision: {body: 'fake'}}
         assigns(:proposal).should be_a_new(Proposal)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Proposal.any_instance.stub(:save).and_return(false)
-        post :create, {committee_id: committee.id, proposal: {}}
+        Proposal.any_instance.stub(:valid?).and_return(false)
+        post :create, {committee_id: committee.id, proposal: {title: 'the prop'}, revision: {body: 'fake'}}
         response.should render_template("new")
       end
     end
@@ -215,7 +215,7 @@ describe ProposalsController do
         # specifies that the Proposal created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Proposal.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        Proposal.any_instance.should_receive(:update_attributes).with({})
         put :update, {:id => proposal.to_param, :proposal => {'these' => 'params'}}
       end
       it "can update all of the fields" do
@@ -271,7 +271,7 @@ describe ProposalsController do
         proposal = FactoryGirl.create(:proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         Proposal.any_instance.stub(:save).and_return(false)
-        put :update, {:id => proposal.to_param, :proposal => {}}
+        put :update, {:id => proposal.to_param, :proposal => {title: 'the prop'}}
         assigns(:proposal).should eq(proposal)
       end
 
@@ -279,7 +279,7 @@ describe ProposalsController do
         proposal = FactoryGirl.create(:proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         Proposal.any_instance.stub(:save).and_return(false)
-        put :update, {:id => proposal.to_param, :proposal => {}}
+        put :update, {:id => proposal.to_param, :proposal => {title: 'the prop'}}
         response.should render_template("edit")
       end
     end

@@ -47,8 +47,6 @@ class CommitteesController < ApplicationController
   # POST /committees
   # POST /committees.json
   def create
-    @committee = Committee.new(params[:committee])
-
     respond_to do |format|
       if @committee.save
         format.html { redirect_to committees_path, notice: 'Committee was successfully created.' }
@@ -66,7 +64,7 @@ class CommitteesController < ApplicationController
     @committee = Committee.find(params[:id])
 
     respond_to do |format|
-      if @committee.update_attributes(params[:committee])
+      if @committee.update_attributes(committee_params)
         format.html { redirect_to committees_path, notice: 'Committee was successfully updated.' }
         format.json { head :no_content }
       else
@@ -91,5 +89,11 @@ class CommitteesController < ApplicationController
   def membership
     #@committees = Committee.all
     @users = User.all
+  end
+
+  private
+
+  def committee_params
+    params.require(:committee).permit(:name, :preliminary)
   end
 end

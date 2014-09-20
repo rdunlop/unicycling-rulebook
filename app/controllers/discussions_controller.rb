@@ -40,9 +40,13 @@ class DiscussionsController < ApplicationController
   private
 
   def load_new_discussion
-    @discussion = Discussion.new(params[:discussion])
+    @discussion = Discussion.new(discussion_params)
     @discussion.committee = @committee
     @discussion.owner = current_user
     @discussion.status = "active"
+  end
+
+  def discussion_params
+    params.require(:discussion).permit(:title, :body)
   end
 end

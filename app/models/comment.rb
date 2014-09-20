@@ -18,8 +18,6 @@ class Comment < ActiveRecord::Base
     validates :user, :presence => true
     validates :comment, :presence => true
 
-    attr_accessible :comment
-
     def proposal
       discussion.proposal
     end

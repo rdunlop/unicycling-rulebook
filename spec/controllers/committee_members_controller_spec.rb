@@ -36,7 +36,7 @@ describe CommitteeMembersController do
       voting: true
     }
   end
-  
+
   describe "GET index" do
     it "fails when not logged in" do
       sign_out @user
@@ -180,23 +180,23 @@ describe CommitteeMembersController do
       it "assigns a newly created but unsaved committee_member as @committee_member" do
         # Trigger the behavior that occurs when invalid params are submitted
         CommitteeMember.any_instance.stub(:save).and_return(false)
-        post :create, {:committee_member => {}, :committee_id => @committee.id}
+        post :create, {:committee_member => {admin: true}, :committee_id => @committee.id}
         assigns(:committee_member).should be_a_new(CommitteeMember)
       end
       it "loads the list of users" do
         CommitteeMember.any_instance.stub(:save).and_return(false)
-        post :create, {:committee_member => {}, :committee_id => @committee.id}
+        post :create, {:committee_member => {admin: true}, :committee_id => @committee.id}
         assigns(:users).should =~ [@user, @admin_user]
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         CommitteeMember.any_instance.stub(:save).and_return(false)
-        post :create, {:committee_member => {}, :committee_id => @committee.id}
+        post :create, {:committee_member => {admin: true}, :committee_id => @committee.id}
         response.should render_template("new")
       end
     end
-    
+
     describe "with non-admin user" do
     before (:each) do
       sign_out @admin_user
@@ -221,7 +221,7 @@ describe CommitteeMembersController do
         # specifies that the CommitteeMember created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        CommitteeMember.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        CommitteeMember.any_instance.should_receive(:update_attributes).with({})
         put :update, {:id => committee_member.to_param, :committee_member => {'these' => 'params'}, :committee_id => @committee.id}
       end
 
@@ -250,7 +250,7 @@ describe CommitteeMembersController do
         committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         # Trigger the behavior that occurs when invalid params are submitted
         CommitteeMember.any_instance.stub(:save).and_return(false)
-        put :update, {:id => committee_member.to_param, :committee_member => {}, :committee_id => @committee.id}
+        put :update, {:id => committee_member.to_param, :committee_member => {admin: true}, :committee_id => @committee.id}
         assigns(:committee_member).should eq(committee_member)
       end
 
@@ -258,7 +258,7 @@ describe CommitteeMembersController do
         committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         # Trigger the behavior that occurs when invalid params are submitted
         CommitteeMember.any_instance.stub(:save).and_return(false)
-        put :update, {:id => committee_member.to_param, :committee_member => {}, :committee_id => @committee.id}
+        put :update, {:id => committee_member.to_param, :committee_member => {admin: true}, :committee_id => @committee.id}
         response.should render_template("edit")
       end
     end

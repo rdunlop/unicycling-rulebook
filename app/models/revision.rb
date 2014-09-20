@@ -22,8 +22,6 @@ class Revision < ActiveRecord::Base
     validates :body, :presence => true
     validate :change_description_required_for_updates
 
-    attr_accessible :rule_text, :body, :change_description, :background, :references
-
     before_validation :determine_num
 
     def determine_num

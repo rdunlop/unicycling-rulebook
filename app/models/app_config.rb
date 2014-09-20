@@ -12,8 +12,6 @@
 #
 
 class AppConfig < ActiveRecord::Base
-  attr_accessible :rulebook_name, :front_page, :faq, :copyright
-
   validate :only_one_model_allowed
 
   def only_one_model_allowed

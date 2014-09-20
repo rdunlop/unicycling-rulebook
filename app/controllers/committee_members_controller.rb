@@ -76,7 +76,7 @@ class CommitteeMembersController < ApplicationController
     @committee_member = CommitteeMember.find(params[:id])
 
     respond_to do |format|
-      if @committee_member.update_attributes(params[:committee_member])
+      if @committee_member.update_attributes(committee_member_params)
         format.html { redirect_to committee_committee_members_path(@committee), notice: 'Committee member was successfully updated.' }
         format.json { head :no_content }
       else
@@ -96,5 +96,11 @@ class CommitteeMembersController < ApplicationController
       format.html { redirect_to committee_committee_members_url(@committee) }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def committee_member_params
+    params.require(:committee_member).permit(:user_id, :committee_id, :voting, :admin, :editor)
   end
 end

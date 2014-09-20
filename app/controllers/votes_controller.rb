@@ -33,7 +33,6 @@ class VotesController < ApplicationController
   # POST /votes
   # POST /votes.json
   def create
-    @vote = Vote.new(params[:vote])
     @vote.proposal = @proposal
     @vote.user = current_user
     @comment = @proposal.comments.new
@@ -58,7 +57,7 @@ class VotesController < ApplicationController
     previous_value = @vote.vote
 
     respond_to do |format|
-      if @vote.update_attributes(params[:vote])
+      if @vote.update_attributes(vote_params)
         UserMailer.vote_changed(@vote.proposal, current_user, previous_value, @vote.vote).deliver
         format.html { redirect_to [@proposal, @vote], notice: 'Vote was successfully updated.' }
         format.json { head :no_content }
@@ -79,5 +78,11 @@ class VotesController < ApplicationController
       format.html { redirect_to proposal_url(@proposal) }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def vote_params
+    params.require(:vote).permit(:vote, :comment)
   end
 end

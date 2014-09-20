@@ -12,9 +12,6 @@ gem 'devise'
 gem 'cancancan', '~> 1.7'
 gem 'exception_notification'
 
-# until we do new-style attributes
-gem 'protected_attributes'
-
 #gem 'sqlite3'
 gem 'pg'
 gem 'haml'

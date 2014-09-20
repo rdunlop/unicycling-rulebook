@@ -22,8 +22,6 @@ class Discussion < ActiveRecord::Base
   validates :owner, :title, :committee, :presence => true
   validates :status, :inclusion => { :in => [ 'active', 'closed' ] }
 
-  attr_accessible :title, :body, :owner_id, :proposal_id, :status
-
   def self.reverse_chronological
     order(updated_at: :desc)
   end

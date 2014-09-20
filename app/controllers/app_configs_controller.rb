@@ -27,8 +27,6 @@ class AppConfigsController < ApplicationController
   # GET /app_configs/new
   # GET /app_configs/new.json
   def new
-    @app_config = AppConfig.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @app_config }
@@ -43,8 +41,6 @@ class AppConfigsController < ApplicationController
   # POST /app_configs
   # POST /app_configs.json
   def create
-    @app_config = AppConfig.new(params[:app_config])
-
     respond_to do |format|
       if @app_config.save
         format.html { redirect_to @app_config, notice: 'App config was successfully created.' }
@@ -62,7 +58,7 @@ class AppConfigsController < ApplicationController
     @app_config = AppConfig.find(params[:id])
 
     respond_to do |format|
-      if @app_config.update_attributes(params[:app_config])
+      if @app_config.update_attributes(app_config_params)
         format.html { redirect_to @app_config, notice: 'App config was successfully updated.' }
         format.json { head :no_content }
       else
@@ -82,5 +78,11 @@ class AppConfigsController < ApplicationController
       format.html { redirect_to app_configs_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def app_config_params
+    params.require(:app_config).permit(:rulebook_name, :front_page, :faq, :copyright)
   end
 end

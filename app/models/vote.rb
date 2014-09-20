@@ -20,8 +20,6 @@ class Vote < ActiveRecord::Base
     validates :user_id, :uniqueness => {:scope => [:proposal_id]}
     validates :vote, :inclusion => { :in => [ 'agree', 'disagree', 'abstain' ] }
 
-    attr_accessible :vote, :comment
-
     def to_s
         if self.new_record?
             return ""

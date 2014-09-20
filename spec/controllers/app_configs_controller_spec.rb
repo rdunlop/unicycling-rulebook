@@ -34,7 +34,7 @@ describe AppConfigsController do
       copyright: "Teh new Copyright"
     }
   end
-  
+
   describe "GET index" do
     it "assigns all app_configs as @app_configs" do
       app_config = AppConfig.create! valid_attributes
@@ -90,14 +90,14 @@ describe AppConfigsController do
       it "assigns a newly created but unsaved app_config as @app_config" do
         # Trigger the behavior that occurs when invalid params are submitted
         AppConfig.any_instance.stub(:save).and_return(false)
-        post :create, {:app_config => {}}
+        post :create, {:app_config => {rulebook_name: 'the book'}}
         assigns(:app_config).should be_a_new(AppConfig)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         AppConfig.any_instance.stub(:save).and_return(false)
-        post :create, {:app_config => {}}
+        post :create, {:app_config => {rulebook_name: 'the book'}}
         response.should render_template("new")
       end
     end
@@ -111,7 +111,7 @@ describe AppConfigsController do
         # specifies that the AppConfig created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        AppConfig.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        AppConfig.any_instance.should_receive(:update_attributes).with({})
         put :update, {:id => app_config.to_param, :app_config => {'these' => 'params'}}
       end
 
@@ -133,7 +133,7 @@ describe AppConfigsController do
         app_config = AppConfig.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         AppConfig.any_instance.stub(:save).and_return(false)
-        put :update, {:id => app_config.to_param, :app_config => {}}
+        put :update, {:id => app_config.to_param, :app_config => {rulebook_name: 'the book'}}
         assigns(:app_config).should eq(app_config)
       end
 
@@ -141,7 +141,7 @@ describe AppConfigsController do
         app_config = AppConfig.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         AppConfig.any_instance.stub(:save).and_return(false)
-        put :update, {:id => app_config.to_param, :app_config => {}}
+        put :update, {:id => app_config.to_param, :app_config => {rulebook_name: 'the book'}}
         response.should render_template("edit")
       end
     end

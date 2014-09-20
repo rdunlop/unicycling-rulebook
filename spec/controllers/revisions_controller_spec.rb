@@ -147,14 +147,14 @@ describe RevisionsController do
       it "assigns a newly created but unsaved revision as @revision" do
         # Trigger the behavior that occurs when invalid params are submitted
         Revision.any_instance.stub(:save).and_return(false)
-        post :create, {:revision => {}, :proposal_id => @proposal.id}
+        post :create, {:revision => {body: 'fake'}, :proposal_id => @proposal.id}
         assigns(:revision).should be_a_new(Revision)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Revision.any_instance.stub(:save).and_return(false)
-        post :create, {:revision => {}, :proposal_id => @proposal.id}
+        post :create, {:revision => {body: 'fake'}, :proposal_id => @proposal.id}
         response.should render_template("new")
       end
     end

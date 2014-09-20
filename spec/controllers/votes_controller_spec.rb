@@ -125,14 +125,14 @@ describe VotesController do
       it "assigns a newly created but unsaved vote as @vote" do
         # Trigger the behavior that occurs when invalid params are submitted
         Vote.any_instance.stub(:save).and_return(false)
-        post :create, {:vote => {}, :proposal_id => @proposal.id}
+        post :create, {:vote => {vote: 'agree'}, :proposal_id => @proposal.id}
         assigns(:vote).should be_a_new(Vote)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Vote.any_instance.stub(:save).and_return(false)
-        post :create, {:vote => {}, :proposal_id => @proposal.id}
+        post :create, {:vote => {vote: 'agree'}, :proposal_id => @proposal.id}
         response.should render_template("proposals/show")
       end
     end
@@ -159,7 +159,7 @@ describe VotesController do
         # specifies that the Vote created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Vote.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        Vote.any_instance.should_receive(:update_attributes).with({})
         put :update, {:id => @vote.to_param, :vote => {'these' => 'params'}, :proposal_id => @proposal.id}
       end
 
@@ -192,7 +192,7 @@ describe VotesController do
         vote = FactoryGirl.create(:vote, :proposal => @proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         Vote.any_instance.stub(:save).and_return(false)
-        put :update, {:id => vote.to_param, :vote => {}, :proposal_id => @proposal.id}
+        put :update, {:id => vote.to_param, :vote => {vote: 'agree'}, :proposal_id => @proposal.id}
         assigns(:vote).should eq(vote)
       end
 
@@ -200,7 +200,7 @@ describe VotesController do
         vote = FactoryGirl.create(:vote, :proposal => @proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         Vote.any_instance.stub(:save).and_return(false)
-        put :update, {:id => vote.to_param, :vote => {}, :proposal_id => @proposal.id}
+        put :update, {:id => vote.to_param, :vote => {vote: 'agree'}, :proposal_id => @proposal.id}
         response.should render_template("edit")
       end
     end

@@ -140,14 +140,14 @@ describe CommitteesController do
       it "assigns a newly created but unsaved committee as @committee" do
         # Trigger the behavior that occurs when invalid params are submitted
         Committee.any_instance.stub(:save).and_return(false)
-        post :create, {:committee => {}}
+        post :create, {:committee => {name: 'fake'}}
         assigns(:committee).should be_a_new(Committee)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Committee.any_instance.stub(:save).and_return(false)
-        post :create, {:committee => {}}
+        post :create, {:committee => {name: 'fake'}}
         response.should render_template("new")
       end
     end
@@ -176,7 +176,7 @@ describe CommitteesController do
         # specifies that the Committee created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Committee.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        Committee.any_instance.should_receive(:update_attributes).with({})
         put :update, {:id => committee.to_param, :committee => {'these' => 'params'}}
       end
 
@@ -198,7 +198,7 @@ describe CommitteesController do
         committee = Committee.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Committee.any_instance.stub(:save).and_return(false)
-        put :update, {:id => committee.to_param, :committee => {}}
+        put :update, {:id => committee.to_param, :committee => {name: 'fake'}}
         assigns(:committee).should eq(committee)
       end
 
@@ -206,7 +206,7 @@ describe CommitteesController do
         committee = Committee.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Committee.any_instance.stub(:save).and_return(false)
-        put :update, {:id => committee.to_param, :committee => {}}
+        put :update, {:id => committee.to_param, :committee => {name: 'fake'}}
         response.should render_template("edit")
       end
     end

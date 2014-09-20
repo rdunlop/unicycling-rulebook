@@ -34,7 +34,6 @@ class RevisionsController < ApplicationController
   # POST /revisions
   # POST /revisions.json
   def create
-    @revision = Revision.new(params[:revision])
     @revision.proposal = @proposal
     @revision.user = current_user
     authorize! :revise, @proposal
@@ -57,4 +56,9 @@ class RevisionsController < ApplicationController
     end
   end
 
+  private
+
+  def revision_params
+    params.require(:revision).permit(:rule_text, :body, :change_description, :background, :references)
+  end
 end

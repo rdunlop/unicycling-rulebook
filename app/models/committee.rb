@@ -16,8 +16,6 @@ class Committee < ActiveRecord::Base
   has_many :proposals
   has_many :discussions
 
-  attr_accessible :name, :preliminary
-
   after_initialize :init
 
   scope :ordered, -> { order("preliminary, name") }
