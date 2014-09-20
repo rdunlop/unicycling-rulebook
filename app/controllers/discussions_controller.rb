@@ -11,6 +11,9 @@ class DiscussionsController < ApplicationController
       @comment = @discussion.comments.new
     end
 
+    add_breadcrumb @discussion.committee, committee_path(@discussion.committee)
+    add_breadcrumb @discussion.title
+
     respond_to do |format|
       format.html # show.html.erb
     end

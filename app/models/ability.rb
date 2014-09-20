@@ -59,7 +59,9 @@ class Ability
     end
 
     # You must be in a committee in order to be able to create a Proposal
-    can :create, Proposal if user.accessible_committees.count > 0
+    can :create_proposal, Committee do |committee|
+      user.is_in_committee(committee)
+    end
 
     # only allow people to see the usernames if they are in the committee
     can :read_usernames, Proposal do |proposal|

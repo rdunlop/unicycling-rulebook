@@ -26,6 +26,7 @@ Rulebook::Application.routes.draw do
     end
     resources :committee_members, :except => [:show]
     resources :discussions, only: [:index, :create, :new]
+    resources :proposals, only: [:new, :create]
   end
 
   resources :discussions, only: [:show]

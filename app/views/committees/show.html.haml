@@ -1,24 +1,24 @@
 %h2 Committee: #{@committee}
 %hr
+Please create and participate in discussions.
+%br
 %h2 Discussions
 %ul
-  - @committee.discussions.each do |discussion|
+  - @committee.discussions.reverse_chronological.each do |discussion|
     %li
-      = link_to discussion.title, discussion_path(discussion)
+      = link_to discussion.display_title, discussion_path(discussion)
       Last updated #{discussion.updated_at}
-= link_to "New Discussion", new_committee_discussion_path(@committee)
-%hr
+= link_to "New Discussion", new_committee_discussion_path(@committee), class: "primary_button"
+- if can? :create_proposal, @committee
+  = link_to "New Proposal", new_committee_proposal_path(@committee), class: "secondary_button"
 
-- if @proposals.empty?
-  %h2
-    No proposals exist yet
-    - if can? :create, Proposal
-      , but a #{link_to('new proposal', new_proposal_path)} can be created.,
-- else
-  = render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Submitted', :header => 'New Unapproved Proposals:', :status_text => '', :votes => @user_votes}
-  = render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Review', :header => 'Proposals for Review:', :status_text => 'These proposals are currently being reviewed. Please comment on these so that the proposal will better represent what you want when it reaches the voting stage.', :votes => @user_votes }
-  = render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Pre-Voting', :header => 'Pre Voting Proposals:', :status_text => 'These proposals were in the review stage and are awaiting the final revision by the owner before it will be put in the voting stage.', :votes => @user_votes }
-  = render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Tabled', :header => 'Recent Set-Aside Proposals:', :status_text => 'These proposals were were Set-Aside.', :votes => @user_votes }
-  = render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Voting', :header => 'Proposals Being Voted On:', :status_text => 'These proposals are currently in the voting process.', :votes => @user_votes }
-  = render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Passed', :header => 'Recent Passed Proposals:', :status_text => 'These proposals were passed by the committee', :votes => @user_votes }
-  = render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Failed', :header => 'Recent Failed Proposals:', :status_text => 'These proposals have failed when voted on by the committee', :votes => @user_votes }
+%hr
+%h2 Proposals
+
+= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Submitted', :header => 'New Unapproved Proposals:', :status_text => '', :votes => @user_votes}
+= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Review', :header => 'Proposals for Review:', :status_text => 'These proposals are currently being reviewed. Please comment on these so that the proposal will better represent what you want when it reaches the voting stage.', :votes => @user_votes }
+= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Pre-Voting', :header => 'Pre Voting Proposals:', :status_text => 'These proposals were in the review stage and are awaiting the final revision by the owner before it will be put in the voting stage.', :votes => @user_votes }
+= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Tabled', :header => 'Recent Set-Aside Proposals:', :status_text => 'These proposals were were Set-Aside.', :votes => @user_votes }
+= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Voting', :header => 'Proposals Being Voted On:', :status_text => 'These proposals are currently in the voting process.', :votes => @user_votes }
+= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Passed', :header => 'Recent Passed Proposals:', :status_text => 'These proposals were passed by the committee', :votes => @user_votes }
+= render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Failed', :header => 'Recent Failed Proposals:', :status_text => 'These proposals have failed when voted on by the committee', :votes => @user_votes }

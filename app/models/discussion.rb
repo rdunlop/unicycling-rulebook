@@ -24,6 +24,10 @@ class Discussion < ActiveRecord::Base
 
   attr_accessible :title, :body, :owner_id, :proposal_id, :status
 
+  def self.reverse_chronological
+    order(updated_at: :desc)
+  end
+
   def last_update_time
     last_time = self.created_at
     if self.comments.count > 0
@@ -33,6 +37,11 @@ class Discussion < ActiveRecord::Base
       end
     end
     last_time
+  end
+
+  # this will change as the discussion becomes a proposal
+  def display_title
+    title
   end
 
   def to_s

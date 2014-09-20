@@ -1,3 +1,20 @@
 // Place all the styles related to the Committees controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+%primary_button {
+  background-color: lightblue;
+  color: white;
+}
+
+.primary_button {
+  @extend %primary_button;
+}
+
+.secondary_button {
+  color: grey;
+}
+
+input[type=submit] {
+  @extend %primary_button;
+}
