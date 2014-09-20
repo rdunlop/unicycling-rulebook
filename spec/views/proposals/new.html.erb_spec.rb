@@ -4,6 +4,7 @@ describe "proposals/new" do
   before(:each) do
     @proposal = FactoryGirl.build_stubbed(:proposal)
     @revision = FactoryGirl.build_stubbed(:revision, :proposal => @proposal)
+    @available_discussions = []
   end
 
   it "renders new proposal form" do

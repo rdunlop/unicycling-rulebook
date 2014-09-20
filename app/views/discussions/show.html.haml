@@ -3,8 +3,9 @@
 = @discussion.body.try(:html_safe)
 
 - if @discussion.proposal
-  This discussion has an associated proposal.
-  = link_to "View Proposal Details here", proposal_path(@discussion.proposal)
+  %div
+    This discussion has an associated proposal.
+    = link_to "View Proposal Details here", proposal_path(@discussion.proposal)
 %hr
 %h3 Comments about this discussion:
 - @discussion.comments.each do |comment|

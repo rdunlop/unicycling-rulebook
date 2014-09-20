@@ -1,10 +1,11 @@
 class ProposalCreator
-  attr_accessor :proposal, :revision, :user
+  attr_accessor :proposal, :revision, :existing_discussion, :user
 
-  def initialize(proposal, revision, user)
+  def initialize(proposal, revision, existing_discussion, user)
     @proposal = proposal
     @revision = revision
     @user = user
+    @existing_discussion = existing_discussion
 
     @proposal.owner = user
     @revision.user = user
@@ -17,7 +18,12 @@ class ProposalCreator
     begin
       Proposal.transaction do
         proposal.save!
-        create_discussion_for(proposal)
+        if existing_discussion
+          existing_discussion.proposal = proposal
+          existing_discussion.save!
+        else
+          create_discussion_for(proposal)
+        end
         revision.proposal = proposal
         revision.save!
       end

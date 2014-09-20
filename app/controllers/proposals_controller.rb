@@ -42,6 +42,7 @@ class ProposalsController < ApplicationController
   def new
     @proposal = Proposal.new
     @revision = Revision.new
+    @available_discussions = @committee.discussions.without_proposals
     @proposal_owner = current_user
 
     respond_to do |format|
@@ -61,8 +62,10 @@ class ProposalsController < ApplicationController
     @proposal.committee = @committee
     @revision = Revision.new(params[:revision])
 
+    @discussion = Discussion.find(params[:discussion_id]) if params[:discussion_id].present?
+
     respond_to do |format|
-      if ProposalCreator.new(@proposal, @revision, current_user).perform
+      if ProposalCreator.new(@proposal, @revision, @discussion, current_user).perform
         mail = UserMailer.proposal_submitted(@proposal).deliver
         @proposal.mail_messageid = mail.message_id
         @proposal.save
@@ -70,6 +73,7 @@ class ProposalsController < ApplicationController
         format.json { render json: @proposal, status: :created, location: @proposal }
       else
         @proposal_owner = current_user
+        @available_discussions = @committee.discussions.without_proposals
         format.html { render action: "new" }
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
       end

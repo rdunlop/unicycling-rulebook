@@ -28,6 +28,10 @@ class Discussion < ActiveRecord::Base
     order(updated_at: :desc)
   end
 
+  def self.without_proposals
+    where(proposal: nil)
+  end
+
   def last_update_time
     last_time = self.created_at
     if self.comments.count > 0
