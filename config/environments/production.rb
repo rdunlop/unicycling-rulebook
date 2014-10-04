@@ -1,4 +1,4 @@
-Rulebook::Application.configure do
+RulebookApp::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -72,7 +72,7 @@ Rulebook::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 end
 
-Rulebook::Application.config.middleware.use ExceptionNotification::Rack,
+RulebookApp::Application.config.middleware.use ExceptionNotification::Rack,
   :email => {
       :email_prefix => "[Rulebook Exception] ",
       :exception_recipients => %w{robin@dunlopweb.com}

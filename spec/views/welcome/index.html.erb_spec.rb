@@ -5,7 +5,7 @@ describe "welcome/index", :type => :view do
     @ability = Object.new
     @ability.extend(CanCan::Ability)
     allow(controller).to receive(:current_ability) { @ability }
-    @config = AppConfig.new
+    @config = Rulebook.new
   end
 
 

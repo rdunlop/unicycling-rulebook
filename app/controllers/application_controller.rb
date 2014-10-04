@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   before_filter :load_config
 
   def load_config
-    @config = AppConfig.first || AppConfig.new
+    @config = Rulebook.first || Rulebook.new
   end
 
   def current_ablity

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe "app_configs/show", :type => :view do
+describe "rulebooks/show", :type => :view do
   before(:each) do
-    @app_config = assign(:app_config, FactoryGirl.build_stubbed(:app_config,
+    @rulebook = assign(:rulebook, FactoryGirl.build_stubbed(:rulebook,
       :rulebook_name => "Rulebook Name",
       :front_page => "Front Page",
       :faq => "Faq",

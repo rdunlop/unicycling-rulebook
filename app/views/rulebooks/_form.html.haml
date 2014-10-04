@@ -1,11 +1,11 @@
-= form_for(@app_config) do |f|
-  - if @app_config.errors.any?
+= form_for(@rulebook) do |f|
+  - if @rulebook.errors.any?
     #error_explanation
       %h2
-        = pluralize(@app_config.errors.count, "error")
-        prohibited this app_config from being saved:
+        = pluralize(@rulebook.errors.count, "error")
+        prohibited this rulebook from being saved:
       %ul
-        - @app_config.errors.full_messages.each do |msg|
+        - @rulebook.errors.full_messages.each do |msg|
           %li= msg
   .field
     = f.label :rulebook_name

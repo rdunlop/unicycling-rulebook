@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: app_configs
+# Table name: rulebooks
 #
 #  id            :integer          not null, primary key
 #  rulebook_name :string(255)
@@ -11,11 +11,11 @@
 #  copyright     :string(255)
 #
 
-class AppConfig < ActiveRecord::Base
+class Rulebook < ActiveRecord::Base
   validate :only_one_model_allowed
 
   def only_one_model_allowed
-    if self.new_record? && AppConfig.all.count > 0
+    if self.new_record? && Rulebook.all.count > 0
       errors[:base] << "Only a single App Config may exist"
     end
   end

@@ -1,6 +1,6 @@
-Rulebook::Application.routes.draw do
+RulebookApp::Application.routes.draw do
 
-  resources :app_configs
+  resources :rulebooks
 
   resources :proposals, :except => [:index, :new, :create] do
     collection do

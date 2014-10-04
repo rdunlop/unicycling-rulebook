@@ -9,7 +9,7 @@
     - if can? :read, Committee
       %li= link_to('Committees', committees_path)
     - if can? :manage, AppConfig
-      %li= link_to('App Config (Admin Pages)', app_configs_path)
+      %li= link_to('App Config (Admin Pages)', rulebooks_path)
     - if can? :send, Message
       %li= link_to('Send E-mail Messages', welcome_message_path)
     - if user_signed_in?

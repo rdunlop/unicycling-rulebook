@@ -11,25 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140914155731) do
+ActiveRecord::Schema.define(version: 20141004170801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "app_configs", force: true do |t|
-    t.string   "rulebook_name"
-    t.text     "front_page"
-    t.text     "faq"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "copyright"
-  end
-
   create_table "comments", force: true do |t|
     t.integer  "user_id"
     t.text     "comment"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "discussion_id"
   end
 
@@ -37,16 +28,16 @@ ActiveRecord::Schema.define(version: 20140914155731) do
     t.integer  "committee_id"
     t.integer  "user_id"
     t.boolean  "voting"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "admin",        default: false
     t.boolean  "editor",       default: false
   end
 
   create_table "committees", force: true do |t|
     t.string   "name"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "preliminary"
   end
 
@@ -73,8 +64,8 @@ ActiveRecord::Schema.define(version: 20140914155731) do
     t.boolean  "transition_straight_to_vote"
     t.integer  "owner_id"
     t.text     "title"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "mail_messageid"
   end
 
@@ -85,10 +76,19 @@ ActiveRecord::Schema.define(version: 20140914155731) do
     t.text     "references"
     t.text     "change_description"
     t.integer  "user_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "num"
     t.text     "rule_text"
+  end
+
+  create_table "rulebooks", force: true do |t|
+    t.string   "rulebook_name"
+    t.text     "front_page"
+    t.text     "faq"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "copyright"
   end
 
   create_table "users", force: true do |t|
@@ -102,8 +102,8 @@ ActiveRecord::Schema.define(version: 20140914155731) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "admin",                  default: false
     t.string   "name"
     t.string   "location"
@@ -121,8 +121,8 @@ ActiveRecord::Schema.define(version: 20140914155731) do
     t.integer  "proposal_id"
     t.integer  "user_id"
     t.string   "vote"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text     "comment"
   end
 

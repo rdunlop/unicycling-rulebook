@@ -1,0 +1,17 @@
+%p
+  %b Rulebook name:
+  = @rulebook.rulebook_name
+%p
+  %b Front page:
+  %br
+  = raw(@rulebook.front_page)
+%p
+  %b Faq:
+  %br
+  = raw(@rulebook.faq)
+%b Copyright:
+%br
+= raw(@rulebook.copyright)
+= link_to 'Edit', edit_rulebook_path(@rulebook)
+|
+= link_to 'Back', rulebooks_path

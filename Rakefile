@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Rulebook::Application.load_tasks
+RulebookApp::Application.load_tasks

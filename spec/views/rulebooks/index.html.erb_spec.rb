@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe "app_configs/index", :type => :view do
+describe "rulebooks/index", :type => :view do
   before(:each) do
-    assign(:app_configs, [
-      FactoryGirl.build_stubbed(:app_config,
+    assign(:rulebooks, [
+      FactoryGirl.build_stubbed(:rulebook,
         :rulebook_name => "Rulebook Name",
         :front_page => "Front Page",
         :faq => "Faq",
@@ -12,7 +12,7 @@ describe "app_configs/index", :type => :view do
     ])
   end
 
-  it "renders a list of app_configs" do
+  it "renders a list of rulebooks" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "tr>td", :text => "Rulebook Name".to_s, :count => 1

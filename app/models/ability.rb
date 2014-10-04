@@ -37,7 +37,7 @@ class Ability
       can :manage, Revision
       can :manage, Comment
       can :manage, User
-      can :manage, AppConfig
+      can :manage, Rulebook
       can :send, Message
     end
 

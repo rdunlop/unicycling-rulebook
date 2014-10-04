@@ -1,0 +1,21 @@
+%h1 Configure Rulebook Application
+%table
+  %tr
+    %th Rulebook name
+    %th Front page text
+    %th Faq
+    %th Copyright
+    %th
+    %th
+    %th
+  - @rulebooks.each do |rulebook|
+    %tr
+      %td= rulebook.rulebook_name
+      %td= rulebook.front_page
+      %td= rulebook.faq
+      %td= rulebook.copyright
+      %td= link_to 'Show', rulebook
+      %td= link_to 'Edit', edit_rulebook_path(rulebook)
+      %td= link_to 'Destroy', rulebook, data: { confirm: 'Are you sure?' }, method: :delete
+%br
+= link_to 'New App config', new_rulebook_path
