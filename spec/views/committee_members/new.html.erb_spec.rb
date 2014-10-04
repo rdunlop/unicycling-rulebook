@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "committee_members/new" do
+describe "committee_members/new", :type => :view do
   before(:each) do
     @cm = assign(:committee_member, FactoryGirl.create(:committee_member))
     @committee = @cm.committee

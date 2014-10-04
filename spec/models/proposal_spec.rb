@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe Proposal do
+describe Proposal, :type => :model do
   it "should have an associated user" do
     prop = Proposal.new
     prop.committee = FactoryGirl.create(:committee)
     prop.title = "Hello People"
     prop.status = 'Submitted'
-    prop.valid?.should == false
+    expect(prop.valid?).to eq(false)
 
     prop.owner = FactoryGirl.create(:user)
-    prop.valid?.should == true
+    expect(prop.valid?).to eq(true)
   end
 
   it "must have a title" do
@@ -17,10 +17,10 @@ describe Proposal do
     prop.status = 'Submitted'
     prop.owner = FactoryGirl.create(:user)
     prop.committee = FactoryGirl.create(:committee)
-    prop.valid?.should == false
+    expect(prop.valid?).to eq(false)
 
     prop.title = "Hi there"
-    prop.valid?.should == true
+    expect(prop.valid?).to eq(true)
   end
 
   it "should have an associated committee" do
@@ -28,16 +28,16 @@ describe Proposal do
     prop.status = 'Submitted'
     prop.title = "Hello People"
     prop.owner = FactoryGirl.create(:user)
-    prop.valid?.should == false
+    expect(prop.valid?).to eq(false)
 
     prop.committee = FactoryGirl.create(:committee)
-    prop.valid?.should == true
+    expect(prop.valid?).to eq(true)
   end
 
   it "should return its title as the default string" do
     prop = FactoryGirl.create(:proposal)
 
-    prop.to_s.should == prop.title
+    expect(prop.to_s).to eq(prop.title)
   end
 
   it "should have associated votes" do
@@ -46,7 +46,7 @@ describe Proposal do
 
     prop = Proposal.find(proposal.id)
 
-    prop.votes.count.should == 1
+    expect(prop.votes.count).to eq(1)
   end
   it "orders the votes by created_at date" do
     proposal = FactoryGirl.create(:proposal)
@@ -55,84 +55,84 @@ describe Proposal do
 
     prop = Proposal.find(proposal.id)
 
-    prop.votes.should == [vote1, vote2]
+    expect(prop.votes).to eq([vote1, vote2])
   end
 
   it "should only allow certain status values" do
     proposal = FactoryGirl.create(:proposal)
-    proposal.valid?.should == true
+    expect(proposal.valid?).to eq(true)
 
     proposal.status = "Submitted"
-    proposal.valid?.should == true
+    expect(proposal.valid?).to eq(true)
     proposal.status = "Review"
-    proposal.valid?.should == true
+    expect(proposal.valid?).to eq(true)
     proposal.status = "Pre-Voting"
-    proposal.valid?.should == true
+    expect(proposal.valid?).to eq(true)
     proposal.status = "Voting"
-    proposal.valid?.should == true
+    expect(proposal.valid?).to eq(true)
     proposal.status = "Tabled"
-    proposal.valid?.should == true
+    expect(proposal.valid?).to eq(true)
     proposal.status = "Passed"
-    proposal.valid?.should == true
+    expect(proposal.valid?).to eq(true)
     proposal.status = "Failed"
-    proposal.valid?.should == true
+    expect(proposal.valid?).to eq(true)
     proposal.status = "Robin"
-    proposal.valid?.should == false
+    expect(proposal.valid?).to eq(false)
   end
 
   it "should have a latest_revision_number" do
     revision = FactoryGirl.create(:revision)
     prop = revision.proposal
 
-    prop.latest_revision_number.should == revision.num
+    expect(prop.latest_revision_number).to eq(revision.num)
   end
   it "should provide all revisions in descending order" do
     prop = FactoryGirl.create(:proposal)
     rev1 = FactoryGirl.create(:revision, :proposal => prop)
     rev2 = FactoryGirl.create(:revision, :proposal => prop)
 
-    prop.revisions.should == [rev2, rev1]
+    expect(prop.revisions).to eq([rev2, rev1])
   end
 
   describe "when checking the 'status_string'" do
     it "should print only the status for a Submitted proposal" do
         prop = FactoryGirl.create(:proposal, :status => 'Submitted')
-        prop.status_string.should == "Submitted"
+        expect(prop.status_string).to eq("Submitted")
     end
     it "should print the review dates for a Review proposal" do
         prop = FactoryGirl.create(:proposal, :status => 'Review',
                                              :review_start_date => Date.new(2012, 1, 1),
                                              :review_end_date   => Date.new(2012, 1, 10))
-        prop.status_string.should == "Review from January  1, 2012 to January 10, 2012"
+        expect(prop.status_string).to eq("Review from January  1, 2012 to January 10, 2012")
     end
 
     it "should print the review dates for a Pre-Voting proposal" do
         prop = FactoryGirl.create(:proposal, :status => 'Pre-Voting',
                                              :review_start_date => Date.new(2012, 1, 1),
                                              :review_end_date   => Date.new(2012, 1, 10))
-        prop.status_string.should == "Pre-Voting (Reviewed from January  1, 2012 to January 10, 2012)"
+        expect(prop.status_string).to eq("Pre-Voting (Reviewed from January  1, 2012 to January 10, 2012)")
     end
     it "should print the voting dates for a Voting proposal" do
         prop = FactoryGirl.create(:proposal, :status => 'Voting',
                                              :vote_start_date => Date.new(2012, 1, 1),
                                              :vote_end_date   => Date.new(2012, 1, 10))
-        prop.status_string.should == "Voting from January  1, 2012 to January 10, 2012"
+        expect(prop.status_string).to eq("Voting from January  1, 2012 to January 10, 2012")
     end
     it "should print the review dates for a Tabled proposal" do
         prop = FactoryGirl.create(:proposal, :status => 'Tabled',
                                              :review_start_date => Date.new(2012, 1, 1),
                                              :review_end_date   => Date.new(2012, 1, 10))
-        prop.status_string.should == "Set-Aside (Reviewed from January  1, 2012 to January 10, 2012)"
+        expect(prop.status_string).to eq("Set-Aside (Reviewed from January  1, 2012 to January 10, 2012)")
     end
     it "should print the vote end dates for a Passed proposal" do
         prop = FactoryGirl.create(:proposal, :status => 'Passed',
                                              :vote_end_date => Date.new(2012, 2, 1))
-        prop.status_string.should == "Passed on February  1, 2012"
+        expect(prop.status_string).to eq("Passed on February  1, 2012")
     end
     it "should print the vote end dates for a Failde proposal" do
         prop = FactoryGirl.create(:proposal, :status => 'Failed',
                                              :vote_end_date => Date.new(2012, 2, 1))
-        prop.status_string.should == "Failed on February  1, 2012"
+        expect(prop.status_string).to eq("Failed on February  1, 2012")
     end
   end
 
@@ -143,13 +143,13 @@ describe Proposal do
         @rev2 = FactoryGirl.create(:revision, :proposal => @prop)
     end
     it "should return the latest background" do
-        @prop.background.should == @rev1.background
+        expect(@prop.background).to eq(@rev1.background)
     end
     it "should return the latest body" do
-        @prop.body.should == @rev1.body
+        expect(@prop.body).to eq(@rev1.body)
     end
     it "should return the latest references" do
-        @prop.references.should == @rev1.references
+        expect(@prop.references).to eq(@rev1.references)
     end
   end
 
@@ -162,23 +162,23 @@ describe Proposal do
         @cm = FactoryGirl.create(:committee_member, :user => @vote.user, :committee => @prop.committee)
     end
     it "should count the number of agree votes" do
-        @prop.agree_votes.should == 1
+        expect(@prop.agree_votes).to eq(1)
     end
     it "should count the number of disagree votes" do
-        @prop.disagree_votes.should == 0
+        expect(@prop.disagree_votes).to eq(0)
     end
     it "should count the number of abstain votes" do
-        @prop.abstain_votes.should == 0
+        expect(@prop.abstain_votes).to eq(0)
     end
     it "should have all voting members (1) voted" do
-        @prop.all_voting_members_voted.should == true
+        expect(@prop.all_voting_members_voted).to eq(true)
     end
     it "should have enough (100%) of the members have voted" do
-        @prop.number_of_voting_members.should == 1
-        @prop.have_voting_quorum.should == true
+        expect(@prop.number_of_voting_members).to eq(1)
+        expect(@prop.have_voting_quorum).to eq(true)
     end
     it "should have at_least_2/3 agree" do
-        @prop.at_least_two_thirds_agree.should == true
+        expect(@prop.at_least_two_thirds_agree).to eq(true)
     end
 
     describe "if there is a 2nd committee_members who hasn't voted" do
@@ -186,18 +186,18 @@ describe Proposal do
             @cm2 = FactoryGirl.create(:committee_member, :committee => @prop.committee)
         end
         it "should have not all voting members (1/2) voted)" do
-            @prop.all_voting_members_voted.should == false
+            expect(@prop.all_voting_members_voted).to eq(false)
         end
         it "should have enough (50%) of the members voted" do
-            @prop.number_of_voting_members.should == 2
-            @prop.have_voting_quorum.should == true
+            expect(@prop.number_of_voting_members).to eq(2)
+            expect(@prop.have_voting_quorum).to eq(true)
         end
         describe "when the 2nd member votes disagree" do
             before(:each) do
               @vote = FactoryGirl.create(:vote, :user => @cm2.user, :proposal => @prop, :vote => 'disagree', :comment => 'hi')
             end
             it "should NOT have at least 2/3 agree" do
-              @prop.at_least_two_thirds_agree.should == false
+              expect(@prop.at_least_two_thirds_agree).to eq(false)
             end
         end
 
@@ -206,10 +206,10 @@ describe Proposal do
             FactoryGirl.create(:committee_member, :committee => @prop.committee)
           end
           it "should have not all voting members (1/3) voted)" do
-            @prop.all_voting_members_voted.should == false
+            expect(@prop.all_voting_members_voted).to eq(false)
           end
           it "should have enough (33%) of the members voted" do
-            @prop.have_voting_quorum.should == false
+            expect(@prop.have_voting_quorum).to eq(false)
           end
         end
     end
@@ -239,19 +239,19 @@ describe Proposal do
 
         it "updates 'Review' proposals that have expired to have status 'Pre-Voting'" do
             @p1.reload
-            @p1.status.should == 'Pre-Voting'
+            expect(@p1.status).to eq('Pre-Voting')
         end
         it "doesn't change the 'Submitted' proposal'" do
             @p2.reload
-            @p2.status.should == 'Submitted'
+            expect(@p2.status).to eq('Submitted')
         end
         it "doesn't change entries which haven't expired yet" do
             @p3.reload
-            @p3.status.should == 'Review'
+            expect(@p3.status).to eq('Review')
         end
         it "should send an e-mail when it changes a proposal" do
             num_deliveries = ActionMailer::Base.deliveries.size
-            num_deliveries.should == 1
+            expect(num_deliveries).to eq(1)
         end
     end
   end
@@ -277,15 +277,15 @@ describe Proposal do
         end
         it "should not change a proposal if the voting period is not over" do
           @p4.reload
-          @p4.status.should == 'Voting'
+          expect(@p4.status).to eq('Voting')
         end
         it "should mark a proposal as Failed if there are no votes" do
           @p5.reload
-          @p5.status.should == 'Failed'
+          expect(@p5.status).to eq('Failed')
         end
         it "should send an e-mail when it changes a proposal" do
           num_deliveries = ActionMailer::Base.deliveries.size
-          num_deliveries.should == 1
+          expect(num_deliveries).to eq(1)
         end
       end
       describe "calling update_states when all of the voting-members have voted agree" do
@@ -298,11 +298,11 @@ describe Proposal do
         end
         it "should mark the proposal as passed" do
           @p5.reload
-          @p5.status.should == 'Passed'
+          expect(@p5.status).to eq('Passed')
         end
         it "should send an e-mail" do
           num_deliveries = ActionMailer::Base.deliveries.size
-          num_deliveries.should == 1
+          expect(num_deliveries).to eq(1)
         end
       end
       describe "calling update_states when all voting-members have voted disagree, but the time has not completed" do
@@ -315,7 +315,7 @@ describe Proposal do
         end
         it "should mark the proposal as 'Failed'" do
           @p4.reload
-          @p4.status.should == 'Failed'
+          expect(@p4.status).to eq('Failed')
         end
       end
   end

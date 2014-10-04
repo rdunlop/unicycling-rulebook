@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe "committees/show" do
+describe "committees/show", :type => :view do
   before(:each) do
     @ability = Object.new
     @ability.extend(CanCan::Ability)
-    controller.stub(:current_ability) { @ability }
+    allow(controller).to receive(:current_ability) { @ability }
   end
 
   describe "when a proposal exists" do
@@ -18,7 +18,7 @@ describe "committees/show" do
       render
     end
     it "should find the proposal title" do
-      rendered.should match(@proposal.title)
+      expect(rendered).to match(@proposal.title)
     end
   end
 end

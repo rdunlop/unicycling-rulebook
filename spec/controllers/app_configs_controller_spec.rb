@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe AppConfigsController do
+describe AppConfigsController, :type => :controller do
   before (:each) do
     @admin_user = FactoryGirl.create(:admin_user)
     sign_in @admin_user
@@ -39,7 +39,7 @@ describe AppConfigsController do
     it "assigns all app_configs as @app_configs" do
       app_config = AppConfig.create! valid_attributes
       get :index, {}
-      assigns(:app_configs).should eq([app_config])
+      expect(assigns(:app_configs)).to eq([app_config])
     end
   end
 
@@ -47,14 +47,14 @@ describe AppConfigsController do
     it "assigns the requested app_config as @app_config" do
       app_config = AppConfig.create! valid_attributes
       get :show, {:id => app_config.to_param}
-      assigns(:app_config).should eq(app_config)
+      expect(assigns(:app_config)).to eq(app_config)
     end
   end
 
   describe "GET new" do
     it "assigns a new app_config as @app_config" do
       get :new, {}
-      assigns(:app_config).should be_a_new(AppConfig)
+      expect(assigns(:app_config)).to be_a_new(AppConfig)
     end
   end
 
@@ -62,7 +62,7 @@ describe AppConfigsController do
     it "assigns the requested app_config as @app_config" do
       app_config = AppConfig.create! valid_attributes
       get :edit, {:id => app_config.to_param}
-      assigns(:app_config).should eq(app_config)
+      expect(assigns(:app_config)).to eq(app_config)
     end
   end
 
@@ -76,29 +76,29 @@ describe AppConfigsController do
 
       it "assigns a newly created app_config as @app_config" do
         post :create, {:app_config => valid_attributes}
-        assigns(:app_config).should be_a(AppConfig)
-        assigns(:app_config).should be_persisted
+        expect(assigns(:app_config)).to be_a(AppConfig)
+        expect(assigns(:app_config)).to be_persisted
       end
 
       it "redirects to the created app_config" do
         post :create, {:app_config => valid_attributes}
-        response.should redirect_to(AppConfig.last)
+        expect(response).to redirect_to(AppConfig.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved app_config as @app_config" do
         # Trigger the behavior that occurs when invalid params are submitted
-        AppConfig.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(AppConfig).to receive(:save).and_return(false)
         post :create, {:app_config => {rulebook_name: 'the book'}}
-        assigns(:app_config).should be_a_new(AppConfig)
+        expect(assigns(:app_config)).to be_a_new(AppConfig)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        AppConfig.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(AppConfig).to receive(:save).and_return(false)
         post :create, {:app_config => {rulebook_name: 'the book'}}
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
@@ -111,20 +111,20 @@ describe AppConfigsController do
         # specifies that the AppConfig created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        AppConfig.any_instance.should_receive(:update_attributes).with({})
+        expect_any_instance_of(AppConfig).to receive(:update_attributes).with({})
         put :update, {:id => app_config.to_param, :app_config => {'these' => 'params'}}
       end
 
       it "assigns the requested app_config as @app_config" do
         app_config = AppConfig.create! valid_attributes
         put :update, {:id => app_config.to_param, :app_config => valid_attributes}
-        assigns(:app_config).should eq(app_config)
+        expect(assigns(:app_config)).to eq(app_config)
       end
 
       it "redirects to the app_config" do
         app_config = AppConfig.create! valid_attributes
         put :update, {:id => app_config.to_param, :app_config => valid_attributes}
-        response.should redirect_to(app_config)
+        expect(response).to redirect_to(app_config)
       end
     end
 
@@ -132,17 +132,17 @@ describe AppConfigsController do
       it "assigns the app_config as @app_config" do
         app_config = AppConfig.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        AppConfig.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(AppConfig).to receive(:save).and_return(false)
         put :update, {:id => app_config.to_param, :app_config => {rulebook_name: 'the book'}}
-        assigns(:app_config).should eq(app_config)
+        expect(assigns(:app_config)).to eq(app_config)
       end
 
       it "re-renders the 'edit' template" do
         app_config = AppConfig.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        AppConfig.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(AppConfig).to receive(:save).and_return(false)
         put :update, {:id => app_config.to_param, :app_config => {rulebook_name: 'the book'}}
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -158,7 +158,7 @@ describe AppConfigsController do
     it "redirects to the app_configs list" do
       app_config = AppConfig.create! valid_attributes
       delete :destroy, {:id => app_config.to_param}
-      response.should redirect_to(app_configs_url)
+      expect(response).to redirect_to(app_configs_url)
     end
   end
 

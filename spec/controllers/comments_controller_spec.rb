@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe CommentsController do
+describe CommentsController, :type => :controller do
   before(:each) do
 
     @proposal = FactoryGirl.create(:proposal, discussion: @discussion, status: "Review")
@@ -47,29 +47,29 @@ describe CommentsController do
 
       it "assigns a newly created comment as @comment" do
         post :create, {:comment => valid_attributes, discussion_id: @discussion.id }
-        assigns(:comment).should be_a(Comment)
-        assigns(:comment).should be_persisted
+        expect(assigns(:comment)).to be_a(Comment)
+        expect(assigns(:comment)).to be_persisted
       end
 
       it "redirects to the created comment" do
         post :create, {:comment => valid_attributes, discussion_id: @discussion.id }
-        response.should redirect_to(@discussion)
+        expect(response).to redirect_to(@discussion)
       end
 
       it "sends an e-mail" do
         ActionMailer::Base.deliveries.clear
         post :create, {:comment => valid_attributes, discussion_id: @discussion.id }
         num_deliveries = ActionMailer::Base.deliveries.size
-        num_deliveries.should == 1
+        expect(num_deliveries).to eq(1)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved comment as @comment" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Comment.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Comment).to receive(:save).and_return(false)
         post :create, {:comment => {comment: "None"}, discussion_id: @discussion.id }
-        assigns(:comment).should be_a_new(Comment)
+        expect(assigns(:comment)).to be_a_new(Comment)
       end
 
       #it "re-renders the 'proposals/show' template" do

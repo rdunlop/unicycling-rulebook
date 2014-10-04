@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe "welcome/index" do
+describe "welcome/index", :type => :view do
   before(:each) do
     @ability = Object.new
     @ability.extend(CanCan::Ability)
-    controller.stub(:current_ability) { @ability }
+    allow(controller).to receive(:current_ability) { @ability }
     @config = AppConfig.new
   end
 
@@ -13,6 +13,6 @@ describe "welcome/index" do
     @committee1 = FactoryGirl.create(:committee)
     @committees = [@committee1]
     render
-    rendered.should match(/#{@committee1.name}/)
+    expect(rendered).to match(/#{@committee1.name}/)
   end
 end

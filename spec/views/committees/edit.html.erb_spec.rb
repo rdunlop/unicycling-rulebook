@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "committees/edit" do
+describe "committees/edit", :type => :view do
   before(:each) do
     @committee = FactoryGirl.create(:committee)
   end

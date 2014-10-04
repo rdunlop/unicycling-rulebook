@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DiscussionsController do
+describe DiscussionsController, :type => :controller do
   before(:each) do
     @admin = FactoryGirl.create(:admin_user)
     sign_in @admin
@@ -22,21 +22,21 @@ describe DiscussionsController do
 
       get :show, { :id => discussion.to_param }
 
-      assigns(:discussion).should eq(discussion)
+      expect(assigns(:discussion)).to eq(discussion)
     end
     it "should have a blank comment object" do
       discussion = FactoryGirl.create(:discussion)
 
       get :show, {:id => discussion.to_param}
 
-      assigns(:comment).should be_a_new(Comment)
+      expect(assigns(:comment)).to be_a_new(Comment)
     end
   end
 
   describe "GET new" do
     it "assigns a new discussion as @discussion" do
       get :new, { :committee_id => committee.id }
-      assigns(:discussion).should be_a_new(Discussion)
+      expect(assigns(:discussion)).to be_a_new(Discussion)
     end
   end
 

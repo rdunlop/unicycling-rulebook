@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "votes/edit" do
+describe "votes/edit", :type => :view do
   before(:each) do
     @vote = assign(:vote, FactoryGirl.create(:vote))
     @proposal = @vote.proposal

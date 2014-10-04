@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "committee_members/index" do
+describe "committee_members/index", :type => :view do
   before(:each) do
     @committee = FactoryGirl.create(:committee)
     @cm = assign(:committee_members, [
@@ -8,7 +8,7 @@ describe "committee_members/index" do
             FactoryGirl.create(:committee_member, :committee => @committee, :voting => false)])
     @ability = Object.new
     @ability.extend(CanCan::Ability)
-    controller.stub(:current_ability) { @ability }
+    allow(controller).to receive(:current_ability) { @ability }
   end
 
   it "renders a list of committee_members" do

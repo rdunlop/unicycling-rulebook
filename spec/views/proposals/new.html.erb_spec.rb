@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "proposals/new" do
+describe "proposals/new", :type => :view do
   let(:committee) { FactoryGirl.create(:committee) }
   before(:each) do
     @proposal = FactoryGirl.build_stubbed(:proposal)

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "votes/index" do
+describe "votes/index", :type => :view do
   before(:each) do
     @proposal = FactoryGirl.create(:proposal)
     @user = FactoryGirl.create(:user)

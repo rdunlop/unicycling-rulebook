@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "revisions/show" do
+describe "revisions/show", :type => :view do
   before(:each) do
     @revision = FactoryGirl.create(:revision)
     @proposal = @revision.proposal
@@ -9,15 +9,15 @@ describe "revisions/show" do
 
     @ability = Object.new
     @ability.extend(CanCan::Ability)
-    controller.stub(:current_ability) { @ability }
+    allow(controller).to receive(:current_ability) { @ability }
   end
 
   it "renders attributes in <p>" do
     render
 
-    rendered.should match(/MyText1/)
-    rendered.should match(/Rule Text/)
-    rendered.should match(/MyText2/)
-    rendered.should match(/MyText3/)
+    expect(rendered).to match(/MyText1/)
+    expect(rendered).to match(/Rule Text/)
+    expect(rendered).to match(/MyText2/)
+    expect(rendered).to match(/MyText3/)
   end
 end

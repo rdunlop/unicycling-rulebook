@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "app_configs/index" do
+describe "app_configs/index", :type => :view do
   before(:each) do
     assign(:app_configs, [
       FactoryGirl.build_stubbed(:app_config,

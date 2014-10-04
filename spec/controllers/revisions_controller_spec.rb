@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe RevisionsController do
+describe RevisionsController, :type => :controller do
   before(:each) do
     @proposal = FactoryGirl.create(:proposal, :with_admin)
     @revision = FactoryGirl.create(:revision, :proposal => @proposal, :user_id => @proposal.owner.id)
@@ -41,7 +41,7 @@ describe RevisionsController do
     it "assigns the requested revision as @revision" do
       revision = FactoryGirl.create(:revision, :proposal => @proposal)
       get :show, {:id => revision.to_param, :proposal_id => @proposal.id}
-      assigns(:revision).should eq(revision)
+      expect(assigns(:revision)).to eq(revision)
     end
     it "can see the revision of a 'Submitted' proposal as a normal user" do
       user = @proposal.owner
@@ -49,9 +49,9 @@ describe RevisionsController do
       sign_out @admin
       sign_in user
       get :show, {:id => @revision.to_param, :proposal_id => @proposal.id}
-      assigns(:revision).should eq(@revision)
-      response.should be_success
-      response.should render_template("show")
+      expect(assigns(:revision)).to eq(@revision)
+      expect(response).to be_success
+      expect(response).to render_template("show")
     end
     describe "as an editor" do
       before(:each) do
@@ -65,7 +65,7 @@ describe RevisionsController do
         @proposal.status = 'Review'
         @proposal.save
         get :show, {:id => @revision.to_param, :proposal_id => @proposal.id}
-        assigns(:revision).should eq(@revision)
+        expect(assigns(:revision)).to eq(@revision)
       end
     end
   end
@@ -73,14 +73,14 @@ describe RevisionsController do
   describe "GET new" do
     it "assigns a new revision as @revision" do
       get :new, {:proposal_id => @proposal.id}
-      assigns(:revision).should be_a_new(Revision)
+      expect(assigns(:revision)).to be_a_new(Revision)
     end
     it "should contain information from previous revision" do
       get :new, {:proposal_id => @proposal.id}
-      assigns(:revision).background.should == @proposal.latest_revision.background
-      assigns(:revision).body.should == @proposal.latest_revision.body
-      assigns(:revision).rule_text.should == @proposal.latest_revision.rule_text
-      assigns(:revision).references.should == @proposal.latest_revision.references
+      expect(assigns(:revision).background).to eq(@proposal.latest_revision.background)
+      expect(assigns(:revision).body).to eq(@proposal.latest_revision.body)
+      expect(assigns(:revision).rule_text).to eq(@proposal.latest_revision.rule_text)
+      expect(assigns(:revision).references).to eq(@proposal.latest_revision.references)
     end
   end
 
@@ -101,8 +101,8 @@ describe RevisionsController do
         end
         it "can create a revision to my own proposal" do
             post :create, {:revision => valid_attributes, :proposal_id => @prop.id}
-            assigns(:revision).should be_persisted
-            response.should redirect_to([@prop, Revision.last])
+            expect(assigns(:revision)).to be_persisted
+            expect(response).to redirect_to([@prop, Revision.last])
         end
       end
       describe "as an editor" do
@@ -117,45 +117,45 @@ describe RevisionsController do
         end
         it "can create a revision to another proposal" do
             post :create, {:revision => valid_attributes, :proposal_id => @prop.id}
-            assigns(:revision).should be_persisted
-            response.should redirect_to([@prop, Revision.last])
+            expect(assigns(:revision)).to be_persisted
+            expect(response).to redirect_to([@prop, Revision.last])
         end
 
       end
 
       it "assigns a newly created revision as @revision" do
         post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}
-        assigns(:revision).should be_a(Revision)
-        assigns(:revision).should be_persisted
+        expect(assigns(:revision)).to be_a(Revision)
+        expect(assigns(:revision)).to be_persisted
       end
 
       it "redirects to the created revision" do
         post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}
-        response.should redirect_to([@proposal, Revision.last])
-        Revision.last.user.should == @admin
-        Revision.last.proposal.should == @proposal
+        expect(response).to redirect_to([@proposal, Revision.last])
+        expect(Revision.last.user).to eq(@admin)
+        expect(Revision.last.proposal).to eq(@proposal)
       end
       it "sends an e-mail when a new revision is created" do
         ActionMailer::Base.deliveries.clear
         post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}
         num_deliveries = ActionMailer::Base.deliveries.size
-        num_deliveries.should == 1
+        expect(num_deliveries).to eq(1)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved revision as @revision" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Revision.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Revision).to receive(:save).and_return(false)
         post :create, {:revision => {body: 'fake'}, :proposal_id => @proposal.id}
-        assigns(:revision).should be_a_new(Revision)
+        expect(assigns(:revision)).to be_a_new(Revision)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Revision.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Revision).to receive(:save).and_return(false)
         post :create, {:revision => {body: 'fake'}, :proposal_id => @proposal.id}
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
     describe "with a Pre-Voting status proposal" do
@@ -165,12 +165,12 @@ describe RevisionsController do
         end
         it "should set the status to review" do
           post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}
-          assigns(:proposal).status.should == 'Review'
+          expect(assigns(:proposal).status).to eq('Review')
         end
         it "should set the review_start_date and review_end_date" do
           post :create, {:revision => valid_attributes, :proposal_id => @proposal.id}
-          ((assigns(:proposal).review_start_date - DateTime.now()) * 1.days).should < 1
-          ((assigns(:proposal).review_end_date - DateTime.now()) * 1.days).should > 2
+          expect((assigns(:proposal).review_start_date - DateTime.now()) * 1.days).to be < 1
+          expect((assigns(:proposal).review_end_date - DateTime.now()) * 1.days).to be > 2
         end
     end
   end

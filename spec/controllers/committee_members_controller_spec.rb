@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe CommitteeMembersController do
+describe CommitteeMembersController, :type => :controller do
   before (:each) do
     @committee = FactoryGirl.create(:committee)
     @user = FactoryGirl.create(:user)
@@ -41,7 +41,7 @@ describe CommitteeMembersController do
     it "fails when not logged in" do
       sign_out @user
       get :index, {:committee_id => @committee.id}
-      response.should redirect_to(new_user_session_path)
+      expect(response).to redirect_to(new_user_session_path)
     end
 
     describe "as admin user" do
@@ -52,13 +52,13 @@ describe CommitteeMembersController do
       it "assigns all committee_members as @committee_members" do
         cm = FactoryGirl.create(:committee_member, :committee => @committee)
         get :index, {:committee_id => @committee.id}
-        assigns(:committee_members).should eq([cm])
+        expect(assigns(:committee_members)).to eq([cm])
       end
       it "should only show members for this committee" do
         cm = FactoryGirl.create(:committee_member, :committee => @committee)
         other_cm = FactoryGirl.create(:committee_member)
         get :index, {:committee_id => @committee.id}
-        assigns(:committee_members).should eq([cm])
+        expect(assigns(:committee_members)).to eq([cm])
       end
     end
     describe "as committee_admin user" do
@@ -70,8 +70,8 @@ describe CommitteeMembersController do
         end
         it "should allow access" do
             get :index, {:committee_id => @cm.committee.id}
-            response.should be_success
-            assigns(:committee_members).should eq([@cm])
+            expect(response).to be_success
+            expect(assigns(:committee_members)).to eq([@cm])
         end
     end
   end
@@ -79,7 +79,7 @@ describe CommitteeMembersController do
   describe "GET new" do
     it "fails when not an Admin" do
       get :new, {:committee_id => @committee.id}
-      response.should redirect_to(root_path)
+      expect(response).to redirect_to(root_path)
     end
 
     describe "as a super-admin" do
@@ -89,21 +89,21 @@ describe CommitteeMembersController do
       end
       it "can access the :new page" do
         get :new, {:committee_id => @committee.id}
-        response.should be_success
+        expect(response).to be_success
       end
 
       it "assigns a new committee_member as @committee_member" do
         get :new, {:committee_id => @committee.id}
-        assigns(:committee_member).should be_a_new(CommitteeMember)
+        expect(assigns(:committee_member)).to be_a_new(CommitteeMember)
       end
       it "assigns all users to @users" do
         get :new, {:committee_id => @committee.id}
-        assigns(:users).should =~ [@user, @admin_user]
+        expect(assigns(:users)).to match_array([@user, @admin_user])
       end
       it "only assigns new members to @users" do
         FactoryGirl.create(:committee_member, :committee => @committee, :user => @admin_user)
         get :new, {:committee_id => @committee.id}
-        assigns(:users).should =~ [@user]
+        expect(assigns(:users)).to match_array([@user])
       end
     end
   end
@@ -112,7 +112,7 @@ describe CommitteeMembersController do
     it "fails when not admin user" do
       committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
       get :edit, {:id => committee_member.to_param, :committee_id => @committee.id}
-      response.should redirect_to(root_path)
+      expect(response).to redirect_to(root_path)
     end
 
     it "assigns the requested committee as @committee" do
@@ -120,7 +120,7 @@ describe CommitteeMembersController do
       sign_in @admin_user
       committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
       get :edit, {:id => committee_member.to_param, :committee_id => @committee.id}
-      assigns(:committee_member).should eq(committee_member)
+      expect(assigns(:committee_member)).to eq(committee_member)
     end
     describe "as committee_admin user" do
         before(:each) do
@@ -131,8 +131,8 @@ describe CommitteeMembersController do
         end
         it "can edit a user" do
             get :edit, {:id => @cm.to_param, :committee_id => @cm.committee.id}
-            response.should be_success
-            assigns(:committee_member).should eq(@cm)
+            expect(response).to be_success
+            expect(assigns(:committee_member)).to eq(@cm)
         end
     end
   end
@@ -157,43 +157,43 @@ describe CommitteeMembersController do
 
       it "assigns a newly created committee_member as @committee_member" do
         post :create, {:committee_member => valid_attributes, :committee_id => @committee.id}
-        assigns(:committee_member).should be_a(CommitteeMember)
-        assigns(:committee_member).should be_persisted
-        assigns(:committee_member).admin.should == false
+        expect(assigns(:committee_member)).to be_a(CommitteeMember)
+        expect(assigns(:committee_member)).to be_persisted
+        expect(assigns(:committee_member).admin).to eq(false)
       end
       it "sets the admin status correctly" do
         post :create, {:committee_member => {user_id: [@user.id], admin: true, voting: false }, :committee_id => @committee.id}
-        assigns(:committee_member).admin.should == true
+        expect(assigns(:committee_member).admin).to eq(true)
       end
       it "sets the editor status correctly" do
         post :create, {:committee_member => {user_id: [@user.id], admin: false, editor: true, voting: false }, :committee_id => @committee.id}
-        assigns(:committee_member).editor.should == true
+        expect(assigns(:committee_member).editor).to eq(true)
       end
 
       it "redirects to the created committee_member" do
         post :create, {:committee_member => valid_attributes, :committee_id => @committee.id}
-        response.should redirect_to(committee_committee_members_path(@committee))
+        expect(response).to redirect_to(committee_committee_members_path(@committee))
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved committee_member as @committee_member" do
         # Trigger the behavior that occurs when invalid params are submitted
-        CommitteeMember.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(CommitteeMember).to receive(:save).and_return(false)
         post :create, {:committee_member => {admin: true}, :committee_id => @committee.id}
-        assigns(:committee_member).should be_a_new(CommitteeMember)
+        expect(assigns(:committee_member)).to be_a_new(CommitteeMember)
       end
       it "loads the list of users" do
-        CommitteeMember.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(CommitteeMember).to receive(:save).and_return(false)
         post :create, {:committee_member => {admin: true}, :committee_id => @committee.id}
-        assigns(:users).should =~ [@user, @admin_user]
+        expect(assigns(:users)).to match_array([@user, @admin_user])
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        CommitteeMember.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(CommitteeMember).to receive(:save).and_return(false)
         post :create, {:committee_member => {admin: true}, :committee_id => @committee.id}
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
 
@@ -204,7 +204,7 @@ describe CommitteeMembersController do
     end
       it "should fail" do
         post :create, {:committee_member => valid_attributes, :committee_id => @committee.id}
-        response.should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
     end
   end
@@ -221,27 +221,27 @@ describe CommitteeMembersController do
         # specifies that the CommitteeMember created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        CommitteeMember.any_instance.should_receive(:update_attributes).with({})
+        expect_any_instance_of(CommitteeMember).to receive(:update_attributes).with({})
         put :update, {:id => committee_member.to_param, :committee_member => {'these' => 'params'}, :committee_id => @committee.id}
       end
 
       it "assigns the requested committee_member as @committee" do
         committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         put :update, {:id => committee_member.to_param, :committee_member => {:user_id => @user.id, :admin => false, :voting => true }, :committee_id => @committee.id}
-        assigns(:committee_member).should eq(committee_member)
+        expect(assigns(:committee_member)).to eq(committee_member)
       end
 
       it "redirects to the committee" do
         committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         put :update, {:id => committee_member.to_param, :committee_member => {:user_id => @user.id, :admin => false, :voting => true}, :committee_id => @committee.id}
-        response.should redirect_to(committee_committee_members_path(@committee))
+        expect(response).to redirect_to(committee_committee_members_path(@committee))
       end
 
       it "sets the editor flag" do
         committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         put :update, {:id => committee_member.to_param, :committee_member => {:user_id => @user.id, :editor => true, :voting => true}, :committee_id => @committee.id}
         cm = CommitteeMember.find(committee_member.id)
-        cm.editor.should == true
+        expect(cm.editor).to eq(true)
       end
     end
 
@@ -249,17 +249,17 @@ describe CommitteeMembersController do
       it "assigns the committee_member as @committee" do
         committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         # Trigger the behavior that occurs when invalid params are submitted
-        CommitteeMember.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(CommitteeMember).to receive(:save).and_return(false)
         put :update, {:id => committee_member.to_param, :committee_member => {admin: true}, :committee_id => @committee.id}
-        assigns(:committee_member).should eq(committee_member)
+        expect(assigns(:committee_member)).to eq(committee_member)
       end
 
       it "re-renders the 'edit' template" do
         committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         # Trigger the behavior that occurs when invalid params are submitted
-        CommitteeMember.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(CommitteeMember).to receive(:save).and_return(false)
         put :update, {:id => committee_member.to_param, :committee_member => {admin: true}, :committee_id => @committee.id}
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
 
@@ -271,7 +271,7 @@ describe CommitteeMembersController do
       it "should fail" do
         committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         put :update, {:id => committee_member.to_param, :committee_member => valid_attributes, :committee_id => @committee.id}
-        response.should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
     end
   end
@@ -291,7 +291,7 @@ describe CommitteeMembersController do
     it "redirects to the committee_member list" do
       committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
       delete :destroy, {:id => committee_member.to_param, :committee_id => @committee.id}
-      response.should redirect_to(committee_committee_members_path(@committee))
+      expect(response).to redirect_to(committee_committee_members_path(@committee))
     end
     describe "with non-admin user" do
       it "fails to delete" do
@@ -299,7 +299,7 @@ describe CommitteeMembersController do
         sign_in @user
         committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
         delete :destroy, {:id => committee_member.to_param, :committee_id => @committee.id}
-        response.should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
     end
   end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "app_configs/edit" do
+describe "app_configs/edit", :type => :view do
   before(:each) do
     @app_config = assign(:app_config, FactoryGirl.build_stubbed(:app_config,
       :rulebook_name => "MyString",

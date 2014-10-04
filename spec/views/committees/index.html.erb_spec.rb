@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe "committees/index" do
+describe "committees/index", :type => :view do
   before(:each) do
     @committees = [FactoryGirl.create(:committee, :preliminary => true),
                    FactoryGirl.create(:committee, :preliminary => false)]
     @ability = Object.new
     @ability.extend(CanCan::Ability)
-    controller.stub(:current_ability) { @ability }
+    allow(controller).to receive(:current_ability) { @ability }
   end
 
   it "renders a list of committees" do

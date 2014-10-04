@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe CommitteesController do
+describe CommitteesController, :type => :controller do
   before (:each) do
     @user = FactoryGirl.create(:user)
     @admin_user = FactoryGirl.create(:admin_user)
@@ -38,7 +38,7 @@ describe CommitteesController do
     it "fails when not logged in" do
       sign_out @user
       get :index
-      response.should redirect_to(new_user_session_path)
+      expect(response).to redirect_to(new_user_session_path)
     end
     describe "for a committee_admin" do
       before(:each) do
@@ -49,11 +49,11 @@ describe CommitteesController do
       end
       it "succeeds for committee_admin" do
         get :index
-        response.should be_success
+        expect(response).to be_success
       end
       it "only shows MY committees" do
         get :index
-        assigns(:committees).should eq([@cm.committee])
+        expect(assigns(:committees)).to eq([@cm.committee])
       end
     end
 
@@ -62,7 +62,7 @@ describe CommitteesController do
       sign_in @admin_user
       committee = Committee.create! valid_attributes
       get :index, {}
-      assigns(:committees).should eq([committee])
+      expect(assigns(:committees)).to eq([committee])
     end
   end
 
@@ -77,7 +77,7 @@ describe CommitteesController do
         committee = FactoryGirl.create(:committee)
         proposal = FactoryGirl.create(:proposal, :status => 'Review', committee: committee)
         get :show, { id: committee.id }
-        assigns(:proposals).should eq([proposal])
+        expect(assigns(:proposals)).to eq([proposal])
       end
     end
   end
@@ -85,14 +85,14 @@ describe CommitteesController do
   describe "GET new" do
     it "fails when not an Admin" do
       get :new, {}
-      response.should redirect_to(root_path)
+      expect(response).to redirect_to(root_path)
     end
 
     it "assigns a new committee as @committee" do
       sign_out @user
       sign_in @admin_user
       get :new, {}
-      assigns(:committee).should be_a_new(Committee)
+      expect(assigns(:committee)).to be_a_new(Committee)
     end
   end
 
@@ -100,7 +100,7 @@ describe CommitteesController do
     it "fails when not admin user" do
       committee = Committee.create! valid_attributes
       get :edit, {:id => committee.to_param}
-      response.should redirect_to(root_path)
+      expect(response).to redirect_to(root_path)
     end
 
     it "assigns the requested committee as @committee" do
@@ -108,7 +108,7 @@ describe CommitteesController do
       sign_in @admin_user
       committee = Committee.create! valid_attributes
       get :edit, {:id => committee.to_param}
-      assigns(:committee).should eq(committee)
+      expect(assigns(:committee)).to eq(committee)
     end
   end
 
@@ -126,29 +126,29 @@ describe CommitteesController do
 
       it "assigns a newly created committee as @committee" do
         post :create, {:committee => valid_attributes}
-        assigns(:committee).should be_a(Committee)
-        assigns(:committee).should be_persisted
+        expect(assigns(:committee)).to be_a(Committee)
+        expect(assigns(:committee)).to be_persisted
       end
 
       it "redirects to the created committee" do
         post :create, {:committee => valid_attributes}
-        response.should redirect_to(committees_path)
+        expect(response).to redirect_to(committees_path)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved committee as @committee" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Committee.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Committee).to receive(:save).and_return(false)
         post :create, {:committee => {name: 'fake'}}
-        assigns(:committee).should be_a_new(Committee)
+        expect(assigns(:committee)).to be_a_new(Committee)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Committee.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Committee).to receive(:save).and_return(false)
         post :create, {:committee => {name: 'fake'}}
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
 
@@ -159,7 +159,7 @@ describe CommitteesController do
     end
       it "should fail" do
         post :create, {:committee => valid_attributes}
-        response.should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
     end
   end
@@ -176,20 +176,20 @@ describe CommitteesController do
         # specifies that the Committee created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Committee.any_instance.should_receive(:update_attributes).with({})
+        expect_any_instance_of(Committee).to receive(:update_attributes).with({})
         put :update, {:id => committee.to_param, :committee => {'these' => 'params'}}
       end
 
       it "assigns the requested committee as @committee" do
         committee = Committee.create! valid_attributes
         put :update, {:id => committee.to_param, :committee => valid_attributes}
-        assigns(:committee).should eq(committee)
+        expect(assigns(:committee)).to eq(committee)
       end
 
       it "redirects to the committee" do
         committee = Committee.create! valid_attributes
         put :update, {:id => committee.to_param, :committee => valid_attributes}
-        response.should redirect_to(committees_path)
+        expect(response).to redirect_to(committees_path)
       end
     end
 
@@ -197,17 +197,17 @@ describe CommitteesController do
       it "assigns the committee as @committee" do
         committee = Committee.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Committee.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Committee).to receive(:save).and_return(false)
         put :update, {:id => committee.to_param, :committee => {name: 'fake'}}
-        assigns(:committee).should eq(committee)
+        expect(assigns(:committee)).to eq(committee)
       end
 
       it "re-renders the 'edit' template" do
         committee = Committee.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Committee.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Committee).to receive(:save).and_return(false)
         put :update, {:id => committee.to_param, :committee => {name: 'fake'}}
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
 
@@ -219,7 +219,7 @@ describe CommitteesController do
       it "should fail" do
         committee = Committee.create! valid_attributes
         put :update, {:id => committee.to_param, :committee => valid_attributes}
-        response.should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
     end
   end
@@ -239,7 +239,7 @@ describe CommitteesController do
     it "redirects to the committee list" do
       committee = Committee.create! valid_attributes
       delete :destroy, {:id => committee.to_param}
-      response.should redirect_to(committees_url)
+      expect(response).to redirect_to(committees_url)
     end
     describe "with non-admin user" do
       it "fails to delete" do
@@ -247,7 +247,7 @@ describe CommitteesController do
         sign_in @user
         committee = Committee.create! valid_attributes
         delete :destroy, {:id => committee.to_param}
-        response.should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
     end
   end
@@ -256,13 +256,13 @@ describe CommitteesController do
     it "assigns all committees as @committees" do
       committee = FactoryGirl.create(:committee)
       get :membership
-      response.should be_success
-      assigns(:committees).should == [committee]
+      expect(response).to be_success
+      expect(assigns(:committees)).to eq([committee])
     end
     it "should assign all users as @users" do
       get :membership
-      response.should be_success
-      assigns(:users).should =~ [@user, @admin_user]
+      expect(response).to be_success
+      expect(assigns(:users)).to match_array([@user, @admin_user])
     end
   end
 end

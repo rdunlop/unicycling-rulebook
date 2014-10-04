@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "proposals/edit" do
+describe "proposals/edit", :type => :view do
   let(:committee) { FactoryGirl.create(:committee) }
   before(:each) do
     @proposal = FactoryGirl.create(:proposal, committee: committee)

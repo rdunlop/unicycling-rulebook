@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe WelcomeController do
+describe WelcomeController, :type => :controller do
   before(:each) do
     @user = FactoryGirl.create(:user)
 
@@ -36,7 +36,7 @@ describe WelcomeController do
     describe "as a normal user" do
       it "cannot send a message" do
         get :message, {}
-        response.should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
     end
     describe "as a super-user" do
@@ -47,11 +47,11 @@ describe WelcomeController do
       end
       it "can send a message" do
         get :message, {}
-        response.should be_success
+        expect(response).to be_success
       end
       it "sets the username to the current-signed-in-user" do
         get :message, {}
-        assigns(:from).should == @admin.name
+        expect(assigns(:from)).to eq(@admin.name)
       end
     end
     describe "as a committee-admin" do
@@ -63,7 +63,7 @@ describe WelcomeController do
       end
       it "can send a message" do
         get :message, {}
-        response.should be_success
+        expect(response).to be_success
       end
     end
   end
@@ -76,13 +76,13 @@ describe WelcomeController do
     end
     it "should fail if no committees are selected" do
       post :send_message, {}
-      flash[:alert].should == "No Target Selected"
+      expect(flash[:alert]).to eq("No Target Selected")
     end
     it "should succeed if a committees is selected" do
       @com = FactoryGirl.create(:committee)
       FactoryGirl.create(:committee_member, committee: @com, :admin => true)
       post :send_message, {:committees => [@com.id]}
-      flash[:notice].should == "Message Successfully Sent"
+      expect(flash[:notice]).to eq("Message Successfully Sent")
     end
     it "should set the reply_to address to the user's email" do
       @com = FactoryGirl.create(:committee)
@@ -91,7 +91,7 @@ describe WelcomeController do
       post :send_message, {:committees => [@com.id]}
       num_deliveries = ActionMailer::Base.deliveries.size
       note = ActionMailer::Base.deliveries.first
-      note.reply_to.should == [@admin_user.email]
+      expect(note.reply_to).to eq([@admin_user.email])
     end
   end
 
@@ -99,7 +99,7 @@ describe WelcomeController do
     it "assigns all MY proposals as @proposals" do
       cm = FactoryGirl.create(:committee_member, :user => @user)
       get :index, {}
-      assigns(:committees).should eq([cm.committee])
+      expect(assigns(:committees)).to eq([cm.committee])
     end
   end
 end

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe UserMailer do
+describe UserMailer, :type => :mailer do
   before(:each) do
       @proposal = FactoryGirl.create(:proposal, :status => "Review", :title => 'A "very" strange title', :mail_messageid => "mymessageid")
       @discussion = FactoryGirl.create(:discussion, proposal: @proposal, committee: @proposal.committee)
@@ -21,7 +21,7 @@ describe UserMailer do
     end
     it "should only send to the normal admin" do
         mail = UserMailer.proposal_submitted(@proposal)
-        mail.bcc.should eq([@normal_admin_user.email])
+        expect(mail.bcc).to eq([@normal_admin_user.email])
     end
   end
 
@@ -33,22 +33,22 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_submitted(@proposal) }
 
     it "renders the headers" do
-      mail.subject.should eq(@proposal_id_title_and_committee)
-      mail.bcc.should eq([@admin_user.email, @admin_user2.email])
-      mail.from.should eq(["unicycling@dunlopweb.com"])
-      mail.header[:from].to_s.should == "#{@proposal.owner.name} <unicycling@dunlopweb.com>"
+      expect(mail.subject).to eq(@proposal_id_title_and_committee)
+      expect(mail.bcc).to eq([@admin_user.email, @admin_user2.email])
+      expect(mail.from).to eq(["unicycling@dunlopweb.com"])
+      expect(mail.header[:from].to_s).to eq("#{@proposal.owner.name} <unicycling@dunlopweb.com>")
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("following proposal has been submitted")
+      expect(mail.body.encoded).to match("following proposal has been submitted")
     end
     it "renders the body without screwing up quotes" do
-      mail.body.encoded.should match('A "very" strange title')
-      mail.body.encoded.should match('This is what I "Like" to do')
-      mail.body.encoded.should match("Sometimes I <link> somewhere")
+      expect(mail.body.encoded).to match('A "very" strange title')
+      expect(mail.body.encoded).to match('This is what I "Like" to do')
+      expect(mail.body.encoded).to match("Sometimes I <link> somewhere")
     end
     it "should not have a in-reply-to set" do
-      mail['In-Reply-To'].should be_nil
+      expect(mail['In-Reply-To']).to be_nil
     end
   end
 
@@ -57,15 +57,15 @@ describe UserMailer do
 
     it "renders the headers" do
       #mail.subject.should eq(@proposal_id_title_and_committee)
-      mail.bcc.should eq([@user.email, @other_cm_user.email])
-      mail.from.should eq(["unicycling@dunlopweb.com"])
-      mail.header[:from].to_s.should == "#{@user.name} <unicycling@dunlopweb.com>"
+      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
+      expect(mail.from).to eq(["unicycling@dunlopweb.com"])
+      expect(mail.header[:from].to_s).to eq("#{@user.name} <unicycling@dunlopweb.com>")
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("Comment Added")
-      mail.body.encoded.should match('This is what I "Said"')
-      mail.body.encoded.should match(@comment.comment)
+      expect(mail.body.encoded).to match("Comment Added")
+      expect(mail.body.encoded).to match('This is what I "Said"')
+      expect(mail.body.encoded).to match(@comment.comment)
     end
     #it "should have a in-reply-to set" do
     #  mail['In-Reply-To'].to_s.should == @proposal.mail_messageid
@@ -91,10 +91,10 @@ describe UserMailer do
     let(:mail) { UserMailer.discussion_comment_added(@discussion, @comment, @user) }
 
     it "should have the body" do
-      mail.body.encoded.should match("Comment Added")
+      expect(mail.body.encoded).to match("Comment Added")
     end
     it "should have no in-reply-to set" do
-      mail['In-Reply-To'].should be_nil
+      expect(mail['In-Reply-To']).to be_nil
     end
   end
 
@@ -105,7 +105,7 @@ describe UserMailer do
     end
     it "should only e-mail.bcc the normal user" do
         mail = UserMailer.proposal_revised(@proposal)
-        mail.bcc.should eq([@user.email])
+        expect(mail.bcc).to eq([@user.email])
     end
   end
 
@@ -117,8 +117,8 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_revised(@proposal) }
 
     it "should not send e-mail to members if the proposal is in 'Submitted' state" do
-      @proposal.status.should == "Submitted"
-      mail.bcc.should eq([])
+      expect(@proposal.status).to eq("Submitted")
+      expect(mail.bcc).to eq([])
     end
   end
 
@@ -126,20 +126,20 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_revised(@proposal) }
 
     it "renders the headers" do
-      mail.subject.should eq(@proposal_id_title_and_committee)
-      mail.bcc.should eq([@user.email, @other_cm_user.email])
-      mail.from.should eq(["unicycling@dunlopweb.com"])
+      expect(mail.subject).to eq(@proposal_id_title_and_committee)
+      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
+      expect(mail.from).to eq(["unicycling@dunlopweb.com"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("proposal has been revised")
+      expect(mail.body.encoded).to match("proposal has been revised")
     end
     it "renders the body without screwing up quotes" do
-      mail.body.encoded.should match('This is what I "Like" to do')
-      mail.body.encoded.should match("Sometimes I <link> somewhere")
+      expect(mail.body.encoded).to match('This is what I "Like" to do')
+      expect(mail.body.encoded).to match("Sometimes I <link> somewhere")
     end
     it "should have a in-reply-to set" do
-      mail['In-Reply-To'].to_s.should == @proposal.mail_messageid
+      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
     end
   end
 
@@ -147,21 +147,21 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_status_review(@proposal, true) }
 
     it "renders the headers" do
-      mail.subject.should eq(@proposal_id_title_and_committee)
-      mail.bcc.should eq([@user.email, @other_cm_user.email])
-      mail.from.should eq(["unicycling@dunlopweb.com"])
+      expect(mail.subject).to eq(@proposal_id_title_and_committee)
+      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
+      expect(mail.from).to eq(["unicycling@dunlopweb.com"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("Proposal in Review")
-      mail.body.encoded.should match("was Set-Aside,")
+      expect(mail.body.encoded).to match("Proposal in Review")
+      expect(mail.body.encoded).to match("was Set-Aside,")
     end
     it "renders the body without screwing up quotes" do
-      mail.body.encoded.should match('This is what I "Like" to do')
-      mail.body.encoded.should match("Sometimes I <link> somewhere")
+      expect(mail.body.encoded).to match('This is what I "Like" to do')
+      expect(mail.body.encoded).to match("Sometimes I <link> somewhere")
     end
     it "should have a in-reply-to set" do
-      mail['In-Reply-To'].to_s.should == @proposal.mail_messageid
+      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
     end
   end
 
@@ -169,16 +169,16 @@ describe UserMailer do
     let(:mail) { UserMailer.vote_changed(@proposal, @user, 'disagree', 'abstain') }
 
     it "renders the headers" do
-      mail.subject.should eq(@proposal_id_title_and_committee)
-      mail.bcc.should eq([@user.email, @other_cm_user.email])
-      mail.from.should eq(["unicycling@dunlopweb.com"])
+      expect(mail.subject).to eq(@proposal_id_title_and_committee)
+      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
+      expect(mail.from).to eq(["unicycling@dunlopweb.com"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("A vote was changed from disagree to abstain by the administrator")
+      expect(mail.body.encoded).to match("A vote was changed from disagree to abstain by the administrator")
     end
     it "should have a in-reply-to set" do
-      mail['In-Reply-To'].to_s.should == @proposal.mail_messageid
+      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
     end
   end
 
@@ -190,15 +190,15 @@ describe UserMailer do
     end
 
     it "renders the headers" do
-      mail.subject.should eq("New committee applicant")
-      mail.bcc.should eq([@admin_user.email])
-      mail.from.should eq(["unicycling@dunlopweb.com"])
-      mail.header[:from].to_s.should == "Uni Rulebook <unicycling@dunlopweb.com>"
+      expect(mail.subject).to eq("New committee applicant")
+      expect(mail.bcc).to eq([@admin_user.email])
+      expect(mail.from).to eq(["unicycling@dunlopweb.com"])
+      expect(mail.header[:from].to_s).to eq("Uni Rulebook <unicycling@dunlopweb.com>")
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("Here are the details of the new applicant:")
-      mail.body.encoded.should match("Please add me")
+      expect(mail.body.encoded).to match("Here are the details of the new applicant:")
+      expect(mail.body.encoded).to match("Please add me")
     end
   end
 
@@ -210,26 +210,26 @@ describe UserMailer do
     let(:mail) { UserMailer.vote_submitted(@vote) }
 
     it "renders the headers" do
-      mail.subject.should eq(@proposal_id_title_and_committee)
-      mail.bcc.should eq([@user.email, @other_cm_user.email])
-      mail.from.should eq(["unicycling@dunlopweb.com"])
+      expect(mail.subject).to eq(@proposal_id_title_and_committee)
+      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
+      expect(mail.from).to eq(["unicycling@dunlopweb.com"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("A member Voted")
-      mail.body.encoded.should match("Did you place your vote?")
+      expect(mail.body.encoded).to match("A member Voted")
+      expect(mail.body.encoded).to match("Did you place your vote?")
     end
     it "should have a in-reply-to set" do
-      mail['In-Reply-To'].to_s.should == @proposal.mail_messageid
+      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
     end
 
     it "should not send e-mail to people who have voted" do
       @my_vote = FactoryGirl.create(:vote, :proposal => @proposal, :user => @user)
-      mail.bcc.should eq([@other_cm_user.email])
+      expect(mail.bcc).to eq([@other_cm_user.email])
     end
     it "should not send e-mail to people who are not voting members" do
       @non_voting_member = FactoryGirl.create(:committee_member, :committee => @proposal.committee, :voting => false).user
-      mail.bcc.should eq([@user.email, @other_cm_user.email])
+      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
     end
   end
 
@@ -237,17 +237,17 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_finished_review(@proposal) }
 
     it "renders the headers" do
-      mail.subject.should eq(@proposal_id_title_and_committee)
-      mail.bcc.should eq([@proposal.owner.email])
-      mail.from.should eq(["unicycling@dunlopweb.com"])
+      expect(mail.subject).to eq(@proposal_id_title_and_committee)
+      expect(mail.bcc).to eq([@proposal.owner.email])
+      expect(mail.from).to eq(["unicycling@dunlopweb.com"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("Review Period has concluded")
-      mail.body.encoded.should match("Make a revision to the proposal")
+      expect(mail.body.encoded).to match("Review Period has concluded")
+      expect(mail.body.encoded).to match("Make a revision to the proposal")
     end
     it "should have a in-reply-to set" do
-      mail['In-Reply-To'].to_s.should == @proposal.mail_messageid
+      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
     end
   end
 
@@ -255,17 +255,17 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_call_for_voting(@proposal) }
 
     it "renders the headers" do
-      mail.subject.should eq(@proposal_id_title_and_committee)
-      mail.bcc.should eq([@user.email, @other_cm_user.email])
-      mail.from.should eq(["unicycling@dunlopweb.com"])
+      expect(mail.subject).to eq(@proposal_id_title_and_committee)
+      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
+      expect(mail.from).to eq(["unicycling@dunlopweb.com"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("Call for Voting")
-      mail.body.encoded.should match("read through the latest revision")
+      expect(mail.body.encoded).to match("Call for Voting")
+      expect(mail.body.encoded).to match("read through the latest revision")
     end
     it "should have a in-reply-to set" do
-      mail['In-Reply-To'].to_s.should == @proposal.mail_messageid
+      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
     end
   end
 
@@ -273,17 +273,17 @@ describe UserMailer do
     let(:mail) { UserMailer.proposal_voting_result(@proposal, true) }
 
     it "renders the headers" do
-      mail.subject.should eq(@proposal_id_title_and_committee)
-      mail.bcc.should eq([@user.email, @other_cm_user.email])
-      mail.from.should eq(["unicycling@dunlopweb.com"])
+      expect(mail.subject).to eq(@proposal_id_title_and_committee)
+      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
+      expect(mail.from).to eq(["unicycling@dunlopweb.com"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("Voting Completed")
-      mail.body.encoded.should match("proposal has Passed")
+      expect(mail.body.encoded).to match("Voting Completed")
+      expect(mail.body.encoded).to match("proposal has Passed")
     end
     it "should have a in-reply-to set" do
-      mail['In-Reply-To'].to_s.should == @proposal.mail_messageid
+      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
     end
   end
 
@@ -291,17 +291,17 @@ describe UserMailer do
     let(:mail) { UserMailer.mass_email([@committee], 'Some Subject', 'Some text', "some@dunlopweb.com") }
 
     it "uses bcc for all committee members" do
-      mail.subject.should eq("Some Subject")
-      mail.bcc.should match_array([@user.email, @other_cm_user.email])
+      expect(mail.subject).to eq("Some Subject")
+      expect(mail.bcc).to match_array([@user.email, @other_cm_user.email])
     end
     it "sends e-mail even when the user is set to 'no-email'" do
       @user3 = FactoryGirl.create(:user, :no_emails => true)
       @cm = FactoryGirl.create(:committee_member, :committee => @committee, :user => @user3)
-      mail.subject.should eq("Some Subject")
-      mail.bcc.should eq([@user.email, @other_cm_user.email, @user3.email])
+      expect(mail.subject).to eq("Some Subject")
+      expect(mail.bcc).to eq([@user.email, @other_cm_user.email, @user3.email])
     end
     it "should be sent with the specified 'reply-to' address" do
-      mail.reply_to.should eq(["some@dunlopweb.com"])
+      expect(mail.reply_to).to eq(["some@dunlopweb.com"])
     end
   end
 

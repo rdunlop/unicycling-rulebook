@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "revisions/new" do
+describe "revisions/new", :type => :view do
   before(:each) do
     @rev = assign(:revision, FactoryGirl.create(:revision))
     @proposal = @rev.proposal
