@@ -20,6 +20,7 @@ Build Status on TravisCI: {<img src="https://travis-ci.org/rdunlop/unicycling-ru
         mail_password: something
         mail_full_email: rulebook-do-not-reply@uniusa.org
         mail_from_name: 'Uni Rulebook'"
+        mail_tls: true
         domain: "localhost:9292"
 
 == Set up the configuration variables (on heroku)

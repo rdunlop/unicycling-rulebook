@@ -5,7 +5,7 @@ ActionMailer::Base.smtp_settings = {
   user_name:            Rails.application.secrets.mail_username,
   password:             Rails.application.secrets.mail_password,
   authentication:       Rails.application.secrets.mail_authentication,
-  enable_starttls_auto: (Rails.application.secrets.mail_tls == 'true')
+  enable_starttls_auto: (Rails.application.secrets.mail_tls.to_s == 'true')
 }
 ActionMailer::Base.default :from => Rails.application.secrets.mail_full_email
 
