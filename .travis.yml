@@ -6,4 +6,5 @@ script: bundle exec rspec spec
 before_script:
   - psql -c 'create database rulebook_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
+  - cp config/secrets.yml.travis config/secrets.yml
   - RAILS_ENV=test bundle exec rake db:schema:load
