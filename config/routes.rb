@@ -2,41 +2,43 @@ RulebookApp::Application.routes.draw do
 
   resources :rulebooks
 
-  resources :proposals, :except => [:index, :new, :create] do
-    collection do
-      get 'passed'
+  scope "/r/(:rulebook_slug)" do
+    resources :proposals, :except => [:index, :new, :create] do
+      collection do
+        get 'passed'
+      end
+      member do
+        put 'set_voting'
+        put 'set_review'
+        put 'set_pre_voting'
+        put 'table'
+      end
+      resources :votes, :except => [:show]
+      resources :revisions, :except => [:edit, :index, :put, :destroy]
     end
-    member do
-      put 'set_voting'
-      put 'set_review'
-      put 'set_pre_voting'
-      put 'table'
+
+    resources :discussions, only: [:show] do
+      put :close, on: :member
+     resources :comments, :only => [:create]
     end
-    resources :votes, :except => [:show]
-    resources :revisions, :except => [:edit, :index, :put, :destroy]
-  end
 
-  resources :discussions, only: [:show] do
-    put :close, on: :member
-   resources :comments, :only => [:create]
-  end
-
-  resources :committees do
-    collection do
-      get 'membership'
+    resources :committees do
+      collection do
+        get 'membership'
+      end
+      resources :committee_members, :except => [:show]
+      resources :discussions, only: [:index, :create, :new]
+      resources :proposals, only: [:new, :create]
     end
-    resources :committee_members, :except => [:show]
-    resources :discussions, only: [:index, :create, :new]
-    resources :proposals, only: [:new, :create]
+
+    devise_for :users
+
+
+    get "welcome/index"
+    get "welcome/help"
+    get "welcome/message"
+    post "welcome/send_message"
   end
-
-  devise_for :users
-
-
-  get "welcome/index"
-  get "welcome/help"
-  get "welcome/message"
-  post "welcome/send_message"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -87,7 +89,8 @@ RulebookApp::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'welcome#index'
+  get '/r/:rulebook_slug' => redirect("/r/%{rulebook_slug}/welcome/index") # to match /en  to send to /en/welcome
+  root :to => 'welcome#index_all'
 
   # See how all your routes lay out with "rake routes"
 

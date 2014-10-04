@@ -17,7 +17,17 @@ class ApplicationController < ActionController::Base
   before_filter :load_config
 
   def load_config
-    @config = Rulebook.first || Rulebook.new
+    @config = self.class.get_current_config || Rulebook.first || Rulebook.new
+  end
+
+  def self.get_current_config
+    Rulebook.find_by(subdomain: Apartment::Tenant.current)
+  end
+
+  def self.default_url_options(options={})
+    logger.debug "default_url_options is passed options: #{options.inspect}\n"
+    config = @config || get_current_config
+    options.merge({ rulebook_slug: config.subdomain })
   end
 
   def current_ablity

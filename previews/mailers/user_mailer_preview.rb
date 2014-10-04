@@ -89,7 +89,7 @@ class UserMailerPreview < ActionMailer::Preview
 
   def discussion
     return @discussion if @discussion
-    @discussion = Discussio.new(title: "this is the discussion", body: "<p>This is the <b>Discussion body</b></p")
+    @discussion = Discussion.new(title: "this is the discussion", body: "<p>This is the <b>Discussion body</b></p")
   end
 
   def user_number

@@ -10,3 +10,4 @@ ActionMailer::Base.smtp_settings = {
 ActionMailer::Base.default :from => Rails.application.secrets.mail_full_email
 
 ActionMailer::Base.default_url_options[:host] = Rails.application.secrets.domain
+ActionMailer::Base.default_url_options[:rulebook] = "rulebook2"

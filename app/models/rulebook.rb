@@ -9,16 +9,15 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #  copyright     :string(255)
+#  subdomain     :string(255)
+#
+# Indexes
+#
+#  index_rulebooks_on_subdomain  (subdomain) UNIQUE
 #
 
 class Rulebook < ActiveRecord::Base
-  validate :only_one_model_allowed
-
-  def only_one_model_allowed
-    if self.new_record? && Rulebook.all.count > 0
-      errors[:base] << "Only a single App Config may exist"
-    end
-  end
+  validates :subdomain, uniqueness: true
 
   def rulebook
     rulebook_name || "Generic IUF Rulebook"

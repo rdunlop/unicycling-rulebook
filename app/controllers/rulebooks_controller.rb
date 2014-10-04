@@ -1,6 +1,9 @@
 class RulebooksController < ApplicationController
-  before_filter :authenticate_user!
-  load_and_authorize_resource
+  skip_authorization_check only: [:new, :create, :index, :show]
+  load_resource only: [:new, :create, :index, :show]
+  layout "global"
+  before_filter :authenticate_user!, only: [:edit, :update, :destroy]
+  load_and_authorize_resource only: [:edit, :update, :destroy]
 
   # GET /rulebooks
   # GET /rulebooks.json
@@ -43,6 +46,7 @@ class RulebooksController < ApplicationController
   def create
     respond_to do |format|
       if @rulebook.save
+        Apartment::Tenant.create(@rulebook.subdomain)
         format.html { redirect_to @rulebook, notice: 'Rulebook was successfully created.' }
         format.json { render json: @rulebook, status: :created, location: @rulebook }
       else
@@ -83,6 +87,6 @@ class RulebooksController < ApplicationController
   private
 
   def rulebook_params
-    params.require(:rulebook).permit(:rulebook_name, :front_page, :faq, :copyright)
+    params.require(:rulebook).permit(:rulebook_name, :front_page, :faq, :copyright, :subdomain)
   end
 end

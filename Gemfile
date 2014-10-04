@@ -14,6 +14,8 @@ gem 'haml'
 # allows storing of secrets in ENV for heroku
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
+gem 'apartment'
+
 group :development, :test, :cucumber do
     gem 'html2haml'
     gem 'consistency_fail'
