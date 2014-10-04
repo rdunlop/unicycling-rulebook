@@ -5,7 +5,7 @@ gem 'rails', '4.1.6'
 
 gem 'rake'
 gem 'devise'
-gem 'cancancan', '~> 1.7'
+gem 'cancancan', '~> 1.9'
 gem 'exception_notification'
 
 #gem 'sqlite3'
