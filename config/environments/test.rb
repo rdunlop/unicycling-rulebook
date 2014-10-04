@@ -33,8 +33,4 @@ Rulebook::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-  ENV['DOMAIN'] = 'localhost'
-  ENV['SECRET'] = "someothersecretstringisreallylongenoughtobesecurecheckpassing"
-  ENV['MAIL_FROM_NAME'] = "Uni Rulebook"
-  ENV['MAIL_FULL_EMAIL'] = "unicycling@dunlopweb.com"
 end

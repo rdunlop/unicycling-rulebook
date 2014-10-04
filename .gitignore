@@ -3,3 +3,4 @@ log
 *.swp
 .env
 config/database.yml
+config/secrets.yml

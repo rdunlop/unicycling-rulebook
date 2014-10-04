@@ -1,7 +1,7 @@
 %h1 Send message
 %p Using this form, you can send e-mail messages to all Members of a Committee. If you select Multiple committees, all members in all of those committees will receive the e-mail.
 %p
-  The e-mail will originate from #{ENV['MAIL_FULL_EMAIL']} and all e-mail addresses will be BCC'd
+  The e-mail will originate from #{Rails.application.secrets.mail_full_email} and all e-mail addresses will be BCC'd
 = form_tag(welcome_send_message_path, :method => "POST") do
   %h3 Committees
   - @committees.each do |c|

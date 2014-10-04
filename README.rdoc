@@ -9,47 +9,47 @@ Build Status on TravisCI: {<img src="https://travis-ci.org/rdunlop/unicycling-ru
     echo "RACK_ENV=development" > .env
     echo "PORT=9292" >> .env
 
-    echo "MAIL_SERVER=smtp.gmail.com" >> .env
-    echo "MAIL_PORT=587" >> .env
-    echo "MAIL_DOMAIN=uniusa.org" >> .env
-    echo "MAIL_USERNAME=rulebook-do-not-reply@uniusa.org" >> .env
-    echo "MAIL_PASSWORD=something" >> .env
-    echo "MAIL_FULL_EMAIL=rulebook-do-not-reply@uniusa.org" >> .env
-    echo "MAIL_FROM_NAME='Uni Rulebook'" >> .env
-    echo "DOMAIN=localhost:9292" >> .env
+    cp config/secrets.yml.template config/secrets.yml
 
+    Update the mail settings, something like:
+    production:
+        mail_server: smtp.gmail.com
+        mail_port: 587
+        mail_domain: uniusa.org
+        mail_username: rulebook-do-not-reply@uniusa.org
+        mail_password: something
+        mail_full_email: rulebook-do-not-reply@uniusa.org
+        mail_from_name: 'Uni Rulebook'"
+        domain: "localhost:9292"
 
 == Set up the configuration variables (on heroku)
 
-    heroku config:add MAIL_SERVER=smtp.gmail.com
-    heroku config:add MAIL_PORT=587
-    heroku config:add MAIL_DOMAIN=uniusa.org
-    heroku config:add MAIL_USERNAME=rulebook-do-not-reply@uniusa.org
-    heroku config:add MAIL_PASSWORD=something
-    heroku config:add MAIL_FULL_EMAIL=rulebook-do-not-reply@uniusa.org
-    heroku config:add MAIL_FROM_NAME="Uni Rulebook"
-    heroku config:add DOMAIN=usarulebook2012.herokuapp.com
+    This will set up Environment settings on heroku for all settings in the secrets.yml
+
+    `rake heroku:secrets[<app-name>] RAILS_ENV=production`
+
+    Example:
+    `rake heroku:secrets[unirulebook2000] RAILS_ENV=production`
 
 == On Non-GMail systems, you may need to set the MAIL_TLS=false variable too (see initializers/mailer.rb)
 
     Current values for Unicycling.org rulebook are:
 
-    MAIL_SERVER=unicycling.org
-    MAIL_PORT=25
-    MAIL_DOMAIN=unicycling.org
-    MAIL_USERNAME=rulebook@unicycling.org
-    MAIL_PASSWORD=********
-    MAIL_FULL_EMAIL=rulebook@unicycling.org
-    MAIL_FROM_NAME="Uni Rulebook"
-    MAIL_TLS=false
-    DOMAIN=rulebook.unicycling.org
-
+    mail_server: unicycling.org
+    mail_port: 25
+    mail_domain: unicycling.org
+    mail_username: rulebook@unicycling.org
+    mail_password: ********
+    mail_full_emali: rulebook@unicycling.org
+    mail_from_name: "Uni Rulebook"
+    mail_tls: false
+    domain: rulebook.unicycling.org
 
 == Secret Hash
 
     The 'Secret' key is required in order to generate secure cookies. With this in place, users can return to the site and have their accounts still logged in (this is a good thing).
 
-    SECRET=<run rake secret on the command line>
+    secret: <run `rake secret` on the command line>
 
     (I use 'rake secret' (from my development environment) to generate a random secure value. I only run it once, and it should be a different value for each of your system). If you don't have a development environment, type approximately a  hundred numbers as your "SECRET"
 
@@ -91,7 +91,7 @@ Build Status on TravisCI: {<img src="https://travis-ci.org/rdunlop/unicycling-ru
 
 4. Load the database
         <tt>heroku run rake db:schema:load --app usarulebook2013</tt>
-  
+
 
 5. Install the scheduling addon:
         <tt>heroku addons:add scheduler:standard</tt>

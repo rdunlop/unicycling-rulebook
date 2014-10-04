@@ -15,6 +15,8 @@ gem 'exception_notification'
 #gem 'sqlite3'
 gem 'pg'
 gem 'haml'
+# allows storing of secrets in ENV for heroku
+gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 group :development, :test, :cucumber do
     gem 'html2haml'
