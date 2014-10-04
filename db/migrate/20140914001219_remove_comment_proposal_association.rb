@@ -7,7 +7,6 @@ class RemoveCommentProposalAssociation < ActiveRecord::Migration
   class Discussion < ActiveRecord::Base
     belongs_to :proposal
 
-    attr_accessible :title, :owner_id, :proposal_id, :status
   end
 
   class Proposal < ActiveRecord::Base

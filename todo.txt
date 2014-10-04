@@ -33,7 +33,6 @@ Friday To-Do:
 
 - Clean up the redundant code in the tests....really nasty duplication
 - Add unit tests for user:is_in_committee/etc methods
-- LEARN why I don't need to have attr_accessible :admin in the committee_member model.
 
 
 - Add Conf table which allows admin to specify the time-delay for many things

@@ -5,7 +5,6 @@ class MoveCommentsToDiscussion < ActiveRecord::Migration
   end
 
   class Discussion < ActiveRecord::Base
-    attr_accessible :title, :owner_id, :proposal_id, :status
   end
 
   class Proposal < ActiveRecord::Base
