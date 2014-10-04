@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 ruby "2.1.0"
 gem 'rails', '4.1.6'
 
-gem 'libv8'
 gem 'rake'
 gem 'devise'
 gem 'cancancan', '~> 1.7'
