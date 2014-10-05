@@ -63,14 +63,6 @@ describe VotesController, :type => :controller do
   end
 
   describe "GET edit" do
-    describe "as normal user" do
-      it "cannot view the edit page" do
-        vote = FactoryGirl.create(:vote, :proposal => @proposal)
-        get :edit, {:id => vote.to_param, :proposal_id => @proposal.id}
-        expect(response).to redirect_to(root_path)
-      end
-    end
-
     describe "as admin" do
       before(:each) do
         sign_out @user
@@ -142,12 +134,6 @@ describe VotesController, :type => :controller do
     before(:each) do
         @vote = FactoryGirl.create(:vote, :proposal => @proposal)
     end
-    describe "as a normal user" do
-      it "redirects to the vote" do
-        put :update, {:id => @vote.to_param, :vote => valid_attributes, :proposal_id => @proposal.id}
-        expect(response).to redirect_to(root_path)
-      end
-    end
 
     describe "with admin with valid params" do
       before(:each) do
@@ -207,11 +193,6 @@ describe VotesController, :type => :controller do
   end
 
   describe "DELETE destroy" do
-    it "should not be allowed" do
-      vote = FactoryGirl.create(:vote, :proposal => @proposal)
-      delete :destroy, {:id => vote.to_param, :proposal_id => @proposal.id}
-      expect(response).to redirect_to(root_path)
-    end
     describe "as admin" do
       before(:each) do
         sign_out @user

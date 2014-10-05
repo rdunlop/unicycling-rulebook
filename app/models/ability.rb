@@ -90,7 +90,7 @@ class Ability
     can :read, Committee
 
     if user.is_committee_admin(nil) || user.admin
-      can :read, CommitteeMember do |committte_member|
+      can :read, CommitteeMember do |committee_member|
         user.is_committee_admin(committee_member.committee)
       end
     end

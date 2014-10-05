@@ -410,16 +410,6 @@ describe ProposalsController, :type => :controller do
         proposal = Proposal.find(proposal.id)
         expect(proposal.status).to eq("Pre-Voting")
     end
-    describe "as a non-super-user" do
-        before(:each) do
-            sign_out @admin_user
-            sign_in FactoryGirl.create(:user)
-        end
-        it "should not be able to set_review a proposal" do
-            put :set_review, {:id => @proposal.to_param}
-            expect(response).to redirect_to(root_path)
-        end
-    end
     describe "as a committee-admin for the same committee" do
         before(:each) do
             sign_out @admin_user

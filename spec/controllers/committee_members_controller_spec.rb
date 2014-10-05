@@ -77,11 +77,6 @@ describe CommitteeMembersController, :type => :controller do
   end
 
   describe "GET new" do
-    it "fails when not an Admin" do
-      get :new, {:committee_id => @committee.id}
-      expect(response).to redirect_to(root_path)
-    end
-
     describe "as a super-admin" do
       before(:each) do
         sign_out @user
@@ -109,12 +104,6 @@ describe CommitteeMembersController, :type => :controller do
   end
 
   describe "GET edit" do
-    it "fails when not admin user" do
-      committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
-      get :edit, {:id => committee_member.to_param, :committee_id => @committee.id}
-      expect(response).to redirect_to(root_path)
-    end
-
     it "assigns the requested committee as @committee" do
       sign_out @user
       sign_in @admin_user
@@ -196,17 +185,6 @@ describe CommitteeMembersController, :type => :controller do
         expect(response).to render_template("new")
       end
     end
-
-    describe "with non-admin user" do
-    before (:each) do
-      sign_out @admin_user
-      sign_in @user
-    end
-      it "should fail" do
-        post :create, {:committee_member => valid_attributes, :committee_id => @committee.id}
-        expect(response).to redirect_to(root_path)
-      end
-    end
   end
 
   describe "PUT update" do
@@ -262,18 +240,6 @@ describe CommitteeMembersController, :type => :controller do
         expect(response).to render_template("edit")
       end
     end
-
-    describe "with non-admin user" do
-    before (:each) do
-      sign_out @admin_user
-      sign_in @user
-    end
-      it "should fail" do
-        committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
-        put :update, {:id => committee_member.to_param, :committee_member => valid_attributes, :committee_id => @committee.id}
-        expect(response).to redirect_to(root_path)
-      end
-    end
   end
 
   describe "DELETE destroy" do
@@ -292,15 +258,6 @@ describe CommitteeMembersController, :type => :controller do
       committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
       delete :destroy, {:id => committee_member.to_param, :committee_id => @committee.id}
       expect(response).to redirect_to(committee_committee_members_path(@committee))
-    end
-    describe "with non-admin user" do
-      it "fails to delete" do
-        sign_out @admin_user
-        sign_in @user
-        committee_member = FactoryGirl.create(:committee_member, :committee => @committee)
-        delete :destroy, {:id => committee_member.to_param, :committee_id => @committee.id}
-        expect(response).to redirect_to(root_path)
-      end
     end
   end
 end

@@ -36,7 +36,7 @@ describe WelcomeController, :type => :controller do
     describe "as a normal user" do
       it "cannot send a message" do
         get :message, {}
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(welcome_index_path)
       end
     end
     describe "as a super-user" do

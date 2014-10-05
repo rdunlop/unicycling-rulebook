@@ -83,11 +83,6 @@ describe CommitteesController, :type => :controller do
   end
 
   describe "GET new" do
-    it "fails when not an Admin" do
-      get :new, {}
-      expect(response).to redirect_to(root_path)
-    end
-
     it "assigns a new committee as @committee" do
       sign_out @user
       sign_in @admin_user
@@ -97,12 +92,6 @@ describe CommitteesController, :type => :controller do
   end
 
   describe "GET edit" do
-    it "fails when not admin user" do
-      committee = Committee.create! valid_attributes
-      get :edit, {:id => committee.to_param}
-      expect(response).to redirect_to(root_path)
-    end
-
     it "assigns the requested committee as @committee" do
       sign_out @user
       sign_in @admin_user
@@ -149,17 +138,6 @@ describe CommitteesController, :type => :controller do
         allow_any_instance_of(Committee).to receive(:save).and_return(false)
         post :create, {:committee => {name: 'fake'}}
         expect(response).to render_template("new")
-      end
-    end
-
-    describe "with non-admin user" do
-    before (:each) do
-      sign_out @admin_user
-      sign_in @user
-    end
-      it "should fail" do
-        post :create, {:committee => valid_attributes}
-        expect(response).to redirect_to(root_path)
       end
     end
   end
@@ -210,18 +188,6 @@ describe CommitteesController, :type => :controller do
         expect(response).to render_template("edit")
       end
     end
-
-    describe "with non-admin user" do
-    before (:each) do
-      sign_out @admin_user
-      sign_in @user
-    end
-      it "should fail" do
-        committee = Committee.create! valid_attributes
-        put :update, {:id => committee.to_param, :committee => valid_attributes}
-        expect(response).to redirect_to(root_path)
-      end
-    end
   end
 
   describe "DELETE destroy" do
@@ -240,15 +206,6 @@ describe CommitteesController, :type => :controller do
       committee = Committee.create! valid_attributes
       delete :destroy, {:id => committee.to_param}
       expect(response).to redirect_to(committees_url)
-    end
-    describe "with non-admin user" do
-      it "fails to delete" do
-        sign_out @admin_user
-        sign_in @user
-        committee = Committee.create! valid_attributes
-        delete :destroy, {:id => committee.to_param}
-        expect(response).to redirect_to(root_path)
-      end
     end
   end
 
