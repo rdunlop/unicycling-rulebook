@@ -12,19 +12,19 @@
     - if p.status == 'Submitted'
       %h4
       %blockquote
-        %b Committee:
-        = p.committee.to_s
-        %br
         %b Owner:
         = p.owner.to_s
         %br
         %b Submit Date:
-        = p.submit_date.to_s
+        %time.js--days-ago{ datetime: p.submit_date.iso8601 }
+        (#{l(p.submit_date, format: :short)})
         %br
     - else
       %small
         %i= p.status_summary
       %strong.status_message= p.vote_detail(votes)
       %small
-        Last revision/comment: #{distance_of_time_in_words(Time.now, p.updated_at)} ago
+        Last revision/comment:
+        %time.js--days-ago{ datetime: p.updated_at.iso8601 }
+          = l(p.updated_at, format: :short)
   %hr

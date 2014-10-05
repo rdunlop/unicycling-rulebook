@@ -9,3 +9,8 @@
 .Voting_block {
   background-color: #C8DAFF;
 }
+
+.is--hidden {
+  // override any element styles
+  display: none !important;
+}

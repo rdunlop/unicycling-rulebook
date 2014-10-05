@@ -19,10 +19,14 @@
     %label{for: "nothing"} Committee:
     #{@committee}
   .field
-    = label_tag :discussion_id, "Use Existing Discussion"
-    = select_tag :discussion_id, options_from_collection_for_select(@available_discussions, "id", "to_s"), include_blank: true, class: "chosen-select"
+    %label Discussion:
+    - if @proposal.discussion
+      = hidden_field_tag :discussion_id, @proposal.discussion.id
+      = @proposal.discussion
+    - else
+      New discussion. (If you want to choose an existing discussion, create the proposal from the discussion page)
+      If you don't choose an existing discussion, a new discussion will be created for you
     %br
-    If you don't choose an existing discussion, a new discussion will be created for you
   .field
     = f.label :title
     = f.text_field :title

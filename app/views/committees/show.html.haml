@@ -7,7 +7,9 @@ Please create and participate in discussions.
   - @committee.discussions.reverse_chronological.each do |discussion|
     %li
       = link_to discussion.display_title, discussion_path(discussion)
-      Last updated #{discussion.updated_at}
+      Last updated
+      %time.js--days-ago{ datetime: discussion.updated_at.iso8601 }
+        = l(discussion.updated_at, format: :short)
 = link_to "New Discussion", new_committee_discussion_path(@committee), class: "primary_button"
 - if can? :create_proposal, @committee
   = link_to "New Proposal", new_committee_proposal_path(@committee), class: "secondary_button"
