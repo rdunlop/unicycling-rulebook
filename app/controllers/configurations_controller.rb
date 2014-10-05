@@ -38,12 +38,12 @@ class ConfigurationsController < ApplicationController
   end
 
   # DELETE /configurations/1
-  # DELETE /configurations/1.json
   def destroy
+    Apartment::Tenant.drop(@rulebook.subdomain)
     @rulebook.destroy
 
     respond_to do |format|
-      format.html { redirect_to configurations_url }
+      format.html { redirect_to root_url }
       format.json { head :no_content }
     end
   end
