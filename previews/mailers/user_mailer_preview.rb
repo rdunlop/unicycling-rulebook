@@ -57,39 +57,21 @@ class UserMailerPreview < ActionMailer::Preview
 
   def proposal
     return @proposal if @proposal
-    @proposal = Proposal.new
-    @proposal.committee = committee
-    @proposal.owner = user
-    @proposal.title = "Change the rule"
-    @proposal.status = "Submitted"
-    create_revision(@proposal)
-    @proposal
-  end
-
-  def create_revision(proposal)
-    revision = Revision.new
-    revision.proposal = proposal
-    revision.body = "Rule body"
-    revision.user = user
-    revision
+    @proposal = Proposal.all.sample
   end
 
   def comment
-    @comment ||= Comment.new
+    @comment ||= Comment.all.sample
   end
 
   def user
     return @user if @user
-    @user = User.new
-    @user.email = "robin#{user_number}@test.com"
-    @user.name = "Robin"
-    @user.password = "password"
-    @user
+    @user = User.all.sample
   end
 
   def discussion
     return @discussion if @discussion
-    @discussion = Discussion.new(title: "this is the discussion", body: "<p>This is the <b>Discussion body</b></p")
+    @discussion = Discussion.all.sample
   end
 
   def user_number
@@ -99,14 +81,10 @@ class UserMailerPreview < ActionMailer::Preview
 
   def committee
     return @committee if @committee
-    @committee = Committee.new
-    @committee.name = "Basic Committee #{user_number}"
-    @committee
+    @committee = Committee.all.sample
   end
 
   def vote
-    @vote ||= Vote.new
-    @vote.proposal = proposal
-    @vote
+    @vote ||= Vote.all.sample
   end
 end

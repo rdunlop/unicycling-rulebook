@@ -1,5 +1,10 @@
 class UserMailer < ActionMailer::Base
   default :return_path => (Rails.application.secrets.mail_full_email || "unicycling@dunlopweb.com")
+  before_action :set_rulebook_slug
+
+  def set_rulebook_slug
+    default_url_options[:rulebook_slug] = Apartment::Tenant.current
+  end
 
   def create_from(from_name = Rails.application.secrets.mail_from_name, from_email = Rails.application.secrets.mail_full_email)
     if from_email.nil?
