@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   # Prevent stored_location_for redirecting to a different tenant
   def after_sign_in_path_for(resource)
     location = stored_location_for(resource)
-    if location.starts_with?("/r/#{Apartment::Tenant.current}")
+    if location && location.starts_with?("/r/#{Apartment::Tenant.current}")
       location
     else
       welcome_index_path
@@ -47,22 +47,4 @@ class ApplicationController < ActionController::Base
   def current_ablity
     current_user.ability
   end
-
-  # breadcrumb methods
-  def add_breadcrumb(title, url = nil)
-    @breadcrumbs ||= []
-    @breadcrumbs << [title, url]
-  end
-
-  def render_breadcrumbs
-    return if @breadcrumbs.nil?
-    res = ""
-    @breadcrumbs.each do |br|
-      res += "&gt;" unless res.blank?
-      res += "<a href='#{br[1]}'>#{br[0]}</a>"
-    end
-    res.html_safe
-  end
-  helper_method :render_breadcrumbs
-
 end

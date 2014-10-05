@@ -57,6 +57,23 @@ Build Status on TravisCI: {<img src="https://travis-ci.org/rdunlop/unicycling-ru
 
     (I use 'rake secret' (from my development environment) to generate a random secure value. I only run it once, and it should be a different value for each of your system). If you don't have a development environment, type approximately a  hundred numbers as your "SECRET"
 
+== Set up the local database
+
+    ```
+    cd unicycling-rulebook
+    bundle
+    rake db:create
+    rake db:schema:load
+    ```
+
+== Start the local server
+
+    ```
+    rails s
+    ```
+
+    Browse to http://localhost:9292
+
 == Starting With Vagrant
 
 1. Create the vagrant instance

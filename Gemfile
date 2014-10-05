@@ -15,6 +15,7 @@ gem 'haml'
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 gem 'apartment'
+gem 'breadcrumbs_on_rails'
 
 group :development, :test, :cucumber do
     gem 'html2haml'
