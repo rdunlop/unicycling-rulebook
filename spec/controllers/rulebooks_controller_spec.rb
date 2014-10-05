@@ -42,19 +42,25 @@ describe RulebooksController, :type => :controller do
     describe "with valid params" do
       it "creates a new Rulebook" do
         expect {
-          post :create, {:rulebook => valid_attributes}
+          post :create, {:rulebook => valid_attributes, access_code: "ACCESS_CODE"}
         }.to change(Rulebook, :count).by(1)
       end
 
       it "assigns a newly created rulebook as @rulebook" do
-        post :create, {:rulebook => valid_attributes}
+        post :create, {:rulebook => valid_attributes, access_code: "ACCESS_CODE"}
         expect(assigns(:rulebook)).to be_a(Rulebook)
         expect(assigns(:rulebook)).to be_persisted
       end
 
       it "redirects to the created rulebook" do
-        post :create, {:rulebook => valid_attributes}
+        post :create, {:rulebook => valid_attributes, access_code: "ACCESS_CODE"}
         expect(response).to redirect_to(Rulebook.last)
+      end
+
+      it "fails with an invalid access code" do
+        expect {
+          post :create, {:rulebook => valid_attributes, access_code: "NO CODE"}
+        }.not_to change(Rulebook, :count)
       end
     end
 
@@ -69,7 +75,7 @@ describe RulebooksController, :type => :controller do
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Rulebook).to receive(:save).and_return(false)
-        post :create, {:rulebook => {rulebook_name: 'the book'}}
+        post :create, {:rulebook => {rulebook_name: 'the book'}, access_code: "ACCESS_CODE"}
         expect(response).to render_template("new")
       end
     end

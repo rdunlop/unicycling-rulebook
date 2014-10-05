@@ -23,6 +23,9 @@ Build Status on TravisCI: {<img src="https://travis-ci.org/rdunlop/unicycling-ru
         mail_tls: true
         domain: "localhost:9292"
 
+== Set the code for creation of new rulebooks
+    rulebook_creation_access_code: "<some code>"
+
 == Set up the configuration variables (on heroku)
 
     This will set up Environment settings on heroku for all settings in the secrets.yml

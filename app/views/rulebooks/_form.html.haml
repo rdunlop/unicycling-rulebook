@@ -8,6 +8,10 @@
         - @rulebook.errors.full_messages.each do |msg|
           %li= msg
   .field
+    = label_tag :access_code, "Rulebook Creation Access Code (get this from the site admin)"
+    %br
+    = text_field_tag :access_code
+  .field
     = f.label :rulebook_name
     %br
     = f.text_field :rulebook_name
