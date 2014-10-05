@@ -31,7 +31,8 @@ describe RulebooksController, :type => :controller do
     { rulebook_name: "My Rulebook",
       front_page: "Something Interesting",
       faq: "FAQ lives here",
-      copyright: "Teh new Copyright"
+      copyright: "Teh new Copyright",
+      subdomain: "the_rulebook"
     }
   end
 

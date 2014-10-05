@@ -17,11 +17,11 @@ class ApplicationController < ActionController::Base
   before_filter :load_config
 
   def load_config
-    @config = self.class.get_current_config || Rulebook.first || Rulebook.new
+    @config = self.class.get_current_config
   end
 
   def self.get_current_config
-    Rulebook.find_by(subdomain: Apartment::Tenant.current)
+    Rulebook.find_by(subdomain: Apartment::Tenant.current) || Rulebook.first || Rulebook.new
   end
 
   def self.default_url_options(options={})

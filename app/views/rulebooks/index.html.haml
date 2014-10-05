@@ -4,18 +4,11 @@
     %th Rulebook name
     %th Subdomain
     %th
-    %th
-    %th
   - @rulebooks.each do |rulebook|
     %tr
       %td= rulebook.rulebook_name
       %td= rulebook.subdomain
       %td= link_to 'Show', rulebook
-      %td
-        - if can? :edit, rulebook
-          = link_to 'Edit', edit_rulebook_path(rulebook)
-      %td
-        - if can? :destroy, rulebook
-          = link_to 'Destroy', rulebook, data: { confirm: 'Are you sure?' }, method: :delete
+
 %br
 = link_to 'New Rulebook Application', new_rulebook_path, class: "primary_button"

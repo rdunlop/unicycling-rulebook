@@ -18,6 +18,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -39,7 +40,11 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
-   config.infer_spec_type_from_file_location!
+  config.before(:each, :type => :view) {
+    controller.default_url_options[:rulebook_slug] = "test_rulebook"
+  }
+
+  config.infer_spec_type_from_file_location!
 end
 
 
