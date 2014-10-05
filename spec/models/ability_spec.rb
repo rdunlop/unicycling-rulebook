@@ -23,7 +23,7 @@ describe "Ability", :type => :model do
 
     context "with a committee" do
       let(:committee) { FactoryGirl.create :committee }
-      it { is_expected.not_to be_able_to(:read, committee) }
+      it { is_expected.to be_able_to(:read, committee) }
       it { is_expected.not_to be_able_to(:edit, committee) }
       it { is_expected.not_to be_able_to(:create, committee) }
       it { is_expected.not_to be_able_to(:update, committee) }
