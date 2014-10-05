@@ -1,0 +1,1 @@
+= render partial: "comments/originator", locals: { title: "Started", committee: @discussion.committee, owner_name: @discussion.owner.to_s, date: @discussion.created_at, html: @discussion.body.try(:html_safe) }

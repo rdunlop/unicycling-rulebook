@@ -1,12 +1,3 @@
 - comment = show
 - return if comment.new_record?
-%h4
-  Comments
-  - if can? :read_usernames, comment.proposal
-    by
-    %b= comment.user.to_s
-  on
-  %i
-    %b= comment.created_at.to_s
-%p
-  = comment.comment.html_safe
+= render partial: "comments/originator", locals: { title: "Comment", committee: comment.discussion.committee, owner_name: comment.user.to_s, date: comment.created_at, html: comment.comment.html_safe }

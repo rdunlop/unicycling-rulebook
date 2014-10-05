@@ -1,0 +1,9 @@
+%h4
+  = title
+  - if can? :read_usernames, committee
+    by
+    %b= owner_name
+  %time.js--days-ago{ datetime: date.iso8601 }
+    = l(date, format: :short)
+%p
+  = html

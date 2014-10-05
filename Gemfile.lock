@@ -123,6 +123,8 @@ GEM
     mime-types (2.3)
     mini_portile (0.6.0)
     minitest (5.4.2)
+    momentjs-rails (2.8.3)
+      railties (>= 3.1)
     multi_json (1.10.1)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
@@ -234,6 +236,7 @@ DEPENDENCIES
   heroku_secrets!
   html2haml
   jquery-rails
+  momentjs-rails
   pg
   pry
   rails (= 4.1.6)

@@ -35,7 +35,6 @@ class Ability
 
       can :manage, Vote
       can :manage, Revision
-      can :manage, Comment
       can :manage, User
       can :manage, Rulebook
       can :send, Message
@@ -51,7 +50,7 @@ class Ability
 
     # Can only create comments if I am in the committee
     can :create, Comment do |comment|
-      user.is_in_committee(comment.discussion.committee) && comment.discussion.is_open_for_comments?
+      (user.admin || user.is_in_committee(comment.discussion.committee)) && comment.discussion.is_open_for_comments?
     end
 
     # Only voting members can vote
@@ -68,8 +67,8 @@ class Ability
     end
 
     # only allow people to see the usernames if they are in the committee
-    can :read_usernames, Proposal do |proposal|
-      user.is_in_committee(proposal.committee)
+    can :read_usernames, Committee do |committee|
+      user.is_in_committee(committee)
     end
 
     # allows editors and admins to see the e-mail address of the proposal owner (for out-of-band communication)

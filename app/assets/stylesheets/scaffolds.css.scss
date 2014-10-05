@@ -61,3 +61,11 @@ div {
     list-style: square;
   }
 }
+
+.admin_action {
+  background-color: lightgrey;
+
+  &:before {
+    content: 'Privileged Action: ';
+  }
+}
