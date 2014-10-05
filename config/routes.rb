@@ -33,6 +33,8 @@ RulebookApp::Application.routes.draw do
 
     devise_for :users
 
+    # this causes devise to direct just-signed-in-users to the welcome/index
+    get 'welcome/index' => "welcome#index", as: :user_root
 
     get "welcome/index"
     get "welcome/help"
