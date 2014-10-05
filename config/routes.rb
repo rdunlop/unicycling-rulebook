@@ -1,8 +1,9 @@
 RulebookApp::Application.routes.draw do
 
-  resources :rulebooks
+  resources :rulebooks, only: [:index, :new, :create, :show]
 
   scope "/r/(:rulebook_slug)" do
+    resources :configurations, except: [:index, :new, :create]
     resources :proposals, :except => [:index, :new, :create] do
       collection do
         get 'passed'

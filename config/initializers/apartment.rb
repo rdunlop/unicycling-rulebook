@@ -45,7 +45,7 @@ Rails.application.config.middleware.use 'Apartment::Elevators::Generic', lambda 
   request_path = request.env["REQUEST_PATH"]
   if request_path.starts_with?(prefix)
     remainder = request_path[prefix.length, request_path.length - prefix.length]
-    rulebook_name = remainder.partition("/").first
+    rulebook_name = CGI::unescape(remainder.partition("/").first)
   else
     'public'
   end

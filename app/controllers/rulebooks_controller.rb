@@ -2,8 +2,6 @@ class RulebooksController < ApplicationController
   skip_authorization_check only: [:new, :create, :index, :show]
   load_resource only: [:new, :create, :index, :show]
   layout "global"
-  before_filter :authenticate_user!, only: [:edit, :update, :destroy]
-  load_and_authorize_resource only: [:edit, :update, :destroy]
 
   # GET /rulebooks
   # GET /rulebooks.json
@@ -36,11 +34,6 @@ class RulebooksController < ApplicationController
     end
   end
 
-  # GET /rulebooks/1/edit
-  def edit
-    @rulebook = Rulebook.find(params[:id])
-  end
-
   # POST /rulebooks
   # POST /rulebooks.json
   def create
@@ -53,34 +46,6 @@ class RulebooksController < ApplicationController
         format.html { render action: "new" }
         format.json { render json: @rulebook.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # PUT /rulebooks/1
-  # PUT /rulebooks/1.json
-  def update
-    @rulebook = Rulebook.find(params[:id])
-
-    respond_to do |format|
-      if @rulebook.update_attributes(rulebook_params)
-        format.html { redirect_to @rulebook, notice: 'Rulebook was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @rulebook.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /rulebooks/1
-  # DELETE /rulebooks/1.json
-  def destroy
-    @rulebook = Rulebook.find(params[:id])
-    @rulebook.destroy
-
-    respond_to do |format|
-      format.html { redirect_to rulebooks_url }
-      format.json { head :no_content }
     end
   end
 

@@ -15,6 +15,9 @@
 %b Copyright:
 %br
 = raw(@rulebook.copyright)
+
 %br
 %br
-= link_to 'Back', rulebooks_path
+= link_to 'Edit', edit_configuration_path(@rulebook)
+|
+= link_to 'Back', welcome_index_path

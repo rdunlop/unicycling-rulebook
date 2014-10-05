@@ -1,4 +1,4 @@
-= form_for(@rulebook) do |f|
+= form_for(@rulebook, url: configuration_path(@rulebook)) do |f|
   - if @rulebook.errors.any?
     #error_explanation
       %h2
@@ -14,7 +14,7 @@
   .field
     = f.label :subdomain
     %br
-    = f.text_field :subdomain
+    = f.object.subdomain
     (this cannot be modified after creation)
   .field
     = f.label :front_page
