@@ -1,11 +1,16 @@
 class ConfigurationsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource :rulebook
+  before_action :load_current_rulebook
+
+  def load_current_rulebook
+    @rulebook = Rulebook.find(params[:id])
+    raise CanCan::AccessDenied.new("Only allowed to modify current rulebook config") if @rulebook != @config
+  end
 
   # GET /configurations/1
   # GET /configurations/1.json
   def show
-    @rulebook = Rulebook.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -15,13 +20,11 @@ class ConfigurationsController < ApplicationController
 
   # GET /configurations/1/edit
   def edit
-    @rulebook = Rulebook.find(params[:id])
   end
 
   # PUT /configurations/1
   # PUT /configurations/1.json
   def update
-    @rulebook = Rulebook.find(params[:id])
 
     respond_to do |format|
       if @rulebook.update_attributes(rulebook_params)
@@ -37,7 +40,6 @@ class ConfigurationsController < ApplicationController
   # DELETE /configurations/1
   # DELETE /configurations/1.json
   def destroy
-    @rulebook = Rulebook.find(params[:id])
     @rulebook.destroy
 
     respond_to do |format|
@@ -49,6 +51,6 @@ class ConfigurationsController < ApplicationController
   private
 
   def rulebook_params
-    params.require(:rulebook).permit(:rulebook_name, :front_page, :faq, :copyright, :subdomain)
+    params.require(:rulebook).permit(:rulebook_name, :front_page, :faq, :copyright)
   end
 end
