@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141004173424) do
+ActiveRecord::Schema.define(version: 20141005163957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 20141004173424) do
     t.datetime "updated_at"
     t.string   "copyright"
     t.string   "subdomain"
+    t.string   "admin_upgrade_code"
   end
 
   add_index "rulebooks", ["subdomain"], name: "index_rulebooks_on_subdomain", unique: true, using: :btree

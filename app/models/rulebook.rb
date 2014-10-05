@@ -1,19 +1,16 @@
 # == Schema Information
 #
-# Table name: rulebooks
+# Table name: public.rulebooks
 #
-#  id            :integer          not null, primary key
-#  rulebook_name :string(255)
-#  front_page    :text
-#  faq           :text
-#  created_at    :datetime
-#  updated_at    :datetime
-#  copyright     :string(255)
-#  subdomain     :string(255)
-#
-# Indexes
-#
-#  index_rulebooks_on_subdomain  (subdomain) UNIQUE
+#  id                 :integer          not null, primary key
+#  rulebook_name      :string(255)
+#  front_page         :text
+#  faq                :text
+#  created_at         :datetime
+#  updated_at         :datetime
+#  copyright          :string(255)
+#  subdomain          :string(255)
+#  admin_upgrade_code :string(255)
 #
 
 class Rulebook < ActiveRecord::Base

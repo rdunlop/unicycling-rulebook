@@ -9,9 +9,23 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) << [:name, :location, :comments]
   end
 
+  # Prevent stored_location_for redirecting to a different tenant
+  def after_sign_in_path_for(resource)
+    location = stored_location_for(resource)
+    if location.starts_with?("/r/#{Apartment::Tenant.current}")
+      location
+    else
+      welcome_index_path
+    end
+  end
+
   public
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_path, :alert => exception.message
+    if Apartment::Tenant.current
+      redirect_to welcome_index_path, alert: exception.message
+    else
+      redirect_to root_path, :alert => exception.message
+    end
   end
 
   before_filter :load_config

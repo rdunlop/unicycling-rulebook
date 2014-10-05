@@ -7,30 +7,40 @@
       %ul
         - @rulebook.errors.full_messages.each do |msg|
           %li= msg
-  .field
-    = label_tag :access_code, "Rulebook Creation Access Code (get this from the site admin)"
-    %br
-    = text_field_tag :access_code
-  .field
-    = f.label :rulebook_name
-    %br
-    = f.text_field :rulebook_name
-  .field
-    = f.label :subdomain
-    %br
-    = f.text_field :subdomain
-    (this cannot be modified after creation)
-  .field
-    = f.label :front_page
-    %br
-    = f.text_area :front_page
-  .field
-    = f.label :faq
-    %br
-    = f.text_area :faq
-  .field
-    = f.label :copyright
-    %br
-    = f.text_field :copyright
+  %table
+    %thead
+      %tr
+        %th Name
+        %th
+        %th Explanation
+    %tbody
+      %tr
+        %td= label_tag :access_code, "Rulebook Creation Access Code"
+        %td= text_field_tag :access_code
+        %td This is necessary to submit this form successfully (get this from the site admin)
+      %tr
+        %td= f.label :admin_upgrade_code
+        %td= f.text_field :admin_upgrade_code
+        %td Specify the code you want to use to upgrade your user account to an Admin account
+      %tr
+        %td= f.label :rulebook_name
+        %td= f.text_field :rulebook_name
+        %td The name displayed on all pages/footers/etc
+      %tr
+        %td= f.label :subdomain
+        %td= f.text_field :subdomain
+        %td This is what will be displayed in the URL bar. (this cannot be modified after creation)
+      %tr
+        %td= f.label :front_page
+        %td= f.text_area :front_page
+        %td The Text which will appear on the front page
+      %tr
+        %td= f.label :faq
+        %td= f.text_area :faq
+        %td Text for the FAQ
+      %tr
+        %td= f.label :copyright
+        %td= f.text_field :copyright
+        %td Copyrigth footer
   .actions
     = f.submit

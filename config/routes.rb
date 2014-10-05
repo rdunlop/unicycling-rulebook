@@ -3,6 +3,7 @@ RulebookApp::Application.routes.draw do
   resources :rulebooks, only: [:index, :new, :create, :show]
 
   scope "/r/(:rulebook_slug)" do
+    resources :admin_upgrades, only: [:new, :create]
     resources :configurations, except: [:index, :new, :create]
     resources :proposals, :except => [:index, :new, :create] do
       collection do
