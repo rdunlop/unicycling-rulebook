@@ -1,8 +1,9 @@
 - return if show.new_record?
 %b= show.user
 voted
-on
-%i= show.created_at.strftime("%B %d, %Y, %I:%M %p")
+
+%time.js--days-ago{ datetime: show.created_at.iso8601 }
+(#{l(show.created_at, format: :short)})
 - if not show.comment.blank?
   %blockquote= show.comment
 %br

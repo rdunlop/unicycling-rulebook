@@ -63,8 +63,10 @@ on #{@proposal.submit_date}
     %br
   - else
     = render :partial => "/votes/form", :object => @vote
-%hr
 = render :partial => "/proposals/proposal_details", :locals => {:proposal => @proposal, :revision => @revision }
+%hr
+%h3 Discussion
+= link_to "View Discussion", discussion_path(@proposal.discussion)
 - if @proposal.revisions.count > 1
   %hr
   %h3 Change Log:
@@ -78,8 +80,8 @@ on #{@proposal.submit_date}
             = 'Revision ' + rev.num.to_s
           changed by
           %i= rev.user.to_s
-          on
-          %i= rev.created_at.to_s(:long)
+          %time.js--days-ago{ datetime: rev.created_at.iso8601 }
+          (#{l(rev.created_at, format: :short)})
       %dd= rev.change_description.try(:html_safe)
 - if @proposal.votes.count > 0
   %hr
@@ -88,4 +90,3 @@ on #{@proposal.submit_date}
     - @proposal.votes.each do |v|
       - if can? :read, v
         = render :partial => "/votes/show", :object => v
-= link_to "Discussion", discussion_path(@proposal.discussion)

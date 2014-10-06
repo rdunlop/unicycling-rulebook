@@ -34,6 +34,10 @@ class Discussion < ActiveRecord::Base
     status == "active"
   end
 
+  def closed?
+    status == "closed"
+  end
+
   def is_open_for_comments?
     active? && proposal_commentable?
   end
@@ -50,7 +54,11 @@ class Discussion < ActiveRecord::Base
 
   # this will change as the discussion becomes a proposal
   def display_title
-    title
+    if closed?
+      "#{title} (Closed for comments)"
+    else
+      title
+    end
   end
 
   def to_s
