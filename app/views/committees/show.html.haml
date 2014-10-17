@@ -15,7 +15,7 @@ Please create and participate in discussions.
 %hr
 %h2 Proposals
 - if can? :create_proposal, @committee
-  = link_to "Create New Proposal", new_committee_proposal_path(@committee), class: "secondary_button"
+  = link_to "Create New Proposal", new_committee_proposal_path(@committee), class: "primary_button"
 
 = render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Submitted', :header => 'New Unapproved Proposals:', :status_text => '', :votes => @user_votes}
 = render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Review', :header => 'Proposals for Review:', :status_text => 'These proposals are currently being reviewed. Please comment on these so that the proposal will better represent what you want when it reaches the voting stage.', :votes => @user_votes }
