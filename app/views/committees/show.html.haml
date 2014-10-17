@@ -3,6 +3,8 @@
 Please create and participate in discussions.
 %br
 %h2 Discussions
+- if can? :create_discussion, @committee
+  = link_to "Create New Discussion", new_committee_discussion_path(@committee), class: "primary_button"
 %ul
   - @committee.discussions.reverse_chronological.each do |discussion|
     %li
@@ -10,12 +12,10 @@ Please create and participate in discussions.
       Last updated
       %time.js--days-ago{ datetime: discussion.updated_at.iso8601 }
         = l(discussion.updated_at, format: :short)
-= link_to "New Discussion", new_committee_discussion_path(@committee), class: "primary_button"
-- if can? :create_proposal, @committee
-  = link_to "New Proposal", new_committee_proposal_path(@committee), class: "secondary_button"
-
 %hr
 %h2 Proposals
+- if can? :create_proposal, @committee
+  = link_to "Create New Proposal", new_committee_proposal_path(@committee), class: "secondary_button"
 
 = render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Submitted', :header => 'New Unapproved Proposals:', :status_text => '', :votes => @user_votes}
 = render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Review', :header => 'Proposals for Review:', :status_text => 'These proposals are currently being reviewed. Please comment on these so that the proposal will better represent what you want when it reaches the voting stage.', :votes => @user_votes }

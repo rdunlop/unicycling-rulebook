@@ -61,8 +61,13 @@ class Ability
       vote.proposal.status == 'Voting' and user.voting_member(vote.proposal.committee)
     end
 
-    # You must be in a committee in order to be able to create a Proposal
+    # You must be a voting member in a committee in order to be able to create a Proposal
     can :create_proposal, Committee do |committee|
+      user.voting_member(committee)
+    end
+
+    # You must be in a committee in order to be able to create a Discussion
+    can :create_discussion, Committee do |committee|
       user.is_in_committee(committee)
     end
 
