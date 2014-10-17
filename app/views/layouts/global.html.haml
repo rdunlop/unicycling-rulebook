@@ -20,11 +20,6 @@
   %body
     .top_nav
       %h1 Rulebook Application
-    .left_nav
-      %ul
-        - Rulebook.all.each do |rulebook|
-          %li= link_to(rulebook.rulebook_name, welcome_index_path(rulebook_slug: rulebook.subdomain))
-
     .main_nav
       %p#notice= notice
       %p.alert= alert

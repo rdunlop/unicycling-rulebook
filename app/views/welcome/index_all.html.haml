@@ -1,9 +1,9 @@
 %h1
   Welcome to the Unicycling Rulebook Application
 
-%p Please choose the rulebook year
+%p Please choose the rulebook committee you would like to participate in:
 
-%ul
+%ul#rulebook_list
   - @rulebooks.each do |rulebook|
     %li= link_to rulebook.rulebook_name, welcome_index_path(rulebook_slug: rulebook.subdomain)
 

@@ -26,9 +26,15 @@ body {
 }
 
 .left_nav li {
-    display: inline;
+    display: inline-block;
     list-style-type: none;
-    padding-right: 20px;
+    background-color: #666;
+    padding: 5px 15px;
+}
+
+.left_nav a {
+  text-decoration: none;
+  color: white;
 }
 
 .main_nav {
@@ -36,6 +42,27 @@ body {
 
 .status_message {
     color: red;
+}
+
+#rulebook_list{
+  list-style: none;
+  display: block;
+  padding-left: 5px;
+  a, a:visited, a:active{
+    text-decoration: none;
+    color: black;
+    font-size: 1.7em;
+    background-color: #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+  a:hover{
+    color:#c00;
+  }
+  li{
+    //width:300px;
+  }
 }
 
 // Form formatting:

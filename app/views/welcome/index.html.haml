@@ -5,7 +5,9 @@
 - else
   = render "default_welcome"
 
-%h4 Available Committees
-- @committees.each do |committee|
-  = link_to committee.name, committee_path(committee)
-  %br
+%h3 Available Committees
+%ul#rulebook_list
+  - @committees.each do |committee|
+    %li= link_to committee.name, committee_path(committee)
+
+%br
