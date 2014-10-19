@@ -60,7 +60,11 @@
     heroku git:remote -a <name of new heroku instance> -r <alias_that you want to use>
     Example: heroku git:remote -a usarulebook2013 -r rulebook
 
-3. Upload the settings/secrets
+3a. Set your production settings
+
+    in secrets.yml, set your production settings in the 'production' scope
+
+3b. Upload the settings/secrets
 
     rake heroku:secrets[rulebook] RAILS_ENV=production
 
@@ -74,9 +78,17 @@
 
 5. Install the scheduling addon:
 
-    heroku addons:add scheduler:standard
+    heroku addons:add scheduler:standard --app usarulebook2013
 
 6. Configure the scheduler via the webpage interface:
 
-    heroku addons:open scheduler
+    heroku addons:open scheduler --app usarulebook2013
     Add Job: "rake update_proposal_states" - Daily - 05:00 UTC
+
+7. Restart the Dyno
+
+    heroku restart --app usarulebook2013
+
+8. Start creating new rulebooks
+
+   Browse to your server via web browser.

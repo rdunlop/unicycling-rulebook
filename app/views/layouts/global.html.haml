@@ -5,6 +5,7 @@
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
+    = render "shared/analytics/google"
     %script{ src: "http://tinymce.cachefly.net/4.1/tinymce.min.js" }
     :javascript
       tinymce.init({selector:'textarea',
