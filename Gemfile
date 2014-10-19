@@ -12,6 +12,7 @@ gem 'exception_notification'
 gem 'pg'
 gem 'haml'
 gem 'momentjs-rails'
+gem 'tinymce-rails'
 # allows storing of secrets in ENV for heroku
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
