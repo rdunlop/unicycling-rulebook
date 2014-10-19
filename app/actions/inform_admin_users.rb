@@ -11,9 +11,11 @@ class InformAdminUsers
   # and also set the mail_message_id for the proposal
   # so that future e-mails are all threaded similarly
   def self.submit_proposal(proposal)
-    mail = UserMailer.proposal_submitted(@proposal).deliver
-    @proposal.mail_messageid = mail.message_id
-    @proposal.save
+    if admin_emails.any?
+      mail = UserMailer.proposal_submitted(proposal, admin_emails).deliver
+      proposal.mail_messageid = mail.message_id
+      proposal.save
+    end
   end
 
 
