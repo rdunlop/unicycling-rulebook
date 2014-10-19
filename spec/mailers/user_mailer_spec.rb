@@ -84,23 +84,13 @@ describe UserMailer, :type => :mailer do
     end
   end
 
-  describe "with a no_emails committee member" do
-    before(:each) do
-        @other_cm_user.no_emails = true
-        @other_cm_user.save
-    end
-    it "should only e-mail.bcc the normal user" do
-        mail = UserMailer.proposal_revised(@proposal)
-        expect(mail.bcc).to eq([@user.email])
-    end
-  end
-
   describe "'Submitted' Proposal Revised" do
     before (:each) do
       @proposal.status = "Submitted"
       @proposal.save
     end
-    let(:mail) { UserMailer.proposal_revised(@proposal) }
+    # XXX This should change
+    let(:mail) { UserMailer.proposal_revised(@proposal.latest_revision, []) }
 
     it "should not send e-mail to members if the proposal is in 'Submitted' state" do
       expect(@proposal.status).to eq("Submitted")
@@ -109,11 +99,10 @@ describe UserMailer, :type => :mailer do
   end
 
   describe "'Review' proposal_revised" do
-    let(:mail) { UserMailer.proposal_revised(@proposal) }
+    let(:mail) { UserMailer.proposal_revised(@proposal.latest_revision, [@user.email]) }
 
     it "renders the headers" do
       expect(mail.subject).to eq(@proposal_id_title_and_committee)
-      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
       expect(mail.from).to eq(["unicycling@dunlopweb.com"])
     end
 

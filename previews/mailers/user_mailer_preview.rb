@@ -9,7 +9,7 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   def proposal_revised
-    UserMailer.proposal_revised(proposal)
+    UserMailer.proposal_revised(revision, committee_emails)
   end
 
   def proposal_status_review
@@ -58,6 +58,10 @@ class UserMailerPreview < ActionMailer::Preview
   def proposal
     return @proposal if @proposal
     @proposal = Proposal.all.sample
+  end
+
+  def revision
+    @revision ||= Revision.all.sample
   end
 
   def comment

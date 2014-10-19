@@ -79,15 +79,15 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.proposal_revised.subject
   #
-  def proposal_revised(proposal)
-    @proposal = proposal
-    @change_description = proposal.latest_revision.change_description
-    @body = proposal.latest_revision.body
-    @rule_text = proposal.latest_revision.rule_text
+  def proposal_revised(revision, members_emails)
+    @proposal = revision.proposal
+    @change_description = revision.change_description
+    @body = revision.body
+    @rule_text = revision.rule_text
 
-    set_threading_header(proposal)
+    set_threading_header(@proposal)
 
-    send_mail(create_committee_email(@proposal, @proposal.committee), @proposal, @proposal.latest_revision.user.name)
+    send_mail(members_emails, @proposal, revision.user.name)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

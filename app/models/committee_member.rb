@@ -19,4 +19,6 @@ class CommitteeMember < ActiveRecord::Base
   validates :committee, :presence => true
   validates :user, :presence => true
   validates :user_id, :uniqueness => {:scope => [:committee_id]}
+
+  scope :admin, -> { where(admin: true) }
 end

@@ -40,7 +40,7 @@ class RevisionsController < ApplicationController
 
     respond_to do |format|
       if @revision.save
-        UserMailer.proposal_revised(@proposal).deliver
+        InformCommitteeMembers.proposal_revised(@revision)
         if @proposal.status == 'Pre-Voting'
             @proposal.status = 'Review'
             @proposal.review_start_date = DateTime.now()
