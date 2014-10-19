@@ -1,0 +1,11 @@
+-# Use this layout when you are in a specific rulebook
+- content_for :top_nav do
+  = render partial: "/nav/navbar"
+  = render_breadcrumbs
+
+- content_for :bottom_nav do
+  %p
+    Copyright &copy; #{@config.copyright_description}
+    %br
+
+= render template: "layouts/application"

@@ -1,29 +1,6 @@
-!!!
-%html
-  %head
-    %title Rulebook Application
-    = stylesheet_link_tag    "application", :media => "all"
-    = javascript_include_tag "application"
-    = csrf_meta_tags
-    = render "shared/analytics/google"
-    %script{ src: "http://tinymce.cachefly.net/4.1/tinymce.min.js" }
-    :javascript
-      tinymce.init({selector:'textarea',
-        menubar: false,
-        height: 300,
-        width: '100%',
-        statusbar: false,
-        plugins: 'link table',
-        toolbar1: 'bold italic underline strikethrough | bullist numlist | cut copy paste | link unlink | table | undo redo',
-        paste_word_valid_elements: 'ol,ul,li,b,strong,i,em,u,ins',
-        target_list: false,
-        link_title: false})
-  %body
-    .top_nav
-      %h1 Rulebook Application
-    .main_nav
-      %p#notice= notice
-      %p.alert= alert
-      = yield
-      %hr
-      = debug(params) if Rails.env.development?
+-# use this layout when you haven't chosen a rulebook yet
+- content_for :top_nav do
+  .top_nav
+    %h1 Rulebook Application
+
+= render template: "layouts/application"
