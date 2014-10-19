@@ -66,9 +66,7 @@ class ProposalsController < ApplicationController
 
     respond_to do |format|
       if ProposalCreator.new(@proposal, @revision, @discussion, current_user).perform
-        mail = UserMailer.proposal_submitted(@proposal).deliver
-        @proposal.mail_messageid = mail.message_id
-        @proposal.save
+        InformAdminUsers.submit_proposal(@proposal)
         format.html { redirect_to @proposal, notice: 'Proposal was successfully created.' }
         format.json { render json: @proposal, status: :created, location: @proposal }
       else

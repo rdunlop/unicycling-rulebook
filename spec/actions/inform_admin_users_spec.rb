@@ -20,6 +20,16 @@ describe InformAdminUsers do
       ActionMailer::Base.deliveries.clear
       expect { do_action }.to change { ActionMailer::Base.deliveries.size }.by(1)
     end
+
+    context "with an admin with no_emails set" do
+      let(:admin_user2) { FactoryGirl.create(:admin_user, no_emails: true) }
+
+      it "should only send to the normal admin" do
+        ActionMailer::Base.deliveries.clear
+        do_action
+        expect(ActionMailer::Base.deliveries.first.bcc).to eq([admin_user.email])
+      end
+    end
   end
 
 end

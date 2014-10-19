@@ -14,27 +14,14 @@ describe UserMailer, :type => :mailer do
       @cm2 = FactoryGirl.create(:committee_member, :committee => @committee, :user => @other_cm_user)
       @proposal_id_title_and_committee = "[" + @committee.name + "] " + @proposal.title + " (#" + @proposal.id.to_s + ")"
   end
-  describe "when we have a one no-email super-admin and one normal super-admin" do
-    before(:each) do
-        @normal_admin_user = FactoryGirl.create(:admin_user)
-        @no_email_admin_user = FactoryGirl.create(:admin_user, :no_emails => true)
-    end
-    it "should only send to the normal admin" do
-        mail = UserMailer.proposal_submitted(@proposal)
-        expect(mail.bcc).to eq([@normal_admin_user.email])
-    end
-  end
 
   describe "proposal_submitted" do
-    before(:each) do
-        @admin_user = FactoryGirl.create(:admin_user)
-        @admin_user2 = FactoryGirl.create(:admin_user)
-    end
-    let(:mail) { UserMailer.proposal_submitted(@proposal) }
+    let(:admin_user) { FactoryGirl.create(:admin_user) }
+    let(:mail) { UserMailer.proposal_submitted(@proposal, [admin_user.email]) }
 
     it "renders the headers" do
       expect(mail.subject).to eq(@proposal_id_title_and_committee)
-      expect(mail.bcc).to eq([@admin_user.email, @admin_user2.email])
+      expect(mail.bcc).to eq([admin_user.email])
       expect(mail.from).to eq(["unicycling@dunlopweb.com"])
       expect(mail.header[:from].to_s).to eq("#{@proposal.owner.name} <unicycling@dunlopweb.com>")
     end

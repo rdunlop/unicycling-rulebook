@@ -1,7 +1,7 @@
 class UserMailerPreview < ActionMailer::Preview
 
   def proposal_submitted
-    UserMailer.proposal_submitted(proposal)
+    UserMailer.proposal_submitted(proposal, admin_emails)
   end
 
   def discussion_comment_added

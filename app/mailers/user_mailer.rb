@@ -22,16 +22,6 @@ class UserMailer < ActionMailer::Base
     mail bcc: bcc_list, subject: create_proposal_subject(proposal), from: create_from(from_name)
   end
 
-  def create_admin_email
-    emails = []
-    User.all.each do |u|
-      if u.admin
-        emails << u.email unless u.no_emails
-      end
-    end
-    emails
-  end
-
   def create_committee_email(proposal, committee, honor_no_email = true)
     emails = []
     CommitteeMember.all.each do |cm|
@@ -60,13 +50,13 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.proposal_submitted.subject
   #
-  def proposal_submitted(proposal)
+  def proposal_submitted(proposal, admin_emails)
     @proposal = proposal
     @body = proposal.latest_revision.body
     @rule_text = proposal.latest_revision.rule_text
     @title = proposal.title
 
-    send_mail(create_admin_email, proposal, proposal.owner.name)
+    send_mail(admin_emails, proposal, proposal.owner.name)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
