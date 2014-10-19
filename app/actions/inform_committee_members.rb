@@ -8,9 +8,7 @@ class InformCommitteeMembers
     emails = committee_members_emails(comment.discussion.committee, comment.user.email)
 
     if emails.any?
-      UserMailer.discussion_comment_added(
-        comment.discussion, comment, comment.user,
-        emails).deliver
+      UserMailer.discussion_comment_added(comment, emails).deliver
     end
   end
 

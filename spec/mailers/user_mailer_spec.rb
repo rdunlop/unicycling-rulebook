@@ -40,7 +40,7 @@ describe UserMailer, :type => :mailer do
   end
 
   describe "discussion_comment_added" do
-    let(:mail) { UserMailer.discussion_comment_added(@discussion, @comment, @user, [@user.email]) }
+    let(:mail) { UserMailer.discussion_comment_added(@comment, [@user.email]) }
 
     it "renders the headers" do
       #mail.subject.should eq(@proposal_id_title_and_committee)
@@ -62,7 +62,7 @@ describe UserMailer, :type => :mailer do
       @proposal.status = "Submitted"
       @proposal.save
     end
-    let(:mail) { UserMailer.discussion_comment_added(@discussion, @comment, @user, [@user.email]) }
+    let(:mail) { UserMailer.discussion_comment_added(@comment, [@user.email]) }
 
     #it "should not send e-mail to members if the proposal is in 'Submitted' state" do
     #  @proposal.status.should == "Submitted"
@@ -74,7 +74,7 @@ describe UserMailer, :type => :mailer do
       @proposal.mail_messageid = nil
       @proposal.save
     end
-    let(:mail) { UserMailer.discussion_comment_added(@discussion, @comment, @user, [@user.email]) }
+    let(:mail) { UserMailer.discussion_comment_added(@comment, [@user.email]) }
 
     it "should have the body" do
       expect(mail.body.encoded).to match("Comment Added")

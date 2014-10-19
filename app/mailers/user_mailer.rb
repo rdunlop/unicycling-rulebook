@@ -64,14 +64,14 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.discussion_comment_added.subject
   #
-  def discussion_comment_added(discussion, comment, user, members_emails)
+  def discussion_comment_added(comment, members_emails)
     @comment = comment.comment
-    @voting_status = user.voting_text(discussion.committee)
-    @discussion = discussion
+    @voting_status = comment.user.voting_text(comment.discussion.committee)
+    @discussion = comment.discussion
 
     #set_threading_header(proposal)
 
-    send_mail(members_emails, discussion, user.name)
+    send_mail(members_emails, @discussion, comment.user.name)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

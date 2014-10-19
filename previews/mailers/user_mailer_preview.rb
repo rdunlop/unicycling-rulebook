@@ -5,7 +5,7 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   def discussion_comment_added
-    UserMailer.discussion_comment_added(discussion, comment, user)
+    UserMailer.discussion_comment_added(comment, committee_emails)
   end
 
   def proposal_revised
@@ -90,5 +90,9 @@ class UserMailerPreview < ActionMailer::Preview
 
   def admin_emails
     ["admin2@gmail.com"]
+  end
+
+    def committee_emails
+    ["boring_user1@gmail.com", "boring_user2@gmail.com"]
   end
 end
