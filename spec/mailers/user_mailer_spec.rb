@@ -184,14 +184,12 @@ describe UserMailer, :type => :mailer do
 
   describe "new_committee_applicant" do
     let(:user) { FactoryGirl.create(:user, :comments => "Please add me") }
-    let(:mail) { UserMailer.new_committee_applicant(user) }
-    before(:each) do
-        @admin_user = FactoryGirl.create(:admin_user)
-    end
+    let(:admin_user) { FactoryGirl.create(:admin_user) }
+    let(:mail) { UserMailer.new_committee_applicant(user, [admin_user.email]) }
 
     it "renders the headers" do
       expect(mail.subject).to eq("New committee applicant")
-      expect(mail.bcc).to eq([@admin_user.email])
+      expect(mail.bcc).to eq([admin_user.email])
       expect(mail.from).to eq(["unicycling@dunlopweb.com"])
       expect(mail.header[:from].to_s).to eq("Uni Rulebook <unicycling@dunlopweb.com>")
     end

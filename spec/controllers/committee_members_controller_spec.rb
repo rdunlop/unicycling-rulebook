@@ -140,7 +140,7 @@ describe CommitteeMembersController, :type => :controller do
       it "creates multiple committee Members" do
         @user2 = FactoryGirl.create(:user)
         expect {
-          post :create, {:committee_member => {:user_id => [@user.id, @user2.id], :admin => false, :voting => false}, :committee_id => @committee.id}
+          post :create, {committee_member: {user_id: [@user.id, @user2.id], admin: false, editor: false, voting: false}, committee_id: @committee.id}
         }.to change(CommitteeMember, :count).by(2)
       end
 
@@ -151,7 +151,7 @@ describe CommitteeMembersController, :type => :controller do
         expect(assigns(:committee_member).admin).to eq(false)
       end
       it "sets the admin status correctly" do
-        post :create, {:committee_member => {user_id: [@user.id], admin: true, voting: false }, :committee_id => @committee.id}
+        post :create, {:committee_member => {user_id: [@user.id], admin: true, editor: false, voting: false }, :committee_id => @committee.id}
         expect(assigns(:committee_member).admin).to eq(true)
       end
       it "sets the editor status correctly" do

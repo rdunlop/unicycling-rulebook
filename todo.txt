@@ -1,3 +1,6 @@
+Known issues:
+- Word-counting of Revision text is broken (it always sayss 500 characters remain)
+
 - Need to deal with first-sign-up, since the mailer chokes because there are NO administrators yet
 
 Friday To-Do:

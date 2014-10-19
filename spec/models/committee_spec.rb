@@ -28,10 +28,11 @@ describe Committee, :type => :model do
     expect(com.committee_members).to eq([committee_member])
   end
 
-  it "should be non-preliminary by default" do
+  it "should be preliminary by default" do
     committee = Committee.new
-    expect(committee.preliminary).to eq(false)
+    expect(committee.preliminary).to eq(true)
   end
+
   it "should list the members alphabetically" do
     committee = FactoryGirl.create(:committee)
     user_b = FactoryGirl.create(:user, :name => "Bravo")

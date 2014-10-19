@@ -16,13 +16,7 @@ class Committee < ActiveRecord::Base
   has_many :proposals
   has_many :discussions
 
-  after_initialize :init
-
   scope :ordered, -> { order("preliminary, name") }
-
-  def init
-    self.preliminary = false if self.preliminary.nil?
-  end
 
   def to_s
     name
