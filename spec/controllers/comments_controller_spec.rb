@@ -26,6 +26,8 @@ describe CommentsController, :type => :controller do
 
     @user = FactoryGirl.create(:user)
     FactoryGirl.create(:committee_member, :committee => @proposal.committee, :user => @user)
+    # another member, so that an e-mail is generated
+    FactoryGirl.create(:committee_member, :committee => @proposal.committee)
 
     sign_in @user
   end

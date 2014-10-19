@@ -5,17 +5,19 @@ class InformCommitteeMembers
   # and those who have opted out
   #
   def self.comment_added(comment)
-    if committee_members_emails(comment.discussion.committee).any?
+    emails = committee_members_emails(comment.discussion.committee, comment.user.email)
+
+    if emails.any?
       UserMailer.discussion_comment_added(
         comment.discussion, comment, comment.user,
-        committee_members_emails(comment.discussion.committee)).deliver
+        emails).deliver
     end
   end
 
   private
 
-  def self.committee_members_emails(committee)
-    committee.committee_members.merge(User.email_notifications).map(&:user).map(&:email)
+  def self.committee_members_emails(committee, exclude)
+    committee.committee_members.merge(User.email_notifications).map(&:user).map(&:email) - [exclude]
   end
 
   def create_committee_email(proposal, committee, honor_no_email = true)
