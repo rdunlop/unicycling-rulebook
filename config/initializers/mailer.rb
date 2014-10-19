@@ -2,17 +2,19 @@ ActionMailer::Base.default :from => Rails.application.secrets.mail_full_email
 
 ActionMailer::Base.default_url_options[:host] = Rails.application.secrets.domain
 
-if Rails.application.secrets.aws_access_key.present?
-  ActionMailer::Base.delivery_method = :amazon_ses
-else
-  ActionMailer::Base.smtp_settings = {
-    address:              Rails.application.secrets.mail_server,
-    port:                 Rails.application.secrets.mail_port,
-    domain:               Rails.application.secrets.mail_domain,
-    user_name:            Rails.application.secrets.mail_username,
-    password:             Rails.application.secrets.mail_password,
-    authentication:       Rails.application.secrets.mail_authentication,
-    enable_starttls_auto: (Rails.application.secrets.mail_tls.to_s == 'true')
-  }
-  ActionMailer::Base.delivery_method = :smtp
+unless Rails.env.test?
+  if Rails.application.secrets.aws_access_key.present?
+    ActionMailer::Base.delivery_method = :amazon_ses
+  else
+    ActionMailer::Base.smtp_settings = {
+      address:              Rails.application.secrets.mail_server,
+      port:                 Rails.application.secrets.mail_port,
+      domain:               Rails.application.secrets.mail_domain,
+      user_name:            Rails.application.secrets.mail_username,
+      password:             Rails.application.secrets.mail_password,
+      authentication:       Rails.application.secrets.mail_authentication,
+      enable_starttls_auto: (Rails.application.secrets.mail_tls.to_s == 'true')
+    }
+    ActionMailer::Base.delivery_method = :smtp
+  end
 end
