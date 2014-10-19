@@ -1,7 +1,6 @@
 == Welcome to the Rulebook Application.
-- Need to deal with first-sign-up, since the mailer chokes because there are NO administrators yet -
 
-Build Status on TravisCI: {<img src="https://travis-ci.org/rdunlop/unicycling-rulebook.png?branch=master" />}[https://travis-ci.org/rdunlop/unicycling-rulebook] {<img src="https://gemnasium.com/rdunlop/unicycling-rulebook.png" />}[https://gemnasium.com/rdunlop/unicycling-rulebook]
+{<img src="https://travis-ci.org/rdunlop/unicycling-rulebook.png?branch=master" />}[https://travis-ci.org/rdunlop/unicycling-rulebook] {<img src="https://gemnasium.com/rdunlop/unicycling-rulebook.png" />}[https://gemnasium.com/rdunlop/unicycling-rulebook]
 
 
 == Set the configuration variables (for local work)
@@ -11,114 +10,73 @@ Build Status on TravisCI: {<img src="https://travis-ci.org/rdunlop/unicycling-ru
 
     cp config/secrets.yml.template config/secrets.yml
 
-    Update the mail settings, something like:
-    production:
-        mail_server: smtp.gmail.com
-        mail_port: 587
-        mail_domain: uniusa.org
-        mail_username: rulebook-do-not-reply@uniusa.org
-        mail_password: something
-        mail_full_email: rulebook-do-not-reply@uniusa.org
-        mail_from_name: 'Uni Rulebook'"
-        mail_tls: true
-        domain: "localhost:9292"
+    Open secrets.yml:
 
-== Set the code for creation of new rulebooks
-    rulebook_creation_access_code: "<some code>"
+      update the mail settings to match your mail settings
+
+      Set the code for creation of new rulebooks
 
 == Set up the configuration variables (on heroku)
 
     This will set up Environment settings on heroku for all settings in the secrets.yml
 
-    `rake heroku:secrets[<app-name>] RAILS_ENV=production`
+    rake heroku:secrets[<app-name>] RAILS_ENV=production
 
     Example:
-    `rake heroku:secrets[unirulebook2000] RAILS_ENV=production`
+    rake heroku:secrets[unirulebook2000] RAILS_ENV=production
 
-== On Non-GMail systems, you may need to set the MAIL_TLS=false variable too (see initializers/mailer.rb)
-
-    Current values for Unicycling.org rulebook are:
-
-    mail_server: unicycling.org
-    mail_port: 25
-    mail_domain: unicycling.org
-    mail_username: rulebook@unicycling.org
-    mail_password: ********
-    mail_full_emali: rulebook@unicycling.org
-    mail_from_name: "Uni Rulebook"
-    mail_tls: false
-    domain: rulebook.unicycling.org
-
-== Secret Hash
-
-    The 'Secret' key is required in order to generate secure cookies. With this in place, users can return to the site and have their accounts still logged in (this is a good thing).
-
-    secret: <run `rake secret` on the command line>
-
-    (I use 'rake secret' (from my development environment) to generate a random secure value. I only run it once, and it should be a different value for each of your system). If you don't have a development environment, type approximately a  hundred numbers as your "SECRET"
 
 == Set up the local database
 
-    ```
     cd unicycling-rulebook
     bundle
     rake db:create
     rake db:schema:load
-    ```
 
 == Start the local server
 
-    ```
     rails s
-    ```
 
     Browse to http://localhost:9292
 
-== Starting With Vagrant
+== Heroku info
 
-1. Create the vagrant instance
-
-    cd vagrant_postgres91_utf8_rails
-    vagrant up
-    vagrant ssh
-    cd workspace
-
-2. Start server
-
-    foreman start
-
-3. Install the heroku toolchain
-4. heroku login
-5. heroku keys:add (creates a new Ssh key pair for upload)
-6. git push heroku master
-7. heroku run rake db:migrate
+1. Install the heroku toolchain
+2. heroku login
+3. heroku keys:add (creates a new Ssh key pair for upload)
+4. git push heroku master
+5. heroku run rake db:migrate
 
 
 == Deploying to Heroku
 
 1. Create a new heroku instance
-        <tt>heroku create cedar,.....something</tt>
-        <tt>Example: heroku create usarulebook2013</tt>
+
+    heroku create cedar <something>
+    Example: heroku create usarulebook2013
 
 2. Add the heroku instance to the git remote list
-        <tt>heroku git:remote -a <name of new heroku instance> -r <alias_that you want to use></tt>
-        <tt>Example: heroku git:remote -a usarulebook2013 -r heroku</tt>
+
+    heroku git:remote -a <name of new heroku instance> -r <alias_that you want to use>
+    Example: heroku git:remote -a usarulebook2013 -r rulebook
+
+3. Upload the settings/secrets
+
+    rake heroku:secrets[rulebook] RAILS_ENV=production
 
 3. Upload the code
-        <tt>git push heroku master</tt>
 
-3a. Set the config variables (see above).
-        Especially the SECRET key
+    git push rulebook master
 
 4. Load the database
-        <tt>heroku run rake db:schema:load --app usarulebook2013</tt>
 
+    heroku run rake db:schema:load --app usarulebook2013
 
 5. Install the scheduling addon:
-        <tt>heroku addons:add scheduler:standard</tt>
+
+    heroku addons:add scheduler:standard
 
 6. Configure the scheduler via the webpage interface:
-        <tt>heroku addons:open scheduler</tt>
-        Add Job: "rake update_proposal_states" - Daily - 05:00 UTC
 
-
+    heroku addons:open scheduler
+    Add Job: "rake update_proposal_states" - Daily - 05:00 UTC

@@ -1,3 +1,5 @@
+- Need to deal with first-sign-up, since the mailer chokes because there are NO administrators yet
+
 Friday To-Do:
 -Brakeman
 - Update FAQ to describe that "you do not get e-mails for votes when you have submitted your vote"
