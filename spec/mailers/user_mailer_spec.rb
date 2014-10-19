@@ -84,20 +84,6 @@ describe UserMailer, :type => :mailer do
     end
   end
 
-  describe "'Submitted' Proposal Revised" do
-    before (:each) do
-      @proposal.status = "Submitted"
-      @proposal.save
-    end
-    # XXX This should change
-    let(:mail) { UserMailer.proposal_revised(@proposal.latest_revision, []) }
-
-    it "should not send e-mail to members if the proposal is in 'Submitted' state" do
-      expect(@proposal.status).to eq("Submitted")
-      expect(mail.bcc).to eq([])
-    end
-  end
-
   describe "'Review' proposal_revised" do
     let(:mail) { UserMailer.proposal_revised(@proposal.latest_revision, [@user.email]) }
 
