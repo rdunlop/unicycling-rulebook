@@ -35,6 +35,23 @@ describe InformCommitteeMembers do
     end
   end
 
+  shared_examples_for "only email admins for submitted proposals" do
+    it "sends NO email to other user" do
+      ActionMailer::Base.deliveries.clear
+      expect { do_action }.to change { ActionMailer::Base.deliveries.size }.by(0)
+    end
+
+    context "when the other user is a committee admin" do
+      let(:other_committee_member) { FactoryGirl.create(:committee_member, :admin, committee: committee, user: other_user) }
+
+      it "informs the committee-admin" do
+        ActionMailer::Base.deliveries.clear
+        do_action
+        expect(ActionMailer::Base.deliveries.first.bcc).to eq([other_user.email])
+      end
+    end
+  end
+
   let(:user) { FactoryGirl.create(:user) }
   let!(:committee_member) { FactoryGirl.create(:committee_member, committee: committee, user: user) }
   let(:other_user) { FactoryGirl.create(:user) }
@@ -48,6 +65,17 @@ describe InformCommitteeMembers do
 
     it_should_behave_like "only inform members based on no_email flag"
   end
+
+  context "with a submitted proposal" do
+    let(:proposal) { FactoryGirl.create(:proposal, :submitted) }
+    let(:discussion) { FactoryGirl.create(:discussion, proposal: proposal) }
+    let(:comment) { FactoryGirl.create(:comment, discussion: discussion, user: user) }
+    let(:committee) { discussion.committee }
+    let(:do_action) { described_class.comment_added(comment) }
+
+    it_should_behave_like "only email admins for submitted proposals"
+  end
+
 
   context "with a committee member2" do
     let(:proposal) { FactoryGirl.create(:proposal, :review) }
@@ -64,19 +92,6 @@ describe InformCommitteeMembers do
     let(:committee) { revision.proposal.committee }
     let(:do_action) { described_class.proposal_revised(revision) }
 
-    it "sends NO email to other user" do
-      ActionMailer::Base.deliveries.clear
-      expect { do_action }.to change { ActionMailer::Base.deliveries.size }.by(0)
-    end
-
-    context "when the other user is a committee admin" do
-      let(:other_committee_member) { FactoryGirl.create(:committee_member, :admin, committee: revision.proposal.committee, user: other_user) }
-
-      it "informs the committee-admin" do
-        ActionMailer::Base.deliveries.clear
-        do_action
-        expect(ActionMailer::Base.deliveries.first.bcc).to eq([other_user.email])
-      end
-    end
+    it_should_behave_like "only email admins for submitted proposals"
   end
 end

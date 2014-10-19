@@ -57,18 +57,7 @@ describe UserMailer, :type => :mailer do
     #  mail['In-Reply-To'].to_s.should == @proposal.mail_messageid
     #end
   end
-  describe "'Submitted' Proposal commented on" do
-    before (:each) do
-      @proposal.status = "Submitted"
-      @proposal.save
-    end
-    let(:mail) { UserMailer.discussion_comment_added(@comment, [@user.email]) }
 
-    #it "should not send e-mail to members if the proposal is in 'Submitted' state" do
-    #  @proposal.status.should == "Submitted"
-    #  mail.bcc.should eq([])
-    #end
-  end
   describe "Proposal without mail_messageid commented on" do
     before(:each) do
       @proposal.mail_messageid = nil

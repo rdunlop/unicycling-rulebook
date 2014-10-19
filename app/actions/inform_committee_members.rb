@@ -5,7 +5,11 @@ class InformCommitteeMembers
   # and those who have opted out
   #
   def self.comment_added(comment)
-    emails = committee_members_emails(comment.discussion.committee, comment.user.email)
+    if comment.discussion.try(:proposal).try(:status) == "Submitted"
+      emails = committee_admin_members_emails(comment.discussion.committee, comment.user.email)
+    else
+      emails = committee_members_emails(comment.discussion.committee, comment.user.email)
+    end
 
     if emails.any?
       UserMailer.discussion_comment_added(comment, emails).deliver
