@@ -3,6 +3,14 @@
 {<img src="https://travis-ci.org/rdunlop/unicycling-rulebook.png?branch=master" />}[https://travis-ci.org/rdunlop/unicycling-rulebook] {<img src="https://gemnasium.com/rdunlop/unicycling-rulebook.png" />}[https://gemnasium.com/rdunlop/unicycling-rulebook]
 
 
+== Dependencies
+
+This application depends on the following services:
+
+- Email (required) - Using either an SMTP or AWS SES e-mailer for sending e-mails when action occur
+- Heroku (required?) - Where the application is designed to be hosted
+- Google Analytis (optional) - Report activity for metrics
+
 == Set the configuration variables (for local work)
 
     echo "RACK_ENV=development" > .env
