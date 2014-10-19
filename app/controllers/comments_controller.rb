@@ -9,7 +9,8 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     respond_to do |format|
       if @comment.save
-        UserMailer.discussion_comment_added(@discussion, @comment, @comment.user).deliver
+        InformCommitteeMembers.comment_added(@comment)
+
         format.html { redirect_to @comment.discussion, notice: 'Comment was successfully created.' }
       else
         format.html { render "discussions/show" }

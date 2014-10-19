@@ -6,7 +6,7 @@ describe InformAdminUsers do
   context "with NO admin user" do
     let(:do_action) { described_class.new_applicant(user) }
 
-    it "creates an e-mail" do
+    it "creates NO e-mail" do
       ActionMailer::Base.deliveries.clear
       expect { do_action }.to change { ActionMailer::Base.deliveries.size }.by(0)
     end
