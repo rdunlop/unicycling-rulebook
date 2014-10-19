@@ -6,7 +6,7 @@
 #  name        :string(255)
 #  created_at  :datetime
 #  updated_at  :datetime
-#  preliminary :boolean
+#  preliminary :boolean          default(TRUE), not null
 #
 
 class Committee < ActiveRecord::Base

@@ -137,13 +137,13 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.new_committee_applicant.subject
   #
-  def new_committee_applicant(user)
+  def new_committee_applicant(user, admin_emails)
     @name = user.name
     @email = user.email
     @location = user.location
     @comments = user.comments
 
-    mail bcc: create_admin_email, from: create_from
+    mail bcc: admin_emails, from: create_from
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

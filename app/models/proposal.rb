@@ -11,7 +11,7 @@
 #  vote_start_date             :date
 #  vote_end_date               :date
 #  tabled_date                 :date
-#  transition_straight_to_vote :boolean
+#  transition_straight_to_vote :boolean          default(TRUE), not null
 #  owner_id                    :integer
 #  title                       :text
 #  created_at                  :datetime

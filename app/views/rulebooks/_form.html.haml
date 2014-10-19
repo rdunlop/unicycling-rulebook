@@ -32,15 +32,15 @@
         %td This is what will be displayed in the URL bar. (this cannot be modified after creation)
       %tr
         %td= f.label :front_page
-        %td= f.text_area :front_page
+        %td= f.text_area :front_page, class: "js--wysiwyg"
         %td The Text which will appear on the front page
       %tr
         %td= f.label :faq
-        %td= f.text_area :faq
+        %td= f.text_area :faq, class: "js--wysiwyg"
         %td Text for the FAQ
       %tr
         %td= f.label :copyright
-        %td= f.text_field :copyright
-        %td Copyrigth footer
+        %td= f.text_field :copyright, class: "js--wysiwyg"
+        %td Copyright footer
   .actions
     = f.submit

@@ -15,14 +15,14 @@
 #  last_sign_in_ip        :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
-#  admin                  :boolean          default(FALSE)
+#  admin                  :boolean          default(FALSE), not null
 #  name                   :string(255)
 #  location               :string(255)
 #  confirmation_token     :string(255)
 #  confirmed_at           :datetime
 #  confirmation_sent_at   :datetime
 #  comments               :text
-#  no_emails              :boolean
+#  no_emails              :boolean          default(FALSE), not null
 #
 # Indexes
 #
@@ -42,7 +42,8 @@ class User < ActiveRecord::Base
 
   validates :name, :presence => true
 
-  scope :super_admin, -> { where(admin: true) }
+  scope :admin, -> { where(admin: true) }
+  scope :email_notifications, -> { where(no_emails: false) }
 
   after_create :send_email_to_admins
 
@@ -59,9 +60,7 @@ class User < ActiveRecord::Base
   end
 
   def send_email_to_admins
-    if User.super_admin.count > 0
-      UserMailer.new_committee_applicant(self).deliver
-    end
+    InformAdminUsers.new_applicant(self)
   end
 
   def accessible_committees

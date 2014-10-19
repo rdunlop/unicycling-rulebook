@@ -24,7 +24,7 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   def new_committee_applicant
-    UserMailer.new_committee_applicant(user)
+    UserMailer.new_committee_applicant(user, admin_emails)
   end
 
   def vote_submitted
@@ -86,5 +86,9 @@ class UserMailerPreview < ActionMailer::Preview
 
   def vote
     @vote ||= Vote.all.sample
+  end
+
+  def admin_emails
+    ["admin2@gmail.com"]
   end
 end

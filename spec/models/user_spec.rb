@@ -85,10 +85,10 @@ describe User, :type => :model do
         expect(user.votes).to eq([vote])
     end
     it "should be able to be created with comments" do
-        user = User.new({:name => "Robin", 
-                         :email => "email@robin.com", 
-                         :password => "password", 
-                         :password_confirmation => "password", 
+        user = User.new({:name => "Robin",
+                         :email => "email@robin.com",
+                         :password => "password",
+                         :password_confirmation => "password",
                          :comments => "Something"})
         expect(user.comments).to eq("Something")
         expect(user.valid?).to eq(true)
@@ -98,10 +98,10 @@ describe User, :type => :model do
         expect(user.no_emails).to eq(false)
     end
     it "should be able to be created with no_emails" do
-        user = User.new({:name => "Robin", 
-                         :email => "email@robin.com", 
-                         :password => "password", 
-                         :password_confirmation => "password", 
+        user = User.new({:name => "Robin",
+                         :email => "email@robin.com",
+                         :password => "password",
+                         :password_confirmation => "password",
                          :no_emails => true})
         expect(user.no_emails).to eq(true)
         expect(user.valid?).to eq(true)

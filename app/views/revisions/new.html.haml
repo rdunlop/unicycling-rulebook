@@ -18,7 +18,7 @@
   = render :partial => "form", :object => f
   .field
     = f.label :change_description
-    = f.text_area :change_description
+    = f.text_area :change_description, class: "js--wysiwyg"
   .actions
     = f.submit
 = link_to 'Back', proposal_revisions_path(@proposal)

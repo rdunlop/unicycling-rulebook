@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141005163957) do
+ActiveRecord::Schema.define(version: 20141019205813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,18 +27,18 @@ ActiveRecord::Schema.define(version: 20141005163957) do
   create_table "committee_members", force: true do |t|
     t.integer  "committee_id"
     t.integer  "user_id"
-    t.boolean  "voting"
+    t.boolean  "voting",       default: true,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "admin",        default: false
-    t.boolean  "editor",       default: false
+    t.boolean  "admin",        default: false, null: false
+    t.boolean  "editor",       default: false, null: false
   end
 
   create_table "committees", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "preliminary"
+    t.boolean  "preliminary", default: true, null: false
   end
 
   create_table "discussions", force: true do |t|
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20141005163957) do
     t.date     "vote_start_date"
     t.date     "vote_end_date"
     t.date     "tabled_date"
-    t.boolean  "transition_straight_to_vote"
+    t.boolean  "transition_straight_to_vote", default: true, null: false
     t.integer  "owner_id"
     t.text     "title"
     t.datetime "created_at"
@@ -108,14 +108,14 @@ ActiveRecord::Schema.define(version: 20141005163957) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "admin",                  default: false
+    t.boolean  "admin",                  default: false, null: false
     t.string   "name"
     t.string   "location"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.text     "comments"
-    t.boolean  "no_emails"
+    t.boolean  "no_emails",              default: false, null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

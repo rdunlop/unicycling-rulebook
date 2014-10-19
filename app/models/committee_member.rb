@@ -5,11 +5,11 @@
 #  id           :integer          not null, primary key
 #  committee_id :integer
 #  user_id      :integer
-#  voting       :boolean
+#  voting       :boolean          default(TRUE), not null
 #  created_at   :datetime
 #  updated_at   :datetime
-#  admin        :boolean          default(FALSE)
-#  editor       :boolean          default(FALSE)
+#  admin        :boolean          default(FALSE), not null
+#  editor       :boolean          default(FALSE), not null
 #
 
 class CommitteeMember < ActiveRecord::Base
