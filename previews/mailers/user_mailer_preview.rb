@@ -41,7 +41,7 @@ class UserMailerPreview < ActionMailer::Preview
 
   def proposal_voting_result
     success = [true, false].sample
-    UserMailer.proposal_voting_result(proposal, success)
+    UserMailer.proposal_voting_result(proposal, success, committee_emails)
   end
 
   def mass_email

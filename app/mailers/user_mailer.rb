@@ -180,7 +180,7 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.proposal_voting_result.subject
   #
-  def proposal_voting_result(proposal, success)
+  def proposal_voting_result(proposal, success, members_emails)
     @proposal = proposal
     @succeeded_failed = success ? "Passed" : "Failed"
     @num_agree = proposal.agree_votes
@@ -189,7 +189,7 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(proposal)
 
-    send_mail(create_committee_email(@proposal, @proposal.committee), @proposal, nil)
+    send_mail(members_emails, @proposal, nil)
   end
 
   def mass_email(committees, subject, body, reply_email)

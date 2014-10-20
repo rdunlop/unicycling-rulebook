@@ -48,7 +48,7 @@ class Proposal < ActiveRecord::Base
         end
         puts "Changing Proposal #{proposal.title} from Voting to #{proposal.status}"
         proposal.save
-        UserMailer.proposal_voting_result(proposal, proposal.status == 'Passed').deliver
+        InformCommitteeMembers.proposal_voting_result(proposal, proposal.status == 'Passed')
       end
     end
   end
