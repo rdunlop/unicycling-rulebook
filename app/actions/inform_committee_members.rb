@@ -76,19 +76,4 @@ class InformCommitteeMembers
   def self.committee_admin_members_emails(committee, exclude)
     committee.committee_members.admin.merge(User.email_notifications).map(&:user).map(&:email) - [exclude]
   end
-
-=begin
-  def create_committee_email(proposal, committee, honor_no_email = true)
-    emails = []
-    CommitteeMember.all.each do |cm|
-      if cm.committee == committee
-        if proposal.nil? or cm.user.can? :read, proposal
-          emails << cm.user.email unless (honor_no_email and cm.user.no_emails)
-        end
-      end
-    end
-    emails
-  end
-=end
-
 end

@@ -22,18 +22,6 @@ class UserMailer < ActionMailer::Base
     mail bcc: bcc_list, subject: create_proposal_subject(proposal), from: create_from(from_name)
   end
 
-  def create_committee_email(proposal, committee, honor_no_email = true)
-    emails = []
-    CommitteeMember.all.each do |cm|
-      if cm.committee == committee
-        if proposal.nil? or cm.user.can? :read, proposal
-          emails << cm.user.email unless (honor_no_email and cm.user.no_emails)
-        end
-      end
-    end
-    emails
-  end
-
   def set_threading_header(proposal)
     if not proposal.mail_messageid.nil?
       headers['In-Reply-To'] = proposal.mail_messageid
@@ -202,4 +190,19 @@ class UserMailer < ActionMailer::Base
 
     mail bcc: emails, subject: subject, reply_to: reply_email, from: create_from
   end
+
+  private
+
+  def create_committee_email(proposal, committee, honor_no_email = true)
+    emails = []
+    CommitteeMember.all.each do |cm|
+      if cm.committee == committee
+        if proposal.nil? or cm.user.can? :read, proposal
+          emails << cm.user.email unless (honor_no_email and cm.user.no_emails)
+        end
+      end
+    end
+    emails
+  end
+
 end
