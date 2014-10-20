@@ -33,6 +33,12 @@ class InformCommitteeMembers
     UserMailer.proposal_call_for_voting(proposal, emails).deliver unless emails.none?
   end
 
+  def self.proposal_status_review(proposal, was_tabled)
+    emails = committee_members_emails(proposal.committee, nil)
+
+    UserMailer.proposal_status_review(proposal, was_tabled, emails).deliver unless emails.none?
+  end
+
   private
 
   def self.committee_members_emails(committee, exclude)

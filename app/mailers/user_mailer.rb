@@ -95,7 +95,7 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.proposal_status_review.subject
   #
-  def proposal_status_review(proposal, was_tabled)
+  def proposal_status_review(proposal, was_tabled, members_emails)
     @proposal = proposal
     @set_aside_message = was_tabled ? "This proposal was Set-Aside, but has been put back into the review stage." : ""
     @body = @proposal.latest_revision.body
@@ -103,7 +103,7 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(proposal)
 
-    send_mail(create_committee_email(@proposal, @proposal.committee), @proposal, nil)
+    send_mail(members_emails, @proposal, nil)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

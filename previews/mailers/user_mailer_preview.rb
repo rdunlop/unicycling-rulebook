@@ -14,7 +14,7 @@ class UserMailerPreview < ActionMailer::Preview
 
   def proposal_status_review
     was_tabled = [true, false].sample
-    UserMailer.proposal_status_review(proposal, was_tabled)
+    UserMailer.proposal_status_review(proposal, was_tabled, committee_emails)
   end
 
   def vote_changed
@@ -36,7 +36,7 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   def proposal_call_for_voting
-    UserMailer.proposal_call_for_voting(proposal)
+    UserMailer.proposal_call_for_voting(proposal, committee_emails)
   end
 
   def proposal_voting_result

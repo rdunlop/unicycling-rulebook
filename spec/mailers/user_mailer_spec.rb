@@ -94,11 +94,10 @@ describe UserMailer, :type => :mailer do
   end
 
   describe "proposal_status_review" do
-    let(:mail) { UserMailer.proposal_status_review(@proposal, true) }
+    let(:mail) { UserMailer.proposal_status_review(@proposal, true, [@user.email]) }
 
     it "renders the headers" do
       expect(mail.subject).to eq(@proposal_id_title_and_committee)
-      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
       expect(mail.from).to eq(["unicycling@dunlopweb.com"])
     end
 

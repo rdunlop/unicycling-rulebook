@@ -131,7 +131,7 @@ class ProposalsController < ApplicationController
 
     respond_to do |format|
       if @proposal.transition_to("Review")
-        UserMailer.proposal_status_review(@proposal, was_tabled).deliver
+        InformCommitteeMembers.proposal_status_review(@proposal, was_tabled)
         format.html { redirect_to @proposal, notice: 'Proposal is now in the review stage.' }
         format.json { head :no_content }
       else
