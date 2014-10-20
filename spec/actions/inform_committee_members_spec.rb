@@ -102,6 +102,7 @@ describe InformCommitteeMembers do
     let(:do_action) { described_class.vote_submitted(vote) }
 
     it "should not send e-mail to people who have voted" do
+      ActionMailer::Base.deliveries.clear
       do_action
       expect(ActionMailer::Base.deliveries.first.bcc).to eq([other_user.email])
     end
