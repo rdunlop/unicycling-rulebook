@@ -111,14 +111,14 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.vote_changed.subject
   #
-  def vote_changed(proposal, user, old_vote_string, new_vote_string)
+  def vote_changed(proposal, user, old_vote_string, new_vote_string, members_emails)
     @name = user.to_s
     @old_vote = old_vote_string
     @new_vote = new_vote_string
 
     set_threading_header(proposal)
 
-    send_mail(create_committee_email(proposal, proposal.committee), proposal, nil)
+    send_mail(members_emails, proposal, nil)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

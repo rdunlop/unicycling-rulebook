@@ -115,11 +115,10 @@ describe UserMailer, :type => :mailer do
   end
 
   describe "vote_changed" do
-    let(:mail) { UserMailer.vote_changed(@proposal, @user, 'disagree', 'abstain') }
+    let(:mail) { UserMailer.vote_changed(@proposal, @user, 'disagree', 'abstain', [@user.email]) }
 
     it "renders the headers" do
       expect(mail.subject).to eq(@proposal_id_title_and_committee)
-      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
       expect(mail.from).to eq(["unicycling@dunlopweb.com"])
     end
 

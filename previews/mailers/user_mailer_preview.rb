@@ -20,7 +20,7 @@ class UserMailerPreview < ActionMailer::Preview
   def vote_changed
     old_vote_string = "agree"
     new_vote_string = "disagree"
-    UserMailer.vote_changed(proposal, user, old_vote_string, new_vote_string)
+    UserMailer.vote_changed(proposal, user, old_vote_string, new_vote_string, committee_emails)
   end
 
   def new_committee_applicant

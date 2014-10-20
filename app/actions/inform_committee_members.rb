@@ -55,6 +55,12 @@ class InformCommitteeMembers
     UserMailer.vote_submitted(vote, emails).deliver unless emails.none?
   end
 
+  def self.vote_changed(proposal, current_user, previous_value, new_vote_value)
+    emails = committee_members_emails(proposal.committee, nil)
+
+    UserMailer.vote_changed(proposal, current_user, previous_value, new_vote_value, emails).deliver unless emails.none?
+  end
+
   private
 
   def self.committee_members_emails(committee, exclude)

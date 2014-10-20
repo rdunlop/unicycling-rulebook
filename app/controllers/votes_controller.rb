@@ -58,7 +58,7 @@ class VotesController < ApplicationController
 
     respond_to do |format|
       if @vote.update_attributes(vote_params)
-        UserMailer.vote_changed(@vote.proposal, current_user, previous_value, @vote.vote).deliver
+        InformCommitteeMembers.vote_changed(@vote.proposal, current_user, previous_value, @vote.vote)
         format.html { redirect_to [@proposal, @vote], notice: 'Vote was successfully updated.' }
         format.json { head :no_content }
       else
