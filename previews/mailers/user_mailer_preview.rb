@@ -28,7 +28,7 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   def vote_submitted
-    UserMailer.vote_submitted(vote)
+    UserMailer.vote_submitted(vote, committee_emails)
   end
 
   def proposal_finished_review

@@ -94,4 +94,24 @@ describe InformCommitteeMembers do
 
     it_should_behave_like "only email admins for submitted proposals"
   end
+
+  context "when votes have been submitted" do
+    let(:proposal) { FactoryGirl.create(:proposal, :submitted) }
+    let(:committee) { proposal.committee }
+    let!(:vote) { FactoryGirl.create(:vote, :proposal => proposal, :user => user) }
+    let(:do_action) { described_class.vote_submitted(vote) }
+
+    it "should not send e-mail to people who have voted" do
+      do_action
+      expect(ActionMailer::Base.deliveries.first.bcc).to eq([other_user.email])
+    end
+
+    context "when other member is non-voting" do
+      let!(:other_committee_member) { FactoryGirl.create(:committee_member, committee: committee, user: other_user, voting: false) }
+
+      it "should not send e-mail to people who are not voting members" do
+        expect { do_action }.to change { ActionMailer::Base.deliveries.size }.by(0)
+      end
+    end
+  end
 end

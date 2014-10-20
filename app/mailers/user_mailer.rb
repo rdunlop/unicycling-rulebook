@@ -135,12 +135,7 @@ class UserMailer < ActionMailer::Base
     mail bcc: admin_emails, from: create_from
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.user_mailer.vote_submitted.subject
-  #
-  def vote_submitted(vote)
+  def vote_submitted(vote, members_emails)
     @proposal = vote.proposal
     @proposal.reload # get new vote associations
     @name = vote.user.to_s
@@ -152,23 +147,11 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(@proposal)
 
-    # don't send e-mails to people who have already voted
-    all_possible_emails = create_committee_email(@proposal, committee)
-    already_voted_emails = @proposal.votes.map {|v| v.user.email }
-    # don't include non-voting members in the e-mail list
-    non_voting_emails = @proposal.committee.committee_members.select { |cm| cm.voting == false}.map {|cm| cm.user.email}
 
-    emails = all_possible_emails - already_voted_emails
-    emails = emails - non_voting_emails
 
-    send_mail(emails, vote.proposal, nil)
+    send_mail(members_emails, vote.proposal, nil)
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.user_mailer.proposal_finished_review.subject
-  #
   def proposal_finished_review(proposal)
     @REVISIONTIME_TEXT = "3 days"
     @proposal = proposal

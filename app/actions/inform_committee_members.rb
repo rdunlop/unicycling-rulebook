@@ -39,6 +39,22 @@ class InformCommitteeMembers
     UserMailer.proposal_status_review(proposal, was_tabled, emails).deliver unless emails.none?
   end
 
+  def self.vote_submitted(vote)
+    emails = committee_members_emails(vote.proposal.committee, nil)
+
+    # don't send e-mails to people who have already voted
+    all_possible_emails = emails
+    already_voted_emails = vote.proposal.votes.map {|v| v.user.email }
+    # don't include non-voting members in the e-mail list
+    non_voting_emails = vote.proposal.committee.committee_members.select { |cm| cm.voting == false}.map {|cm| cm.user.email}
+
+    emails = all_possible_emails - already_voted_emails
+    emails = emails - non_voting_emails
+
+
+    UserMailer.vote_submitted(vote, emails).deliver unless emails.none?
+  end
+
   private
 
   def self.committee_members_emails(committee, exclude)

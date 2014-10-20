@@ -154,11 +154,10 @@ describe UserMailer, :type => :mailer do
         @vote = FactoryGirl.create(:vote, :proposal => @proposal)
     end
 
-    let(:mail) { UserMailer.vote_submitted(@vote) }
+    let(:mail) { UserMailer.vote_submitted(@vote, [@user.email]) }
 
     it "renders the headers" do
       expect(mail.subject).to eq(@proposal_id_title_and_committee)
-      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
       expect(mail.from).to eq(["unicycling@dunlopweb.com"])
     end
 
@@ -168,15 +167,6 @@ describe UserMailer, :type => :mailer do
     end
     it "should have a in-reply-to set" do
       expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
-    end
-
-    it "should not send e-mail to people who have voted" do
-      @my_vote = FactoryGirl.create(:vote, :proposal => @proposal, :user => @user)
-      expect(mail.bcc).to eq([@other_cm_user.email])
-    end
-    it "should not send e-mail to people who are not voting members" do
-      @non_voting_member = FactoryGirl.create(:committee_member, :committee => @proposal.committee, :voting => false).user
-      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
     end
   end
 
