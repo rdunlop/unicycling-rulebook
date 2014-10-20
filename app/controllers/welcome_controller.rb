@@ -1,9 +1,9 @@
 class WelcomeController < ApplicationController
   skip_authorization_check
-  layout "global", only: [:index_all]
 
   def index_all
     @rulebooks = Rulebook.all
+    render layout: "global"
   end
 
   def index
