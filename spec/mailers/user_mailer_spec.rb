@@ -200,11 +200,10 @@ describe UserMailer, :type => :mailer do
   end
 
   describe "proposal_call_for_voting" do
-    let(:mail) { UserMailer.proposal_call_for_voting(@proposal) }
+    let(:mail) { UserMailer.proposal_call_for_voting(@proposal, [@user.email]) }
 
     it "renders the headers" do
       expect(mail.subject).to eq(@proposal_id_title_and_committee)
-      expect(mail.bcc).to eq([@user.email, @other_cm_user.email])
       expect(mail.from).to eq(["unicycling@dunlopweb.com"])
     end
 

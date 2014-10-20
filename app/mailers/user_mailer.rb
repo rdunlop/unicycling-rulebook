@@ -183,13 +183,13 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.proposal_call_for_voting.subject
   #
-  def proposal_call_for_voting(proposal)
+  def proposal_call_for_voting(proposal, members_emails)
     @proposal = proposal
     @vote_end = proposal.vote_end_date.to_s
 
     set_threading_header(proposal)
 
-    send_mail(create_committee_email(@proposal, @proposal.committee), @proposal, nil)
+    send_mail(members_emails, @proposal, nil)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

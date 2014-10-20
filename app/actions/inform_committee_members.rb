@@ -11,9 +11,7 @@ class InformCommitteeMembers
       emails = committee_members_emails(comment.discussion.committee, comment.user.email)
     end
 
-    if emails.any?
-      UserMailer.discussion_comment_added(comment, emails).deliver
-    end
+    UserMailer.discussion_comment_added(comment, emails).deliver unless emails.none?
   end
 
   # Send e-mail to all committee members
@@ -26,9 +24,13 @@ class InformCommitteeMembers
       emails = committee_members_emails(revision.proposal.committee, revision.user.email)
     end
 
-    if emails.any?
-      UserMailer.proposal_revised(revision, emails).deliver
-    end
+    UserMailer.proposal_revised(revision, emails).deliver unless emails.none?
+  end
+
+  def self.proposal_call_for_voting(proposal)
+    emails = committee_members_emails(proposal.committee, nil)
+
+    UserMailer.proposal_call_for_voting(proposal, emails).deliver unless emails.none?
   end
 
   private
