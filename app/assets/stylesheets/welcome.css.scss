@@ -2,9 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-$nav_width: 150px;
-$top_height: 5em;
-
 html,body{
     margin: 20;
     padding: 0;
@@ -12,37 +9,17 @@ html,body{
 body {
     height: 100%;
 }
-.top_nav {
-    overflow: hidden;
-    text-align: center;
-    width: 100%;
-    height: $top_height;
-}
 
-.left_nav {
-    overflow: auto;
-    top: $top_height;
-    padding: 5px;
-}
-
-.left_nav li {
-    display: inline-block;
-    list-style-type: none;
-    background-color: #666;
-    padding: 5px 15px;
-}
-
-.left_nav a {
-  text-decoration: none;
-  color: white;
-}
-
-.main_nav {
-}
 
 .status_message {
     color: red;
 }
+
+// Navigation formating:
+
+$nav_width: 150px;
+$top_height: 5em;
+
 
 #rulebook_list{
   list-style: none;
@@ -60,10 +37,38 @@ body {
   a:hover{
     color:#c00;
   }
-  li{
-    //width:300px;
-  }
 }
+
+.top_nav {
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+    height: $top_height;
+}
+
+.left_nav {
+    overflow: auto;
+    top: $top_height;
+    padding: 5px;
+}
+
+.left_nav li {
+    display: inline-block;
+    list-style-type: none;
+    background-color: #666;
+}
+
+.left_nav a {
+  text-decoration: none;
+  display: inline-block;
+  color: white;
+  padding: 5px 15px;
+}
+
+.main_nav {
+}
+
+
 
 // Form formatting:
 textarea {
