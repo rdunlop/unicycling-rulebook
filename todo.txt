@@ -1,14 +1,12 @@
 Known issues:
+- Fix that some discussions have no associated committee (but they _do_ have a proposal?...bad migration?)
 - Word-counting of Revision text is broken (it always sayss 500 characters remain)
-
-- Need to deal with first-sign-up, since the mailer chokes because there are NO administrators yet
 
 Friday To-Do:
 -Brakeman
 - Update FAQ to describe that "you do not get e-mails for votes when you have submitted your vote"
  - Only Voting members receive e-mail about voting?
  - Update "Table" to include a description?
-- Upgrade Rails to 3.2.10 for security.
 - Create scopes for the "vote_submitted" mailer search lists (like: voting_members, voted_members, etc)
 
 #####- Add ability for Admin to adjust the admin status of another user.
@@ -20,7 +18,6 @@ Friday To-Do:
 - "Do not send me e-mails"
 - "send me e-mail once a week"
 
-- Can I pull the "e-mail list creation logic" into  the controller, so that I can prevent the problem of trying to send to no-one.
 - Can I change it so that the system sends e-mails based on the 'read-ability' of objects, instead of the relationship. (thus all super-admin would get ALL e-mails).
 
 - Add interface to allow people to modify these settings for themselves easily.
