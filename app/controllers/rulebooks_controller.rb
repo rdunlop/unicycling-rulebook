@@ -38,6 +38,7 @@ class RulebooksController < ApplicationController
   # POST /rulebooks.json
   def create
     raise CanCan::AccessDenied.new("Incorrect Access code") unless params[:access_code] == Rails.application.secrets.rulebook_creation_access_code
+    raise Exception.new("Unable to name a schema 'public'") if @rulebook.subdomain == "public"
 
     respond_to do |format|
       if @rulebook.save
