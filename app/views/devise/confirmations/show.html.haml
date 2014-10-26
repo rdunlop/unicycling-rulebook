@@ -4,7 +4,6 @@
   = form.inputs do
     = form.input :password, :input_html => {:autofocus => true}
     = form.input :password_confirmation
-    - binding.pry
     = form.input :confirmation_token, :as => :hidden, input_html: { value: @original_token }
   = form.actions do
     = form.action :submit, :label => 'Confirm Account'

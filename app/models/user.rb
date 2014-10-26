@@ -40,8 +40,6 @@ class User < ActiveRecord::Base
   has_many :committees, :through => :committee_members
   has_many :votes
 
-  validates :name, :presence => true
-
   scope :admin, -> { where(admin: true) }
   scope :email_notifications, -> { where(no_emails: false) }
 
@@ -130,6 +128,6 @@ class User < ActiveRecord::Base
   end
 
   def to_s
-    name
+    name.presence || email
   end
 end

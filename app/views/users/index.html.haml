@@ -1,0 +1,7 @@
+%h1 Create Many users at once
+
+= semantic_form_for :new_users, url: users_path, action: :post do |form|
+  = form.inputs do
+    = form.input :emails, as: :text, label: "Comma-delimited emails"
+  = form.actions do
+    = form.action :submit, :label => 'Create Accounts and send e-mails'
