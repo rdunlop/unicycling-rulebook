@@ -1,15 +1,6 @@
 Allow SuperAdmin:
 - only send e-mail to confirmed accounts.
 
-- create new user, and associated memberships.
- - Sends a welcome e-mail, and a "confirm/set-password" link.
- - email should include the rulebook instance name
- - Can we create multiple users at once (paste a bunch of e-mail accounts) at once
-- Allow a way for a committe to add many members at once easily.
- - use chosen-select for choosing the members.
- - no notification of this change.
-
-
 Known issues:
 - Fix that some discussions have no associated committee (but they _do_ have a proposal?...bad migration?)
 - Word-counting of Revision text is broken (it always sayss 500 characters remain)
