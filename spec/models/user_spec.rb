@@ -41,13 +41,6 @@ describe User, :type => :model do
         end
     end
 
-    it "should require a name" do
-        user = FactoryGirl.create(:user)
-
-        user.name = ""
-        expect(user.valid?).to eq(false)
-    end
-
     it "should return it's name as the string" do
         user = FactoryGirl.create(:user)
 
