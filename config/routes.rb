@@ -32,7 +32,7 @@ RulebookApp::Application.routes.draw do
       resources :discussions, only: [:index, :create, :new]
       resources :proposals, only: [:new, :create]
     end
-    resources :users, only: [:index, :create]
+    resources :bulk_users, only: [:index, :create]
 
     devise_for :users, :controllers => {:confirmations => 'confirmations'}
 

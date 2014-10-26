@@ -1,6 +1,4 @@
 Allow SuperAdmin:
-- only send e-mail to confirmed accounts.
-
 Known issues:
 - Fix that some discussions have no associated committee (but they _do_ have a proposal?...bad migration?)
 - Word-counting of Revision text is broken (it always sayss 500 characters remain)
