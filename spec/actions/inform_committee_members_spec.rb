@@ -22,7 +22,16 @@ describe InformCommitteeMembers do
         ActionMailer::Base.deliveries.clear
         expect { do_action }.to change { ActionMailer::Base.deliveries.size }.by(0)
       end
+    end
 
+    context "with user who is not yet confirmed" do
+      let(:user) { FactoryGirl.create(:user, no_emails: true) }
+      let(:other_user) { FactoryGirl.create(:user, confirmed_at: nil) }
+
+      it "should send NO e-mail" do
+        ActionMailer::Base.deliveries.clear
+        expect { do_action }.to change { ActionMailer::Base.deliveries.size }.by(0)
+      end
     end
 
     context "with other member who is no-email" do
