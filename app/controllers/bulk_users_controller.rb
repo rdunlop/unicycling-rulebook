@@ -23,6 +23,6 @@ class BulkUsersController < ApplicationController
 
     flash[:notice] = "Created user accounts for #{good_emails.join(', ')}" if good_emails.any?
     flash[:alert] = "Errors #{bad_emails.join(', ')}" if bad_emails.any?
-    redirect_to users_path
+    redirect_to bulk_users_path
   end
 end
