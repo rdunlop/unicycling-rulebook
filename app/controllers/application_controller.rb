@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:name, :location, :comments]
+    devise_parameter_sanitizer.for(:account_update) << [:name, :location, :comments, :no_emails]
   end
 
   # Prevent stored_location_for redirecting to a different tenant
@@ -21,6 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   public
+
   rescue_from CanCan::AccessDenied do |exception|
     if Apartment::Tenant.current
       redirect_to welcome_index_path, alert: exception.message

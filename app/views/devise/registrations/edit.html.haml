@@ -9,6 +9,11 @@
     = f.label :email
     = f.email_field :email
   %div
+    = f.label :location
+    %br
+    .detail ie. City, Region, Country
+    = f.text_field :location
+  %div
     = f.label :password
     %i (leave blank if you don't want to change it)
     = f.password_field :password, :autocomplete => "off"

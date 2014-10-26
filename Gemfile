@@ -13,6 +13,7 @@ gem 'pg'
 gem 'haml'
 gem 'momentjs-rails'
 gem 'tinymce-rails'
+gem 'chosen-rails'
 gem 'formtastic' # currently user for user-confirmation step only
 # allows storing of secrets in ENV for heroku
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'

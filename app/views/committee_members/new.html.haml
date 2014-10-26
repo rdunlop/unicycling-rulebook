@@ -12,7 +12,7 @@
   .field
     = f.label :user_id
     %br
-    = f.select(:user_id, @users.map{ |e| [e, e.id]}, {}, {:multiple => true, :size => 10})
+    = f.select(:user_id, @users.map{ |e| [e, e.id]}, {}, {multiple: true, class: 'chosen-select'} )
   .field
     = f.label :admin
     %br
