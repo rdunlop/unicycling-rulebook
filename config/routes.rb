@@ -33,7 +33,11 @@ RulebookApp::Application.routes.draw do
       resources :proposals, only: [:new, :create]
     end
 
-    devise_for :users
+    devise_for :users, :controllers => {:confirmations => 'confirmations'}
+
+    devise_scope :user do
+      patch "/confirm" => "confirmations#confirm"
+    end
 
     # this causes devise to direct just-signed-in-users to the welcome/index
     get 'welcome/index' => "welcome#index", as: :user_root

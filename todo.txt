@@ -1,4 +1,6 @@
 Allow SuperAdmin:
+- only send e-mail to confirmed accounts.
+
 - create new user, and associated memberships.
  - Sends a welcome e-mail, and a "confirm/set-password" link.
  - email should include the rulebook instance name

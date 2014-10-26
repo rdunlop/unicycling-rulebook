@@ -37,15 +37,17 @@ class RulebooksController < ApplicationController
   # POST /rulebooks
   # POST /rulebooks.json
   def create
-    raise CanCan::AccessDenied.new("Incorrect Access code") unless params[:access_code] == Rails.application.secrets.rulebook_creation_access_code
-    raise Exception.new("Unable to name a schema 'public'") if @rulebook.subdomain == "public"
+    errors = []
+    errors << "Incorrect Access code" unless params[:access_code] == Rails.application.secrets.rulebook_creation_access_code
+    errors << "Unable to name a schema 'public'" if @rulebook.subdomain == "public"
 
     respond_to do |format|
-      if @rulebook.save
+      if errors.empty? && @rulebook.save
         Apartment::Tenant.create(@rulebook.subdomain)
         format.html { redirect_to @rulebook, notice: 'Rulebook was successfully created.' }
         format.json { render json: @rulebook, status: :created, location: @rulebook }
       else
+        flash[:alert] = errors.join(", ")
         format.html { render action: "new" }
         format.json { render json: @rulebook.errors, status: :unprocessable_entity }
       end

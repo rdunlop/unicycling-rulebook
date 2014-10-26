@@ -40,7 +40,7 @@ class ConfigurationsController < ApplicationController
   # DELETE /configurations/1
   def destroy
     Apartment::Tenant.drop(@rulebook.subdomain)
-    @rulebok.destroy
+    @rulebook.destroy
 
     respond_to do |format|
       format.html { redirect_to root_url }
