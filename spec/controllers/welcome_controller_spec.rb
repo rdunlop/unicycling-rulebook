@@ -51,7 +51,7 @@ describe WelcomeController, :type => :controller do
       end
       it "sets the username to the current-signed-in-user" do
         get :message, {}
-        expect(assigns(:from)).to eq(@admin.name)
+        expect(assigns(:from)).to eq(@admin)
       end
     end
     describe "as a committee-admin" do
