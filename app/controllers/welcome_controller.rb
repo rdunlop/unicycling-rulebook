@@ -27,7 +27,7 @@ class WelcomeController < ApplicationController
   def message
     authorize! :send, Message
     @committees = Committee.all
-    @from = current_user.name
+    @from = current_user.to_s
     @from_email = current_user.email
   end
 

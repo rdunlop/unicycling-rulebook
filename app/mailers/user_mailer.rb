@@ -59,7 +59,7 @@ class UserMailer < ActionMailer::Base
 
     #set_threading_header(proposal)
 
-    send_mail(members_emails, @discussion, comment.user.name)
+    send_mail(members_emails, @discussion, comment.user.to_s)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -75,7 +75,7 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(@proposal)
 
-    send_mail(members_emails, @proposal, revision.user.name)
+    send_mail(members_emails, @proposal, revision.user.to_s)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
