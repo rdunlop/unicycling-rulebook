@@ -2,7 +2,9 @@
 = semantic_form_for(resource, :as => resource_name, :url => confirm_path) do |form|
   = devise_error_messages!
   = form.inputs do
-    = form.input :password, :input_html => {:autofocus => true}
+    = form.input :name, required: true, :input_html => {:autofocus => true}
+    = form.input :location, label: "Location (ie. City, Region, Country)"
+    = form.input :password
     = form.input :password_confirmation
     = form.input :confirmation_token, :as => :hidden, input_html: { value: @original_token }
   = form.actions do

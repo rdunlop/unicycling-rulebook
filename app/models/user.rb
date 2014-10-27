@@ -49,6 +49,8 @@ class User < ActiveRecord::Base
 
   after_initialize :init
 
+  validates_presence_of :name
+
   # necessary to allow user creation without password
   def password_required?
     super if confirmed?
