@@ -45,7 +45,7 @@ describe UserMailer, :type => :mailer do
     it "renders the headers" do
       #mail.subject.should eq(@proposal_id_title_and_committee)
       expect(mail.from).to eq(["unicycling@dunlopweb.com"])
-      expect(mail.header[:from].to_s).to eq("#{@user.name} <unicycling@dunlopweb.com>")
+      expect(mail.header[:from].to_s).to eq("#{@user} <unicycling@dunlopweb.com>")
     end
 
     it "renders the body" do

@@ -2,12 +2,12 @@
 - @committees.each do |committee|
   %h2= "Committee: " + committee.to_s
   - committee.committee_members.each do |member|
-    %b= member.user.name
+    %b= member.user
     (#{member.user.voting_text(committee)}) - #{member.user.location}
     %br
 %hr
 %h2 All Members
 - @users.each do |user|
-  %b= user.name
+  %b= user
   \- #{user.location}
   %br
