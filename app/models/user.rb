@@ -49,7 +49,8 @@ class User < ActiveRecord::Base
 
   after_initialize :init
 
-  validates_presence_of :name
+  # allow initial creation to occur without a name
+  validates_presence_of :name, if: :persisted?
 
   # necessary to allow user creation without password
   def password_required?

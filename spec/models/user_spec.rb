@@ -77,6 +77,18 @@ describe User, :type => :model do
 
         expect(user.votes).to eq([vote])
     end
+    it "doesn't need a name initially" do
+        u = FactoryGirl.build(:user, name: nil)
+        expect(u).to be_valid
+    end
+
+    it "does require a name after being created" do
+        u = FactoryGirl.create(:user, name: nil)
+        expect(u).to be_invalid
+        u.name = "Robin"
+        expect(u).to be_valid
+    end
+
     it "should be able to be created with comments" do
         user = User.new({:name => "Robin",
                          :email => "email@robin.com",
