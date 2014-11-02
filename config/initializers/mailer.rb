@@ -3,7 +3,9 @@ ActionMailer::Base.default :from => Rails.application.secrets.mail_full_email
 ActionMailer::Base.default_url_options[:host] = Rails.application.secrets.domain
 
 unless Rails.env.test?
-  if Rails.application.secrets.aws_access_key.present?
+  if Rails.application.secrets.mailjet_api_key.present?
+    ActionMailer::Base.delivery_method = :mailjet
+  elsif Rails.application.secrets.aws_access_key.present?
     ActionMailer::Base.delivery_method = :amazon_ses
   else
     ActionMailer::Base.smtp_settings = {

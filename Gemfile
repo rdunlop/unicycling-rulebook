@@ -21,6 +21,7 @@ gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 gem 'apartment'
 gem 'breadcrumbs_on_rails'
 gem 'aws-sdk'
+gem 'mailjet'
 
 group :development, :test, :cucumber do
     gem 'html2haml'
