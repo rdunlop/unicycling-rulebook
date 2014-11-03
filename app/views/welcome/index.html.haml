@@ -1,13 +1,14 @@
-%h1
-  Welcome to the #{@config.rulebook}
-- if @config.front_page.present?
-  = @config.front_page.html_safe
-- else
-  = render "default_welcome"
+%div#homepage-container
+  %h1
+    Welcome to the #{@config.rulebook}
+  - if @config.front_page.present?
+    = @config.front_page.html_safe
+  - else
+    = render "default_welcome"
 
-%h3 Available Committees
-%ul#rulebook_list
-  - @committees.each do |committee|
-    %li= link_to committee.name, committee_path(committee)
+  %h3 Available Committees
+  %ul#rulebook_list
+    - @committees.each do |committee|
+      %li= link_to committee.name, committee_path(committee)
 
-%br
+  %br
