@@ -31,6 +31,8 @@
 #
 
 class User < ActiveRecord::Base
+  attr_accessor :confirming # indicates that we are about to confirm this user
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
@@ -50,7 +52,11 @@ class User < ActiveRecord::Base
   after_initialize :init
 
   # allow initial creation to occur without a name
-  validates_presence_of :name, if: :persisted?
+  validates_presence_of :name, if: :confirming_or_confirmed?
+
+  def confirming_or_confirmed?
+    confirming || confirmed?
+  end
 
   # necessary to allow user creation without password
   def password_required?

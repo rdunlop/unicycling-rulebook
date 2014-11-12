@@ -19,6 +19,7 @@ class ConfirmationsController < Devise::ConfirmationsController
     self.resource = resource_class.find_by_confirmation_token! digested_token
     resource.assign_attributes(permitted_params) unless params[resource_name].nil?
 
+    resource.confirming = true
     if resource.valid? && resource.password_match?
       self.resource.confirm!
       set_flash_message :notice, :confirmed
