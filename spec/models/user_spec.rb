@@ -71,19 +71,21 @@ describe User, :type => :model do
 
         expect(user.voting_text(cm.committee)).to eq("Non-Voting Member")
     end
+
     it "should be able to list its votes" do
         user = FactoryGirl.create(:user)
         vote = FactoryGirl.create(:vote, :user => user)
 
         expect(user.votes).to eq([vote])
     end
+
     it "doesn't need a name initially" do
-        u = FactoryGirl.build(:user, name: nil)
+        u = FactoryGirl.build(:user, name: nil, confirmed_at: nil)
         expect(u).to be_valid
     end
 
     it "does require a name after being created" do
-        u = FactoryGirl.create(:user, name: nil)
+        u = FactoryGirl.build(:user, name: nil)
         expect(u).to be_invalid
         u.name = "Robin"
         expect(u).to be_valid
