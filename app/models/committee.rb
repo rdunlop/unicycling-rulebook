@@ -16,7 +16,7 @@ class Committee < ActiveRecord::Base
   has_many :proposals
   has_many :discussions
 
-  scope :ordered, -> { order("preliminary, name") }
+  scope :ordered, -> { order("preliminary, id") }
 
   def to_s
     name
