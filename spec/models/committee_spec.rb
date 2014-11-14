@@ -56,7 +56,7 @@ describe Committee, :type => :model do
     end
 
     it "sorts the preliminary committees by name" do
-      expect(committees).to eq([base, prelim1, prelim2])
+      expect(committees).to eq([base, prelim2, prelim1])
     end
   end
 end
