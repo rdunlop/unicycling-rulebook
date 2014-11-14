@@ -2,6 +2,10 @@ class Ability
   include CanCan::Ability
   # very important reference: https://github.com/ryanb/cancan/wiki/Nested-Resources
 
+  def proposals_allowed?
+    Rulebook.proposals_allowed
+  end
+
   def initialize(user)
 
     user ||= User.new # default user if not signed in
@@ -63,7 +67,7 @@ class Ability
 
     # You must be a voting member in a committee in order to be able to create a Proposal
     can :create_proposal, Committee do |committee|
-       if rulebook.proposals_allowed
+       if proposals_allowed?
         user.voting_member(committee)
        else
          false
