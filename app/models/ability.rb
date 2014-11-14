@@ -63,7 +63,11 @@ class Ability
 
     # You must be a voting member in a committee in order to be able to create a Proposal
     can :create_proposal, Committee do |committee|
-      user.voting_member(committee)
+       if rulebook.proposals_allowed
+        user.voting_member(committee)
+       else
+         false
+       end
     end
 
     # You must be in a committee in order to be able to create a Discussion
