@@ -3,13 +3,9 @@ source 'https://rubygems.org'
 ruby "2.1.2"
 gem 'rails', '4.1.7'
 
-gem 'rake'
-
 # authorization
 gem 'devise'
 gem 'cancancan', '~> 1.9'
-
-gem 'pg'
 
 # front end
 gem 'haml'
@@ -34,7 +30,11 @@ gem 'aws-sdk'
 gem 'mailjet'
 
 # other
+gem 'rake'
+gem 'pg'
 gem 'unicorn'
+gem 'redis-rails'
+gem 'sidekiq'
 #gem 'whenever'
 
 # deployment

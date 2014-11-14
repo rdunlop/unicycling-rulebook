@@ -15,6 +15,14 @@ Amazon Ec2 installation:
 - `createuser rulebooktestuser -h unisoftdb.cdotscaeyshe.us-west-2.rds.amazonaws.com -d -P -U robindunlop`
 - write these credentials into the database.yml
 - then `RAILS_ENV=stage bundle exec rake db:create`
+
+- install redis via script/install_redis.sh
+- install sidekiq via...
+
+- copy nginx.conf.template to /etc/nginx/nginx.conf
+- copy database.yml.template and secrets.yml.template to /home/ec2-user/unicycling-rulebook/shared/config/
+- cap prod deploy
+
 - bundle
 - rvmsudo bundle exec rails s -p 80 -e production
 
