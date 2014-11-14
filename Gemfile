@@ -18,6 +18,12 @@ gem 'tinymce-rails'
 gem 'chosen-rails'
 gem 'formtastic' # currently user for user-confirmation step only
 gem 'breadcrumbs_on_rails'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier', '>= 1.0.3'
+
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+#gem 'therubyracer'
 
 # allows storing of secrets in ENV for heroku
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
@@ -55,17 +61,6 @@ group :development, :test, :cucumber do
     gem 'pry'
 end
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  #gem 'therubyracer'
-
-  gem 'uglifier', '>= 1.0.3'
-end
 
 gem 'jquery-rails'
 
