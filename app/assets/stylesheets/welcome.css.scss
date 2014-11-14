@@ -15,10 +15,6 @@ body {
     color: red;
 }
 
-#homepage-container {
-  margin-left: 45px
-}
-
 // Navigation formating:
 
 $nav_width: 150px;
@@ -53,7 +49,9 @@ $top_height: 5em;
 .left_nav {
     overflow: auto;
     top: $top_height;
-    padding: 5px;
+      ul {
+        padding-left:0px;
+      }
 }
 
 .left_nav li {
@@ -69,7 +67,12 @@ $top_height: 5em;
   padding: 5px 15px;
 }
 
-.main_nav {
+.main_nav, .breadcrumbs, .left_nav {
+  margin-left: 45px
+}
+
+.remove-indent {
+  margin-left:-45px;
 }
 
 
@@ -78,6 +81,10 @@ $top_height: 5em;
 textarea {
     height: 400px;
     width: 60%;
+}
+textarea.voting-comment {
+  height: 100px;
+  width: 30%;
 }
 #subject {
     width: 60%;
