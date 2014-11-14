@@ -1,7 +1,8 @@
 -# Use this layout when you are in a specific rulebook
 - content_for :top_nav do
   = render partial: "/nav/navbar"
-  = render_breadcrumbs
+  .breadcrumbs
+    = render_breadcrumbs
 
 - content_for :bottom_nav do
   %p
