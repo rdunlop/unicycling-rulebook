@@ -7,6 +7,7 @@ Amazon Ec2 installation:
 - source ~/.profile
 - rvm install ruby 2.1.2
 - rvm alias create default ruby-2.1.2 (set the default ruby)
+- sudo yum install nodejs npm --enablerepo=epel (for js-runtime)
 - bash --login (so that I can use the ruby)
 - yum install postgresql-devel
 - gem install bundler
