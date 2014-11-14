@@ -4,24 +4,39 @@ ruby "2.1.2"
 gem 'rails', '4.1.7'
 
 gem 'rake'
+
+# authorization
 gem 'devise'
 gem 'cancancan', '~> 1.9'
-gem 'exception_notification'
 
-#gem 'sqlite3'
 gem 'pg'
+
+# front end
 gem 'haml'
 gem 'momentjs-rails'
 gem 'tinymce-rails'
 gem 'chosen-rails'
 gem 'formtastic' # currently user for user-confirmation step only
+gem 'breadcrumbs_on_rails'
+
 # allows storing of secrets in ENV for heroku
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 gem 'apartment'
-gem 'breadcrumbs_on_rails'
+gem 'exception_notification'
 gem 'aws-sdk'
 gem 'mailjet'
+
+# other
+gem 'unicorn'
+#gem 'whenever'
+
+# deployment
+gem 'capistrano'
+gem 'capistrano-rails'
+gem 'capistrano-rvm'
+gem 'capistrano-bundler'
+gem 'capistrano3-unicorn'
 
 group :development, :test, :cucumber do
     gem 'html2haml'

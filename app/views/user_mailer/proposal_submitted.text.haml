@@ -4,7 +4,7 @@ Title: #{raw @title}
 URL: #{proposal_url(@proposal)}
 
 PROPOSAL:
-\#{raw @rule_text}
+\#{raw strip_tags @rule_text}
 
 BODY:
-\#{raw @body}
+\#{raw strip_tags @body}

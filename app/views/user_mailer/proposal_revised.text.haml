@@ -4,10 +4,10 @@ URL: #{proposal_url(@proposal)}
 
 
 Changes made:
-\#{raw @change_description}
+\#{raw strip_tags @change_description}
 
 PROPOSAL:
-\#{raw @rule_text}
+\#{raw strip_tags @rule_text}
 
 BODY:
-\#{raw @body}
+\#{raw strip_tags @body}

@@ -1,10 +1,14 @@
 %b The following proposal has been revised:
+
 %h2
   Title: #{@proposal.title}
 = link_to proposal_url(@proposal), proposal_url(@proposal)
+
 %h2 Changes made:
 = @change_description.html_safe
+
 %h2 Proposal:
 = @rule_text.html_safe
+
 %h2 Body:
 = @body.html_safe

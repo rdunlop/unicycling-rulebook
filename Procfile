@@ -1,2 +1,2 @@
-web: bundle exec rails server -p $PORT -e $RACK_ENV
+web: bundle exec unicorn -p $PORT
 watchr: bundle exec watchr .watchr

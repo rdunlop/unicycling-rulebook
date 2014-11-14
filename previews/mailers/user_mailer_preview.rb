@@ -96,7 +96,7 @@ class UserMailerPreview < ActionMailer::Preview
     ["admin2@gmail.com"]
   end
 
-    def committee_emails
+  def committee_emails
     ["boring_user1@gmail.com", "boring_user2@gmail.com"]
   end
 end

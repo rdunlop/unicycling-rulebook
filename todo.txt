@@ -1,3 +1,17 @@
+Amazon Ec2 installation:
+- yum update
+- yum groupinstall "Development Tools" (may not be required)
+- yum install libxml2-devel libxslt-devel (for nokogiri)
+- gpg2 --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3 ( trust the rvm guy)
+- \curl -sSL https://get.rvm.io | bash -s stable
+- source ~/.profile
+- rvm install ruby 2.1.2
+- bash --login (so that I can use the ruby)
+- yum install postgresql-devel
+- gem install bundler
+- bundle
+- rvmsudo bundle exec rails s -p 80 -e production
+
 Allow SuperAdmin:
 Known issues:
 - Fix that some discussions have no associated committee (but they _do_ have a proposal?...bad migration?)

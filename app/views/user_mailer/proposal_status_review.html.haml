@@ -1,0 +1,16 @@
+%b The following proposal is now in the review stage:
+
+#{@set_aside_message}
+
+%h1 Title: @proposal.title
+
+= link_to proposal_url(@proposal), proposal_url(@proposal)
+
+%p
+  If you are a committee member, please visit the URL above, read through the proposal and background, and make any comments so it can be improved.
+
+%h2 Proposal:
+= @rule_text.try(:html_safe)
+
+%h2 Body:
+= @body.try(:html_safe)
