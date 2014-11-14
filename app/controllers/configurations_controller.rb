@@ -51,6 +51,6 @@ class ConfigurationsController < ApplicationController
   private
 
   def rulebook_params
-    params.require(:rulebook).permit(:rulebook_name, :front_page, :faq, :copyright)
+    params.require(:rulebook).permit(:rulebook_name, :front_page, :faq, :copyright,:proposals_allowed)
   end
 end

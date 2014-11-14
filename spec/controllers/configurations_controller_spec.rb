@@ -14,7 +14,8 @@ describe ConfigurationsController, :type => :controller do
       front_page: "Something Interesting",
       faq: "FAQ lives here",
       copyright: "Teh new Copyright",
-      subdomain: "the_rulebook"
+      subdomain: "the_rulebook",
+      proposals_allowed: true
     }
   end
 

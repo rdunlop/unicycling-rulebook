@@ -11,6 +11,7 @@
 #  copyright          :string(255)
 #  subdomain          :string(255)
 #  admin_upgrade_code :string(255)
+#  proposals_allowed  :boolean          default(TRUE), not null
 #
 
 class Rulebook < ActiveRecord::Base
@@ -22,5 +23,13 @@ class Rulebook < ActiveRecord::Base
 
   def copyright_description
     copyright || "#{Date.today.year} International Unicycling Federation"
+  end
+
+  def self.proposals_allowed
+    if proposals_allowed.nil?
+      true
+    else
+      proposals_allowed
+    end
   end
 end
