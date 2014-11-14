@@ -6,13 +6,9 @@
   %h2 Discussions
   - if can? :create_discussion, @committee
     = link_to "Create New Discussion", new_committee_discussion_path(@committee), class: "primary_button"
-  %ul
-    - @committee.discussions.reverse_chronological.each do |discussion|
-      %li
-        = link_to discussion.display_title, discussion_path(discussion)
-        Last updated
-        %time.js--days-ago{ datetime: discussion.updated_at.iso8601 }
-          = l(discussion.updated_at, format: :short)
+    
+  = render :partial => "discussions/display_summary"
+
   %hr
   %h2 Proposals
   - if can? :create_proposal, @committee
