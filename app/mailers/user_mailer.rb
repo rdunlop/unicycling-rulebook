@@ -55,7 +55,8 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.discussion_comment_added.subject
   #
-  def discussion_comment_added(comment, members_emails)
+  def discussion_comment_added(comment_id, members_emails)
+    comment = Comment.find(comment_id)
     @comment = comment.comment
     @voting_status = comment.user.voting_text(comment.discussion.committee)
     @discussion = comment.discussion
@@ -70,7 +71,8 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.proposal_revised.subject
   #
-  def proposal_revised(revision, members_emails)
+  def proposal_revised(revision_id, members_emails)
+    revision = Revision.find(revision_id)
     @proposal = revision.proposal
     @change_description = revision.change_description
     @body = revision.body
@@ -86,7 +88,8 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.proposal_status_review.subject
   #
-  def proposal_status_review(proposal, was_tabled, members_emails)
+  def proposal_status_review(proposal_id, was_tabled, members_emails)
+    proposal = Proposal.find(proposal_id)
     @proposal = proposal
     @set_aside_message = was_tabled ? "This proposal was Set-Aside, but has been put back into the review stage." : ""
     @body = @proposal.latest_revision.body
@@ -158,7 +161,8 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.proposal_call_for_voting.subject
   #
-  def proposal_call_for_voting(proposal, members_emails)
+  def proposal_call_for_voting(proposal_id, members_emails)
+    proposal = Proposal.find(proposal_id)
     @proposal = proposal
     @vote_end = proposal.vote_end_date.to_s
 
