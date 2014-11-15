@@ -6,7 +6,7 @@
 
 - content_for :bottom_nav do
   %p
-    Copyright &copy; #{@config.copyright_description}
+    Copyright &copy; #{@config.copyright_description.html_safe}
     %br
 
 = render template: "layouts/application"
