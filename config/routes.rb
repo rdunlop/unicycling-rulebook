@@ -1,12 +1,12 @@
 RulebookApp::Application.routes.draw do
   require 'sidekiq/web'
-  authenticate :user, ->(u) { u.admin? } do
-    mount Sidekiq::Web => '/sidekiq'
-  end
 
   resources :rulebooks, only: [:index, :new, :create, :show]
 
   scope "/r/(:rulebook_slug)" do
+    authenticate :user, ->(u) { u.admin? } do
+      mount Sidekiq::Web => '/sidekiq'
+    end
     resources :admin_upgrades, only: [:new, :create]
     resources :configurations, except: [:index, :new, :create]
     resources :proposals, :except => [:index, :new, :create] do
