@@ -3,7 +3,7 @@ class Ability
   # very important reference: https://github.com/ryanb/cancan/wiki/Nested-Resources
 
   def proposals_allowed?
-    Rulebook.proposals_allowed
+    Rulebook.current_rulebook.proposals_allowed?
   end
 
   def initialize(user)
@@ -66,12 +66,10 @@ class Ability
     end
 
     # You must be a voting member in a committee in order to be able to create a Proposal
-    can :create_proposal, Committee do |committee|
-       if proposals_allowed?
+    if proposals_allowed?
+      can :create_proposal, Committee do |committee|
         user.voting_member(committee)
-       else
-         false
-       end
+      end
     end
 
     # You must be in a committee in order to be able to create a Discussion

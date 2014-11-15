@@ -69,6 +69,13 @@ describe "Ability", :type => :model do
 
       it { is_expected.to be_able_to(:read, review_proposal) }
     end
+
+    describe "when the rulebook is configured for no proposals allowed" do
+      let(:rulebook) { FactoryGirl.create(:rulebook, proposals_allowed: false) }
+      before { allow(Rulebook).to receive(:current_rulebook).and_return(rulebook) }
+
+      it { is_expected.not_to be_able_to(:create_proposal, Committee) }
+    end
   end
 
   describe "as an admin user" do

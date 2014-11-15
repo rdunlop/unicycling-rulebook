@@ -25,11 +25,7 @@ class Rulebook < ActiveRecord::Base
     copyright || "#{Date.today.year} International Unicycling Federation"
   end
 
-  def self.proposals_allowed
-    if proposals_allowed.nil?
-      true
-    else
-      proposals_allowed
-    end
+  def self.current_rulebook
+    find_by(subdomain: Apartment::Tenant.current) || Rulebook.first || Rulebook.new
   end
 end
