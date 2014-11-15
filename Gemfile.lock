@@ -47,6 +47,9 @@ GEM
     apartment (0.25.2)
       activerecord (>= 3.1.2, < 4.2)
       rack (>= 1.3.6)
+    apartment-sidekiq (0.1.0)
+      apartment (>= 0.25)
+      sidekiq (>= 2.11)
     arel (5.0.1.20140414130214)
     aws-sdk (1.56.0)
       aws-sdk-v1 (= 1.56.0)
@@ -324,6 +327,7 @@ PLATFORMS
 DEPENDENCIES
   annotate
   apartment
+  apartment-sidekiq
   aws-sdk
   better_errors
   binding_of_caller
