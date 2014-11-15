@@ -38,13 +38,16 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.proposal_submitted.subject
   #
-  def proposal_submitted(proposal, admin_emails)
+  def proposal_submitted(proposal_id, admin_emails)
+    proposal = Proposal.find(proposal_id)
     @proposal = proposal
     @body = proposal.latest_revision.body
     @rule_text = proposal.latest_revision.rule_text
     @title = proposal.title
 
-    send_mail(admin_emails, proposal, proposal.owner.name)
+    message = send_mail(admin_emails, proposal, proposal.owner.name)
+    proposal.mail_messageid = message.message_id
+    proposal.save
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -114,7 +117,8 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.new_committee_applicant.subject
   #
-  def new_committee_applicant(user, admin_emails)
+  def new_committee_applicant(user_id, admin_emails)
+    user = User.find(user_id)
     @name = user
     @email = user.email
     @location = user.location

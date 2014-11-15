@@ -2,22 +2,6 @@ require 'spec_helper'
 
 describe User, :type => :model do
 
-    it "sends an e-mail when a new user is created" do
-        ActionMailer::Base.deliveries.clear
-        user = FactoryGirl.create(:user, :confirmed_at => nil)
-        user.confirm!
-        num_deliveries = ActionMailer::Base.deliveries.size
-        # Note: devise sends a confirmation e-mail,
-        # without having an admin user in the system, it will not send one there too.
-
-        deliveries = ActionMailer::Base.deliveries
-        num_deliveries = ActionMailer::Base.deliveries.size
-
-        expect(num_deliveries).to eq(1)
-        sign_up_email = deliveries.first
-        expect(sign_up_email.to.count).to eq(1) # sent by devise
-    end
-
     describe "with an admin user existing" do
         before(:each) do
             @admin = FactoryGirl.create(:admin_user)

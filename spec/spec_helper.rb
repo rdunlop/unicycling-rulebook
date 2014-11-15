@@ -45,6 +45,23 @@ RSpec.configure do |config|
   }
 
   config.infer_spec_type_from_file_location!
+
+  # Default to using inline, meaning all jobs will run as they're
+  # called. Since we primarily are using this for email, this ensures
+  # the emails go immediately to ActionMailer::Base.deliveries
+  require 'sidekiq/testing'
+  config.before(:each) do
+    Sidekiq::Worker.clear_all
+  end
+
+  config.around(:each) do |example|
+
+    if example.metadata[:sidekiq] == :fake
+      Sidekiq::Testing.fake!(&example)
+    else
+      Sidekiq::Testing.inline!(&example)
+    end
+  end
 end
 
 
