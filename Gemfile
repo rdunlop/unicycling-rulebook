@@ -5,6 +5,7 @@ gem 'rails', '4.1.7'
 
 # authorization
 gem 'devise'
+gem "devise-async"
 gem 'cancancan', '~> 1.9'
 
 # front end
@@ -35,6 +36,9 @@ gem 'pg'
 gem 'unicorn'
 gem 'redis-rails'
 gem 'sidekiq'
+# if you require 'sinatra' you get the Sinatra DSL extended to Object
+gem 'sinatra', '>= 1.3.0', :require => nil # necessary for sidekiq
+
 #gem 'whenever'
 
 # deployment
