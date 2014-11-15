@@ -43,7 +43,7 @@ This application depends on the following services:
 
 == Start the local server
 
-    rails s
+    bundle exec unicorn
 
     Browse to http://localhost:9292
 
