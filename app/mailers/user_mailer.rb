@@ -105,7 +105,9 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.vote_changed.subject
   #
-  def vote_changed(proposal, user, old_vote_string, new_vote_string, members_emails)
+  def vote_changed(proposal_id, user_id, old_vote_string, new_vote_string, members_emails)
+    user = User.find(user_id)
+    proposal = Proposal.find(proposal_id)
     @name = user.to_s
     @old_vote = old_vote_string
     @new_vote = new_vote_string
@@ -130,7 +132,8 @@ class UserMailer < ActionMailer::Base
     mail bcc: admin_emails, from: create_from
   end
 
-  def vote_submitted(vote, members_emails)
+  def vote_submitted(vote_id, members_emails)
+    vote = Vote.find(vote_id)
     @proposal = vote.proposal
     @proposal.reload # get new vote associations
     @name = vote.user.to_s
@@ -142,12 +145,11 @@ class UserMailer < ActionMailer::Base
 
     set_threading_header(@proposal)
 
-
-
     send_mail(members_emails, vote.proposal, nil)
   end
 
-  def proposal_finished_review(proposal)
+  def proposal_finished_review(proposal_id)
+    proposal = Proposal.find(proposal_id)
     @REVISIONTIME_TEXT = "3 days"
     @proposal = proposal
 
@@ -176,7 +178,8 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.proposal_voting_result.subject
   #
-  def proposal_voting_result(proposal, success, members_emails)
+  def proposal_voting_result(proposal_id, success, members_emails)
+    proposal = Proposal.find(proposal_id)
     @proposal = proposal
     @succeeded_failed = success ? "Passed" : "Failed"
     @num_agree = proposal.agree_votes
@@ -188,11 +191,11 @@ class UserMailer < ActionMailer::Base
     send_mail(members_emails, @proposal, nil)
   end
 
-  def mass_email(committees, subject, body, reply_email)
+  def mass_email(committee_ids, subject, body, reply_email)
 
     emails = []
-    committees.each do |c|
-      emails += create_committee_email(nil, c, false)
+    committee_ids.each do |c_id|
+      emails += create_committee_email(nil, Committee.find(c_id), false)
     end
     @body = body
 

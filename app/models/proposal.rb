@@ -39,7 +39,7 @@ class Proposal < ActiveRecord::Base
         proposal.status = 'Pre-Voting'
         puts "Changing Proposal #{proposal.title} from Review to Pre-Voting"
         proposal.save
-        UserMailer.proposal_finished_review(proposal).deliver
+        UserMailer.delay.proposal_finished_review(proposal.id)
       elsif proposal.status == 'Voting' and (proposal.vote_end_date < Date.today or proposal.all_voting_members_voted)
         if proposal.have_voting_quorum and proposal.at_least_two_thirds_agree
           proposal.status = 'Passed'

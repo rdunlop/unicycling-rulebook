@@ -34,21 +34,15 @@ class WelcomeController < ApplicationController
   def send_message
     authorize! :send, Message
 
-    @committee_numbers = params[:committees]
-    @committees = []
-    if not @committee_numbers.nil?
-      @committee_numbers.each do |cn|
-        @committees << Committee.find(cn)
-      end
-    end
+    @committee_numbers = params[:committees] || []
     @subject = params[:subject]
     @body = params[:body]
     @reply_email = current_user.email
 
-    if @committees.empty?
+    if @committee_numbers.empty?
       flash[:alert] = "No Target Selected"
     else
-      if UserMailer.mass_email(@committees, @subject, @body, @reply_email).deliver
+      if UserMailer.delay.mass_email(@committee_numbers, @subject, @body, @reply_email)
         flash[:notice] = "Message Successfully Sent"
       else
         flash[:alert] = "Message Send Error"
