@@ -12,6 +12,9 @@ Amazon Ec2 installation:
 - bash --login (so that I can use the ruby)
 - yum install postgresql-devel
 - gem install bundler
+- `createuser rulebooktestuser -h unisoftdb.cdotscaeyshe.us-west-2.rds.amazonaws.com -d -P -U robindunlop`
+- write these credentials into the database.yml
+- then `RAILS_ENV=stage bundle exec rake db:create`
 - bundle
 - rvmsudo bundle exec rails s -p 80 -e production
 
