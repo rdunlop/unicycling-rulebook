@@ -4,6 +4,14 @@ GIT
   specs:
     heroku_secrets (0.0.2)
 
+GIT
+  remote: git://github.com/seuros/capistrano-sidekiq.git
+  revision: a2df250bbd6e7455692e5d292ab9145a0cd84962
+  specs:
+    capistrano-sidekiq (0.4.0)
+      capistrano
+      sidekiq
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -326,6 +334,7 @@ DEPENDENCIES
   capistrano-bundler
   capistrano-rails
   capistrano-rvm
+  capistrano-sidekiq!
   capistrano3-unicorn
   capybara
   chosen-rails
