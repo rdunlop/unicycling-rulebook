@@ -71,10 +71,11 @@ describe "Ability", :type => :model do
     end
 
     describe "when the rulebook is configured for no proposals allowed" do
+      let(:committee) { FactoryGirl.create(:committee) }
       let(:rulebook) { FactoryGirl.create(:rulebook, proposals_allowed: false) }
       before { allow(Rulebook).to receive(:current_rulebook).and_return(rulebook) }
 
-      it { is_expected.not_to be_able_to(:create_proposal, Committee) }
+      it { is_expected.not_to be_able_to(:create_proposal, committee) }
     end
   end
 

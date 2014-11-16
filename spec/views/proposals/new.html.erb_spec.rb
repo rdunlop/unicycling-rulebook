@@ -3,8 +3,9 @@ require 'spec_helper'
 describe "proposals/new", :type => :view do
   let(:committee) { FactoryGirl.create(:committee) }
   before(:each) do
-    @proposal = FactoryGirl.build_stubbed(:proposal)
+    @proposal = Proposal.new
     @revision = FactoryGirl.build_stubbed(:revision, :proposal => @proposal)
+    @committee = committee
     @available_discussions = []
   end
 
