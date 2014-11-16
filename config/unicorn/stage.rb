@@ -5,7 +5,7 @@
 env = ENV['RAILS_ENV'] || "stage"
 
 # workers
-worker_processes 2
+worker_processes 1
 
 # listen
 listen "/tmp/unicorn-unicycling-rulebooktest.socket", :backlog => 64
