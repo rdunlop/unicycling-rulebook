@@ -29,6 +29,7 @@ gem 'apartment'
 gem 'exception_notification'
 gem 'aws-sdk'
 gem 'mailjet'
+gem 'newrelic_rpm'
 
 # other
 gem 'rake'
