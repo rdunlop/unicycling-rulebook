@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
   end
 
   def self.get_current_config
-    Rulebook.find_by(subdomain: Apartment::Tenant.current) || Rulebook.first || Rulebook.new
+    Rulebook.current_rulebook
   end
 
   def self.default_url_options(options={})
