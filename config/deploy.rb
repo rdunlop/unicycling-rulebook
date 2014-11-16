@@ -18,6 +18,7 @@ namespace :deploy do
   end
 end
 
-#set :whenever_command,      ->{ [:bundle, :exec, :whenever] }
-#set :whenever_environment,  ->{ fetch :rails_env }
-#set :whenever_identifier,   ->{ fetch :application }
+set :whenever_command,      ->{ [:bundle, :exec, :whenever] }
+set :whenever_environment,  ->{ fetch :rails_env }
+set :whenever_identifier,   ->{ fetch :application }
+set :whenever_roles,        ->{ [:db, :app] }
