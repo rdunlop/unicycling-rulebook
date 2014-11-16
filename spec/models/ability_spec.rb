@@ -78,6 +78,34 @@ describe "Ability", :type => :model do
     end
   end
 
+  describe "as a committee admin" do
+    let(:user) { FactoryGirl.build_stubbed(:user) }
+    let(:committee_member) { FactoryGirl.create(:committee_member, user: user, admin: true) }
+    let(:committee) { committee_member.committee }
+    subject { @ability = Ability.new(user) }
+
+    specify { is_expected.to_not be_able_to(:create_proposal, committee) }
+
+    describe "when also voting member" do
+      before { committee_member.update_attribute(:voting, true) }
+
+      specify { is_expected.to be_able_to(:create_proposal, committee) }
+    end
+
+    describe "when proposals are not allowed" do
+      let(:rulebook) { FactoryGirl.create(:rulebook, proposals_allowed: false) }
+      before { allow(Rulebook).to receive(:current_rulebook).and_return(rulebook) }
+
+      specify { is_expected.to_not be_able_to(:create_proposal, committee) }
+
+      describe "as a voting member" do
+        before { committee_member.update_attribute(:voting, true) }
+
+        specify { is_expected.to be_able_to(:create_proposal, committee) }
+      end
+    end
+  end
+
   describe "as an admin user" do
     let(:user) { FactoryGirl.build_stubbed(:admin_user) }
 

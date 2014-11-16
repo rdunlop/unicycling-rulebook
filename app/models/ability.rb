@@ -66,8 +66,8 @@ class Ability
     end
 
     # You must be a voting member in a committee in order to be able to create a Proposal
-    if proposals_allowed?
-      can :create_proposal, Committee do |committee|
+    can :create_proposal, Committee do |committee|
+      if proposals_allowed? || user.is_committee_admin(committee)
         user.voting_member(committee)
       end
     end
