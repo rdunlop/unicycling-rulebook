@@ -16,7 +16,7 @@ class Redis
   end
 
   def self.configuration
-    valid_options = %w(host port password)
+    valid_options = %w(host port password db)
     config = ::Rails.application.secrets.redis.slice(*valid_options)
 
     yield config
