@@ -43,50 +43,35 @@ class Proposal < ActiveRecord::Base
   def self.update_proposal_states
     Proposal.all.each do |proposal|
       if proposal.status == 'Review' and proposal.review_end_date < Date.today
-        proposal.status = 'Pre-Voting'
-        puts "Changing Proposal #{proposal.title} from Review to Pre-Voting"
-        proposal.save
+        proposal.update_attribute(:status, 'Pre-Voting')
         UserMailer.delay.proposal_finished_review(proposal.id)
-      elsif proposal.status == 'Voting' and (proposal.vote_end_date < Date.today or proposal.all_voting_members_voted)
-        if proposal.have_voting_quorum and proposal.at_least_two_thirds_agree
-          proposal.status = 'Passed'
+      elsif proposal.status == 'Voting' && (proposal.vote_end_date < Date.today || proposal.all_voting_members_voted)
+        if proposal.have_voting_quorum && proposal.at_least_two_thirds_agree
+          proposal.update_attribute(:status, 'Passed')
         else
-          proposal.status = 'Failed'
+          proposal.update_attribute(:status, 'Failed')
         end
-        puts "Changing Proposal #{proposal.title} from Voting to #{proposal.status}"
-        proposal.save
         InformCommitteeMembers.proposal_voting_result(proposal, proposal.status == 'Passed')
       end
     end
   end
 
   def at_least_two_thirds_agree
-    votes_which_count = self.agree_votes + self.disagree_votes
+    votes_which_count = agree_votes + disagree_votes
     (self.agree_votes / votes_which_count.to_f) >= (2 / 3.0)
   end
 
   def have_voting_quorum
-    if number_of_voting_members == 0
-      return false
-    end
+    return false if number_of_voting_members == 0
 
-    if (self.votes.count / number_of_voting_members.to_f) >= 0.50
-      true
-    else
-      false
-    end
+    (votes.count / number_of_voting_members.to_f) >= 0.50
   end
 
   def number_of_voting_members
-    x = self.committee.committee_members.select {|cm| cm.voting }
-    x.count
+    committee.committee_members.voting.count
   end
 
-  def is_open_for_comments?
-    state.is_open_for_comments?
-  end
-
-  delegate :transition_to, to: :state
+  delegate :is_open_for_comments?, :transition_to, to: :state
 
   def state
     class_name = BaseState.get_state(status)
@@ -94,7 +79,7 @@ class Proposal < ActiveRecord::Base
   end
 
   def all_voting_members_voted
-    self.number_of_voting_members == self.votes.count
+    number_of_voting_members == votes.count
   end
 
   def latest_revision
@@ -113,27 +98,11 @@ class Proposal < ActiveRecord::Base
     end
   end
 
-  def background
-    self.latest_revision.background
-  end
-
-  def body
-    self.latest_revision.body
-  end
-
-  def references
-    self.latest_revision.references
-  end
+  delegate :background, :body, :references, to: :latest_revision
 
 private
   def count_votes(type)
-    count = 0
-    votes.each do |v|
-      if v.vote == type
-        count += 1
-      end
-    end
-    count
+    votes.where(vote: type).count
   end
 
 public
@@ -147,9 +116,7 @@ public
     count_votes('abstain')
   end
 
-  def status_summary
-    state.status_summary
-  end
+  delegate :status_summary, :status_string, to: :state
 
   def vote_detail(user_votes)
     user_votes.each do |v|
@@ -158,10 +125,6 @@ public
       end
     end
     ""
-  end
-
-  def status_string
-    state.status_string
   end
 
   def to_s
