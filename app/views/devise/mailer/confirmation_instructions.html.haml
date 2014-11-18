@@ -1,4 +1,9 @@
 %p
-  Welcome #{@resource.email}!
-%p You can confirm your #{Rulebook.find_by(subdomain: Apartment::Tenant.current).try(:rulebook_name)} account email through the link below:
-%p= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @token)
+  Welcome #{@resource.email}! Thank you for joining the #{Rulebook.current_rulebook.rulebook_name}. This rulebook committee is a volunteer-run opperation so we thank you for your interest in participating. In order to participate in the #{Rulebook.current_rulebook.rulebook_name}, you must verify your email address:
+%p
+  %big= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @token)
+%p
+  After your email is confirmed, the Rulebook Committee Director can add you to various subcommittees and then you can take part in creating the future of unicycle rules.
+
+%p
+  %small This email was sent from a rulebook committee application created at unicycling-software.com. We appologize if it was sent to you in error.
