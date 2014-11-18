@@ -14,7 +14,7 @@ class VotingState < BaseState
   can_transition_to "Pre-Voting"
 
   def on_enter
-    proposal.vote_start_date = Date.today()
+    proposal.vote_start_date = Date.today
     proposal.vote_end_date = @proposal.vote_start_date.next_day(7)
   end
 

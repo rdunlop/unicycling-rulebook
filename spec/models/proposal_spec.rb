@@ -234,7 +234,7 @@ describe Proposal, :type => :model do
     end
     describe "when I call Proposal.update_states" do
         before(:each) do
-            Proposal.update_states
+            Proposal.update_proposal_states
         end
 
         it "updates 'Review' proposals that have expired to have status 'Pre-Voting'" do
@@ -273,7 +273,7 @@ describe Proposal, :type => :model do
         before(:each) do
           ActionMailer::Base.deliveries.clear
 
-          Proposal.update_states
+          Proposal.update_proposal_states
         end
         it "should not change a proposal if the voting period is not over" do
           @p4.reload
@@ -288,13 +288,13 @@ describe Proposal, :type => :model do
           expect(num_deliveries).to eq(1)
         end
       end
-      describe "calling update_states when all of the voting-members have voted agree" do
+      describe "calling update_proposal_states when all of the voting-members have voted agree" do
         before(:each) do
             @p5.committee.committee_members.each do |cm|
                 FactoryGirl.create(:vote, :proposal => @p5, :user => cm.user, :vote => 'agree')
             end
             ActionMailer::Base.deliveries.clear
-            Proposal.update_states
+            Proposal.update_proposal_states
         end
         it "should mark the proposal as passed" do
           @p5.reload
@@ -311,7 +311,7 @@ describe Proposal, :type => :model do
                 FactoryGirl.create(:vote, :proposal => @p4, :user => cm.user, :vote => 'disagree')
             end
             ActionMailer::Base.deliveries.clear
-            Proposal.update_states
+            Proposal.update_proposal_states
         end
         it "should mark the proposal as 'Failed'" do
           @p4.reload

@@ -21,4 +21,5 @@ class CommitteeMember < ActiveRecord::Base
   validates :user_id, :uniqueness => {:scope => [:committee_id]}
 
   scope :admin, -> { where(admin: true) }
+  scope :voting, -> { where(voting: true) }
 end
