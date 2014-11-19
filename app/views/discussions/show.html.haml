@@ -20,9 +20,10 @@
   = render :partial => "/comments/form", :object => @comment
 
 - unless @discussion.proposal
-  .admin_action
-    Is this discussion ready to be made into a proposal?
-    = link_to "Create a proposal from this discussion", "#", class: "js--toggle", data: { toggle: ".proposal_new"}
+  - if can? :create_proposal, @committee
+    .admin_action
+      Is this discussion ready to be made into a proposal?
+      = link_to "Create a proposal from this discussion", "#", class: "js--toggle", data: % toggle: ".proposal_new"
 
   .proposal_new.is--hidden
     - @committee = @discussion.committee
