@@ -137,6 +137,10 @@ class User < ActiveRecord::Base
   end
 
   def to_s
-    name.presence || email
+    name.presence || short_email
+  end
+
+  def short_email
+    email.truncate(9)
   end
 end
