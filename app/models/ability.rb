@@ -45,7 +45,7 @@ class Ability
     end
 
     can :close, Discussion do |discussion|
-      discussion.active? && discussion.owner == user
+      discussion.active? && (discussion.owner == user || user.admin)
     end
 
     can :send, Message if user.is_committee_admin(nil)
