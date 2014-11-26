@@ -12,3 +12,11 @@
  *= require chosen
  *= require_tree .
 */
+body {
+  width:100%;
+  overflow: hidden;
+}
+
+hr {
+  width: 300%;
+}

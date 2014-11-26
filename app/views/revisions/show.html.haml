@@ -1,2 +1,3 @@
-= render :partial => "/proposals/show_revision", :locals => {:proposal => @revision.proposal, :revision => @revision }
-= link_to 'Back', proposal_path(@proposal)
+.proposal-container
+  = render :partial => "/proposals/show_revision", :locals => {:proposal => @revision.proposal, :revision => @revision }
+  = link_to 'Back', proposal_path(@proposal)
