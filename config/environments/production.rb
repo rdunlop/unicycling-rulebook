@@ -78,6 +78,7 @@ end
 
 RulebookApp::Application.config.middleware.use ExceptionNotification::Rack,
   :email => {
-      :email_prefix => "[Rulebook Exception] ",
-      :exception_recipients => %w{robin@dunlopweb.com}
+      email_prefix: "[Rulebook Exception] ",
+      sender_address: Rails.application.secrets.mail_full_email,
+      exception_recipients: %w{robin@dunlopweb.com}
   }
