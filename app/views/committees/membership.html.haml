@@ -3,7 +3,7 @@
   %h2= "Committee: " + committee.to_s
   - committee.committee_members.each do |member|
     %b= member.user
-    (#{member.user.voting_text(committee)}) - #{member.user.location}
+    (#{member.voting_text}) - #{member.user.location}
     %br
 %hr
 %h2 All Members

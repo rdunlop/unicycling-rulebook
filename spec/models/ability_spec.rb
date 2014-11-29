@@ -81,11 +81,11 @@ describe "Ability", :type => :model do
 
   describe "as a committee admin" do
     let(:user) { FactoryGirl.build_stubbed(:user) }
-    let(:committee_member) { FactoryGirl.create(:committee_member, user: user, admin: true) }
+    let(:committee_member) { FactoryGirl.create(:committee_member, user: user, admin: true, voting: false) }
     let(:committee) { committee_member.committee }
     subject { @ability = Ability.new(user) }
 
-    specify { is_expected.to_not be_able_to(:create_proposal, committee) }
+    specify { is_expected.not_to be_able_to(:create_proposal, committee) }
 
     describe "when also voting member" do
       before { committee_member.update_attribute(:voting, true) }

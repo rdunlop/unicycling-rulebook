@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable, :async
 
-  has_many :committee_members
+  has_many :committee_members, inverse_of: :user
   has_many :committees, :through => :committee_members
   has_many :votes
 
@@ -122,18 +122,11 @@ class User < ActiveRecord::Base
   end
 
   def voting_member(committee)
-    committee_members.each do |cm|
-        if cm.committee == committee
-            if cm.voting
-                return true
-            end
-        end
-    end
-    return false
+    committee_members.find_by(committee: committee).try(:voting)
   end
 
   def voting_text(committee)
-    self.voting_member(committee) ? "Voting Member" : "Non-Voting Member"
+    voting_member(committee) ? "Voting Member" : "Non-Voting Member"
   end
 
   def to_s

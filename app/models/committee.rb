@@ -12,7 +12,7 @@
 class Committee < ActiveRecord::Base
   validates :name, :presence => true, :uniqueness => true
 
-  has_many :committee_members, -> { includes(:user).order("users.name") }
+  has_many :committee_members, -> { includes(:user).order("users.name") }, inverse_of: :committee
   has_many :proposals
   has_many :discussions
 

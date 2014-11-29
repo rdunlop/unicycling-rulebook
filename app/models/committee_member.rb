@@ -13,8 +13,8 @@
 #
 
 class CommitteeMember < ActiveRecord::Base
-  belongs_to :committee
-  belongs_to :user
+  belongs_to :committee, inverse_of: :committee_members
+  belongs_to :user, inverse_of: :committee_members
 
   validates :committee, :presence => true
   validates :user, :presence => true
@@ -22,4 +22,8 @@ class CommitteeMember < ActiveRecord::Base
 
   scope :admin, -> { where(admin: true) }
   scope :voting, -> { where(voting: true) }
+
+  def voting_text
+    voting? ? "Voting Member" : "Non-Voting Member"
+  end
 end

@@ -87,7 +87,7 @@ class CommitteesController < ApplicationController
   end
 
   def membership
-    #@committees = Committee.all
+    @committees = Committee.includes(:committee_members).all
     @users = User.all
   end
 
