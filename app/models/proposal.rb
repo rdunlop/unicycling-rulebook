@@ -24,7 +24,7 @@ class Proposal < ActiveRecord::Base
   belongs_to :committee
   has_many :votes, -> { order("created_at ASC") }
   has_many :comments, through: :discussion
-  has_one :discussion
+  has_one :discussion, inverse_of: :proposal
   has_many :revisions, -> { order("id DESC") }
 
   validates :owner, :presence => true

@@ -1,53 +1,45 @@
-- first_one = true
 %hr
 %div
-  - @committee.discussions.reverse_chronological.each do |discussion|
-    - unless discussion.closed?
-      - if !discussion.proposal or discussion.proposal.status == 'Submitted'
-        - if first_one
-          - first_one = false
-          %hr
-          %div.only_discussion_block
-            %h3 Only Discussions:
-            %p These discussions do not have any viewable associated proposals.
-        %div.only_discussion_block
-          = link_to discussion.display_title, discussion_path(discussion)
-          %small
-            Created:
-            = discussion.created_at.to_date.to_s(:long) + "."
-            Last comment:
-            %time.js--days-ago{ datetime: discussion.updated_at.iso8601 }
-        %hr
-- first_one = true
+  - discussions = @committee.discussions_without_approved_proposals.includes(:proposal).reverse_chronological
+  - if discussions.any?
+    %hr
+    %div.only_discussion_block
+      %h3 Only Discussions:
+      %p These discussions do not have any viewable associated proposals.
+    - discussions.each do |discussion|
+      %div.only_discussion_block
+        = link_to discussion.display_title, discussion_path(discussion)
+        %small
+          Created:
+          = discussion.created_at.to_date.to_s(:long) + "."
+          Last comment:
+          %time.js--days-ago{ datetime: discussion.updated_at.iso8601 }
+      %hr
 %div
-  - @committee.discussions.reverse_chronological.each do |discussion|
-    - unless discussion.closed?
-      - if discussion.proposal and discussion.proposal.status != 'Submitted'
-        - if first_one
-          - first_one = false
-          %hr
-          %div.discussions_with_proposals_block
-            %h3 Discussions for Proposals:
-            %p These discussions have proposals associated with them.
-        %div.discussions_with_proposals_block
-          = link_to discussion.display_title, discussion_path(discussion)
-          %small
-            Created:
-            = discussion.created_at.to_date.to_s(:long) + "."
-            Last comment:
-            %time.js--days-ago{ datetime: discussion.updated_at.iso8601 }
-          =link_to "Associated proposal", proposal_path(discussion.proposal)
-        %hr
-- first_one = true
+  - discussions = @committee.discussions_with_proposals.includes(:proposal).reverse_chronological
+  - if discussions.any?
+    %hr
+    %div.discussions_with_proposals_block
+      %h3 Discussions for Proposals:
+      %p These discussions have proposals associated with them.
+    - discussions.each do |discussion|
+      %div.discussions_with_proposals_block
+        = link_to discussion.display_title, discussion_path(discussion)
+        %small
+          Created:
+          = discussion.created_at.to_date.to_s(:long) + "."
+          Last comment:
+          %time.js--days-ago{ datetime: discussion.updated_at.iso8601 }
+        =link_to "Associated proposal", proposal_path(discussion.proposal)
+      %hr
 %div
-  - @committee.discussions.reverse_chronological.each do |discussion|
-    - if discussion.closed?
-      - if first_one
-        - first_one = false
-        %hr
-        %div.closed_discussion_block
-          %h3 Closed Discussions:
-          %p These discussions have been closed to commenting.
+  - discussions = @committee.discussions.closed.reverse_chronological
+  - if discussions.any?
+    %hr
+    %div.closed_discussion_block
+      %h3 Closed Discussions:
+      %p These discussions have been closed to commenting.
+    - discussions.each do |discussion|
       %div.closed_discussion_block
         = link_to discussion.display_title, discussion_path(discussion)
       %hr

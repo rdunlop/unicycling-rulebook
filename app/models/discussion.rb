@@ -15,12 +15,29 @@
 
 class Discussion < ActiveRecord::Base
   belongs_to :owner, :class_name => "User"
-  belongs_to :proposal, touch: true
+  belongs_to :proposal, touch: true, inverse_of: :discussion
   belongs_to :committee
   has_many :comments, -> { order("created_at ASC") }
 
   validates :owner, :title, :committee, :presence => true
   validates :status, :inclusion => { :in => [ 'active', 'closed' ] }
+
+  def self.active
+    where(status: 'active')
+  end
+
+  def self.closed
+    where(status: 'closed')
+  end
+
+  # discussions without a matching proposal, or with a matching proposal in 'Submitted' status.
+  def self.without_approved_proposal
+    joins('LEFT OUTER JOIN proposals on proposals.id = discussions.proposal_id').where("proposals.id IS NULL OR proposals.status = 'Submitted'")
+  end
+
+  def self.with_approved_proposal
+    joins(:proposal).merge(Proposal.where.not(status: 'Submitted'))
+  end
 
   def self.reverse_chronological
     order(updated_at: :desc)

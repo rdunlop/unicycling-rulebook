@@ -6,7 +6,7 @@
   %h2 Discussions
   - if can? :create_discussion, @committee
     = link_to "Create New Discussion", new_committee_discussion_path(@committee), class: "primary_button"
-    
+
   = render :partial => "discussions/display_summary"
 
   %hr

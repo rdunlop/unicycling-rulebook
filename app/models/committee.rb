@@ -18,6 +18,14 @@ class Committee < ActiveRecord::Base
 
   scope :ordered, -> { order("preliminary, id") }
 
+  def discussions_without_approved_proposals
+    discussions.active.without_approved_proposal
+  end
+
+  def discussions_with_proposals
+    discussions.active.with_approved_proposal
+  end
+
   def to_s
     name
   end
