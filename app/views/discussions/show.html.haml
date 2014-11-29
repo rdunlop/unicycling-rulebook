@@ -11,14 +11,13 @@
     = link_to "Close this discussion", close_discussion_path(@discussion), method: :put, data: { confirm: "This will prevent future comments and proposals based on this discussion. Continue?" }
 %hr
 
-.discussion-container
-  %h3 Comments about this discussion:
-  = render partial: "start_of_discussion", locals: { discussion: @discussion }
+%h3 Comments about this discussion:
+= render partial: "start_of_discussion", locals: { discussion: @discussion }
 
-  - @discussion.comments.each do |comment|
-    = render :partial => "/comments/show", :object => comment
-  - if can? :create, @comment
-    = render :partial => "/comments/form", :object => @comment
+- @discussion.comments.each do |comment|
+  = render :partial => "/comments/show", :object => comment
+- if can? :create, @comment
+  = render :partial => "/comments/form", :object => @comment
 
 - unless @discussion.proposal
   - if can? :create_proposal, @committee

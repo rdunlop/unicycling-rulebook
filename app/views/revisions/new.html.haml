@@ -1,25 +1,24 @@
-.proposal-container
-  %h2 Revise your proposal
-  %p Please enter all the details below for revising your proposal.
-  %b Title:
-  = @proposal.title
-  %br
-  %b Owner:
-  = @proposal.owner
-  %br
-  = form_for([@proposal, @revision]) do |f|
-    - if @revision.errors.any?
-      #error_explanation
-        %h2
-          = pluralize(@revision.errors.count, "error")
-          prohibited this revision from being saved:
-        %ul
-          - @revision.errors.full_messages.each do |msg|
-            %li= msg
-    = render :partial => "form", :object => f
-    .field
-      = f.label :change_description
-      = f.text_area :change_description, class: "js--wysiwyg"
-    .actions
-      = f.submit
-  = link_to 'Back', proposal_revisions_path(@proposal)
+%h2 Revise your proposal
+%p Please enter all the details below for revising your proposal.
+%b Title:
+= @proposal.title
+%br
+%b Owner:
+= @proposal.owner
+%br
+= form_for([@proposal, @revision]) do |f|
+  - if @revision.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@revision.errors.count, "error")
+        prohibited this revision from being saved:
+      %ul
+        - @revision.errors.full_messages.each do |msg|
+          %li= msg
+  = render :partial => "form", :object => f
+  .field
+    = f.label :change_description
+    = f.text_area :change_description, class: "js--wysiwyg"
+  .actions
+    = f.submit
+= link_to 'Back', proposal_revisions_path(@proposal)

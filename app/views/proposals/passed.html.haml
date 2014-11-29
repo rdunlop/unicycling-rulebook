@@ -1,15 +1,14 @@
-.proposal-container
-  %h1 The following proposals passed:
-  - @proposals.each do |proposal|
-    %hr
-    %h2
-      Proposal #{proposal.id}: #{proposal.to_s}
-    %b Committee:
-    = proposal.committee
+%h1 The following proposals passed:
+- @proposals.each do |proposal|
+  %hr
+  %h2
+    Proposal #{proposal.id}: #{proposal.to_s}
+  %b Committee:
+  = proposal.committee
+  %br
+  %h3 Vote Summary:
+  - if proposal.vote_end_date
+    Passed on #{proposal.vote_end_date.to_date.to_s(:long)}
     %br
-    %h3 Vote Summary:
-    - if proposal.vote_end_date
-      Passed on #{proposal.vote_end_date.to_date.to_s(:long)}
-      %br
-    = render :partial => "/proposals/vote_summary", :object => proposal
-    = render :partial => "/proposals/proposal_details", :locals => {:proposal => proposal, :revision => proposal.latest_revision }
+  = render :partial => "/proposals/vote_summary", :object => proposal
+  = render :partial => "/proposals/proposal_details", :locals => {:proposal => proposal, :revision => proposal.latest_revision }
