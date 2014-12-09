@@ -11,6 +11,7 @@ class InformCommitteeMembers
       emails = committee_members_emails(comment.discussion.committee, comment.user.email)
     end
 
+    Rails.logger.warn "Comment added, sending comment #{comment.id} to #{emails}"
     UserMailer.delay.discussion_comment_added(comment.id, emails) unless emails.none?
   end
 
