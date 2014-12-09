@@ -62,7 +62,7 @@ class UserMailer < ActionMailer::Base
     @discussion = comment.discussion
 
     #set_threading_header(proposal)
-    Rails.logger.warn "Discussion Comment Added to #{member_emails} for #{@discussion} from #{comment.user}"
+    Rails.logger.warn "Discussion Comment Added to #{members_emails} for #{@discussion} from #{comment.user}"
     send_mail(members_emails, @discussion, comment.user)
   end
 
