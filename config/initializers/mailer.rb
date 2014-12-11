@@ -20,3 +20,6 @@ unless Rails.env.test?
     ActionMailer::Base.delivery_method = :smtp
   end
 end
+
+require 'logging_mail_interceptor'
+ActionMailer::Base.register_interceptor(LoggingMailInterceptor)
