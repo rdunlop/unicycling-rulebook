@@ -63,6 +63,7 @@ class ProposalsController < ApplicationController
     @revision = Revision.new(revision_params)
 
     @discussion = Discussion.find(params[:discussion_id]) if params[:discussion_id].present?
+    @proposal.discussion = @discussion
 
     respond_to do |format|
       if ProposalCreator.new(@proposal, @revision, @discussion, current_user).perform
