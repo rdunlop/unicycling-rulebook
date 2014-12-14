@@ -22,4 +22,6 @@ unless Rails.env.test?
 end
 
 require 'logging_mail_interceptor'
+require 'development_mail_interceptor'
 ActionMailer::Base.register_interceptor(LoggingMailInterceptor)
+ActionMailer::Base.register_interceptor(DevelopmentMailInterceptor) if Rails.env.development?
