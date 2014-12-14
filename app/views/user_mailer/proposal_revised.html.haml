@@ -1,8 +1,7 @@
 %b The following proposal has been revised:
 
 %h2
-  Title: #{@proposal.title}
-= link_to proposal_url(@proposal), proposal_url(@proposal)
+  = link_to @proposal.title, proposal_url(@proposal)
 
 %h2 Changes made:
 = @change_description.html_safe

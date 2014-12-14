@@ -5,5 +5,6 @@ Comment Added:
 
 \--
 \#{@user} - #{@voting_status}__________________________________________________________
-= link_to "Discussion #{@discussion.id.to_s}", discussion_url(@discussion)
-.
+Discussion #{@discussion.id.to_s} can be viewed at:
+
+= discussion_url(@discussion)

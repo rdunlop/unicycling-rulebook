@@ -1,0 +1,9 @@
+%h2 Voting Completed.
+%b The following proposal has #{@succeeded_failed}:
+%br
+%b Title: #{raw @proposal.title}
+%b Voting Results: #{@num_agree} agree, #{@num_disagree} disagree, #{@num_abstain} abstain
+%br
+= link_to @proposal.title, proposal_url(@proposal)
+%br
+%p To see the full proposal and the comments from the voting, visit the link above.
