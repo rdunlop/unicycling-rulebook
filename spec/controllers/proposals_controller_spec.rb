@@ -336,7 +336,7 @@ describe ProposalsController, :type => :controller do
         proposal = Proposal.find(proposal.id)
         expect(proposal.status).to eq("Tabled")
     end
-    it "sholud send an e-mail" do
+    it "should send an e-mail" do
         proposal = FactoryGirl.create(:proposal, :with_admin, :status => "Pre-Voting")
         ActionMailer::Base.deliveries.clear
 
