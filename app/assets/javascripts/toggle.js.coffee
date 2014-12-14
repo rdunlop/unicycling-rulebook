@@ -8,10 +8,12 @@ toggle = ->
       .blur()
 
   # ##### Toggle Items in and out of view
-  $('body')
-    .on 'click', '.js--toggle', ->
-      toggleItem @
-      return false
+  $("body").on "click", ".js--toggle", ->
+    toggleItem this
+    $("html, body").animate
+      scrollTop: $(this).offset().top - 10
+    , 1000
+    return
 
   inactive_parent = $(".js--collapsible .is--active")
     .closest '.is--hidden'
