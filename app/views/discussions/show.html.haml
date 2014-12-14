@@ -20,7 +20,7 @@
   = render :partial => "/comments/form", :object => @comment
 
 -# only show the "create proposal" to admins and the original owner
-- if !@discussion.proposal && (current_user.is_committee_admin(committee) || @discussion.owner == current_user)
+- if !@discussion.proposal && (current_user.is_committee_admin(@discussion.committee) || @discussion.owner == current_user)
   - if can? :create_proposal, @discussion.committee
     .admin_action
       Is this discussion ready to be made into a proposal?
