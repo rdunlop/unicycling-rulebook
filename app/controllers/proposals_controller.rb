@@ -1,7 +1,8 @@
 class ProposalsController < ApplicationController
   before_action :authenticate_user!, :except => [:show, :passed]
   before_action :load_committee, only: [:new, :create]
-  load_and_authorize_resource
+  skip_authorization_check only: [:create, :new]
+  load_and_authorize_resource except: [:create, :new]
 
   # GET /proposals/passed
   # GET /proposals/passed.json
@@ -40,6 +41,7 @@ class ProposalsController < ApplicationController
 
   # GET /committees/1/proposals/new
   def new
+    authorize! :create_proposal, @committee
     @proposal = Proposal.new
     @revision = Revision.new
     @available_discussions = @committee.discussions.without_proposals
@@ -63,6 +65,8 @@ class ProposalsController < ApplicationController
     @revision = Revision.new(revision_params)
 
     @discussion = Discussion.find(params[:discussion_id]) if params[:discussion_id].present?
+    @proposal.discussion = @discussion
+    authorize! :create_proposal, @committee
 
     respond_to do |format|
       if ProposalCreator.new(@proposal, @revision, @discussion, current_user).perform

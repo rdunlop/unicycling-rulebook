@@ -2,12 +2,13 @@
 .field
   = form.label :background
   %br
-  .detail
-    (short overview what will be changed, max 500 characters)
-    %br
-    You have
-    %input{:name => "countdown", :readonly => "", :size => "3", :type => "text", :value => $MAX_CHARACTERS}/
-    characters left.
+  -# disabled because it doesn't work with the wysiwyg
+    .detail
+      (short overview what will be changed, max 500 characters)
+      %br
+      You have
+      %input{:name => "countdown", :readonly => "", :size => "3", :type => "text", :value => $MAX_CHARACTERS}/
+      characters left.
   = form.text_area :background, {class: "js--wysiwyg js--wordcount", data: { wordCountField: 'countdown', maxCharacters: $MAX_CHARACTERS.to_s } }
 .field
   = form.label :rule_text, 'Proposal'
