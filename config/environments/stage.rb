@@ -27,8 +27,9 @@ RulebookApp::Application.configure do
   config.assets.digest = true
 
   # show mailer previews
-  config.action_mailer.preview_path = "previews/mailers"
-  config.action_mailer.preview_enabled = true
+  # (only available in Rails 4.2)
+  #config.action_mailer.preview_path = "previews/mailers"
+  #config.action_mailer.preview_enabled = true
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
