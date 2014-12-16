@@ -4,6 +4,6 @@
 = @user
 \- #{@voting_status}
 %hr
-= link_to "Discussion #{@discussion.id.to_s}", discussion_url(@discussion)
-\.
+= succeed '.' do
+  = link_to "Discussion #{@discussion.id.to_s}", discussion_url(@discussion)
 
