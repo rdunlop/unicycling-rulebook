@@ -165,7 +165,8 @@ describe VotesController, :type => :controller do
         expect(num_deliveries).to eq(1)
 
         note = ActionMailer::Base.deliveries.first
-        expect(note.body).to match(' agree to disagree')
+        # because it's a 2-part email, grab the first part
+        expect(note.parts.first.body).to match(' agree to disagree')
       end
     end
 
