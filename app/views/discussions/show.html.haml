@@ -12,7 +12,7 @@
 %hr
 
 %h3 Comments about this discussion:
-= render partial: "start_of_discussion", locals: { discussion: @discussion }
+= render partial: "/discussions/start_of_discussion", locals: { discussion: @discussion }
 
 - @discussion.comments.each do |comment|
   = render :partial => "/comments/show", :object => comment
