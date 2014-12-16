@@ -66,7 +66,7 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   def revision
-    @revision ||= Revision.all.sample
+    @revision ||= Revision.where.not(change_description: nil).sample
   end
 
   def comment
