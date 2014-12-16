@@ -1,8 +1,6 @@
 %b The following proposal has been submitted:
 %h1
-  Title: #{@title}
-%br
-= link_to 'Link to proposal', proposal_url(@proposal)
+  = link_to @title, proposal_url(@proposal)
 %h2 Proposal:
 = @rule_text.try(:html_safe)
 %h2 Body:

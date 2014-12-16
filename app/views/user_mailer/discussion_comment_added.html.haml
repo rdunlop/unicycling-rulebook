@@ -4,6 +4,6 @@
 = @user
 \- #{@voting_status}
 %hr
-Discussion #{@discussion.id.to_s} can be viewed at:
+= link_to "Discussion #{@discussion.id.to_s}", discussion_url(@discussion)
+.
 
-= link_to discussion_url(@discussion), discussion_url(@discussion)
