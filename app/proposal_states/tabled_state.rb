@@ -1,6 +1,6 @@
 class TabledState < BaseState
   def is_open_for_comments?
-    false
+    true
   end
 
   def status_summary
