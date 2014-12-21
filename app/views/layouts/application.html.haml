@@ -17,7 +17,9 @@
         toolbar1: 'bold italic underline strikethrough | bullist numlist | cut copy paste | link unlink | table | undo redo',
         paste_word_valid_elements: 'ol,ul,li,b,strong,i,em,u,ins',
         target_list: false,
-        link_title: false})
+        link_title: false,
+        extended_valid_elements : "span[!class,!color]"
+        })
   %body
     - if content_for?(:top_nav)
       = yield :top_nav
