@@ -32,6 +32,7 @@ class DiscussionsController < ApplicationController
       if @discussion.save
         format.html { redirect_to [@discussion], notice: 'Discussion was successfully created.' }
       else
+        flash[:alert] = "Unable to create discussion"
         format.html { render action: "new" }
       end
     end
@@ -42,6 +43,7 @@ class DiscussionsController < ApplicationController
       if @discussion.close
         format.html { redirect_to @discussion, notice: "Discussion has been closed." }
       else
+        flash[:alert] = "Unable to close this discussion"
         format.html { render action: "show" }
       end
     end

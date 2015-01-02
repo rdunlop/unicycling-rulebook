@@ -14,6 +14,13 @@
 %h3 Comments about this discussion:
 = render partial: "/discussions/start_of_discussion", locals: { discussion: @discussion }
 
+- if can? :close, @discussion
+  Can Close Discussion
+  %br
+- if can? :create, @comment
+  Can create comment
+  %br
+
 - @discussion.comments.each do |comment|
   = render :partial => "/comments/show", :object => comment
 - if can? :create, @comment
