@@ -22,8 +22,12 @@ class Committee < ActiveRecord::Base
     discussions.active.without_approved_proposal
   end
 
-  def discussions_with_proposals
+  def discussions_with_active_proposals
     discussions.active.with_approved_proposal
+  end
+
+  def discussions_with_passed_proposals
+    discussions.active.with_passed_proposal
   end
 
   def to_s

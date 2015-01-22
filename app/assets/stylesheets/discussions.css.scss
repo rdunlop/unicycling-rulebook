@@ -6,10 +6,10 @@
   background-color: #D6FAD6;
 }
 
-.discussions_with_proposals_block {
+.discussions_with_active_proposals_block {
   background-color: #C8DAFF;
 }
 
-.closed_discussion_block {
+.closed_discussion_block, .discussions_with_passed_proposals_block {
   background-color: #FFD8D8;
 }

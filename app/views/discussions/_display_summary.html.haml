@@ -16,14 +16,31 @@
           %time.js--days-ago{ datetime: discussion.updated_at.iso8601 }
       %hr
 %div
-  - discussions = @committee.discussions_with_proposals.includes(:proposal).reverse_chronological
+  - discussions = @committee.discussions_with_active_proposals.includes(:proposal).reverse_chronological
   - if discussions.any?
     %hr
-    %div.discussions_with_proposals_block
-      %h3 Discussions for Proposals:
-      %p These discussions have proposals associated with them.
+    %div.discussions_with_active_proposals_block
+      %h3 Discussions for Active Proposals:
+      %p These discussions have active proposals associated with them.
     - discussions.each do |discussion|
-      %div.discussions_with_proposals_block
+      %div.discussions_with_active_proposals_block
+        = link_to discussion.display_title, discussion_path(discussion)
+        %small
+          Created:
+          = discussion.created_at.to_date.to_s(:long) + "."
+          Last comment:
+          %time.js--days-ago{ datetime: discussion.updated_at.iso8601 }
+        =link_to "Associated proposal", proposal_path(discussion.proposal)
+      %hr
+%div
+  - discussions = @committee.discussions_with_passed_proposals.includes(:proposal).reverse_chronological
+  - if discussions.any?
+    %hr
+    %div.discussions_with_passed_proposals_block
+      %h3 Discussions for Passed Proposals:
+      %p These discussions have passed proposals associated with them.
+    - discussions.each do |discussion|
+      %div.discussions_with_passed_proposals_block
         = link_to discussion.display_title, discussion_path(discussion)
         %small
           Created:
