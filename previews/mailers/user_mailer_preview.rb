@@ -9,6 +9,10 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.proposal_submitted(proposal, admin_emails)
   end
 
+  def discussion_created
+    UserMailer.discussion_created(discussion, committee_emails)
+  end
+
   def discussion_comment_added
     UserMailer.discussion_comment_added(comment, committee_emails)
   end

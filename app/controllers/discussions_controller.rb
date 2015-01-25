@@ -30,6 +30,7 @@ class DiscussionsController < ApplicationController
   def create
     respond_to do |format|
       if @discussion.save
+        InformCommitteeMembers.discussion_created(@discussion)
         format.html { redirect_to [@discussion], notice: 'Discussion was successfully created.' }
       else
         flash[:alert] = "Unable to create discussion"

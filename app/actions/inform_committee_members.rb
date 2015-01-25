@@ -68,6 +68,12 @@ class InformCommitteeMembers
     UserMailer.delay.proposal_voting_result(proposal.id, status, emails) unless emails.none?
   end
 
+  def self.discussion_created(discussion)
+    emails = committee_members_emails(discussion.committee, nil)
+
+    UserMailer.delay.discussion_created(discussion.id, emails) unless emails.none?
+  end
+
   private
 
   def self.committee_members_emails(committee, exclude)

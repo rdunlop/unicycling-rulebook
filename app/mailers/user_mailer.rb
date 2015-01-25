@@ -50,6 +50,12 @@ class UserMailer < ActionMailer::Base
     proposal.save
   end
 
+  def discussion_created(discussion_id, members_emails)
+    @discussion = Discussion.find(discussion_id)
+
+    send_mail(members_emails, @discussion, @discussion.owner)
+  end
+
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
