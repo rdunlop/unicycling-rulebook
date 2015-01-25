@@ -36,7 +36,15 @@ class Discussion < ActiveRecord::Base
   end
 
   def self.with_approved_proposal
-    joins(:proposal).merge(Proposal.where.not(status: 'Submitted'))
+    joins('LEFT OUTER JOIN proposals on proposals.id = discussions.proposal_id').where("proposals.status = 'Review' OR 
+                                                                                        proposals.status = 'Pre-Voting' OR 
+                                                                                        proposals.status = 'Voting' OR 
+                                                                                        proposals.status = 'Tabled' OR 
+                                                                                        proposals.status = 'Failed'")
+  end
+
+  def self.with_passed_proposal
+    joins('LEFT OUTER JOIN proposals on proposals.id = discussions.proposal_id').where("proposals.status = 'Passed'")
   end
 
   def self.reverse_chronological
