@@ -37,6 +37,7 @@ Friday To-Do:
  - Only Voting members receive e-mail about voting?
  - Update "Table" to include a description?
 - Create scopes for the "vote_submitted" mailer search lists (like: voting_members, voted_members, etc)
+- address some of the rulebook software issues (See Jan23 E-mail)
 
 #####- Add ability for Admin to adjust the admin status of another user.
 

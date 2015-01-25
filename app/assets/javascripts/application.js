@@ -16,3 +16,12 @@
 //= require_tree .
 //= require moment
 //= require tinymce
+
+$(document).ready(function () {
+  if (!$('input').hasClass("multiclick")) {
+    $('form').submit(function() {
+      $("input[type='submit']", this).attr("disabled", "disabled");
+      $("input[type='submit']", this).val("Please wait...");
+    });
+  }
+});
