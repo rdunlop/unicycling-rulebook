@@ -40,7 +40,9 @@ Friday To-Do:
 - address some of the rulebook software issues (See Jan23 E-mail)
 
 #####- Add ability for Admin to adjust the admin status of another user.
-
+- Mass mail issue when sending e-mail: "Any new proposals for the rulebook must be submitted by November 27th (that&#x27;s the day before thanksgiving)"
+- Include the Rulebook Name in the "New Committee Applicant" e-mail
+- Add ability to "open" a "Closed" discussion.
 - Add option to "auto-enroll" people to a given group (include option about whether they are a voting member by default or not)
 
 - Add freeform text box to application
