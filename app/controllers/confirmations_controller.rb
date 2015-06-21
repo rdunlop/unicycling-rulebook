@@ -21,7 +21,7 @@ class ConfirmationsController < Devise::ConfirmationsController
 
     resource.confirming = true
     if resource.valid? && resource.password_match?
-      self.resource.confirm!
+      self.resource.confirm
       set_flash_message :notice, :confirmed
       sign_in_and_redirect resource_name, resource
     else
