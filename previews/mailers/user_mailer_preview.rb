@@ -2,7 +2,7 @@ class UserMailerPreview < ActionMailer::Preview
 
   # Switch to a tenant so that we have data
   def initialize
-    Apartment::Tenant.switch Rulebook.first.subdomain
+    Apartment::Tenant.switch! Rulebook.first.subdomain
   end
 
   def proposal_submitted

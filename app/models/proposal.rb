@@ -35,8 +35,9 @@ class Proposal < ActiveRecord::Base
   # This is the auto-updated function CLASS METHOD
   def self.update_states
     Apartment.tenant_names.each do |tenant|
-      Apartment::Tenant.switch(tenant)
-      update_proposal_states
+      Apartment::Tenant.switch(tenant) do
+        update_proposal_states
+      end
     end
   end
 
