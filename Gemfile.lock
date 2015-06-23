@@ -85,7 +85,7 @@ GEM
       terminal-table (~> 1.4)
     breadcrumbs_on_rails (2.3.0)
     builder (3.2.2)
-    cancancan (1.9.2)
+    cancancan (1.11.0)
     capistrano (3.2.1)
       i18n
       rake (>= 10.0.0)
