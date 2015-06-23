@@ -1,6 +1,7 @@
 == Welcome to the Rulebook Application.
 
-{<img src="https://travis-ci.org/rdunlop/unicycling-rulebook.png?branch=master" />}[https://travis-ci.org/rdunlop/unicycling-rulebook] {<img src="https://gemnasium.com/rdunlop/unicycling-rulebook.png" />}[https://gemnasium.com/rdunlop/unicycling-rulebook]
+{<img src="https://circleci.com/gh/rdunlop/unicycling-rulebook.svg?style=svg" alt="Circle CI" />}[https://circleci.com/gh/rdunlop/unicycling-rulebook]
+{<img src="https://gemnasium.com/rdunlop/unicycling-rulebook.png" />}[https://gemnasium.com/rdunlop/unicycling-rulebook]
 
 
 == Dependencies

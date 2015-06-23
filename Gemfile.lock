@@ -409,3 +409,6 @@ DEPENDENCIES
   unicorn
   watchr
   whenever
+
+BUNDLED WITH
+   1.10.4
