@@ -5,6 +5,6 @@
 
 %ul#rulebook_list
   - @rulebooks.each do |rulebook|
-    %li= link_to rulebook.rulebook_name, welcome_index_path(rulebook_slug: rulebook.subdomain)
+    %li= link_to rulebook.rulebook_name, rulebook.url
 
 = link_to "create new rulebook application", rulebooks_path if Rulebook.all.none?
