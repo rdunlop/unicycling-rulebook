@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe InformCommitteeMembers do
+  # before { FactoryGirl.create(:rulebook, :test_schema) }
 
   shared_examples_for "only inform members based on no_email flag" do
     it "creates an e-mail" do

@@ -54,6 +54,11 @@ RSpec.configure do |config|
     Sidekiq::Worker.clear_all
   end
 
+  config.before(:each) do
+    rulebook = FactoryGirl.create(:rulebook, :test_schema)
+    Apartment::Tenant.switch! rulebook.subdomain
+  end
+
   config.around(:each) do |example|
 
     if example.metadata[:sidekiq] == :fake

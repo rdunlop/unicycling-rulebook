@@ -5,5 +5,9 @@ FactoryGirl.define do
     rulebook_name "MyString"
     front_page "MyString"
     faq "MyString"
+
+    trait :test_schema do
+      subdomain "public"
+    end
   end
 end

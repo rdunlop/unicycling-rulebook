@@ -19,7 +19,7 @@ describe RulebooksController, :type => :controller do
     it "assigns all rulebooks as @rulebooks" do
       rulebook = Rulebook.create! valid_attributes
       get :index, {}
-      expect(assigns(:rulebooks)).to eq([rulebook])
+      expect(assigns(:rulebooks)).to include(rulebook)
     end
   end
 

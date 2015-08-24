@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 describe ConfigurationsController, :type => :controller do
+  let(:rulebook) { Rulebook.create! valid_attributes }
+
   before (:each) do
+    Apartment::Tenant.create(rulebook.subdomain)
+    Apartment::Tenant.switch!(rulebook.subdomain)
     @admin_user = FactoryGirl.create(:admin_user)
     sign_in @admin_user
   end
@@ -21,7 +25,6 @@ describe ConfigurationsController, :type => :controller do
 
   describe "GET show" do
     it "assigns the requested rulebook as @rulebook" do
-      rulebook = Rulebook.create! valid_attributes
       get :show, {:id => rulebook.to_param}
       expect(assigns(:rulebook)).to eq(rulebook)
     end
@@ -29,7 +32,6 @@ describe ConfigurationsController, :type => :controller do
 
   describe "GET edit" do
     it "assigns the requested rulebook as @rulebook" do
-      rulebook = Rulebook.create! valid_attributes
       get :edit, {:id => rulebook.to_param}
       expect(assigns(:rulebook)).to eq(rulebook)
     end
@@ -39,7 +41,6 @@ describe ConfigurationsController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested rulebook" do
-        rulebook = Rulebook.create! valid_attributes
         # Assuming there are no other rulebooks in the database, this
         # specifies that the Rulebook created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -49,13 +50,11 @@ describe ConfigurationsController, :type => :controller do
       end
 
       it "assigns the requested rulebook as @rulebook" do
-        rulebook = Rulebook.create! valid_attributes
         put :update, {:id => rulebook.to_param, :rulebook => valid_attributes}
         expect(assigns(:rulebook)).to eq(rulebook)
       end
 
       it "redirects to the rulebook" do
-        rulebook = Rulebook.create! valid_attributes
         put :update, {:id => rulebook.to_param, :rulebook => valid_attributes}
         expect(response).to redirect_to(configuration_path(rulebook))
       end
@@ -63,7 +62,6 @@ describe ConfigurationsController, :type => :controller do
 
     describe "with invalid params" do
       it "assigns the rulebook as @rulebook" do
-        rulebook = Rulebook.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Rulebook).to receive(:save).and_return(false)
         put :update, {:id => rulebook.to_param, :rulebook => {rulebook_name: 'the book'}}
@@ -71,7 +69,6 @@ describe ConfigurationsController, :type => :controller do
       end
 
       it "re-renders the 'edit' template" do
-        rulebook = Rulebook.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Rulebook).to receive(:save).and_return(false)
         put :update, {:id => rulebook.to_param, :rulebook => {rulebook_name: 'the book'}}
@@ -81,19 +78,15 @@ describe ConfigurationsController, :type => :controller do
   end
 
   describe "DELETE destroy" do
-    before do
-      @rulebook = Rulebook.create! valid_attributes
-      Apartment::Tenant.create(@rulebook.subdomain)
-    end
     it "destroys the requested rulebook" do
       expect {
-        delete :destroy, {:id => @rulebook.to_param}
+        delete :destroy, {:id => rulebook.to_param}
       }.to change(Rulebook, :count).by(-1)
     end
 
     it "redirects to the rulebooks list" do
-      delete :destroy, {:id => @rulebook.to_param}
-      expect(response).to redirect_to(root_url)
+      delete :destroy, {:id => rulebook.to_param}
+      expect(response).to redirect_to(welcome_index_all_path)
     end
   end
 

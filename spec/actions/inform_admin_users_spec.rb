@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe InformAdminUsers do
   let!(:user) { FactoryGirl.create(:user) }
+  # before { FactoryGirl.create(:rulebook, :test_schema) }
 
   context "with NO admin user" do
     let(:do_action) { described_class.new_applicant(user) }
