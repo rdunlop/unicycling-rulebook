@@ -10,6 +10,11 @@ class WelcomeController < ApplicationController
     @committees = Committee.ordered.all
   end
 
+  # tells the user that we have moved the rulebook to its own server
+  def new_location
+    @rulebook = Rulebook.find_by(subdomain: params[:rulebook_slug])
+  end
+
   def help
     @contactemail = "robin@dunlopweb.com"
     @contactname = "robin"

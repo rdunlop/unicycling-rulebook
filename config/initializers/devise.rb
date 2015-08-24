@@ -5,9 +5,9 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
   config.mailer_sender = Rails.application.secrets.mail_full_email
-
-  # Configure the class responsible to send e-mails.
-  config.mailer = "DeviseRulebookMailer"
+  config.mailer.class_eval do
+    include SubdomainHelper
+  end
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and

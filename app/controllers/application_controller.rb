@@ -41,12 +41,6 @@ class ApplicationController < ActionController::Base
     Rulebook.current_rulebook
   end
 
-  def self.default_url_options(options={})
-    logger.debug "default_url_options is passed options: #{options.inspect}\n"
-    config = @config || get_current_config
-    options.merge({ rulebook_slug: config.subdomain })
-  end
-
   def current_ablity
     current_user.ability
   end

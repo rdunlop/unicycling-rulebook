@@ -1,8 +1,8 @@
 # Require whichever elevator you're using below here...
 #
-# require 'apartment/elevators/generic'
+require 'apartment/elevators/generic'
 # require 'apartment/elevators/domain'
-require 'apartment/elevators/subdomain'
+# require 'apartment/elevators/subdomain'
 
 #
 # Apartment Configuration
@@ -38,18 +38,11 @@ end
 
 ##
 # Elevator Configuration
-
-Rails.application.config.middleware.use 'Apartment::Elevators::Generic', lambda { |request|
-  # TODO: supply generic implementation
-  prefix = "/r/"
-  request_path = request.env["REQUEST_PATH"]
-  if request_path.starts_with?(prefix)
-    remainder = request_path[prefix.length, request_path.length - prefix.length]
-    rulebook_name = CGI::unescape(remainder.partition("/").first)
-  else
-    'public'
-  end
-}
+unless Rails.env.test?
+  Rails.application.config.middleware.use 'Apartment::Elevators::Generic', lambda { |request|
+    Rulebook.find_first_by_hostname(request.host).try(:subdomain) || "public"
+  }
+end
 
 # Rails.application.config.middleware.use 'Apartment::Elevators::Domain'
 

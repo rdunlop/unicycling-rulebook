@@ -25,7 +25,15 @@ class Rulebook < ActiveRecord::Base
     copyright || "#{Date.today.year} International Unicycling Federation"
   end
 
+  def url
+    "http://#{subdomain}.#{Rails.application.secrets.domain}"
+  end
+
   def self.current_rulebook
     find_by(subdomain: Apartment::Tenant.current) || Rulebook.first || Rulebook.new
+  end
+
+  def self.find_first_by_hostname(hostname)
+    find_by(subdomain: hostname.split('.')[0])
   end
 end
