@@ -59,13 +59,13 @@ class InformCommitteeMembers
   def self.vote_changed(proposal, current_user, previous_value, new_vote_value)
     emails = committee_members_emails(proposal.committee, nil)
 
-    UserMailer.delay.vote_changed(proposal.id, current_user.id, previous_value, new_vote_value, emails) unless emails.none?
+    UserMailer.delay.vote_changed(proposal, current_user, previous_value, new_vote_value, emails) unless emails.none?
   end
 
   def self.proposal_voting_result(proposal, status)
     emails = committee_members_emails(proposal.committee, nil)
 
-    UserMailer.delay.proposal_voting_result(proposal.id, status, emails) unless emails.none?
+    UserMailer.delay.proposal_voting_result(proposal, status, emails) unless emails.none?
   end
 
   def self.discussion_created(discussion)
