@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Committee, :type => :model do
+describe Committee, type: :model do
   it "must have a name" do
     committee = Committee.new
     expect(committee.valid?).to eq(false)
@@ -35,12 +35,12 @@ describe Committee, :type => :model do
 
   it "should list the members alphabetically" do
     committee = FactoryGirl.create(:committee)
-    user_b = FactoryGirl.create(:user, :name => "Bravo")
-    user_a = FactoryGirl.create(:user, :name => "Alpha")
-    user_c = FactoryGirl.create(:user, :name => "Charlie")
-    cm_b = FactoryGirl.create(:committee_member, :committee => committee, :user => user_b)
-    cm_a = FactoryGirl.create(:committee_member, :committee => committee, :user => user_a)
-    cm_c = FactoryGirl.create(:committee_member, :committee => committee, :user => user_c)
+    user_b = FactoryGirl.create(:user, name: "Bravo")
+    user_a = FactoryGirl.create(:user, name: "Alpha")
+    user_c = FactoryGirl.create(:user, name: "Charlie")
+    cm_b = FactoryGirl.create(:committee_member, committee: committee, user: user_b)
+    cm_a = FactoryGirl.create(:committee_member, committee: committee, user: user_a)
+    cm_c = FactoryGirl.create(:committee_member, committee: committee, user: user_c)
 
     expect(committee.committee_members).to eq([cm_a, cm_b, cm_c])
   end

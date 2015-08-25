@@ -1,7 +1,7 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :user, :aliases => [:owner] do
+  factory :user, aliases: [:owner] do
     sequence(:name) {|n| "person #{n}" }
     location 'Chicago'
     sequence(:email) {|n| "person#{n}@example.com" }

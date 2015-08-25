@@ -40,7 +40,7 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
-  config.before(:each, :type => :view) {
+  config.before(:each, type: :view) {
     controller.default_url_options[:rulebook_slug] = "test_rulebook"
   }
 

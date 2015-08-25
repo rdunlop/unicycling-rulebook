@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "welcome/index", :type => :view do
+describe "welcome/index", type: :view do
   before(:each) do
     @ability = Object.new
     @ability.extend(CanCan::Ability)

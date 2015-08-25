@@ -1,7 +1,7 @@
 class VotesController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource :proposal
-  load_and_authorize_resource :vote, :through => :proposal
+  load_and_authorize_resource :vote, through: :proposal
 
   # GET /votes
   # GET /votes.json

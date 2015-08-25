@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe "rulebooks/show", :type => :view do
+describe "rulebooks/show", type: :view do
   before(:each) do
     @rulebook = assign(:rulebook, FactoryGirl.build_stubbed(:rulebook,
-      :rulebook_name => "Rulebook Name",
-      :front_page => "Front Page",
-      :faq => "Faq",
-      :copyright => "Some Copy"
+      rulebook_name: "Rulebook Name",
+      front_page: "Front Page",
+      faq: "Faq",
+      copyright: "Some Copy"
     ))
   end
 

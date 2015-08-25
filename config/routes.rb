@@ -8,7 +8,7 @@ RulebookApp::Application.routes.draw do
   end
   resources :admin_upgrades, only: [:new, :create]
   resources :configurations, except: [:index, :new, :create]
-  resources :proposals, :except => [:index, :new, :create] do
+  resources :proposals, except: [:index, :new, :create] do
     collection do
       get 'passed'
     end
@@ -18,26 +18,26 @@ RulebookApp::Application.routes.draw do
       put 'set_pre_voting'
       put 'table'
     end
-    resources :votes, :except => [:show]
-    resources :revisions, :except => [:edit, :index, :put, :destroy]
+    resources :votes, except: [:show]
+    resources :revisions, except: [:edit, :index, :put, :destroy]
   end
 
   resources :discussions, only: [:show] do
     put :close, on: :member
-   resources :comments, :only => [:create]
+   resources :comments, only: [:create]
   end
 
   resources :committees do
     collection do
       get 'membership'
     end
-    resources :committee_members, :except => [:show]
+    resources :committee_members, except: [:show]
     resources :discussions, only: [:index, :create, :new]
     resources :proposals, only: [:new, :create]
   end
   resources :bulk_users, only: [:index, :create]
 
-  devise_for :users, :controllers => {:confirmations => 'confirmations'}
+  devise_for :users, controllers: {confirmations: 'confirmations'}
 
   devise_scope :user do
     patch "/confirm" => "confirmations#confirm"
@@ -101,7 +101,7 @@ RulebookApp::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   get '/r/:rulebook_slug/*other' => "welcome#new_location" #}redirect("/r/%{rulebook_slug}/welcome/index") # to match /en  to send to /en/welcome
-  root :to => 'welcome#index'
+  root to: 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 

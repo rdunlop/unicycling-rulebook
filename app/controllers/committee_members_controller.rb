@@ -2,7 +2,7 @@ class CommitteeMembersController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource :committee
   before_action :set_committee_breadcrumb
-  load_and_authorize_resource :committee_member, :through => :committee
+  load_and_authorize_resource :committee_member, through: :committee
 
   # GET /committee_members
   # GET /committee_members.json
@@ -43,10 +43,10 @@ class CommitteeMembersController < ApplicationController
       params[:committee_member][:user_id].each do |user|
         next if user.blank?
         @committee_member = CommitteeMember.new(
-          :user_id => user,
-          :voting => params[:committee_member][:voting],
-          :admin => params[:committee_member][:admin],
-          :editor => params[:committee_member][:editor])
+          user_id: user,
+          voting: params[:committee_member][:voting],
+          admin: params[:committee_member][:admin],
+          editor: params[:committee_member][:editor])
         @committee_member.committee = @committee
         unless @committee_member.save
           @success = false

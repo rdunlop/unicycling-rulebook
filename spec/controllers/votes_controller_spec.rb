@@ -18,12 +18,12 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe VotesController, :type => :controller do
+describe VotesController, type: :controller do
   before(:each) do
-    @proposal = FactoryGirl.create(:proposal, :with_admin, :status => 'Voting')
+    @proposal = FactoryGirl.create(:proposal, :with_admin, status: 'Voting')
     @admin_user = FactoryGirl.create(:admin_user)
     @user = FactoryGirl.create(:user)
-    FactoryGirl.create(:committee_member, :committee => @proposal.committee, :voting => true, :user => @user)
+    FactoryGirl.create(:committee_member, committee: @proposal.committee, voting: true, user: @user)
 
     sign_in @user
   end
@@ -43,21 +43,21 @@ describe VotesController, :type => :controller do
         sign_in @admin_user
     end
     it "assigns all votes as @votes" do
-      vote = FactoryGirl.create(:vote, :proposal => @proposal)
-      get :index, {:proposal_id => @proposal.id}
+      vote = FactoryGirl.create(:vote, proposal: @proposal)
+      get :index, {proposal_id: @proposal.id}
       expect(assigns(:votes)).to eq([vote])
     end
     it "should only show votes from this proposal" do
-      vote = FactoryGirl.create(:vote, :proposal => @proposal)
+      vote = FactoryGirl.create(:vote, proposal: @proposal)
       other_vote = FactoryGirl.create(:vote)
-      get :index, {:proposal_id => @proposal.id}
+      get :index, {proposal_id: @proposal.id}
       expect(assigns(:votes)).to eq([vote])
     end
   end
 
   describe "GET new" do
     it "assigns a new vote as @vote" do
-      get :new, {:proposal_id => @proposal.id}
+      get :new, {proposal_id: @proposal.id}
       expect(assigns(:vote)).to be_a_new(Vote)
     end
   end
@@ -69,8 +69,8 @@ describe VotesController, :type => :controller do
         sign_in @admin_user
       end
       it "assigns the requested vote as @vote" do
-        vote = FactoryGirl.create(:vote, :proposal => @proposal)
-        get :edit, {:id => vote.to_param, :proposal_id => @proposal.id}
+        vote = FactoryGirl.create(:vote, proposal: @proposal)
+        get :edit, {id: vote.to_param, proposal_id: @proposal.id}
         expect(assigns(:vote)).to eq(vote)
       end
     end
@@ -80,23 +80,23 @@ describe VotesController, :type => :controller do
     describe "with valid params" do
       it "creates a new Vote" do
         expect {
-          post :create, {:vote => valid_attributes, :proposal_id => @proposal.id}
+          post :create, {vote: valid_attributes, proposal_id: @proposal.id}
         }.to change(Vote, :count).by(1)
       end
 
       it "assigns a newly created vote as @vote" do
-        post :create, {:vote => valid_attributes, :proposal_id => @proposal.id}
+        post :create, {vote: valid_attributes, proposal_id: @proposal.id}
         expect(assigns(:vote)).to be_a(Vote)
         expect(assigns(:vote)).to be_persisted
       end
 
       it "redirects to the created vote" do
-        post :create, {:vote => valid_attributes, :proposal_id => @proposal.id}
+        post :create, {vote: valid_attributes, proposal_id: @proposal.id}
         expect(response).to redirect_to(@proposal)
       end
       it "sends an email" do
         ActionMailer::Base.deliveries.clear
-        post :create, {:vote => valid_attributes, :proposal_id => @proposal.id}
+        post :create, {vote: valid_attributes, proposal_id: @proposal.id}
         num_deliveries = ActionMailer::Base.deliveries.size
         expect(num_deliveries).to eq(1)
       end
@@ -108,7 +108,7 @@ describe VotesController, :type => :controller do
         end
         it "should not be possible to create a vote" do
           expect {
-            post :create, {:vote => valid_attributes, :proposal_id => @proposal.id}
+            post :create, {vote: valid_attributes, proposal_id: @proposal.id}
           }.to change(Vote, :count).by(0)
         end
     end
@@ -117,14 +117,14 @@ describe VotesController, :type => :controller do
       it "assigns a newly created but unsaved vote as @vote" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Vote).to receive(:save).and_return(false)
-        post :create, {:vote => {vote: 'agree'}, :proposal_id => @proposal.id}
+        post :create, {vote: {vote: 'agree'}, proposal_id: @proposal.id}
         expect(assigns(:vote)).to be_a_new(Vote)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Vote).to receive(:save).and_return(false)
-        post :create, {:vote => {vote: 'agree'}, :proposal_id => @proposal.id}
+        post :create, {vote: {vote: 'agree'}, proposal_id: @proposal.id}
         expect(response).to render_template("proposals/show")
       end
     end
@@ -132,7 +132,7 @@ describe VotesController, :type => :controller do
 
   describe "PUT update" do
     before(:each) do
-        @vote = FactoryGirl.create(:vote, :proposal => @proposal)
+        @vote = FactoryGirl.create(:vote, proposal: @proposal)
     end
 
     describe "with admin with valid params" do
@@ -146,21 +146,21 @@ describe VotesController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(Vote).to receive(:update_attributes).with({})
-        put :update, {:id => @vote.to_param, :vote => {'these' => 'params'}, :proposal_id => @proposal.id}
+        put :update, {id: @vote.to_param, vote: {'these' => 'params'}, proposal_id: @proposal.id}
       end
 
       it "assigns the requested vote as @vote" do
-        put :update, {:id => @vote.to_param, :vote => valid_attributes, :proposal_id => @proposal.id}
+        put :update, {id: @vote.to_param, vote: valid_attributes, proposal_id: @proposal.id}
         expect(assigns(:vote)).to eq(@vote)
       end
 
       it "redirects to the vote" do
-        put :update, {:id => @vote.to_param, :vote => valid_attributes, :proposal_id => @proposal.id}
+        put :update, {id: @vote.to_param, vote: valid_attributes, proposal_id: @proposal.id}
         expect(response).to redirect_to([@proposal, @vote])
       end
       it "sends an e-mail" do
         ActionMailer::Base.deliveries.clear
-        put :update, {:id => @vote.to_param, :vote => {vote: 'disagree'}, :proposal_id => @proposal.id}
+        put :update, {id: @vote.to_param, vote: {vote: 'disagree'}, proposal_id: @proposal.id}
         num_deliveries = ActionMailer::Base.deliveries.size
         expect(num_deliveries).to eq(1)
 
@@ -176,18 +176,18 @@ describe VotesController, :type => :controller do
         sign_in @admin_user
       end
       it "assigns the vote as @vote" do
-        vote = FactoryGirl.create(:vote, :proposal => @proposal)
+        vote = FactoryGirl.create(:vote, proposal: @proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Vote).to receive(:save).and_return(false)
-        put :update, {:id => vote.to_param, :vote => {vote: 'agree'}, :proposal_id => @proposal.id}
+        put :update, {id: vote.to_param, vote: {vote: 'agree'}, proposal_id: @proposal.id}
         expect(assigns(:vote)).to eq(vote)
       end
 
       it "re-renders the 'edit' template" do
-        vote = FactoryGirl.create(:vote, :proposal => @proposal)
+        vote = FactoryGirl.create(:vote, proposal: @proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Vote).to receive(:save).and_return(false)
-        put :update, {:id => vote.to_param, :vote => {vote: 'agree'}, :proposal_id => @proposal.id}
+        put :update, {id: vote.to_param, vote: {vote: 'agree'}, proposal_id: @proposal.id}
         expect(response).to render_template("edit")
       end
     end
@@ -200,15 +200,15 @@ describe VotesController, :type => :controller do
         sign_in @admin_user
       end
       it "destroys the requested vote" do
-        vote = FactoryGirl.create(:vote, :proposal => @proposal)
+        vote = FactoryGirl.create(:vote, proposal: @proposal)
         expect {
-          delete :destroy, {:id => vote.to_param, :proposal_id => @proposal.id}
+          delete :destroy, {id: vote.to_param, proposal_id: @proposal.id}
         }.to change(Vote, :count).by(-1)
       end
 
       it "redirects to the votes list" do
-        vote = FactoryGirl.create(:vote, :proposal => @proposal)
-        delete :destroy, {:id => vote.to_param, :proposal_id => @proposal.id}
+        vote = FactoryGirl.create(:vote, proposal: @proposal)
+        delete :destroy, {id: vote.to_param, proposal_id: @proposal.id}
         expect(response).to redirect_to(proposal_url(@proposal))
       end
     end

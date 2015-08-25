@@ -1,5 +1,5 @@
 class CommitteesController < ApplicationController
-  before_filter :authenticate_user!, :except => [:membership, :show]
+  before_filter :authenticate_user!, except: [:membership, :show]
   before_filter :load_committee, only: [:show, :edit, :update, :destroy]
   before_filter :set_committee_breadcrumb, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource

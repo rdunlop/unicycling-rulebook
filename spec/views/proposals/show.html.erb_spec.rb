@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe "proposals/show", :type => :view do
+describe "proposals/show", type: :view do
   before(:each) do
-    @proposal = FactoryGirl.create(:proposal, :title => "thetitle")
-    @revision = FactoryGirl.create(:revision, :proposal => @proposal, :background => "thebackground")
+    @proposal = FactoryGirl.create(:proposal, title: "thetitle")
+    @revision = FactoryGirl.create(:revision, proposal: @proposal, background: "thebackground")
     @discussion = FactoryGirl.create(:discussion, proposal: @proposal)
     @comment = @discussion.comments.new
     @vote = @proposal.votes.new
@@ -21,8 +21,8 @@ describe "proposals/show", :type => :view do
   end
   describe "with a voting-state proposal" do
     before(:each) do
-      @proposal = FactoryGirl.create(:proposal, :title => "thetitle", :status => "Voting")
-      @revision = FactoryGirl.create(:revision, :proposal => @proposal, :background => "thebackground")
+      @proposal = FactoryGirl.create(:proposal, title: "thetitle", status: "Voting")
+      @revision = FactoryGirl.create(:revision, proposal: @proposal, background: "thebackground")
       @discussion = FactoryGirl.create(:discussion, proposal: @proposal)
 
       @comment = @proposal.comments.new

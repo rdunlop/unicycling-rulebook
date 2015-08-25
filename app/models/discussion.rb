@@ -14,13 +14,13 @@
 #
 
 class Discussion < ActiveRecord::Base
-  belongs_to :owner, :class_name => "User"
+  belongs_to :owner, class_name: "User"
   belongs_to :proposal, touch: true, inverse_of: :discussion
   belongs_to :committee
   has_many :comments, -> { order("created_at ASC") }
 
-  validates :owner, :title, :committee, :presence => true
-  validates :status, :inclusion => { :in => [ 'active', 'closed' ] }
+  validates :owner, :title, :committee, presence: true
+  validates :status, inclusion: { in: [ 'active', 'closed' ] }
 
   def self.active
     where(status: 'active')

@@ -20,17 +20,17 @@
 #
 
 class Proposal < ActiveRecord::Base
-  belongs_to :owner, :class_name => "User"
+  belongs_to :owner, class_name: "User"
   belongs_to :committee
   has_many :votes, -> { order("created_at ASC") }
   has_many :comments, through: :discussion
   has_one :discussion, inverse_of: :proposal
   has_many :revisions, -> { order("id DESC") }
 
-  validates :owner, :presence => true
-  validates :title, :presence => true
-  validates :committee, :presence => true
-  validates :status, :inclusion => { :in => [ 'Submitted', 'Review', 'Pre-Voting', 'Voting', 'Tabled', 'Passed', 'Failed' ] }
+  validates :owner, presence: true
+  validates :title, presence: true
+  validates :committee, presence: true
+  validates :status, inclusion: { in: [ 'Submitted', 'Review', 'Pre-Voting', 'Voting', 'Tabled', 'Passed', 'Failed' ] }
 
   # This is the auto-updated function CLASS METHOD
   def self.update_states

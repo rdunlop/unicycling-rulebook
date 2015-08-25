@@ -339,12 +339,6 @@ Style/GuardClause:
     - 'app/mailers/user_mailer.rb'
     - 'app/models/revision.rb'
 
-# Offense count: 690
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, UseHashRocketsWithSymbolValues.
-Style/HashSyntax:
-  Enabled: false
-
 # Offense count: 17
 # Cop supports --auto-correct.
 # Configuration parameters: MaxLineLength.

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  check_authorization :unless => :devise_controller?
+  check_authorization unless: :devise_controller?
   before_action :configure_permitted_parameters, if: :devise_controller?
   layout "rulebook"
   before_filter :load_config
@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
     if Apartment::Tenant.current
       redirect_to root_path, alert: exception.message
     else
-      redirect_to welcome_index_all_path, :alert => exception.message
+      redirect_to welcome_index_all_path, alert: exception.message
     end
   end
 

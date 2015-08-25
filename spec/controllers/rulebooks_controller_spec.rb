@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe RulebooksController, :type => :controller do
+describe RulebooksController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
   # Rulebook. As you add validations to Rulebook, be sure to
@@ -26,7 +26,7 @@ describe RulebooksController, :type => :controller do
   describe "GET show" do
     it "assigns the requested rulebook as @rulebook" do
       rulebook = Rulebook.create! valid_attributes
-      get :show, {:id => rulebook.to_param}
+      get :show, {id: rulebook.to_param}
       expect(assigns(:rulebook)).to eq(rulebook)
     end
   end
@@ -43,24 +43,24 @@ describe RulebooksController, :type => :controller do
     describe "with valid params" do
       it "creates a new Rulebook" do
         expect {
-          post :create, {:rulebook => valid_attributes, access_code: "ACCESS_CODE"}
+          post :create, {rulebook: valid_attributes, access_code: "ACCESS_CODE"}
         }.to change(Rulebook, :count).by(1)
       end
 
       it "assigns a newly created rulebook as @rulebook" do
-        post :create, {:rulebook => valid_attributes, access_code: "ACCESS_CODE"}
+        post :create, {rulebook: valid_attributes, access_code: "ACCESS_CODE"}
         expect(assigns(:rulebook)).to be_a(Rulebook)
         expect(assigns(:rulebook)).to be_persisted
       end
 
       it "redirects to the created rulebook" do
-        post :create, {:rulebook => valid_attributes, access_code: "ACCESS_CODE"}
+        post :create, {rulebook: valid_attributes, access_code: "ACCESS_CODE"}
         expect(response).to redirect_to(Rulebook.last)
       end
 
       it "fails with an invalid access code" do
         expect {
-          post :create, {:rulebook => valid_attributes, access_code: "NO CODE"}
+          post :create, {rulebook: valid_attributes, access_code: "NO CODE"}
         }.not_to change(Rulebook, :count)
       end
     end
@@ -69,14 +69,14 @@ describe RulebooksController, :type => :controller do
       it "assigns a newly created but unsaved rulebook as @rulebook" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Rulebook).to receive(:save).and_return(false)
-        post :create, {:rulebook => {rulebook_name: 'the book'}}
+        post :create, {rulebook: {rulebook_name: 'the book'}}
         expect(assigns(:rulebook)).to be_a_new(Rulebook)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Rulebook).to receive(:save).and_return(false)
-        post :create, {:rulebook => {rulebook_name: 'the book'}, access_code: "ACCESS_CODE"}
+        post :create, {rulebook: {rulebook_name: 'the book'}, access_code: "ACCESS_CODE"}
         expect(response).to render_template("new")
       end
     end

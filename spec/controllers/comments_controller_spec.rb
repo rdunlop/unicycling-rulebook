@@ -18,16 +18,16 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe CommentsController, :type => :controller do
+describe CommentsController, type: :controller do
   before(:each) do
 
     @proposal = FactoryGirl.create(:proposal, discussion: @discussion, status: "Review")
-    @discussion = FactoryGirl.create(:discussion, :status => 'active', committee: @proposal.committee)
+    @discussion = FactoryGirl.create(:discussion, status: 'active', committee: @proposal.committee)
 
     @user = FactoryGirl.create(:user)
-    FactoryGirl.create(:committee_member, :committee => @proposal.committee, :user => @user)
+    FactoryGirl.create(:committee_member, committee: @proposal.committee, user: @user)
     # another member, so that an e-mail is generated
-    FactoryGirl.create(:committee_member, :committee => @proposal.committee)
+    FactoryGirl.create(:committee_member, committee: @proposal.committee)
 
     sign_in @user
   end
@@ -43,24 +43,24 @@ describe CommentsController, :type => :controller do
     describe "with valid params" do
       it "creates a new Comment" do
         expect {
-          post :create, {:comment => valid_attributes, discussion_id: @discussion.id }
+          post :create, {comment: valid_attributes, discussion_id: @discussion.id }
         }.to change(Comment, :count).by(1)
       end
 
       it "assigns a newly created comment as @comment" do
-        post :create, {:comment => valid_attributes, discussion_id: @discussion.id }
+        post :create, {comment: valid_attributes, discussion_id: @discussion.id }
         expect(assigns(:comment)).to be_a(Comment)
         expect(assigns(:comment)).to be_persisted
       end
 
       it "redirects to the created comment" do
-        post :create, {:comment => valid_attributes, discussion_id: @discussion.id }
+        post :create, {comment: valid_attributes, discussion_id: @discussion.id }
         expect(response).to redirect_to(@discussion)
       end
 
       it "sends an e-mail" do
         ActionMailer::Base.deliveries.clear
-        post :create, {:comment => valid_attributes, discussion_id: @discussion.id }
+        post :create, {comment: valid_attributes, discussion_id: @discussion.id }
         num_deliveries = ActionMailer::Base.deliveries.size
         expect(num_deliveries).to eq(1)
       end
@@ -70,7 +70,7 @@ describe CommentsController, :type => :controller do
       it "assigns a newly created but unsaved comment as @comment" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Comment).to receive(:save).and_return(false)
-        post :create, {:comment => {comment: "None"}, discussion_id: @discussion.id }
+        post :create, {comment: {comment: "None"}, discussion_id: @discussion.id }
         expect(assigns(:comment)).to be_a_new(Comment)
       end
 

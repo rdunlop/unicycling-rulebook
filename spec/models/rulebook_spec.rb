@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Rulebook, :type => :model do
+describe Rulebook, type: :model do
   it "should allow 2 rulebooks to exist" do
     FactoryGirl.create(:rulebook)
     ac = described_class.new

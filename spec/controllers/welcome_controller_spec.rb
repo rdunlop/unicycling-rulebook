@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe WelcomeController, :type => :controller do
+describe WelcomeController, type: :controller do
   before(:each) do
     @user = FactoryGirl.create(:user)
 
@@ -58,7 +58,7 @@ describe WelcomeController, :type => :controller do
       before(:each) do
         sign_out @user
         @ca = FactoryGirl.create(:user)
-        FactoryGirl.create(:committee_member, :user => @ca, :admin => true)
+        FactoryGirl.create(:committee_member, user: @ca, admin: true)
         sign_in @ca
       end
       it "can send a message" do
@@ -80,15 +80,15 @@ describe WelcomeController, :type => :controller do
     end
     it "should succeed if a committees is selected" do
       @com = FactoryGirl.create(:committee)
-      FactoryGirl.create(:committee_member, committee: @com, :admin => true)
-      post :send_message, {:committees => [@com.id]}
+      FactoryGirl.create(:committee_member, committee: @com, admin: true)
+      post :send_message, {committees: [@com.id]}
       expect(flash[:notice]).to eq("Message Successfully Sent")
     end
     it "should set the reply_to address to the user's email" do
       @com = FactoryGirl.create(:committee)
-      FactoryGirl.create(:committee_member, committee: @com, :admin => true)
+      FactoryGirl.create(:committee_member, committee: @com, admin: true)
       ActionMailer::Base.deliveries.clear
-      post :send_message, {:committees => [@com.id]}
+      post :send_message, {committees: [@com.id]}
       num_deliveries = ActionMailer::Base.deliveries.size
       note = ActionMailer::Base.deliveries.first
       expect(note.reply_to).to eq([@admin_user.email])
@@ -97,7 +97,7 @@ describe WelcomeController, :type => :controller do
 
   describe "GET index" do
     it "assigns all MY proposals as @proposals" do
-      cm = FactoryGirl.create(:committee_member, :user => @user)
+      cm = FactoryGirl.create(:committee_member, user: @user)
       get :index, {}
       expect(assigns(:committees)).to eq([cm.committee])
     end

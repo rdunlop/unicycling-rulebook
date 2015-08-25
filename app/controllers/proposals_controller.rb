@@ -1,5 +1,5 @@
 class ProposalsController < ApplicationController
-  before_action :authenticate_user!, :except => [:show, :passed]
+  before_action :authenticate_user!, except: [:show, :passed]
   before_action :load_committee, only: [:new, :create]
   before_action :set_committee_breadcrumb, only: [:new, :create]
   skip_authorization_check only: [:create, :new]

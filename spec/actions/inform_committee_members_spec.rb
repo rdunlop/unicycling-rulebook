@@ -108,7 +108,7 @@ describe InformCommitteeMembers do
   context "when votes have been submitted" do
     let(:proposal) { FactoryGirl.create(:proposal, :submitted) }
     let(:committee) { proposal.committee }
-    let!(:vote) { FactoryGirl.create(:vote, :proposal => proposal, :user => user) }
+    let!(:vote) { FactoryGirl.create(:vote, proposal: proposal, user: user) }
     let(:do_action) { described_class.vote_submitted(vote) }
 
     it "should not send e-mail to people who have voted" do

@@ -15,10 +15,10 @@ class Vote < ActiveRecord::Base
     belongs_to :proposal
     belongs_to :user
 
-    validates :proposal, :presence => true
-    validates :user, :presence => true
-    validates :user_id, :uniqueness => {:scope => [:proposal_id]}
-    validates :vote, :inclusion => { :in => [ 'agree', 'disagree', 'abstain' ] }
+    validates :proposal, presence: true
+    validates :user, presence: true
+    validates :user_id, uniqueness: {scope: [:proposal_id]}
+    validates :vote, inclusion: { in: [ 'agree', 'disagree', 'abstain' ] }
 
     def to_s
         if self.new_record?

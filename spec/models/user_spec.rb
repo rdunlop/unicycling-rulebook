@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe User, :type => :model do
+describe User, type: :model do
   describe "with an admin user existing" do
     before(:each) do
       @admin = FactoryGirl.create(:admin_user)
@@ -44,21 +44,21 @@ describe User, :type => :model do
 
   it "should describe it's voting status via method" do
     user = FactoryGirl.create(:user)
-    cm = FactoryGirl.create(:committee_member, :user => user)
+    cm = FactoryGirl.create(:committee_member, user: user)
 
     expect(user.voting_text(cm.committee)).to eq("Voting Member")
   end
 
   it "should describe it's voting status via method when non-voting member" do
     user = FactoryGirl.create(:user)
-    cm = FactoryGirl.create(:committee_member, :user => user, :voting => false)
+    cm = FactoryGirl.create(:committee_member, user: user, voting: false)
 
     expect(user.voting_text(cm.committee)).to eq("Non-Voting Member")
   end
 
   it "should be able to list its votes" do
     user = FactoryGirl.create(:user)
-    vote = FactoryGirl.create(:vote, :user => user)
+    vote = FactoryGirl.create(:vote, user: user)
 
     expect(user.votes).to eq([vote])
   end
@@ -84,11 +84,11 @@ describe User, :type => :model do
   end
 
   it "should be able to be created with comments" do
-    user = User.new({:name => "Robin",
-                     :email => "email@robin.com",
-                     :password => "password",
-                     :password_confirmation => "password",
-                     :comments => "Something"})
+    user = User.new({name: "Robin",
+                     email: "email@robin.com",
+                     password: "password",
+                     password_confirmation: "password",
+                     comments: "Something"})
     expect(user.comments).to eq("Something")
     expect(user.valid?).to eq(true)
   end
@@ -99,11 +99,11 @@ describe User, :type => :model do
   end
 
   it "should be able to be created with no_emails" do
-    user = User.new({:name => "Robin",
-                     :email => "email@robin.com",
-                     :password => "password",
-                     :password_confirmation => "password",
-                     :no_emails => true})
+    user = User.new({name: "Robin",
+                     email: "email@robin.com",
+                     password: "password",
+                     password_confirmation: "password",
+                     no_emails: true})
     expect(user.no_emails).to eq(true)
     expect(user.valid?).to eq(true)
   end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "committees/show", :type => :view do
+describe "committees/show", type: :view do
   before(:each) do
     @ability = Object.new
     @ability.extend(CanCan::Ability)
@@ -13,8 +13,8 @@ describe "committees/show", :type => :view do
       @proposal = FactoryGirl.create(:proposal)
       @proposals = [@proposal]
       assign(:votes, [
-          FactoryGirl.create(:vote, :proposal => @proposal),
-          FactoryGirl.create(:vote, :proposal => @proposal)])
+          FactoryGirl.create(:vote, proposal: @proposal),
+          FactoryGirl.create(:vote, proposal: @proposal)])
       render
     end
     it "should find the proposal title" do

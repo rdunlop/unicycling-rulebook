@@ -16,9 +16,9 @@ class CommitteeMember < ActiveRecord::Base
   belongs_to :committee, inverse_of: :committee_members
   belongs_to :user, inverse_of: :committee_members
 
-  validates :committee, :presence => true
-  validates :user, :presence => true
-  validates :user_id, :uniqueness => {:scope => [:committee_id]}
+  validates :committee, presence: true
+  validates :user, presence: true
+  validates :user_id, uniqueness: {scope: [:committee_id]}
 
   scope :admin, -> { where(admin: true) }
   scope :voting, -> { where(voting: true) }

@@ -19,7 +19,7 @@ class Revision < ActiveRecord::Base
     belongs_to :proposal, touch: true
     belongs_to :user
 
-    validates :body, :presence => true
+    validates :body, presence: true
     validate :change_description_required_for_updates
 
     before_validation :determine_num

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Proposal, :type => :model do
+describe Proposal, type: :model do
   it "should have an associated user" do
     prop = Proposal.new
     prop.committee = FactoryGirl.create(:committee)
@@ -42,7 +42,7 @@ describe Proposal, :type => :model do
 
   it "should have associated votes" do
     proposal = FactoryGirl.create(:proposal)
-    vote = FactoryGirl.create(:vote, :proposal => proposal)
+    vote = FactoryGirl.create(:vote, proposal: proposal)
 
     prop = Proposal.find(proposal.id)
 
@@ -50,8 +50,8 @@ describe Proposal, :type => :model do
   end
   it "orders the votes by created_at date" do
     proposal = FactoryGirl.create(:proposal)
-    vote2 = FactoryGirl.create(:vote, :proposal => proposal, :created_at => 1.second.ago)
-    vote1 = FactoryGirl.create(:vote, :proposal => proposal, :created_at => 2.seconds.ago)
+    vote2 = FactoryGirl.create(:vote, proposal: proposal, created_at: 1.second.ago)
+    vote1 = FactoryGirl.create(:vote, proposal: proposal, created_at: 2.seconds.ago)
 
     prop = Proposal.find(proposal.id)
 
@@ -88,50 +88,50 @@ describe Proposal, :type => :model do
   end
   it "should provide all revisions in descending order" do
     prop = FactoryGirl.create(:proposal)
-    rev1 = FactoryGirl.create(:revision, :proposal => prop)
-    rev2 = FactoryGirl.create(:revision, :proposal => prop)
+    rev1 = FactoryGirl.create(:revision, proposal: prop)
+    rev2 = FactoryGirl.create(:revision, proposal: prop)
 
     expect(prop.revisions).to eq([rev2, rev1])
   end
 
   describe "when checking the 'status_string'" do
     it "should print only the status for a Submitted proposal" do
-        prop = FactoryGirl.create(:proposal, :status => 'Submitted')
+        prop = FactoryGirl.create(:proposal, status: 'Submitted')
         expect(prop.status_string).to eq("Submitted")
     end
     it "should print the review dates for a Review proposal" do
-        prop = FactoryGirl.create(:proposal, :status => 'Review',
-                                             :review_start_date => Date.new(2012, 1, 1),
-                                             :review_end_date   => Date.new(2012, 1, 10))
+        prop = FactoryGirl.create(:proposal, status: 'Review',
+                                             review_start_date: Date.new(2012, 1, 1),
+                                             review_end_date: Date.new(2012, 1, 10))
         expect(prop.status_string).to eq("Review from January  1, 2012 to January 10, 2012")
     end
 
     it "should print the review dates for a Pre-Voting proposal" do
-        prop = FactoryGirl.create(:proposal, :status => 'Pre-Voting',
-                                             :review_start_date => Date.new(2012, 1, 1),
-                                             :review_end_date   => Date.new(2012, 1, 10))
+        prop = FactoryGirl.create(:proposal, status: 'Pre-Voting',
+                                             review_start_date: Date.new(2012, 1, 1),
+                                             review_end_date: Date.new(2012, 1, 10))
         expect(prop.status_string).to eq("Pre-Voting (Reviewed from January  1, 2012 to January 10, 2012)")
     end
     it "should print the voting dates for a Voting proposal" do
-        prop = FactoryGirl.create(:proposal, :status => 'Voting',
-                                             :vote_start_date => Date.new(2012, 1, 1),
-                                             :vote_end_date   => Date.new(2012, 1, 10))
+        prop = FactoryGirl.create(:proposal, status: 'Voting',
+                                             vote_start_date: Date.new(2012, 1, 1),
+                                             vote_end_date: Date.new(2012, 1, 10))
         expect(prop.status_string).to eq("Voting from January  1, 2012 to January 10, 2012")
     end
     it "should print the review dates for a Tabled proposal" do
-        prop = FactoryGirl.create(:proposal, :status => 'Tabled',
-                                             :review_start_date => Date.new(2012, 1, 1),
-                                             :review_end_date   => Date.new(2012, 1, 10))
+        prop = FactoryGirl.create(:proposal, status: 'Tabled',
+                                             review_start_date: Date.new(2012, 1, 1),
+                                             review_end_date: Date.new(2012, 1, 10))
         expect(prop.status_string).to eq("Set-Aside (Reviewed from January  1, 2012 to January 10, 2012)")
     end
     it "should print the vote end dates for a Passed proposal" do
-        prop = FactoryGirl.create(:proposal, :status => 'Passed',
-                                             :vote_end_date => Date.new(2012, 2, 1))
+        prop = FactoryGirl.create(:proposal, status: 'Passed',
+                                             vote_end_date: Date.new(2012, 2, 1))
         expect(prop.status_string).to eq("Passed on February  1, 2012")
     end
     it "should print the vote end dates for a Failde proposal" do
-        prop = FactoryGirl.create(:proposal, :status => 'Failed',
-                                             :vote_end_date => Date.new(2012, 2, 1))
+        prop = FactoryGirl.create(:proposal, status: 'Failed',
+                                             vote_end_date: Date.new(2012, 2, 1))
         expect(prop.status_string).to eq("Failed on February  1, 2012")
     end
   end
@@ -139,8 +139,8 @@ describe Proposal, :type => :model do
   describe "with 2 revisions" do
     before(:each) do
         @prop = FactoryGirl.create(:proposal)
-        @rev1 = FactoryGirl.create(:revision, :proposal => @prop)
-        @rev2 = FactoryGirl.create(:revision, :proposal => @prop)
+        @rev1 = FactoryGirl.create(:revision, proposal: @prop)
+        @rev2 = FactoryGirl.create(:revision, proposal: @prop)
     end
     it "should return the latest background" do
         expect(@prop.background).to eq(@rev1.background)
@@ -156,10 +156,10 @@ describe Proposal, :type => :model do
   describe "with votes" do
     before(:each) do
         @prop = FactoryGirl.create(:proposal)
-        @rev1 = FactoryGirl.create(:revision, :proposal => @prop)
-        @vote = FactoryGirl.create(:vote, :proposal => @prop, :vote => 'agree', :comment => '')
+        @rev1 = FactoryGirl.create(:revision, proposal: @prop)
+        @vote = FactoryGirl.create(:vote, proposal: @prop, vote: 'agree', comment: '')
 
-        @cm = FactoryGirl.create(:committee_member, :user => @vote.user, :committee => @prop.committee)
+        @cm = FactoryGirl.create(:committee_member, user: @vote.user, committee: @prop.committee)
     end
     it "should count the number of agree votes" do
         expect(@prop.agree_votes).to eq(1)
@@ -183,7 +183,7 @@ describe Proposal, :type => :model do
 
     describe "if there is a 2nd committee_members who hasn't voted" do
         before(:each) do
-            @cm2 = FactoryGirl.create(:committee_member, :committee => @prop.committee)
+            @cm2 = FactoryGirl.create(:committee_member, committee: @prop.committee)
         end
         it "should have not all voting members (1/2) voted)" do
             expect(@prop.all_voting_members_voted).to eq(false)
@@ -194,7 +194,7 @@ describe Proposal, :type => :model do
         end
         describe "when the 2nd member votes disagree" do
             before(:each) do
-              @vote = FactoryGirl.create(:vote, :user => @cm2.user, :proposal => @prop, :vote => 'disagree', :comment => 'hi')
+              @vote = FactoryGirl.create(:vote, user: @cm2.user, proposal: @prop, vote: 'disagree', comment: 'hi')
             end
             it "should NOT have at least 2/3 agree" do
               expect(@prop.at_least_two_thirds_agree).to eq(false)
@@ -203,7 +203,7 @@ describe Proposal, :type => :model do
 
         describe "if there is a 3rd committee_members who hasn't voted" do
           before(:each) do
-            FactoryGirl.create(:committee_member, :committee => @prop.committee)
+            FactoryGirl.create(:committee_member, committee: @prop.committee)
           end
           it "should have not all voting members (1/3) voted)" do
             expect(@prop.all_voting_members_voted).to eq(false)
@@ -219,16 +219,16 @@ describe Proposal, :type => :model do
   describe "with existing Review+Submitted proposals" do
     before(:each) do
         # review proposal which will be advanced
-        @p1 = FactoryGirl.create(:proposal, :status => 'Review', :review_end_date => Date.today.prev_day(1))
-        @r1 = FactoryGirl.create(:revision, :proposal => @p1)
+        @p1 = FactoryGirl.create(:proposal, status: 'Review', review_end_date: Date.today.prev_day(1))
+        @r1 = FactoryGirl.create(:revision, proposal: @p1)
 
         # submitted proposal which will not be advanced
-        @p2 = FactoryGirl.create(:proposal, :status => 'Submitted')
-        @r2 = FactoryGirl.create(:revision, :proposal => @p2)
+        @p2 = FactoryGirl.create(:proposal, status: 'Submitted')
+        @r2 = FactoryGirl.create(:revision, proposal: @p2)
 
         # review proposal which will NOT be advanced (due to date)
-        @p3 = FactoryGirl.create(:proposal, :status => 'Review', :review_end_date => Date.today)
-        @r3 = FactoryGirl.create(:revision, :proposal => @p3)
+        @p3 = FactoryGirl.create(:proposal, status: 'Review', review_end_date: Date.today)
+        @r3 = FactoryGirl.create(:revision, proposal: @p3)
 
         ActionMailer::Base.deliveries.clear
     end
@@ -259,15 +259,15 @@ describe Proposal, :type => :model do
   describe "with 'Voting' proposals" do
       before(:each) do
           # voting proposal which will NOT be advanced (due to date)
-          @p4 = FactoryGirl.create(:proposal, :status => 'Voting', :vote_end_date => Date.today)
-          @r4 = FactoryGirl.create(:revision, :proposal => @p4)
+          @p4 = FactoryGirl.create(:proposal, status: 'Voting', vote_end_date: Date.today)
+          @r4 = FactoryGirl.create(:revision, proposal: @p4)
 
           # voting proposal which will be failed (due to no votes)
-          @p5 = FactoryGirl.create(:proposal, :status => 'Voting', :vote_end_date => Date.today.prev_day(1))
-          @r5 = FactoryGirl.create(:revision, :proposal => @p5)
+          @p5 = FactoryGirl.create(:proposal, status: 'Voting', vote_end_date: Date.today.prev_day(1))
+          @r5 = FactoryGirl.create(:revision, proposal: @p5)
 
-          FactoryGirl.create(:committee_member, :committee => @p4.committee)
-          FactoryGirl.create(:committee_member, :committee => @p5.committee)
+          FactoryGirl.create(:committee_member, committee: @p4.committee)
+          FactoryGirl.create(:committee_member, committee: @p5.committee)
       end
       describe "when calling update_states" do
         before(:each) do
@@ -291,7 +291,7 @@ describe Proposal, :type => :model do
       describe "calling update_proposal_states when all of the voting-members have voted agree" do
         before(:each) do
             @p5.committee.committee_members.each do |cm|
-                FactoryGirl.create(:vote, :proposal => @p5, :user => cm.user, :vote => 'agree')
+                FactoryGirl.create(:vote, proposal: @p5, user: cm.user, vote: 'agree')
             end
             ActionMailer::Base.deliveries.clear
             Proposal.update_proposal_states
@@ -308,7 +308,7 @@ describe Proposal, :type => :model do
       describe "calling update_states when all voting-members have voted disagree, but the time has not completed" do
         before(:each) do
             @p4.committee.committee_members.each do |cm|
-                FactoryGirl.create(:vote, :proposal => @p4, :user => cm.user, :vote => 'disagree')
+                FactoryGirl.create(:vote, proposal: @p4, user: cm.user, vote: 'disagree')
             end
             ActionMailer::Base.deliveries.clear
             Proposal.update_proposal_states

@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :async
 
   has_many :committee_members, inverse_of: :user
-  has_many :committees, :through => :committee_members
+  has_many :committees, through: :committee_members
   has_many :votes
 
   scope :admin, -> { where(admin: true) }
@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
 
   after_create :send_email_to_admins
 
-  delegate :can?, :cannot?, :to => :ability
+  delegate :can?, :cannot?, to: :ability
 
   after_initialize :init
 

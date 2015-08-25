@@ -39,7 +39,7 @@ gem 'unicorn'
 gem 'redis-rails'
 gem 'sidekiq'
 # if you require 'sinatra' you get the Sinatra DSL extended to Object
-gem 'sinatra', '>= 1.3.0', :require => nil # necessary for sidekiq
+gem 'sinatra', '>= 1.3.0', require: nil # necessary for sidekiq
 gem 'apartment-sidekiq'
 gem 'whenever'
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Comment, :type => :model do
+describe Comment, type: :model do
     it "should have an associated discussion" do
         comment = Comment.new
         comment.user = FactoryGirl.create(:user)
