@@ -66,6 +66,7 @@ group :development, :test, :cucumber do
     gem 'watchr'
     gem 'foreman'
     gem 'pry'
+    gem 'rubocop', require: false
 end
 
 
