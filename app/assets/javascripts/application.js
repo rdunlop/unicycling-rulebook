@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require foundation
 //= require chosen-jquery
 //= require_tree .
 //= require moment
@@ -25,3 +26,5 @@ $(document).ready(function () {
     });
   }
 });
+
+$(function(){ $(document).foundation(); });

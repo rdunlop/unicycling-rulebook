@@ -18,6 +18,7 @@ gem 'breadcrumbs_on_rails'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier', '>= 1.0.3'
+gem 'foundation-rails'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 #gem 'therubyracer'
