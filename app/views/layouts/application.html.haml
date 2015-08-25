@@ -19,9 +19,11 @@
     .main_nav
       %p#notice= notice
       %p.alert= alert
-      = content_for(:content) ? yield(:content) : yield
+      .row
+        = content_for(:content) ? yield(:content) : yield
     - if content_for?(:bottom_nav)
       %hr
-      = yield :bottom_nav
+      .row
+        = yield :bottom_nav
     = debug(params) if Rails.env.development?
 
