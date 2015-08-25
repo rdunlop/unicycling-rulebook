@@ -34,6 +34,7 @@ class WelcomeController < ApplicationController
   end
 
   def message
+    add_breadcrumb "Send E-mail"
     authorize! :send, Message
     @committees = Committee.all
     @from = current_user

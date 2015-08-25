@@ -2,11 +2,7 @@ class ConfigurationsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource :rulebook
   before_action :load_current_rulebook
-
-  def load_current_rulebook
-    @rulebook = Rulebook.find(params[:id])
-    raise CanCan::AccessDenied.new("Only allowed to modify current rulebook config") if @rulebook != @config
-  end
+  before_action { add_breadcrumb "App Configuration" }
 
   # GET /configurations/1
   # GET /configurations/1.json
@@ -53,4 +49,10 @@ class ConfigurationsController < ApplicationController
   def rulebook_params
     params.require(:rulebook).permit(:rulebook_name, :front_page, :faq, :copyright,:proposals_allowed)
   end
+
+  def load_current_rulebook
+    @rulebook = Rulebook.find(params[:id])
+    raise CanCan::AccessDenied.new("Only allowed to modify current rulebook config") if @rulebook != @config
+  end
+
 end

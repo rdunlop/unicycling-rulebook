@@ -1,6 +1,7 @@
 class DiscussionsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource :committee, except: [:show, :close]
+  before_action :set_committee_breadcrumb, except: [:show, :close]
   before_action :load_new_discussion, only: :create
   load_and_authorize_resource through: :committee, except: [:show, :close]
   load_and_authorize_resource only: [:show, :close]
@@ -11,7 +12,7 @@ class DiscussionsController < ApplicationController
       @comment = @discussion.comments.new
     end
 
-    add_breadcrumb @discussion.committee, committee_path(@discussion.committee)
+    set_committee_breadcrumb(@discussion.committee)
     add_breadcrumb @discussion.title
 
     respond_to do |format|
@@ -21,6 +22,7 @@ class DiscussionsController < ApplicationController
 
   # GET /committees/1/discussions/new
   def new
+    add_breadcrumb "New Discussion"
     respond_to do |format|
       format.html # new.html.erb
     end

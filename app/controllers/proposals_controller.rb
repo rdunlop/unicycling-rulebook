@@ -1,6 +1,7 @@
 class ProposalsController < ApplicationController
   before_action :authenticate_user!, :except => [:show, :passed]
   before_action :load_committee, only: [:new, :create]
+  before_action :set_committee_breadcrumb, only: [:new, :create]
   skip_authorization_check only: [:create, :new]
   load_and_authorize_resource except: [:create, :new]
 
@@ -23,6 +24,8 @@ class ProposalsController < ApplicationController
   def show
     @proposal = Proposal.find(params[:id])
 
+    set_proposal_breadcrumb
+
     @proposal.votes.each do |v|
       if v.user == current_user
         @vote = v
@@ -42,6 +45,7 @@ class ProposalsController < ApplicationController
 
   # GET /committees/1/proposals/new
   def new
+    add_breadcrumb "New Proposal"
     authorize! :create_proposal, @committee
     @proposal = Proposal.new
     @revision = Revision.new
@@ -56,6 +60,9 @@ class ProposalsController < ApplicationController
   # GET /proposals/1/edit
   def edit
     @proposal = Proposal.find(params[:id])
+    set_committee_breadcrumb(@proposal.committee)
+    add_breadcrumb "Revise Proposal Dates & Status"
+
     @committees = current_user.accessible_committees
   end
 
@@ -75,6 +82,7 @@ class ProposalsController < ApplicationController
         format.html { redirect_to @proposal, notice: 'Proposal was successfully created.' }
         format.json { render json: @proposal, status: :created, location: @proposal }
       else
+        add_breadcrumb "New Proposal"
         @proposal_owner = current_user
         @available_discussions = @committee.discussions.without_proposals
         format.html { render action: "new" }
@@ -93,6 +101,8 @@ class ProposalsController < ApplicationController
         format.html { redirect_to @proposal, notice: 'Proposal was successfully updated.' }
         format.json { head :no_content }
       else
+        set_committee_breadcrumb(@proposal.committee)
+        add_breadcrumb "Revise Proposal Dates & Status"
         format.html { render action: "edit" }
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
       end
@@ -122,6 +132,8 @@ class ProposalsController < ApplicationController
         format.html { redirect_to @proposal, notice: 'Proposal is now in the voting stage.' }
         format.json { head :no_content }
       else
+        set_committee_breadcrumb(@proposal.committee)
+        add_breadcrumb "Revise Proposal Dates & Status"
         format.html { render action: "edit" }
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
       end
@@ -140,6 +152,8 @@ class ProposalsController < ApplicationController
         format.html { redirect_to @proposal, notice: 'Proposal is now in the review stage.' }
         format.json { head :no_content }
       else
+        set_committee_breadcrumb(@proposal.committee)
+        add_breadcrumb "Revise Proposal Dates & Status"
         format.html { render action: "edit" }
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
       end
@@ -156,6 +170,8 @@ class ProposalsController < ApplicationController
         format.html { redirect_to @proposal, notice: 'Proposal is now in the Pre-Voting stage. All votes have been deleted' }
         format.json { head :no_content }
       else
+        set_committee_breadcrumb(@proposal.committee)
+        add_breadcrumb "Revise Proposal Dates & Status"
         format.html { render action: "edit" }
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
       end
@@ -171,8 +187,10 @@ class ProposalsController < ApplicationController
         format.html { redirect_to @proposal, notice: 'Proposal has been Set-Aside' }
         format.json { head :no_content }
       else
+        set_committee_breadcrumb(@proposal.committee)
+        add_breadcrumb "Proposal: #{@proposal.title}"
         @proposal.status = @proposal.status_was
-        flash[:alert] = "Unable to set status to Tabled unless in 'Pre-Voting' or 'Review' state"
+        flash.now[:alert] = "Unable to set status to Tabled unless in 'Pre-Voting' or 'Review' state"
         format.html { render action: "show" }
         format.json { render json: @proposal.errors, status: :unprocessable_entity }
       end

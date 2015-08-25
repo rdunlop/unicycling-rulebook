@@ -2,6 +2,7 @@ class BulkUsersController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    add_breadcrumb "Bulk User Creation"
     authorize! :mass_user_creation, User
   end
 

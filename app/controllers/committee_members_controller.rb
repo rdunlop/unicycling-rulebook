@@ -1,11 +1,13 @@
 class CommitteeMembersController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource :committee
+  before_action :set_committee_breadcrumb
   load_and_authorize_resource :committee_member, :through => :committee
 
   # GET /committee_members
   # GET /committee_members.json
   def index
+    add_breadcrumb "Committee Members"
     @committee_members = @committee.committee_members
 
     respond_to do |format|
@@ -17,6 +19,7 @@ class CommitteeMembersController < ApplicationController
   # GET /committee_members/new
   # GET /committee_members/new.json
   def new
+    add_breadcrumb "New Member"
     load_committee_new
 
     respond_to do |format|
@@ -27,6 +30,7 @@ class CommitteeMembersController < ApplicationController
 
   # GET /committee_members/1/edit
   def edit
+    add_breadcrumb "Edit Member"
     @committee_member = CommitteeMember.find(params[:id])
     @users = User.all
   end

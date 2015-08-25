@@ -50,7 +50,12 @@ class ApplicationController < ActionController::Base
     current_user.ability
   end
 
-  def set_committee_breadcrumb
-    add_breadcrumb "Committee: #{@committee.name}", committee_path(@committee)
+  def set_committee_breadcrumb(committee = @committee)
+    add_breadcrumb "Committee: #{committee.name}", committee_path(committee)
+  end
+
+  def set_proposal_breadcrumb(proposal = @proposal)
+    set_committee_breadcrumb(proposal.committee)
+    add_breadcrumb "Proposal: #{proposal.title}", proposal_path(proposal)
   end
 end
