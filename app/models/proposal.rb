@@ -30,7 +30,7 @@ class Proposal < ActiveRecord::Base
   validates :owner, presence: true
   validates :title, presence: true
   validates :committee, presence: true
-  validates :status, inclusion: { in: [ 'Submitted', 'Review', 'Pre-Voting', 'Voting', 'Tabled', 'Passed', 'Failed' ] }
+  validates :status, inclusion: { in: ['Submitted', 'Review', 'Pre-Voting', 'Voting', 'Tabled', 'Passed', 'Failed'] }
 
   # This is the auto-updated function CLASS METHOD
   def self.update_states

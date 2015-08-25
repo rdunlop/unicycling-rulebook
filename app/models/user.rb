@@ -98,7 +98,7 @@ class User < ActiveRecord::Base
         end
       end
     end
-    return false
+    false
   end
 
   def is_committee_editor(committee = nil)
@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
         end
       end
     end
-    return false
+    false
   end
 
   def is_in_committee(committee)
@@ -118,7 +118,7 @@ class User < ActiveRecord::Base
         return true
       end
     end
-    return false
+    false
   end
 
   def voting_member(committee)

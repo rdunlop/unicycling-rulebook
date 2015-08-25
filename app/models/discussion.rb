@@ -20,7 +20,7 @@ class Discussion < ActiveRecord::Base
   has_many :comments, -> { order("created_at ASC") }
 
   validates :owner, :title, :committee, presence: true
-  validates :status, inclusion: { in: [ 'active', 'closed' ] }
+  validates :status, inclusion: { in: ['active', 'closed'] }
 
   def self.active
     where(status: 'active')

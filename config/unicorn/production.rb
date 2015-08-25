@@ -16,7 +16,7 @@ preload_app true
 # paths
 app_path = "/home/ec2-user/unicycling-rulebook"
 working_directory "#{app_path}/current"
-pid               "tmp/pids/unicorn.pid"
+pid "tmp/pids/unicorn.pid"
 
 # logging
 stderr_path "log/unicorn.stderr.log"

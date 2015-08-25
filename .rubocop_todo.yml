@@ -484,13 +484,6 @@ Style/Proc:
 Style/RaiseArgs:
   EnforcedStyle: compact
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: AllowMultipleReturnValues.
-Style/RedundantReturn:
-  Exclude:
-    - 'app/models/user.rb'
-
 # Offense count: 18
 # Cop supports --auto-correct.
 Style/RedundantSelf:
@@ -524,32 +517,11 @@ Style/SingleLineMethods:
   Exclude:
     - 'app/models/message.rb'
 
-# Offense count: 7
-# Cop supports --auto-correct.
-Style/SingleSpaceBeforeFirstArg:
-  Exclude:
-    - 'config/unicorn/production.rb'
-    - 'config/unicorn/stage.rb'
-    - 'db/migrate/20120829161702_devise_create_users.rb'
-    - 'db/migrate/20120911153404_add_confirmable_to_user.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/SpaceAfterComma:
-  Exclude:
-    - 'app/controllers/configurations_controller.rb'
-
 # Offense count: 8
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/SpaceBeforeBlockBraces:
   Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/SpaceBeforeComma:
-  Exclude:
-    - 'Gemfile'
 
 # Offense count: 14
 # Cop supports --auto-correct.
@@ -557,26 +529,11 @@ Style/SpaceBeforeComma:
 Style/SpaceInsideBlockBraces:
   Enabled: false
 
-# Offense count: 10
-# Cop supports --auto-correct.
-Style/SpaceInsideBrackets:
-  Exclude:
-    - 'app/models/discussion.rb'
-    - 'app/models/proposal.rb'
-    - 'app/models/vote.rb'
-    - 'config/initializers/devise.rb'
-
 # Offense count: 383
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces, SupportedStyles.
 Style/SpaceInsideHashLiteralBraces:
   Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/SpaceInsideParens:
-  Exclude:
-    - 'config/initializers/ses_config.rb'
 
 # Offense count: 1034
 # Cop supports --auto-correct.
@@ -590,13 +547,6 @@ Style/StringLiterals:
 Style/SymbolProc:
   Exclude:
     - 'app/controllers/committee_members_controller.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/TrailingBlankLines:
-  Exclude:
-    - 'spec/spec_helper.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
