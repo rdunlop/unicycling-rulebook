@@ -1,24 +1,28 @@
-.left_nav
-  %ul
-    %li= link_to('Home', welcome_index_path)
-    %li= link_to('FAQ', welcome_help_path)
-    - if can? :membership, Committee
-      %li= link_to('Members', membership_committees_path)
-    - if can? :passed, Proposal
-      %li= link_to('View Approved Proposals', passed_proposals_path)
-    - if can? :read, Committee
-      %li= link_to('Committees', committees_path)
-    - if can? :manage, Rulebook
-      %li= link_to('App Config (Admin Pages)', configuration_path(@config))
-    - if can? :send, Message
-      %li= link_to('Send E-mail Messages', welcome_message_path)
-    - if can? :mass_user_creation, User
-      %li= link_to('Create multiple user accounts', bulk_users_path)
-    - if user_signed_in?
-      %li= link_to('Account Settings', edit_user_registration_path)
-      %li= link_to('Logout', destroy_user_session_path, :method => :delete)
-      - if User.count < 3
-        %li= link_to("Upgrade Account", new_admin_upgrade_path)
-    - if not user_signed_in?
-      %li= link_to('Login', new_user_session_path)
-      %li= link_to('Sign-Up', new_user_registration_path)
+.top-bar
+  %ul.title-area
+    %li.name
+      %h1= link_to "Rulebook (?)", root_path
+  %section.top-bar-section
+    %ul.right
+      %li= link_to('Home', welcome_index_path)
+      %li= link_to('FAQ', welcome_help_path)
+      - if can? :membership, Committee
+        %li= link_to('Members', membership_committees_path)
+      - if can? :passed, Proposal
+        %li= link_to('View Approved Proposals', passed_proposals_path)
+      - if can? :read, Committee
+        %li= link_to('Committees', committees_path)
+      - if can? :manage, Rulebook
+        %li= link_to('App Config (Admin Pages)', configuration_path(@config))
+      - if can? :send, Message
+        %li= link_to('Send E-mail Messages', welcome_message_path)
+      - if can? :mass_user_creation, User
+        %li= link_to('Create multiple user accounts', bulk_users_path)
+      - if user_signed_in?
+        %li= link_to('Account Settings', edit_user_registration_path)
+        %li= link_to('Logout', destroy_user_session_path, :method => :delete)
+        - if User.count < 3
+          %li= link_to("Upgrade Account", new_admin_upgrade_path)
+      - if not user_signed_in?
+        %li= link_to('Login', new_user_session_path)
+        %li= link_to('Sign-Up', new_user_registration_path)
