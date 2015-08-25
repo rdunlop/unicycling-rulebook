@@ -12,7 +12,7 @@ class InformCommitteeMembers
     end
 
     Rails.logger.warn "Comment added, sending comment #{comment.id} to #{emails}"
-    UserMailer.delay.discussion_comment_added(comment.id, emails) unless emails.none?
+    UserMailer.delay.discussion_comment_added(comment, emails) unless emails.none?
   end
 
   # Send e-mail to all committee members
@@ -25,13 +25,13 @@ class InformCommitteeMembers
       emails = committee_members_emails(revision.proposal.committee, revision.user.email)
     end
 
-    UserMailer.delay.proposal_revised(revision.id, emails) unless emails.none?
+    UserMailer.delay.proposal_revised(revision, emails) unless emails.none?
   end
 
   def self.proposal_call_for_voting(proposal)
     emails = committee_members_emails(proposal.committee, nil)
 
-    UserMailer.delay.proposal_call_for_voting(proposal.id, emails) unless emails.none?
+    UserMailer.delay.proposal_call_for_voting(proposal, emails) unless emails.none?
   end
 
   def self.proposal_status_review(proposal, was_tabled)
@@ -53,7 +53,7 @@ class InformCommitteeMembers
     emails = emails - non_voting_emails
 
 
-    UserMailer.delay.vote_submitted(vote.id, emails) unless emails.none?
+    UserMailer.delay.vote_submitted(vote, emails) unless emails.none?
   end
 
   def self.vote_changed(proposal, current_user, previous_value, new_vote_value)
@@ -71,7 +71,7 @@ class InformCommitteeMembers
   def self.discussion_created(discussion)
     emails = committee_members_emails(discussion.committee, nil)
 
-    UserMailer.delay.discussion_created(discussion.id, emails) unless emails.none?
+    UserMailer.delay.discussion_created(discussion, emails) unless emails.none?
   end
 
   private

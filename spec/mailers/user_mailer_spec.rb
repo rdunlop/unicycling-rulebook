@@ -17,7 +17,7 @@ describe UserMailer, :type => :mailer do
 
   describe "proposal_submitted" do
     let(:admin_user) { FactoryGirl.create(:admin_user) }
-    let(:mail) { UserMailer.proposal_submitted(@proposal.id, [admin_user.email]) }
+    let(:mail) { UserMailer.proposal_submitted(@proposal, [admin_user.email]) }
 
     it "renders the headers" do
       expect(mail.subject).to eq(@proposal_id_title_and_committee)
@@ -133,7 +133,7 @@ describe UserMailer, :type => :mailer do
   describe "new_committee_applicant" do
     let(:user) { FactoryGirl.create(:user, :comments => "Please add me") }
     let(:admin_user) { FactoryGirl.create(:admin_user) }
-    let(:mail) { UserMailer.new_committee_applicant(user.id, [admin_user.email]) }
+    let(:mail) { UserMailer.new_committee_applicant(user, [admin_user.email]) }
 
     it "renders the headers" do
       expect(mail.subject).to eq("New committee applicant")
@@ -222,7 +222,7 @@ describe UserMailer, :type => :mailer do
   end
 
   describe "mass_email" do
-    let(:mail) { UserMailer.mass_email([@committee], 'Some Subject', 'Some text', "some@dunlopweb.com") }
+    let(:mail) { UserMailer.mass_email([@committee.id], 'Some Subject', 'Some text', "some@dunlopweb.com") }
 
     it "uses bcc for all committee members" do
       expect(mail.subject).to eq("Some Subject")

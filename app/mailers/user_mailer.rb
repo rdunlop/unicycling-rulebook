@@ -33,8 +33,7 @@ class UserMailer < TenantAwareMailer
   #
   #   en.user_mailer.proposal_submitted.subject
   #
-  def proposal_submitted(proposal_id, admin_emails)
-    proposal = Proposal.find(proposal_id)
+  def proposal_submitted(proposal, admin_emails)
     @proposal = proposal
     @body = proposal.latest_revision.body
     @rule_text = proposal.latest_revision.rule_text
@@ -45,8 +44,8 @@ class UserMailer < TenantAwareMailer
     proposal.save
   end
 
-  def discussion_created(discussion_id, members_emails)
-    @discussion = Discussion.find(discussion_id)
+  def discussion_created(discussion, members_emails)
+    @discussion = discussion
 
     send_mail(members_emails, @discussion, @discussion.owner)
   end
@@ -56,8 +55,7 @@ class UserMailer < TenantAwareMailer
   #
   #   en.user_mailer.discussion_comment_added.subject
   #
-  def discussion_comment_added(comment_id, members_emails)
-    comment = Comment.find(comment_id)
+  def discussion_comment_added(comment, members_emails)
     @comment = comment.comment
     @voting_status = comment.user.voting_text(comment.discussion.committee)
     @discussion = comment.discussion
@@ -72,8 +70,7 @@ class UserMailer < TenantAwareMailer
   #
   #   en.user_mailer.proposal_revised.subject
   #
-  def proposal_revised(revision_id, members_emails)
-    revision = Revision.find(revision_id)
+  def proposal_revised(revision, members_emails)
     @proposal = revision.proposal
     @change_description = revision.change_description
     @body = revision.body
@@ -89,8 +86,7 @@ class UserMailer < TenantAwareMailer
   #
   #   en.user_mailer.proposal_status_review.subject
   #
-  def proposal_status_review(proposal_id, was_tabled, members_emails)
-    proposal = Proposal.find(proposal_id)
+  def proposal_status_review(proposal, was_tabled, members_emails)
     @proposal = proposal
     @set_aside_message = was_tabled ? "This proposal was Set-Aside, but has been put back into the review stage." : ""
     @body = @proposal.latest_revision.body
@@ -106,9 +102,7 @@ class UserMailer < TenantAwareMailer
   #
   #   en.user_mailer.vote_changed.subject
   #
-  def vote_changed(proposal_id, user_id, old_vote_string, new_vote_string, members_emails)
-    user = User.find(user_id)
-    proposal = Proposal.find(proposal_id)
+  def vote_changed(proposal, user, old_vote_string, new_vote_string, members_emails)
     @name = user.to_s
     @old_vote = old_vote_string
     @new_vote = new_vote_string
@@ -123,8 +117,7 @@ class UserMailer < TenantAwareMailer
   #
   #   en.user_mailer.new_committee_applicant.subject
   #
-  def new_committee_applicant(user_id, admin_emails)
-    user = User.find(user_id)
+  def new_committee_applicant(user, admin_emails)
     @name = user
     @email = user.email
     @location = user.location
@@ -133,8 +126,7 @@ class UserMailer < TenantAwareMailer
     mail bcc: admin_emails, from: create_from
   end
 
-  def vote_submitted(vote_id, members_emails)
-    vote = Vote.find(vote_id)
+  def vote_submitted(vote, members_emails)
     @proposal = vote.proposal
     @proposal.reload # get new vote associations
     @name = vote.user.to_s
@@ -149,8 +141,7 @@ class UserMailer < TenantAwareMailer
     send_mail(members_emails, vote.proposal, nil)
   end
 
-  def proposal_finished_review(proposal_id)
-    proposal = Proposal.find(proposal_id)
+  def proposal_finished_review(proposal)
     @REVISIONTIME_TEXT = "3 days"
     @proposal = proposal
 
@@ -164,8 +155,7 @@ class UserMailer < TenantAwareMailer
   #
   #   en.user_mailer.proposal_call_for_voting.subject
   #
-  def proposal_call_for_voting(proposal_id, members_emails)
-    proposal = Proposal.find(proposal_id)
+  def proposal_call_for_voting(proposal, members_emails)
     @proposal = proposal
     @vote_end = proposal.vote_end_date.to_s
 
@@ -179,8 +169,7 @@ class UserMailer < TenantAwareMailer
   #
   #   en.user_mailer.proposal_voting_result.subject
   #
-  def proposal_voting_result(proposal_id, success, members_emails)
-    proposal = Proposal.find(proposal_id)
+  def proposal_voting_result(proposal, success, members_emails)
     @proposal = proposal
     @succeeded_failed = success ? "Passed" : "Failed"
     @num_agree = proposal.agree_votes

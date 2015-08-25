@@ -54,7 +54,7 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   def mass_email
-    committees = [committee]
+    committees = [committee.id]
     subject = "This is a mass e-mail"
     body = "Hello, this is a mass e-mail to all"
     reply_email = "robin@test.com"
