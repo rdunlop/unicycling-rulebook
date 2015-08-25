@@ -11,14 +11,14 @@
 #
 
 class Comment < ActiveRecord::Base
-    belongs_to :discussion, touch: true
-    belongs_to :user
+  belongs_to :discussion, touch: true
+  belongs_to :user
 
-    validates :discussion, presence: true
-    validates :user, presence: true
-    validates :comment, presence: true
+  validates :discussion, presence: true
+  validates :user, presence: true
+  validates :comment, presence: true
 
-    def proposal
-      discussion.proposal
-    end
+  def proposal
+    discussion.proposal
+  end
 end

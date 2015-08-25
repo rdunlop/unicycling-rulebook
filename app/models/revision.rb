@@ -16,33 +16,33 @@
 #
 
 class Revision < ActiveRecord::Base
-    belongs_to :proposal, touch: true
-    belongs_to :user
+  belongs_to :proposal, touch: true
+  belongs_to :user
 
-    validates :body, presence: true
-    validate :change_description_required_for_updates
+  validates :body, presence: true
+  validate :change_description_required_for_updates
 
-    before_validation :determine_num
+  before_validation :determine_num
 
-    def determine_num
-        if proposal.nil? or proposal.new_record?
-            self.num = 1
-        else
-            self.num = proposal.revisions.count + 1
-        end
+  def determine_num
+    if proposal.nil? or proposal.new_record?
+      self.num = 1
+    else
+      self.num = proposal.revisions.count + 1
     end
+  end
 
 
-    def change_description_required_for_updates
-        if not self.new_record?
-            return
-        end
-        if self.change_description.blank?
-            if self.proposal
-                if self.proposal.revisions.count > 0
-                    errors[:change_description] << "Change Description field must be present for all Revisions"
-                end
-            end
-        end
+  def change_description_required_for_updates
+    if not self.new_record?
+      return
     end
+    if self.change_description.blank?
+      if self.proposal
+        if self.proposal.revisions.count > 0
+          errors[:change_description] << "Change Description field must be present for all Revisions"
+        end
+      end
+    end
+  end
 end

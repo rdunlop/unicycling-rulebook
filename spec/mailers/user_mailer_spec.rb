@@ -2,17 +2,17 @@ require "spec_helper"
 
 describe UserMailer, type: :mailer do
   before(:each) do
-      @proposal = FactoryGirl.create(:proposal, status: "Review", title: 'A "very" strange title', mail_messageid: "mymessageid")
-      @discussion = FactoryGirl.create(:discussion, proposal: @proposal, committee: @proposal.committee)
-      @comment = FactoryGirl.create(:comment, discussion: @discussion, comment: 'This is what I "Said"')
-      FactoryGirl.create(:revision, proposal: @proposal, rule_text: "This is what I \"Like\" to do", body: "Sometimes I <link> somewhere")
-      @user = @comment.user
+    @proposal = FactoryGirl.create(:proposal, status: "Review", title: 'A "very" strange title', mail_messageid: "mymessageid")
+    @discussion = FactoryGirl.create(:discussion, proposal: @proposal, committee: @proposal.committee)
+    @comment = FactoryGirl.create(:comment, discussion: @discussion, comment: 'This is what I "Said"')
+    FactoryGirl.create(:revision, proposal: @proposal, rule_text: "This is what I \"Like\" to do", body: "Sometimes I <link> somewhere")
+    @user = @comment.user
 
-      @committee = @proposal.committee
-      @cm = FactoryGirl.create(:committee_member, committee: @committee, user: @user)
-      @other_cm_user = FactoryGirl.create(:user)
-      @cm2 = FactoryGirl.create(:committee_member, committee: @committee, user: @other_cm_user)
-      @proposal_id_title_and_committee = "[" + @committee.name + "] " + @proposal.title + " (#" + @proposal.id.to_s + ")"
+    @committee = @proposal.committee
+    @cm = FactoryGirl.create(:committee_member, committee: @committee, user: @user)
+    @other_cm_user = FactoryGirl.create(:user)
+    @cm2 = FactoryGirl.create(:committee_member, committee: @committee, user: @other_cm_user)
+    @proposal_id_title_and_committee = "[" + @committee.name + "] " + @proposal.title + " (#" + @proposal.id.to_s + ")"
   end
 
   describe "proposal_submitted" do
@@ -150,7 +150,7 @@ describe UserMailer, type: :mailer do
 
   describe "vote_submitted" do
     before(:each) do
-        @vote = FactoryGirl.create(:vote, proposal: @proposal)
+      @vote = FactoryGirl.create(:vote, proposal: @proposal)
     end
 
     let(:mail) { UserMailer.vote_submitted(@vote, [@user.email]) }

@@ -62,17 +62,17 @@ describe CommitteeMembersController, type: :controller do
       end
     end
     describe "as committee_admin user" do
-        before(:each) do
-            @committee_admin = FactoryGirl.create(:user)
-            @cm = FactoryGirl.create(:committee_member, admin: true, user: @committee_admin)
-            sign_out @user
-            sign_in @committee_admin
-        end
-        it "should allow access" do
-            get :index, {committee_id: @cm.committee.id}
-            expect(response).to be_success
-            expect(assigns(:committee_members)).to eq([@cm])
-        end
+      before(:each) do
+        @committee_admin = FactoryGirl.create(:user)
+        @cm = FactoryGirl.create(:committee_member, admin: true, user: @committee_admin)
+        sign_out @user
+        sign_in @committee_admin
+      end
+      it "should allow access" do
+        get :index, {committee_id: @cm.committee.id}
+        expect(response).to be_success
+        expect(assigns(:committee_members)).to eq([@cm])
+      end
     end
   end
 
@@ -112,17 +112,17 @@ describe CommitteeMembersController, type: :controller do
       expect(assigns(:committee_member)).to eq(committee_member)
     end
     describe "as committee_admin user" do
-        before(:each) do
-            @committee_admin = FactoryGirl.create(:user)
-            @cm = FactoryGirl.create(:committee_member, admin: true, user: @committee_admin)
-            sign_out @user
-            sign_in @committee_admin
-        end
-        it "can edit a user" do
-            get :edit, {id: @cm.to_param, committee_id: @cm.committee.id}
-            expect(response).to be_success
-            expect(assigns(:committee_member)).to eq(@cm)
-        end
+      before(:each) do
+        @committee_admin = FactoryGirl.create(:user)
+        @cm = FactoryGirl.create(:committee_member, admin: true, user: @committee_admin)
+        sign_out @user
+        sign_in @committee_admin
+      end
+      it "can edit a user" do
+        get :edit, {id: @cm.to_param, committee_id: @cm.committee.id}
+        expect(response).to be_success
+        expect(assigns(:committee_member)).to eq(@cm)
+      end
     end
   end
 

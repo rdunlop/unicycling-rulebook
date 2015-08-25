@@ -12,7 +12,7 @@ FactoryGirl.define do
     # confirmed_at Time.now
 
     factory :admin_user do
-        admin true
+      admin true
     end
     confirmed_at Time.now
   end

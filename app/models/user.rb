@@ -84,39 +84,39 @@ class User < ActiveRecord::Base
 
   def accessible_committees
     if self.admin
-        Committee.all
+      Committee.all
     else
-        self.committees
+      self.committees
     end
   end
 
   def is_committee_admin(committee = nil)
     committee_members.each do |cm|
-        if cm.committee == committee or committee == nil
-            if cm.admin
-                return true
-            end
+      if cm.committee == committee or committee == nil
+        if cm.admin
+          return true
         end
+      end
     end
     return false
   end
 
   def is_committee_editor(committee = nil)
     committee_members.each do |cm|
-        if cm.committee == committee or committee == nil
-            if cm.editor
-                return true
-            end
+      if cm.committee == committee or committee == nil
+        if cm.editor
+          return true
         end
+      end
     end
     return false
   end
 
   def is_in_committee(committee)
     committee_members.each do |cm|
-        if cm.committee == committee
-            return true
-        end
+      if cm.committee == committee
+        return true
+      end
     end
     return false
   end

@@ -132,28 +132,28 @@ describe ProposalsController, type: :controller do
       expect(assigns(:committees)).to eq([committee, cm])
     end
     describe "as a committee-admin for the same committee" do
-        before(:each) do
-            @proposal = FactoryGirl.create(:proposal, status: "Review")
-            sign_out @admin_user
-            cm = FactoryGirl.create(:committee_member, committee: @proposal.committee, admin: true)
-            @cm_admin_user = cm.user
-            sign_in @cm_admin_user
-        end
-        it "should be able to get" do
-            get :edit, {id: @proposal.to_param}
-            expect(assigns(:proposal)).to eq(@proposal)
-            expect(response).to render_template("edit")
-        end
+      before(:each) do
+        @proposal = FactoryGirl.create(:proposal, status: "Review")
+        sign_out @admin_user
+        cm = FactoryGirl.create(:committee_member, committee: @proposal.committee, admin: true)
+        @cm_admin_user = cm.user
+        sign_in @cm_admin_user
+      end
+      it "should be able to get" do
+        get :edit, {id: @proposal.to_param}
+        expect(assigns(:proposal)).to eq(@proposal)
+        expect(response).to render_template("edit")
+      end
     end
   end
 
   describe "POST create" do
     describe "with valid params" do
       before(:each) do
-          @valid_revision_attributes = {
-            background: "some background",
-            body: "some body",
-            references: "some references"}
+        @valid_revision_attributes = {
+          background: "some background",
+          body: "some body",
+          references: "some references"}
       end
       it "creates a new Proposal" do
         expect {
@@ -284,17 +284,17 @@ describe ProposalsController, type: :controller do
       end
     end
     describe "as a committee-admin for the same committee" do
-        before(:each) do
-            @proposal = FactoryGirl.create(:proposal, status: "Review")
-            sign_out @admin_user
-            cm = FactoryGirl.create(:committee_member, committee: @proposal.committee, admin: true)
-            @cm_admin_user = cm.user
-            sign_in @cm_admin_user
-        end
-        it "should be able to update" do
-            put :update, {id: @proposal.to_param, proposal: valid_attributes}
-            expect(response).to redirect_to(@proposal)
-        end
+      before(:each) do
+        @proposal = FactoryGirl.create(:proposal, status: "Review")
+        sign_out @admin_user
+        cm = FactoryGirl.create(:committee_member, committee: @proposal.committee, admin: true)
+        @cm_admin_user = cm.user
+        sign_in @cm_admin_user
+      end
+      it "should be able to update" do
+        put :update, {id: @proposal.to_param, proposal: valid_attributes}
+        expect(response).to redirect_to(@proposal)
+      end
     end
   end
 
@@ -316,112 +316,112 @@ describe ProposalsController, type: :controller do
 
   describe "PUT set_voting" do
     it "changes the status to voting" do
-        proposal = FactoryGirl.create(:proposal, :with_admin, status: "Pre-Voting")
+      proposal = FactoryGirl.create(:proposal, :with_admin, status: "Pre-Voting")
 
-        put :set_voting, {id: proposal.to_param}
+      put :set_voting, {id: proposal.to_param}
 
-        expect(response).to redirect_to(proposal_path(proposal))
-        proposal = Proposal.find(proposal.id)
-        expect(proposal.status).to eq("Voting")
-        expect(proposal.vote_start_date).to eq(Date.today)
-        expect(proposal.vote_end_date - Date.today).to eq(7)
+      expect(response).to redirect_to(proposal_path(proposal))
+      proposal = Proposal.find(proposal.id)
+      expect(proposal.status).to eq("Voting")
+      expect(proposal.vote_start_date).to eq(Date.today)
+      expect(proposal.vote_end_date - Date.today).to eq(7)
     end
 
     it "should not be allowed to change unless the status is Pre-Voting" do
-        proposal = FactoryGirl.create(:proposal, :with_admin, status: "Tabled")
+      proposal = FactoryGirl.create(:proposal, :with_admin, status: "Tabled")
 
-        put :set_voting, {id: proposal.to_param}
+      put :set_voting, {id: proposal.to_param}
 
-        expect(response).to render_template("edit")
-        proposal = Proposal.find(proposal.id)
-        expect(proposal.status).to eq("Tabled")
+      expect(response).to render_template("edit")
+      proposal = Proposal.find(proposal.id)
+      expect(proposal.status).to eq("Tabled")
     end
     it "should send an e-mail" do
-        proposal = FactoryGirl.create(:proposal, :with_admin, status: "Pre-Voting")
-        ActionMailer::Base.deliveries.clear
+      proposal = FactoryGirl.create(:proposal, :with_admin, status: "Pre-Voting")
+      ActionMailer::Base.deliveries.clear
 
-        put :set_voting, {id: proposal.to_param}
-        num_deliveries = ActionMailer::Base.deliveries.size
-        expect(num_deliveries).to eq(1)
+      put :set_voting, {id: proposal.to_param}
+      num_deliveries = ActionMailer::Base.deliveries.size
+      expect(num_deliveries).to eq(1)
     end
     describe "as a committee-admin for the same committee" do
-        before(:each) do
-            @proposal = FactoryGirl.create(:proposal, :with_admin, status: "Pre-Voting")
-            sign_out @admin_user
-            cm = FactoryGirl.create(:committee_member, committee: @proposal.committee, admin: true)
-            @cm_admin_user = cm.user
-            sign_in @cm_admin_user
-        end
-        it "should be able to set_voting" do
-            put :set_voting, {id: @proposal.to_param}
+      before(:each) do
+        @proposal = FactoryGirl.create(:proposal, :with_admin, status: "Pre-Voting")
+        sign_out @admin_user
+        cm = FactoryGirl.create(:committee_member, committee: @proposal.committee, admin: true)
+        @cm_admin_user = cm.user
+        sign_in @cm_admin_user
+      end
+      it "should be able to set_voting" do
+        put :set_voting, {id: @proposal.to_param}
 
-            expect(response).to redirect_to(proposal_path(@proposal))
-        end
+        expect(response).to redirect_to(proposal_path(@proposal))
+      end
     end
   end
 
   describe "PUT set_review" do
     before(:each) do
-        @proposal = FactoryGirl.create(:proposal, :with_admin, status: "Submitted")
-        @revision = FactoryGirl.create(:revision, proposal: @proposal)
+      @proposal = FactoryGirl.create(:proposal, :with_admin, status: "Submitted")
+      @revision = FactoryGirl.create(:revision, proposal: @proposal)
     end
 
     it "changes the status to Review" do
-        proposal = @proposal
+      proposal = @proposal
 
-        put :set_review, {id: proposal.to_param}
+      put :set_review, {id: proposal.to_param}
 
-        expect(response).to redirect_to(proposal_path(proposal))
-        proposal = Proposal.find(proposal.id)
-        expect(proposal.status).to eq("Review")
-        expect(proposal.review_start_date).to eq(Date.today)
-        expect(proposal.review_end_date - Date.today).to eq(10)
+      expect(response).to redirect_to(proposal_path(proposal))
+      proposal = Proposal.find(proposal.id)
+      expect(proposal.status).to eq("Review")
+      expect(proposal.review_start_date).to eq(Date.today)
+      expect(proposal.review_end_date - Date.today).to eq(10)
     end
     it "should send an e-mail" do
-        proposal = @proposal
-        ActionMailer::Base.deliveries.clear
+      proposal = @proposal
+      ActionMailer::Base.deliveries.clear
 
-        put :set_review, {id: proposal.to_param}
+      put :set_review, {id: proposal.to_param}
 
-        num_deliveries = ActionMailer::Base.deliveries.size
-        expect(num_deliveries).to eq(1)
+      num_deliveries = ActionMailer::Base.deliveries.size
+      expect(num_deliveries).to eq(1)
     end
 
     it "changes the status to Review from Tabled status" do
-        proposal = @proposal
+      proposal = @proposal
 
-        put :set_review, {id: proposal.to_param}
+      put :set_review, {id: proposal.to_param}
 
-        expect(response).to redirect_to(proposal_path(proposal))
-        proposal = Proposal.find(proposal.id)
-        expect(proposal.status).to eq("Review")
-        expect(proposal.review_start_date).to eq(Date.today)
-        expect(proposal.review_end_date - Date.today).to eq(10)
+      expect(response).to redirect_to(proposal_path(proposal))
+      proposal = Proposal.find(proposal.id)
+      expect(proposal.status).to eq("Review")
+      expect(proposal.review_start_date).to eq(Date.today)
+      expect(proposal.review_end_date - Date.today).to eq(10)
     end
 
     it "should not be allowed to change unless the status is Submitted" do
-        @proposal.status = 'Pre-Voting'
-        @proposal.save
-        proposal = @proposal
+      @proposal.status = 'Pre-Voting'
+      @proposal.save
+      proposal = @proposal
 
-        put :set_review, {id: proposal.to_param}
+      put :set_review, {id: proposal.to_param}
 
-        expect(response).to render_template("edit")
-        proposal = Proposal.find(proposal.id)
-        expect(proposal.status).to eq("Pre-Voting")
+      expect(response).to render_template("edit")
+      proposal = Proposal.find(proposal.id)
+      expect(proposal.status).to eq("Pre-Voting")
     end
     describe "as a committee-admin for the same committee" do
-        before(:each) do
-            sign_out @admin_user
-            cm = FactoryGirl.create(:committee_member, committee: @proposal.committee, admin: true)
-            @cm_admin_user = cm.user
-            sign_in @cm_admin_user
-        end
-        it "should be able to set_review" do
-            put :set_review, {id: @proposal.to_param}
+      before(:each) do
+        sign_out @admin_user
+        cm = FactoryGirl.create(:committee_member, committee: @proposal.committee, admin: true)
+        @cm_admin_user = cm.user
+        sign_in @cm_admin_user
+      end
+      it "should be able to set_review" do
+        put :set_review, {id: @proposal.to_param}
 
-            expect(response).to redirect_to(proposal_path(@proposal))
-        end
+        expect(response).to redirect_to(proposal_path(@proposal))
+      end
     end
     describe "as owner of a proposal" do
       before(:each) do
@@ -444,42 +444,42 @@ describe ProposalsController, type: :controller do
 
   describe "PUT set_pre_voting" do
     before(:each) do
-        sign_out @admin_user
-        sign_in @admin_user
+      sign_out @admin_user
+      sign_in @admin_user
     end
 
     it "changes the status to Pre-Voting" do
-        proposal = FactoryGirl.create(:proposal, status: "Voting")
+      proposal = FactoryGirl.create(:proposal, status: "Voting")
 
-        put :set_pre_voting, {id: proposal.to_param}
+      put :set_pre_voting, {id: proposal.to_param}
 
-        expect(response).to redirect_to(proposal_path(proposal))
-        proposal = Proposal.find(proposal.id)
-        expect(proposal.status).to eq("Pre-Voting")
+      expect(response).to redirect_to(proposal_path(proposal))
+      proposal = Proposal.find(proposal.id)
+      expect(proposal.status).to eq("Pre-Voting")
     end
 
     it "changes the status to Pre-Voting should remove any votes" do
-        proposal = FactoryGirl.create(:proposal, status: "Voting")
-        vote = FactoryGirl.create(:vote, proposal: proposal)
+      proposal = FactoryGirl.create(:proposal, status: "Voting")
+      vote = FactoryGirl.create(:vote, proposal: proposal)
 
-        expect(proposal.votes.count).to eq(1)
+      expect(proposal.votes.count).to eq(1)
 
-        put :set_pre_voting, {id: proposal.to_param}
+      put :set_pre_voting, {id: proposal.to_param}
 
-        expect(response).to redirect_to(proposal_path(proposal))
-        proposal = Proposal.find(proposal.id)
-        expect(proposal.status).to eq("Pre-Voting")
-        expect(proposal.votes.count).to eq(0)
+      expect(response).to redirect_to(proposal_path(proposal))
+      proposal = Proposal.find(proposal.id)
+      expect(proposal.status).to eq("Pre-Voting")
+      expect(proposal.votes.count).to eq(0)
     end
 
     it "should not be allowed to change unless the status is Voting" do
-        proposal = FactoryGirl.create(:proposal, status: "Tabled")
+      proposal = FactoryGirl.create(:proposal, status: "Tabled")
 
-        put :set_pre_voting, {id: proposal.to_param}
+      put :set_pre_voting, {id: proposal.to_param}
 
-        expect(response).to render_template("edit")
-        proposal = Proposal.find(proposal.id)
-        expect(proposal.status).to eq("Tabled")
+      expect(response).to render_template("edit")
+      proposal = Proposal.find(proposal.id)
+      expect(proposal.status).to eq("Tabled")
     end
     describe "as a committee admin" do
       before(:each) do
@@ -501,48 +501,48 @@ describe ProposalsController, type: :controller do
   end
   describe "PUT table" do
     before(:each) do
-        sign_out @admin_user
-        sign_in @admin_user
+      sign_out @admin_user
+      sign_in @admin_user
     end
 
     it "changes the status to Tabled from review" do
-        proposal = FactoryGirl.create(:proposal, status: "Review")
+      proposal = FactoryGirl.create(:proposal, status: "Review")
 
-        put :table, {id: proposal.to_param}
+      put :table, {id: proposal.to_param}
 
-        expect(response).to redirect_to(proposal_path(proposal))
-        proposal = Proposal.find(proposal.id)
-        expect(proposal.status).to eq("Tabled")
-        proposal.tabled_date == Date.today
+      expect(response).to redirect_to(proposal_path(proposal))
+      proposal = Proposal.find(proposal.id)
+      expect(proposal.status).to eq("Tabled")
+      proposal.tabled_date == Date.today
     end
 
     it "changes the status to Tabled from Pre-Voting" do
-        proposal = FactoryGirl.create(:proposal, status: "Pre-Voting")
+      proposal = FactoryGirl.create(:proposal, status: "Pre-Voting")
 
-        put :table, {id: proposal.to_param}
+      put :table, {id: proposal.to_param}
 
-        expect(response).to redirect_to(proposal_path(proposal))
-        proposal = Proposal.find(proposal.id)
-        expect(proposal.status).to eq("Tabled")
+      expect(response).to redirect_to(proposal_path(proposal))
+      proposal = Proposal.find(proposal.id)
+      expect(proposal.status).to eq("Tabled")
     end
     it "should set the tabled_date" do
-        proposal = FactoryGirl.create(:proposal, status: "Pre-Voting")
+      proposal = FactoryGirl.create(:proposal, status: "Pre-Voting")
 
-        put :table, {id: proposal.to_param}
+      put :table, {id: proposal.to_param}
 
-        proposal.reload
-        expect(proposal.tabled_date).to eq(Date.today)
+      proposal.reload
+      expect(proposal.tabled_date).to eq(Date.today)
     end
     it "does not allow changing to Tabled from Voting" do
-        proposal = FactoryGirl.create(:proposal, status: "Voting")
+      proposal = FactoryGirl.create(:proposal, status: "Voting")
 
-        put :table, {id: proposal.to_param}
+      put :table, {id: proposal.to_param}
 
-        expect(response).to render_template("show")
-        proposal = Proposal.find(proposal.id)
-        expect(proposal.status).to eq("Voting")
-        expect(assigns(:proposal).status).to eq("Voting")
-        expect(flash[:alert]).to eq("Unable to set status to Tabled unless in 'Pre-Voting' or 'Review' state")
+      expect(response).to render_template("show")
+      proposal = Proposal.find(proposal.id)
+      expect(proposal.status).to eq("Voting")
+      expect(assigns(:proposal).status).to eq("Voting")
+      expect(flash[:alert]).to eq("Unable to set status to Tabled unless in 'Pre-Voting' or 'Review' state")
     end
     describe "as proposal owner" do
       before(:each) do

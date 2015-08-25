@@ -45,10 +45,10 @@ class RevisionsController < ApplicationController
       if @revision.save
         InformCommitteeMembers.proposal_revised(@revision)
         if @proposal.status == 'Pre-Voting'
-            @proposal.status = 'Review'
-            @proposal.review_start_date = DateTime.now()
-            @proposal.review_end_date = DateTime.now() + 3
-            @proposal.save
+          @proposal.status = 'Review'
+          @proposal.review_start_date = DateTime.now()
+          @proposal.review_end_date = DateTime.now() + 3
+          @proposal.save
         end
         format.html { redirect_to [@proposal, @revision], notice: 'Revision was successfully created.' }
         format.json { render json: [@proposal, @revision], status: :created, location: [@proposal, @revision] }

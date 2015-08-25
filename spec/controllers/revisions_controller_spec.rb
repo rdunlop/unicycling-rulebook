@@ -93,32 +93,32 @@ describe RevisionsController, type: :controller do
       end
       describe "as a normal user" do
         before(:each) do
-            sign_out @admin
-            @user = FactoryGirl.create(:user)
-            @prop = FactoryGirl.create(:proposal, owner: @user, status: 'Review')
-            cm = FactoryGirl.create(:committee_member, user: @user, committee: @prop.committee)
-            sign_in @user
+          sign_out @admin
+          @user = FactoryGirl.create(:user)
+          @prop = FactoryGirl.create(:proposal, owner: @user, status: 'Review')
+          cm = FactoryGirl.create(:committee_member, user: @user, committee: @prop.committee)
+          sign_in @user
         end
         it "can create a revision to my own proposal" do
-            post :create, {revision: valid_attributes, proposal_id: @prop.id}
-            expect(assigns(:revision)).to be_persisted
-            expect(response).to redirect_to([@prop, Revision.last])
+          post :create, {revision: valid_attributes, proposal_id: @prop.id}
+          expect(assigns(:revision)).to be_persisted
+          expect(response).to redirect_to([@prop, Revision.last])
         end
       end
       describe "as an editor" do
         before(:each) do
-            sign_out @admin
-            @user = FactoryGirl.create(:user)
-            @editor = FactoryGirl.create(:user)
-            @prop = FactoryGirl.create(:proposal, owner: @user, status: 'Review')
-            cm = FactoryGirl.create(:committee_member, user: @user, committee: @prop.committee)
-            cm = FactoryGirl.create(:committee_member, user: @editor, editor: true, committee: @prop.committee)
-            sign_in @editor
+          sign_out @admin
+          @user = FactoryGirl.create(:user)
+          @editor = FactoryGirl.create(:user)
+          @prop = FactoryGirl.create(:proposal, owner: @user, status: 'Review')
+          cm = FactoryGirl.create(:committee_member, user: @user, committee: @prop.committee)
+          cm = FactoryGirl.create(:committee_member, user: @editor, editor: true, committee: @prop.committee)
+          sign_in @editor
         end
         it "can create a revision to another proposal" do
-            post :create, {revision: valid_attributes, proposal_id: @prop.id}
-            expect(assigns(:revision)).to be_persisted
-            expect(response).to redirect_to([@prop, Revision.last])
+          post :create, {revision: valid_attributes, proposal_id: @prop.id}
+          expect(assigns(:revision)).to be_persisted
+          expect(response).to redirect_to([@prop, Revision.last])
         end
 
       end
@@ -159,19 +159,19 @@ describe RevisionsController, type: :controller do
       end
     end
     describe "with a Pre-Voting status proposal" do
-        before(:each) do
-            @proposal.status = 'Pre-Voting'
-            @proposal.save!
-        end
-        it "should set the status to review" do
-          post :create, {revision: valid_attributes, proposal_id: @proposal.id}
-          expect(assigns(:proposal).status).to eq('Review')
-        end
-        it "should set the review_start_date and review_end_date" do
-          post :create, {revision: valid_attributes, proposal_id: @proposal.id}
-          expect((assigns(:proposal).review_start_date - DateTime.now()) * 1.days).to be < 1
-          expect((assigns(:proposal).review_end_date - DateTime.now()) * 1.days).to be > 2
-        end
+      before(:each) do
+        @proposal.status = 'Pre-Voting'
+        @proposal.save!
+      end
+      it "should set the status to review" do
+        post :create, {revision: valid_attributes, proposal_id: @proposal.id}
+        expect(assigns(:proposal).status).to eq('Review')
+      end
+      it "should set the review_start_date and review_end_date" do
+        post :create, {revision: valid_attributes, proposal_id: @proposal.id}
+        expect((assigns(:proposal).review_start_date - DateTime.now()) * 1.days).to be < 1
+        expect((assigns(:proposal).review_end_date - DateTime.now()) * 1.days).to be > 2
+      end
     end
   end
 end

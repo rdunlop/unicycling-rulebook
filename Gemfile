@@ -52,21 +52,21 @@ gem 'capistrano3-unicorn'
 gem 'capistrano-sidekiq' , github: 'seuros/capistrano-sidekiq'
 
 group :development, :test, :cucumber do
-    gem 'html2haml'
-    gem 'consistency_fail'
-    gem 'better_errors'
-    gem "binding_of_caller"
-    gem 'brakeman'
-    gem 'annotate'
-    gem 'factory_girl_rails'
-    gem 'rspec-rails'
-    gem 'capybara'
-    gem 'spork'
-    gem 'syntax'
-    gem 'watchr'
-    gem 'foreman'
-    gem 'pry'
-    gem 'rubocop', require: false
+  gem 'html2haml'
+  gem 'consistency_fail'
+  gem 'better_errors'
+  gem "binding_of_caller"
+  gem 'brakeman'
+  gem 'annotate'
+  gem 'factory_girl_rails'
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'spork'
+  gem 'syntax'
+  gem 'watchr'
+  gem 'foreman'
+  gem 'pry'
+  gem 'rubocop', require: false
 end
 
 

@@ -39,8 +39,8 @@ describe VotesController, type: :controller do
 
   describe "GET index" do
     before(:each) do
-        sign_out @user
-        sign_in @admin_user
+      sign_out @user
+      sign_in @admin_user
     end
     it "assigns all votes as @votes" do
       vote = FactoryGirl.create(:vote, proposal: @proposal)
@@ -102,15 +102,15 @@ describe VotesController, type: :controller do
       end
     end
     describe "when the proposal is not in voting" do
-        before(:each) do
-            @proposal.status = 'Submitted'
-            @proposal.save!
-        end
-        it "should not be possible to create a vote" do
-          expect {
-            post :create, {vote: valid_attributes, proposal_id: @proposal.id}
-          }.to change(Vote, :count).by(0)
-        end
+      before(:each) do
+        @proposal.status = 'Submitted'
+        @proposal.save!
+      end
+      it "should not be possible to create a vote" do
+        expect {
+          post :create, {vote: valid_attributes, proposal_id: @proposal.id}
+        }.to change(Vote, :count).by(0)
+      end
     end
 
     describe "with invalid params" do
@@ -132,7 +132,7 @@ describe VotesController, type: :controller do
 
   describe "PUT update" do
     before(:each) do
-        @vote = FactoryGirl.create(:vote, proposal: @proposal)
+      @vote = FactoryGirl.create(:vote, proposal: @proposal)
     end
 
     describe "with admin with valid params" do
