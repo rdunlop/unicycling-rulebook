@@ -7,6 +7,7 @@ class ProposalsController < ApplicationController
   # GET /proposals/passed
   # GET /proposals/passed.json
   def passed
+    add_breadcrumb "Approved Proposals"
     # the non-preliminary ones go first
     @proposals = Proposal.select{ |p| p.committee.preliminary == false and p.status == 'Passed'}
     @proposals += Proposal.select{ |p| p.committee.preliminary == true and p.status == 'Passed'}

@@ -3,12 +3,6 @@ class CommitteeMembersController < ApplicationController
   load_and_authorize_resource :committee
   load_and_authorize_resource :committee_member, :through => :committee
 
-  def load_committee_new
-    @committee_member = CommitteeMember.new
-    @users = User.all
-    @users -= @committee.committee_members.map{|member| member.user}
-  end
-
   # GET /committee_members
   # GET /committee_members.json
   def index
@@ -103,4 +97,11 @@ class CommitteeMembersController < ApplicationController
   def committee_member_params
     params.require(:committee_member).permit(:user_id, :committee_id, :voting, :admin, :editor)
   end
+
+  def load_committee_new
+    @committee_member = CommitteeMember.new
+    @users = User.all
+    @users -= @committee.committee_members.map{|member| member.user}
+  end
+
 end

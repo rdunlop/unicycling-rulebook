@@ -4,7 +4,7 @@
       %h1= link_to "Rulebook (?)", root_path
   %section.top-bar-section
     %ul.right
-      %li= link_to('Home', welcome_index_path)
+      %li= link_to('Home', root_path)
       %li= link_to('FAQ', welcome_help_path)
       - if can? :membership, Committee
         %li= link_to('Members', membership_committees_path)

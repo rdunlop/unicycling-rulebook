@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   check_authorization :unless => :devise_controller?
   before_action :configure_permitted_parameters, if: :devise_controller?
   layout "rulebook"
+  before_filter :load_config
+  before_action :set_base_breadcrumb
 
   protected
 
@@ -17,24 +19,27 @@ class ApplicationController < ActionController::Base
     if location && location.starts_with?("/r/#{Apartment::Tenant.current}")
       location
     else
-      welcome_index_path
+      root_path
     end
   end
 
-  public
+  private
 
   rescue_from CanCan::AccessDenied do |exception|
     if Apartment::Tenant.current
-      redirect_to welcome_index_path, alert: exception.message
+      redirect_to root_path, alert: exception.message
     else
-      redirect_to root_path, :alert => exception.message
+      redirect_to welcome_index_all_path, :alert => exception.message
     end
   end
 
-  before_filter :load_config
 
   def load_config
     @config = self.class.get_current_config
+  end
+
+  def set_base_breadcrumb
+    add_breadcrumb @config.rulebook_name, root_url if @config
   end
 
   def self.get_current_config
@@ -43,5 +48,9 @@ class ApplicationController < ActionController::Base
 
   def current_ablity
     current_user.ability
+  end
+
+  def set_committee_breadcrumb
+    add_breadcrumb "Committee: #{@committee.name}", committee_path(@committee)
   end
 end

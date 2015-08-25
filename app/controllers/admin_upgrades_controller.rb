@@ -10,6 +10,6 @@ class AdminUpgradesController < ApplicationController
 
     current_user.update_attributes({admin: true})
     flash[:notice] = "Successfully upgraded to admin"
-    redirect_to welcome_index_path
+    redirect_to root_path
   end
 end

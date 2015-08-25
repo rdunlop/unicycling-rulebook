@@ -1,11 +1,13 @@
 class WelcomeController < ApplicationController
   skip_authorization_check
 
+  # Page where user can choose any of the rulebooks
   def index_all
     @rulebooks = Rulebook.all
     render layout: "global"
   end
 
+  # Root path of the system
   def index
     @committees = Committee.ordered.all
   end
@@ -16,6 +18,8 @@ class WelcomeController < ApplicationController
   end
 
   def help
+    add_breadcrumb "Faq"
+
     @contactemail = "robin@dunlopweb.com"
     @contactname = "robin"
     @committeename = "the committee"

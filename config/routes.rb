@@ -44,9 +44,8 @@ RulebookApp::Application.routes.draw do
   end
 
   # this causes devise to direct just-signed-in-users to the welcome/index
-  get 'welcome/index' => "welcome#index", as: :user_root
+  # get 'welcome/index' => "welcome#index", as: :user_root
 
-  get "welcome/index"
   get "welcome/index_all"
   get "welcome/help"
   get "welcome/message"

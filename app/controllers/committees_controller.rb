@@ -1,10 +1,13 @@
 class CommitteesController < ApplicationController
   before_filter :authenticate_user!, :except => [:membership, :show]
+  before_filter :load_committee, only: [:show, :edit, :update, :destroy]
+  before_filter :set_committee_breadcrumb, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
 
   # GET /committees
   # GET /committees.json
   def index
+    add_breadcrumb "Committees"
     @committees = Committee.all
 
     respond_to do |format|
@@ -14,7 +17,6 @@ class CommitteesController < ApplicationController
   end
 
   def show
-    @committee = Committee.find(params[:id])
     @proposals = []
     @committee.proposals.each do |p|
       if can? :read, p
@@ -31,6 +33,7 @@ class CommitteesController < ApplicationController
   # GET /committees/new
   # GET /committees/new.json
   def new
+    add_breadcrumb "New Committee"
     @committee = Committee.new
 
     respond_to do |format|
@@ -41,7 +44,6 @@ class CommitteesController < ApplicationController
 
   # GET /committees/1/edit
   def edit
-    @committee = Committee.find(params[:id])
   end
 
   # POST /committees
@@ -52,6 +54,7 @@ class CommitteesController < ApplicationController
         format.html { redirect_to committees_path, notice: 'Committee was successfully created.' }
         format.json { render json: @committee, status: :created, location: committees_path }
       else
+        add_breadcrumb "New Committee"
         format.html { render action: "new" }
         format.json { render json: @committee.errors, status: :unprocessable_entity }
       end
@@ -61,8 +64,6 @@ class CommitteesController < ApplicationController
   # PUT /committees/1
   # PUT /committees/1.json
   def update
-    @committee = Committee.find(params[:id])
-
     respond_to do |format|
       if @committee.update_attributes(committee_params)
         format.html { redirect_to committees_path, notice: 'Committee was successfully updated.' }
@@ -77,7 +78,6 @@ class CommitteesController < ApplicationController
   # DELETE /committees/1
   # DELETE /committees/1.json
   def destroy
-    @committee = Committee.find(params[:id])
     @committee.destroy
 
     respond_to do |format|
@@ -87,6 +87,7 @@ class CommitteesController < ApplicationController
   end
 
   def membership
+    add_breadcrumb "Committee Members"
     @committees = Committee.includes(:committee_members).all
     @users = User.all
   end
@@ -96,4 +97,9 @@ class CommitteesController < ApplicationController
   def committee_params
     params.require(:committee).permit(:name, :preliminary)
   end
+
+  def load_committee
+    @committee = Committee.find(params[:id])
+  end
+
 end
