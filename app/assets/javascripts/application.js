@@ -14,9 +14,9 @@
 //= require jquery_ujs
 //= require foundation
 //= require chosen-jquery
+//= require tinymce
 //= require_tree .
 //= require moment
-//= require tinymce
 
 $(document).ready(function () {
   if (!$('input').hasClass("multiclick")) {
