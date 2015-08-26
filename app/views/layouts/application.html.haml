@@ -16,14 +16,14 @@
   %body
     - if content_for?(:top_nav)
       = yield :top_nav
-    .main_nav
-      %p#notice= notice
-      %p.alert= alert
-      .row
-        = content_for(:content) ? yield(:content) : yield
-    - if content_for?(:bottom_nav)
-      %hr
-      .row
-        = yield :bottom_nav
-    = debug(params) if Rails.env.development?
-
+    .off-canvas-wrap{ data: { offcanvas: true } }
+      .inner-wrap
+        #container
+          = render "shared/breadcrumbs"
+          #main.row
+            = render "shared/flashes"
+            = content_for(:content) ? yield(:content) : yield
+        %a.exit-off-canvas{ href: "#" }
+        - if content_for?(:bottom_nav)
+          = yield :bottom_nav
+        = debug(params) if Rails.env.development?

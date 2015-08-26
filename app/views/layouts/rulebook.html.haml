@@ -1,11 +1,10 @@
 -# Use this layout when you are in a specific rulebook
 - content_for :top_nav do
   = render partial: "/nav/navbar"
-  %ul.breadcrumbs
-    = render_breadcrumbs tag: "li", separator: ""
 
 - content_for :bottom_nav do
-  %p
+  .row
+    %hr
     Copyright &copy; #{@config.copyright_description.html_safe}
     %br
 
