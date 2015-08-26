@@ -4,6 +4,7 @@ class WelcomeController < ApplicationController
   # Page where user can choose any of the rulebooks
   def index_all
     @rulebooks = Rulebook.all
+    add_breadcrumb "Choose a Rulebook"
     render layout: "global"
   end
 

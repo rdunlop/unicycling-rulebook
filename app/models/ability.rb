@@ -42,6 +42,7 @@ class Ability
       can :manage, User
       can :manage, Rulebook
       can :send, Message
+      can :view, :all_rulebooks_list
     end
 
     can :close, Discussion do |discussion|
