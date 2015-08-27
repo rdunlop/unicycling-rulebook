@@ -1,12 +1,20 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+
   protect_from_forgery
-  check_authorization unless: :devise_controller?
   before_action :configure_permitted_parameters, if: :devise_controller?
   layout "rulebook"
   before_filter :load_config
   before_action :set_base_breadcrumb
 
+  check_authorization unless: :devise_controller_or_pundit_handled?
+  # before_action :skip_authorization, if: :devise_controller?
+  # after_action :verify_authorized, unless: [:devise_controller?, :rails_admin_controller?]
+
   protected
+
+  def devise_controller_or_pundit_handled?
+    devise_controller? || pundit_policy_authorized?
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:name, :location, :comments]

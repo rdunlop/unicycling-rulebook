@@ -1,13 +1,12 @@
 class BulkUsersController < ApplicationController
+  before_action :authenticate_ability
   before_action :authenticate_user!
 
   def index
     add_breadcrumb "Bulk User Creation"
-    authorize! :mass_user_creation, User
   end
 
   def create
-    authorize! :mass_user_creation,  User
 
     good_emails = []
     bad_emails = []
@@ -25,5 +24,11 @@ class BulkUsersController < ApplicationController
     flash[:notice] = "Created user accounts for #{good_emails.join(', ')}" if good_emails.any?
     flash[:alert] = "Errors #{bad_emails.join(', ')}" if bad_emails.any?
     redirect_to bulk_users_path
+  end
+
+  private
+
+  def authenticate_ability
+    authorize :bulk_users, :create?
   end
 end
