@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe MessagePolicy do
   let(:user) { FactoryGirl.create(:user) }
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin) { FactoryGirl.create(:admin_user) }
 
   subject { described_class }
 

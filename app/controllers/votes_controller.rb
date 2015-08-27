@@ -1,6 +1,7 @@
 class VotesController < ApplicationController
-  before_filter :authenticate_user!
-  load_and_authorize_resource :proposal
+  before_action :authenticate_user!
+  before_action :load_proposal
+  load_and_authorize_resource :proposal # WHAT does the 'authorize' portion of this do?
   load_and_authorize_resource :vote, through: :proposal
 
   # GET /votes
@@ -81,6 +82,10 @@ class VotesController < ApplicationController
   end
 
   private
+
+  def load_proposal
+    @proposal = Proposal.find(params[:proposal_id])
+  end
 
   def vote_params
     params.require(:vote).permit(:vote, :comment)
