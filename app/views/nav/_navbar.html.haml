@@ -16,7 +16,7 @@
         %li= link_to('App Config (Admin Pages)', configuration_path(@config))
       - if can? :send, Message
         %li= link_to('Send E-mail Messages', welcome_message_path)
-      - if can? :mass_user_creation, User
+      - if policy(:bulk_email).send?
         %li= link_to('Create multiple user accounts', bulk_users_path)
       - if can? :view, :all_rulebooks_list
         %li= link_to "All Rulebooks", welcome_index_all_path

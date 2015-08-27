@@ -7,6 +7,7 @@ gem 'rails', '4.2.4'
 gem 'devise'
 gem "devise-async"
 gem 'cancancan', '~> 1.9'
+gem 'pundit'
 
 # front end
 gem 'haml'
