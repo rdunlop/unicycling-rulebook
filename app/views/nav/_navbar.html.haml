@@ -14,7 +14,7 @@
         %li= link_to('Committees', committees_path)
       - if can? :manage, Rulebook
         %li= link_to('App Config (Admin Pages)', configuration_path(@config))
-      - if can? :send, Message
+      - if policy(:message, :create?)
         %li= link_to('Send E-mail Messages', welcome_message_path)
       - if policy(:bulk_email).send?
         %li= link_to('Create multiple user accounts', bulk_users_path)

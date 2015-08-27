@@ -36,14 +36,14 @@ class WelcomeController < ApplicationController
 
   def message
     add_breadcrumb "Send E-mail"
-    authorize! :send, Message
+    authorize(:message, :create?)
     @committees = Committee.all
     @from = current_user
     @from_email = current_user.email
   end
 
   def send_message
-    authorize! :send, Message
+    authorize(:message, :create?)
 
     @committee_numbers = params[:committees] || []
     @subject = params[:subject]

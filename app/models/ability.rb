@@ -41,15 +41,12 @@ class Ability
       can :manage, Revision
       can :manage, User
       can :manage, Rulebook
-      can :send, Message
       can :view, :all_rulebooks_list
     end
 
     can :close, Discussion do |discussion|
       discussion.active? && (discussion.owner == user || user.admin)
     end
-
-    can :send, Message if user.is_committee_admin(nil)
 
     can :read, Discussion
 
