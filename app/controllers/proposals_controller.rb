@@ -2,7 +2,7 @@ class ProposalsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :passed]
   before_action :load_committee, only: [:new, :create]
   before_action :set_committee_breadcrumb, only: [:new, :create]
-  before_action :load_and_authorize_proposal, only: [:show, :update, :destroy]
+  before_action :load_and_authorize_proposal, only: [:show, :edit, :update, :destroy]
 
   # GET /proposals/passed
   def passed

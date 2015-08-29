@@ -6,7 +6,6 @@ gem 'rails', '4.2.4'
 # authorization
 gem 'devise'
 gem "devise-async"
-gem 'cancancan', '~> 1.9'
 gem 'pundit'
 
 # front end

@@ -7,11 +7,7 @@ describe "proposals/show", type: :view do
     @discussion = FactoryGirl.create(:discussion, proposal: @proposal)
     @comment = @discussion.comments.new
     @vote = @proposal.votes.new
-    @ability = Object.new
-    @ability.extend(CanCan::Ability)
-    allow(controller).to receive(:current_ability) { @ability }
-    # XXX can? nothing: @ability.can :something, @proposal
-    allow(view).to receive(:policy).and_return double(create?: false)
+    allow(view).to receive(:policy).and_return double(create?: false, read_usernames?: false, set_review?: false, revise?: false, vote?: false)
   end
 
   it "renders attributes in <p>" do

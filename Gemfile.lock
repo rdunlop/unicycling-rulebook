@@ -88,7 +88,6 @@ GEM
       terminal-table (~> 1.4)
     breadcrumbs_on_rails (2.3.1)
     builder (3.2.2)
-    cancancan (1.12.0)
     capistrano (3.4.0)
       i18n
       rake (>= 10.0.0)
@@ -402,7 +401,6 @@ DEPENDENCIES
   binding_of_caller
   brakeman
   breadcrumbs_on_rails
-  cancancan (~> 1.9)
   capistrano
   capistrano-bundler
   capistrano-rails

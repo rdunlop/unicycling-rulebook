@@ -5,14 +5,12 @@ class ProposalProgressController < ApplicationController
   # PUT /proposals/1/set_voting
   def set_voting
 
-    respond_to do |format|
-      if @proposal.transition_to("Voting")
-        InformCommitteeMembers.proposal_call_for_voting(@proposal)
-        format.html { redirect_to @proposal, notice: 'Proposal is now in the voting stage.' }
-      else
-        flash[:alert] = "Unable to set to voting"
-        redirect_to :back
-      end
+    if @proposal.transition_to("Voting")
+      InformCommitteeMembers.proposal_call_for_voting(@proposal)
+      redirect_to @proposal, notice: 'Proposal is now in the voting stage.'
+    else
+      flash[:alert] = "Unable to set to voting"
+      redirect_to :back
     end
   end
 
@@ -21,28 +19,24 @@ class ProposalProgressController < ApplicationController
 
     was_tabled = @proposal.status == 'Tabled'
 
-    respond_to do |format|
-      if @proposal.transition_to("Review")
-        InformCommitteeMembers.proposal_status_review(@proposal, was_tabled)
-        format.html { redirect_to @proposal, notice: 'Proposal is now in the review stage.' }
-      else
-        flash[:alert] = "Unable to set to review"
-        redirect_to :back
-      end
+    if @proposal.transition_to("Review")
+      InformCommitteeMembers.proposal_status_review(@proposal, was_tabled)
+      redirect_to @proposal, notice: 'Proposal is now in the review stage.'
+    else
+      flash[:alert] = "Unable to set to review"
+      redirect_to :back
     end
   end
 
   # PUT /proposals/1/set_pre_voting
   def set_pre_voting
 
-    respond_to do |format|
-      if @proposal.transition_to("Pre-Voting")
-        @proposal.votes.delete_all
-        format.html { redirect_to @proposal, notice: 'Proposal is now in the Pre-Voting stage. All votes have been deleted' }
-      else
-        flash[:alert] = "Unable to set to pre-voting"
-        redirect_to :back
-      end
+    if @proposal.transition_to("Pre-Voting")
+      @proposal.votes.delete_all
+      redirect_to @proposal, notice: 'Proposal is now in the Pre-Voting stage. All votes have been deleted'
+    else
+      flash[:alert] = "Unable to set to pre-voting"
+      redirect_to :back
     end
   end
 

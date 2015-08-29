@@ -1,12 +1,6 @@
 require 'spec_helper'
 
 describe "committees/show", type: :view do
-  before(:each) do
-    @ability = Object.new
-    @ability.extend(CanCan::Ability)
-    allow(controller).to receive(:current_ability) { @ability }
-  end
-
   describe "when a proposal exists" do
     before(:each) do
       @committee = FactoryGirl.create(:committee)

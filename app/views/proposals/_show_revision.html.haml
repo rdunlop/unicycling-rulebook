@@ -7,10 +7,10 @@
 %b Committee:
 = @proposal.committee
 %br
-- if can? :read_usernames, @proposal
+- if policy(@proposal).read_usernames?
   %b Owner:
   = @proposal.owner
-  - if can? :read_email, @proposal
+  - if policy(@proposal).read_email?
     (#{@proposal.owner.email})
   %br
 %b Submitted

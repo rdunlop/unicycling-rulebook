@@ -47,8 +47,6 @@ class User < ActiveRecord::Base
 
   after_create :send_email_to_admins
 
-  delegate :can?, :cannot?, to: :ability
-
   after_initialize :init
 
   # allow initial creation to occur without a name

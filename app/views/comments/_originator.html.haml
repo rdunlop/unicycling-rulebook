@@ -1,6 +1,6 @@
 %h4
   = title
-  - if can? :read_usernames, committee
+  - if policy(committee).read_usernames?
     by
     %b= owner_name
   %time.js--days-ago{ datetime: date.iso8601 }

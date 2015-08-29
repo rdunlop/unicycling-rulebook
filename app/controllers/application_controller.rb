@@ -7,15 +7,9 @@ class ApplicationController < ActionController::Base
   before_filter :load_config
   before_action :set_base_breadcrumb
 
-  check_authorization unless: :devise_controller_or_pundit_handled?
-  # before_action :skip_authorization, if: :devise_controller?
-  # after_action :verify_authorized, unless: [:devise_controller?, :rails_admin_controller?]
+  after_action :verify_authorized, unless: :devise_controller?
 
   protected
-
-  def devise_controller_or_pundit_handled?
-    devise_controller? || pundit_policy_authorized?
-  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:name, :location, :comments]
@@ -39,14 +33,6 @@ class ApplicationController < ActionController::Base
   def user_not_authorized
     flash[:alert] = "You are not authorized to perform this action."
     redirect_to(request.referrer || root_path)
-  end
-
-  rescue_from CanCan::AccessDenied do |exception|
-    if Apartment::Tenant.current
-      redirect_to root_path, alert: exception.message
-    else
-      redirect_to welcome_index_all_path, alert: exception.message
-    end
   end
 
   def load_config

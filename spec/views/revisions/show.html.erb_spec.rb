@@ -7,10 +7,7 @@ describe "revisions/show", type: :view do
     @discussion = FactoryGirl.create(:discussion, proposal: @proposal)
     @proposal.reload
 
-    allow(view).to receive(:policy).and_return double(create?: false)
-    @ability = Object.new
-    @ability.extend(CanCan::Ability)
-    allow(controller).to receive(:current_ability) { @ability }
+    allow(view).to receive(:policy).and_return double(create?: false, read_usernames?: false, set_review?: false, revise?: false, vote?: false)
   end
 
   it "renders attributes in <p>" do

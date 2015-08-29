@@ -1,9 +1,10 @@
 class WelcomeController < ApplicationController
-  skip_authorization_check
+  before_action :skip_authorization
 
   # Page where user can choose any of the rulebooks
   def index_all
     @rulebooks = Rulebook.all
+    authorize :all_rulebooks_list, :show?
     add_breadcrumb "Choose a Rulebook"
     render layout: "global"
   end

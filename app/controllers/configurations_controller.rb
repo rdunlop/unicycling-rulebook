@@ -46,7 +46,7 @@ class ConfigurationsController < ApplicationController
   end
 
   def ensure_current_rulebook
-    raise CanCan::AccessDenied.new("Only allowed to modify current rulebook config") if @rulebook != @config
+    raise Pundit::NotAuthorizedError.new("Only allowed to modify current rulebook config") if @rulebook != @config
   end
 
   def load_rulebook
