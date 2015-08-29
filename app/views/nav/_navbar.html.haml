@@ -12,7 +12,7 @@
         %li= link_to('View Approved Proposals', passed_proposals_path)
       - if policy(Committee).index?
         %li= link_to('Committees', committees_path)
-      - if can? :manage, Rulebook
+      - if policy(Rulebook).edit?
         %li= link_to('App Config (Admin Pages)', configuration_path(@config))
       - if policy(:message).create?
         %li= link_to('Send E-mail Messages', welcome_message_path)

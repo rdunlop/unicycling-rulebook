@@ -34,7 +34,6 @@ class Ability
 
       can :manage, Revision
       can :manage, User
-      can :manage, Rulebook
       can :view, :all_rulebooks_list
     end
 

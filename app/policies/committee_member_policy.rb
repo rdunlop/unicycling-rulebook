@@ -8,10 +8,6 @@ class CommitteeMemberPolicy < ApplicationPolicy
     admin? || committee_admin?(record.committee)
   end
 
-  def membership?
-    true
-  end
-
   def update?
     admin? || committee_admin?(record.committee)
   end
