@@ -17,13 +17,13 @@
 - if policy(@discussion).close?
   Can Close Discussion
   %br
-- if can? :create, @comment
+- if policy(@comment).create?
   Can create comment
   %br
 
 - @discussion.comments.each do |comment|
   = render :partial => "/comments/show", :object => comment
-- if can? :create, @comment
+- if policy(@comment).create?
   = render :partial => "/comments/form", :object => @comment
 
 -# only show the "create proposal" to admins and the original owner

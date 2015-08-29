@@ -7,8 +7,9 @@ class DiscussionsController < ApplicationController
   # GET /discussions/1
   def show
     authorize @discussion
-    if can?(:create, Comment)
-      @comment = @discussion.comments.new
+    @comment = @discussion.comments.new
+    unless policy(@comment).create?
+      @comment = nil
     end
 
     set_committee_breadcrumb(@discussion.committee)

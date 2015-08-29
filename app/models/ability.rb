@@ -33,11 +33,6 @@ class Ability
       can :view, :all_rulebooks_list
     end
 
-    # Can only create comments if I am in the committee
-    can :create, Comment do |comment|
-      (user.admin || user.is_in_committee(comment.discussion.committee)) && comment.discussion.is_open_for_comments?
-    end
-
     # Only voting members can vote
     can :vote, Proposal do |proposal|
       proposal.status == 'Voting' and user.voting_member(proposal.committee)
