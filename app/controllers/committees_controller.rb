@@ -20,7 +20,7 @@ class CommitteesController < ApplicationController
   def show
     @proposals = []
     @committee.proposals.each do |p|
-      if can? :read, p
+      if policy(p).show?
         @proposals += [p]
       end
     end

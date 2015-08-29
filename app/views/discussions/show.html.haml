@@ -2,11 +2,11 @@
 
 - if @discussion.proposal
   %div
-  - if can? :read, @discussion.proposal
+  - if policy(@discussion.proposal).show?
     This discussion has an associated proposal. #{link_to "View Proposal Details here", proposal_path(@discussion.proposal)}.
   - elsif @discussion.proposal.status = "Submitted"
     This discussion has an associated proposal but it has not been approved yet.
-- if can? :close, @discussion
+- if policy(@discussion).close?
   .admin_action
     = link_to "Close this discussion", close_discussion_path(@discussion), method: :put, data: { confirm: "This will prevent future comments and proposals based on this discussion. Continue?" }
 %hr

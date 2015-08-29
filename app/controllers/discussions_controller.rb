@@ -8,9 +8,6 @@ class DiscussionsController < ApplicationController
   def show
     authorize @discussion
     @comment = @discussion.comments.new
-    unless policy(@comment).create?
-      @comment = nil
-    end
 
     set_committee_breadcrumb(@discussion.committee)
     add_breadcrumb @discussion.title

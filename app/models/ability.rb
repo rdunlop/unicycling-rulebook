@@ -11,13 +11,6 @@ class Ability
     user ||= User.new # default user if not signed in
 
     # PUBLIC can:
-    can [:read], Proposal do |proposal|
-      proposal.status != 'Submitted'
-    end
-
-    can :passed, Proposal
-
-
     # SUPER ADMIN can do anything
     if user.admin
       can :manage, Proposal
@@ -28,7 +21,6 @@ class Ability
       # (even administrators can't vote if not a voting member with proposal in 'voting' status)
       cannot :vote, Proposal
 
-      can :manage, Revision
       can :manage, User
       can :view, :all_rulebooks_list
     end
@@ -60,19 +52,7 @@ class Ability
       user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user or user.is_committee_editor(proposal.committee)
     end
 
-    can [:read], Proposal do |proposal|
-      if proposal.status == 'Submitted'
-        user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user
-      else
-        user.is_in_committee(proposal.committee)
-      end
-    end
-
     # Committee-Admin
-
-    can :update, Proposal do |proposal|
-      user.is_committee_admin(proposal.committee)
-    end
 
     can [:set_review], Proposal do |proposal|
       # allow owner to change from Tabled back to Review.
@@ -93,11 +73,6 @@ class Ability
     # editors can revise and table
     can [:revise, :table], Proposal do |proposal|
       user.is_committee_admin(proposal.committee) or proposal.try(:owner) == user or user.is_committee_editor(proposal.committee)
-    end
-
-    can :create, Revision
-    can :read, Revision do |revision|
-      user.is_committee_admin(revision.try(:proposal).try(:committee)) or revision.try(:proposal).try(:owner) == user or user.is_committee_editor(revision.try(:proposal).try(:committee))
     end
 
     # Define abilities for the passed in user here. For example:

@@ -198,7 +198,7 @@ class UserMailer < TenantAwareMailer
     emails = []
     CommitteeMember.all.each do |cm|
       if cm.committee == committee
-        if proposal.nil? or cm.user.can? :read, proposal
+        if proposal.nil? || Pundit.policy(cm.user, proposal).show?
           emails << cm.user.email unless (honor_no_email and cm.user.no_emails)
         end
       end

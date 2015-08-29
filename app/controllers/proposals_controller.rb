@@ -2,12 +2,12 @@ class ProposalsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :passed]
   before_action :load_committee, only: [:new, :create]
   before_action :set_committee_breadcrumb, only: [:new, :create]
-  skip_authorization_check only: [:create, :new]
-  load_and_authorize_resource except: [:create, :new]
+  load_and_authorize_resource except: [:create, :new, :passed, :show, :edit, :update, :destroy]
 
   # GET /proposals/passed
   # GET /proposals/passed.json
   def passed
+    authorize Proposal
     add_breadcrumb "Approved Proposals"
     # the non-preliminary ones go first
     @proposals = Proposal.select{ |p| p.committee.preliminary == false and p.status == 'Passed'}
@@ -22,6 +22,7 @@ class ProposalsController < ApplicationController
   # GET /proposals/1
   def show
     @proposal = Proposal.find(params[:id])
+    authorize @proposal
 
     set_proposal_breadcrumb
 
@@ -50,6 +51,7 @@ class ProposalsController < ApplicationController
   # GET /proposals/1/edit
   def edit
     @proposal = Proposal.find(params[:id])
+    authorize @proposal
     set_committee_breadcrumb(@proposal.committee)
     add_breadcrumb "Revise Proposal Dates & Status"
 
@@ -85,6 +87,7 @@ class ProposalsController < ApplicationController
   # PUT /proposals/1.json
   def update
     @proposal = Proposal.find(params[:id])
+    authorize @proposal
 
     respond_to do |format|
       if @proposal.update_attributes(update_params)
@@ -103,6 +106,7 @@ class ProposalsController < ApplicationController
   # DELETE /proposals/1.json
   def destroy
     @proposal = Proposal.find(params[:id])
+    authorize @proposal
     committee = @proposal.committee
     @proposal.destroy
 

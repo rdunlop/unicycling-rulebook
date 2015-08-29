@@ -1,24 +1,21 @@
 class RevisionsController < ApplicationController
-  before_filter :authenticate_user!
-  load_and_authorize_resource :proposal
+  before_action :authenticate_user!
+  before_action :load_proposal
   before_action :set_proposal_breadcrumb
-  load_and_authorize_resource :revision, through: :proposal
 
-  # GET /revisions/1
-  # GET /revisions/1.json
+  # GET /proposals/:proposal_id/revisions/1
   def show
-    @revision = Revision.find(params[:id])
+    @revision = @proposal.revisions.find(params[:id])
+    authorize @revision
     add_breadcrumb "Revision #{@revision.num}"
     @comment = @revision.proposal.discussion.comments.new
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @revision }
     end
   end
 
-  # GET /revisions/new
-  # GET /revisions/new.json
+  # GET /proposals/:proposal_id/revisions/new
   def new
     add_breadcrumb "New Revision"
     @revision = Revision.new
@@ -26,20 +23,20 @@ class RevisionsController < ApplicationController
     @revision.body = @proposal.latest_revision.body
     @revision.references = @proposal.latest_revision.references
     @revision.rule_text = @proposal.latest_revision.rule_text
+    authorize @revision
     authorize! :revise, @proposal
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @revision }
     end
   end
 
-  # POST /revisions
-  # POST /revisions.json
+  # POST /proposals/:proposal_id/revisions
   def create
+    @revision = @proposal.revisions.new(revision_params)
     @revision.proposal = @proposal
     @revision.user = current_user
-    authorize! :revise, @proposal
+    authorize @revision
 
     respond_to do |format|
       if @revision.save
@@ -51,16 +48,18 @@ class RevisionsController < ApplicationController
           @proposal.save
         end
         format.html { redirect_to [@proposal, @revision], notice: 'Revision was successfully created.' }
-        format.json { render json: [@proposal, @revision], status: :created, location: [@proposal, @revision] }
       else
         add_breadcrumb "New Revision"
         format.html { render action: "new" }
-        format.json { render json: @revision.errors, status: :unprocessable_entity }
       end
     end
   end
 
   private
+
+  def load_proposal
+    @proposal = Proposal.find(params[:proposal_id])
+  end
 
   def revision_params
     params.require(:revision).permit(:rule_text, :body, :change_description, :background, :references)
