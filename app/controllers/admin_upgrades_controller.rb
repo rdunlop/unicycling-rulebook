@@ -6,7 +6,7 @@ class AdminUpgradesController < ApplicationController
   end
 
   def create
-    raise CanCan::AccessDenied.new("Incorrect Access code") unless params[:access_code] == @config.admin_upgrade_code
+    raise Pundit::NotAuthorizedError.new("Incorrect Access code") unless params[:access_code] == @config.admin_upgrade_code
 
     current_user.update_attributes({admin: true})
     flash[:notice] = "Successfully upgraded to admin"
