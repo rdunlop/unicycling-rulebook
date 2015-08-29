@@ -7,7 +7,7 @@
 %b Committee:
 = @proposal.committee
 %br
-- if policy(@proposal).read_usernames?
+- if policy(@proposal.committee).read_usernames?
   %b Owner:
   = @proposal.owner
   - if policy(@proposal).read_email?

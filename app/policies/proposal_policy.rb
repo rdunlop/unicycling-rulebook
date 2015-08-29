@@ -35,7 +35,7 @@ class ProposalPolicy < ApplicationPolicy
     record.status == 'Voting' && user.voting_member(record.committee)
   end
 
-  def read_email
+  def read_email?
     user.is_committee_admin(record.committee) or record.try(:owner) == user or user.is_committee_editor(record.committee)
   end
 
