@@ -21,15 +21,6 @@ describe "Ability", type: :model do
       it { is_expected.not_to be_able_to(:update, committee_member) }
     end
 
-    context "with a committee" do
-      let(:committee) { FactoryGirl.create :committee }
-      it { is_expected.to be_able_to(:read, committee) }
-      it { is_expected.not_to be_able_to(:edit, committee) }
-      it { is_expected.not_to be_able_to(:create, committee) }
-      it { is_expected.not_to be_able_to(:update, committee) }
-      it { is_expected.not_to be_able_to(:destroy, committee) }
-    end
-
     context "with a proposal" do
       let(:proposal) { FactoryGirl.create :proposal, :submitted }
       it { is_expected.not_to be_able_to(:set_review, proposal) }
@@ -112,15 +103,6 @@ describe "Ability", type: :model do
       it { is_expected.to be_able_to(:create, committee_member) }
       it { is_expected.to be_able_to(:destroy, committee_member) }
       it { is_expected.to be_able_to(:update, committee_member) }
-    end
-
-    context "with a committee" do
-      let(:committee) { FactoryGirl.create :committee }
-      it { is_expected.to be_able_to(:read, committee) }
-      it { is_expected.to be_able_to(:edit, committee) }
-      it { is_expected.to be_able_to(:create, committee) }
-      it { is_expected.to be_able_to(:update, committee) }
-      it { is_expected.to be_able_to(:destroy, committee) }
     end
 
     context "with a proposal" do

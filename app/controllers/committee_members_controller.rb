@@ -1,6 +1,6 @@
 class CommitteeMembersController < ApplicationController
   before_filter :authenticate_user!
-  load_and_authorize_resource :committee
+  load_resource :committee
   before_action :set_committee_breadcrumb
   load_and_authorize_resource :committee_member, through: :committee
 

@@ -14,19 +14,16 @@ class Ability
     can [:read], Proposal do |proposal|
       proposal.status != 'Submitted'
     end
-    can [:read], Committee
     can :read, Discussion
     can :create, Discussion do |discussion|
       user.is_in_committee(discussion.committee)
     end
 
     can :passed, Proposal
-    can :membership, Committee
 
 
     # SUPER ADMIN can do anything
     if user.admin
-      can :manage, Committee
       can :manage, CommitteeMember
 
       can :manage, Proposal
@@ -90,8 +87,6 @@ class Ability
     end
 
     # Committee-Admin
-
-    can :read, Committee
 
     if user.is_committee_admin(nil) || user.admin
       can :read, CommitteeMember do |committee_member|

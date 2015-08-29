@@ -1,6 +1,6 @@
 class DiscussionsController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource :committee, except: [:show, :close]
+  load_resource :committee, except: [:show, :close]
   before_action :set_committee_breadcrumb, except: [:show, :close]
   before_action :load_new_discussion, only: :create
   load_and_authorize_resource through: :committee, except: [:show, :close]
