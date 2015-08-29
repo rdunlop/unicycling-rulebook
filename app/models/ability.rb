@@ -24,8 +24,6 @@ class Ability
 
     # SUPER ADMIN can do anything
     if user.admin
-      can :manage, CommitteeMember
-
       can :manage, Proposal
           #includes :set_pre_voting
           # and :set_review, :set_voting, :administer
@@ -87,16 +85,6 @@ class Ability
     end
 
     # Committee-Admin
-
-    if user.is_committee_admin(nil) || user.admin
-      can :read, CommitteeMember do |committee_member|
-        user.is_committee_admin(committee_member.committee)
-      end
-    end
-
-    can :update, CommitteeMember do |committee_member|
-      user.is_committee_admin(committee_member.committee)
-    end
 
     can :update, Proposal do |proposal|
       user.is_committee_admin(proposal.committee)

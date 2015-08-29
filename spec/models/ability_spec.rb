@@ -10,16 +10,6 @@ describe "Ability", type: :model do
     it { is_expected.to be_able_to(:read, Proposal) }
     it { is_expected.not_to be_able_to(:read, User.new) }
     it { is_expected.not_to be_able_to(:create, Committee) }
-    it { is_expected.not_to be_able_to(:read, CommitteeMember) }
-
-    context "With a committee member" do
-      let(:committee_member) { FactoryGirl.create(:committee_member) }
-      it { is_expected.not_to be_able_to(:read, committee_member) }
-      it { is_expected.not_to be_able_to(:edit, committee_member) }
-      it { is_expected.not_to be_able_to(:create, committee_member) }
-      it { is_expected.not_to be_able_to(:destroy, committee_member) }
-      it { is_expected.not_to be_able_to(:update, committee_member) }
-    end
 
     context "with a proposal" do
       let(:proposal) { FactoryGirl.create :proposal, :submitted }
@@ -95,15 +85,6 @@ describe "Ability", type: :model do
     let(:user) { FactoryGirl.build_stubbed(:admin_user) }
 
     subject { @ability = Ability.new(user) }
-
-    context "With a committee member" do
-      let(:committee_member) { FactoryGirl.create(:committee_member) }
-      it { is_expected.to be_able_to(:read, committee_member) }
-      it { is_expected.to be_able_to(:edit, committee_member) }
-      it { is_expected.to be_able_to(:create, committee_member) }
-      it { is_expected.to be_able_to(:destroy, committee_member) }
-      it { is_expected.to be_able_to(:update, committee_member) }
-    end
 
     context "with a proposal" do
       let(:proposal) { FactoryGirl.create :proposal, :submitted }
