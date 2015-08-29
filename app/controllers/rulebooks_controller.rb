@@ -1,6 +1,6 @@
 class RulebooksController < ApplicationController
   skip_authorization_check only: [:new, :create, :index, :show]
-  before_action :load_rulebook, only: [:create, :show]
+  before_action :load_rulebook, only: [:show]
   layout "global"
 
   # GET /rulebooks
@@ -32,6 +32,7 @@ class RulebooksController < ApplicationController
 
   # POST /rulebooks
   def create
+    @rulebook = Rulebook.new(rulebook_params)
     errors = []
     errors << "Incorrect Access code" unless params[:access_code] == Rails.application.secrets.rulebook_creation_access_code
     errors << "Unable to name a schema 'public'" if @rulebook.subdomain == "public"

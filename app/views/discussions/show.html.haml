@@ -14,7 +14,7 @@
 %h3 Comments about this discussion:
 = render partial: "/discussions/start_of_discussion", locals: { discussion: @discussion }
 
-- if can? :close, @discussion
+- if policy(@discussion).close?
   Can Close Discussion
   %br
 - if can? :create, @comment

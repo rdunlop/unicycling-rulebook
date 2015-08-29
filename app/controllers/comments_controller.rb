@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource :discussion
+  load_resource :discussion
   load_and_authorize_resource :comment, through: :discussion
 
   # POST /comments

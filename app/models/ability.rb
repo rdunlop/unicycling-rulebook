@@ -14,10 +14,6 @@ class Ability
     can [:read], Proposal do |proposal|
       proposal.status != 'Submitted'
     end
-    can :read, Discussion
-    can :create, Discussion do |discussion|
-      user.is_in_committee(discussion.committee)
-    end
 
     can :passed, Proposal
 
@@ -36,12 +32,6 @@ class Ability
       can :manage, User
       can :view, :all_rulebooks_list
     end
-
-    can :close, Discussion do |discussion|
-      discussion.active? && (discussion.owner == user || user.admin)
-    end
-
-    can :read, Discussion
 
     # Can only create comments if I am in the committee
     can :create, Comment do |comment|

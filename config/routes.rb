@@ -24,7 +24,7 @@ RulebookApp::Application.routes.draw do
 
   resources :discussions, only: [:show] do
     put :close, on: :member
-   resources :comments, only: [:create]
+    resources :comments, only: [:create]
   end
 
   resources :committees do
