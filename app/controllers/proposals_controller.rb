@@ -4,7 +4,6 @@ class ProposalsController < ApplicationController
   before_action :set_committee_breadcrumb, only: [:new, :create]
   before_action :load_and_authorize_proposal, only: [:show, :update, :destroy]
 
-
   # GET /proposals/passed
   def passed
     authorize Proposal
@@ -21,9 +20,6 @@ class ProposalsController < ApplicationController
   # GET /proposals/1
   def show
     set_proposal_breadcrumb
-
-    @my_vote = @proposal.votes.find_by(user: current_user)
-    @vote = @my_vote || @proposal.votes.new
 
     respond_to do |format|
       format.html # show.html.erb

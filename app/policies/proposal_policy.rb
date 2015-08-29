@@ -30,6 +30,8 @@ class ProposalPolicy < ApplicationPolicy
 
   # Only voting members can vote
   def vote?
+    return false unless user
+
     record.status == 'Voting' && user.voting_member(record.committee)
   end
 

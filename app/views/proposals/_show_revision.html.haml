@@ -53,14 +53,13 @@ on #{@proposal.submit_date}
       = link_to 'Revise', new_proposal_revision_path(@proposal)
       |
 %br
-- # Display Voting Options
-- if policy(@vote).create?
-  - # this user is allowed to vote
-  - if @my_vote.present?
+- if policy(@proposal).vote?
+  - @vote ||= @proposal.find_vote_for(current_user)
+  - if @vote.persisted?
     - # if vote already exists for this user
     %b You have already voted:
     %strong.status_message
-      = @my_vote.vote
+      = @vote.vote
     %br
   - else
     = render :partial => "/votes/form", :object => @vote

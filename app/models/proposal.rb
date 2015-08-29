@@ -99,6 +99,10 @@ class Proposal < ActiveRecord::Base
     end
   end
 
+  def find_vote_for(user)
+    votes.find_by(user: user) || votes.new
+  end
+
   delegate :background, :body, :references, to: :latest_revision
 
 private

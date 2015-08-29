@@ -62,13 +62,6 @@ describe ProposalsController, type: :controller do
       expect(assigns(:proposal)).to eq(proposal)
     end
 
-    it "should not have a vote object by default" do
-      proposal = FactoryGirl.create(:proposal)
-      get :show, {id: proposal.to_param}
-      expect(assigns(:my_vote)).to eq(nil)
-      expect(assigns(:vote)).to be_a_new(Vote)
-    end
-
     it "should have a blank vote object when in Voting" do
       proposal = FactoryGirl.create(:proposal, status: 'Voting', committee: committee)
       get :show, {id: proposal.to_param}
