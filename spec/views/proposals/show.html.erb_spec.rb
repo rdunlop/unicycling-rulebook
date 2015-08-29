@@ -11,6 +11,7 @@ describe "proposals/show", type: :view do
     @ability.extend(CanCan::Ability)
     allow(controller).to receive(:current_ability) { @ability }
     # XXX can? nothing: @ability.can :something, @proposal
+    allow(view).to receive(:policy).and_return double(create?: false)
   end
 
   it "renders attributes in <p>" do

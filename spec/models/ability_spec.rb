@@ -35,13 +35,6 @@ describe "Ability", type: :model do
       it { is_expected.not_to be_able_to(:set_review, proposal) }
     end
 
-    context "with a vote" do
-      let(:vote) { FactoryGirl.create :vote }
-      it { is_expected.not_to be_able_to(:edit, vote) }
-      it { is_expected.not_to be_able_to(:update, vote) }
-      it { is_expected.not_to be_able_to(:destroy, vote) }
-    end
-
     # Proposals
     describe "with submitted proposal" do
       let(:committee) { FactoryGirl.create(:committee) }
@@ -133,13 +126,6 @@ describe "Ability", type: :model do
     context "with a proposal" do
       let(:proposal) { FactoryGirl.create :proposal, :submitted }
       it { is_expected.to be_able_to(:set_review, proposal) }
-    end
-
-    context "with a vote" do
-      let(:vote) { FactoryGirl.create :vote }
-      it { is_expected.to be_able_to(:edit, vote) }
-      it { is_expected.to be_able_to(:update, vote) }
-      it { is_expected.to be_able_to(:destroy, vote) }
     end
   end
 

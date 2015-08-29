@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
 
   def devise_controller_or_pundit_handled?
     devise_controller? || pundit_policy_authorized?
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:name, :location, :comments]
@@ -40,7 +41,6 @@ class ApplicationController < ActionController::Base
       redirect_to welcome_index_all_path, alert: exception.message
     end
   end
-
 
   def load_config
     @config = self.class.get_current_config
