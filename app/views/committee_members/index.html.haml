@@ -36,13 +36,13 @@
       %td= committee_member.editor
       %td= committee_member.voting
       %td
-        - if can? :edit, committee_member
+        - if policy(committee_member).edit?
           = link_to 'Edit', edit_committee_committee_member_path(@committee, committee_member)
       %td
-        - if can? :destroy, committee_member
+        - if policy(committee_member).destroy?
           = link_to 'Destroy', [@committee, committee_member], data: { confirm: 'Are you sure?' }, method: :delete
 %br
-- if can? :create, CommitteeMember
+- if policy(CommitteeMember).create?
   = link_to 'New Committee member', new_committee_committee_member_path(@committee)
   %br
 = link_to 'Back', committees_path

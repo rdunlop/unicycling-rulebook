@@ -13,10 +13,10 @@ RulebookApp::Application.routes.draw do
       get 'passed'
     end
     member do
-      put 'set_voting'
-      put 'set_review'
-      put 'set_pre_voting'
-      put 'table'
+      put 'set_voting', to: 'proposal_progress#set_voting'
+      put 'set_review', to: 'proposal_progress#set_review'
+      put 'set_pre_voting', to: 'proposal_progress#set_pre_voting'
+      put 'table', to: 'proposal_progress#table'
     end
     resources :votes, except: [:show]
     resources :revisions, except: [:edit, :index, :put, :destroy]
@@ -24,7 +24,7 @@ RulebookApp::Application.routes.draw do
 
   resources :discussions, only: [:show] do
     put :close, on: :member
-   resources :comments, only: [:create]
+    resources :comments, only: [:create]
   end
 
   resources :committees do

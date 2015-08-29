@@ -35,9 +35,8 @@ describe WelcomeController, type: :controller do
   describe "GET message" do
     describe "as a normal user" do
       it "cannot send a message" do
-        expect do
-          get :message, {}
-        end.to raise_error(Pundit::NotAuthorizedError)
+        get :message, {}
+        expect(response).to redirect_to(root_path)
       end
     end
     describe "as a super-user" do

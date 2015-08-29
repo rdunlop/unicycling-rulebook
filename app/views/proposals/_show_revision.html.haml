@@ -20,7 +20,7 @@ on #{@proposal.submit_date}
 %strong.status_message= @proposal.status_string
 %br
 / options
-- if can? :set_review, @proposal
+- if policy(@proposal).set_review?
   %b
     %i Options:
   - if @proposal.status == 'Submitted'
@@ -34,12 +34,12 @@ on #{@proposal.submit_date}
     |
     \#{link_to('Change Back to Pre-Voting', set_pre_voting_proposal_path(@proposal), :method => :put, data: { confirm: 'Doing this will remove all votes and revert the proposal back to Pre-Voting. (You MUST change the Dates too, or else it will move back to Voting again tonight)' } )}
     |
-  - if can? :edit, @proposal
+  - if policy(@proposal).edit?
     = link_to('Modify Proposal Title/Committee/Status/Dates', edit_proposal_path(@proposal))
     |
   - #= link_to('Change Committee', modify_dates_proposal_path(@proposal))
   %br
-- if can? :revise, @proposal
+- if policy(@proposal).revise?
   %b
     %i Options:
   - if @proposal.status == 'Pre-Voting'
@@ -49,7 +49,7 @@ on #{@proposal.submit_date}
   - if @proposal.status == 'Submitted' or @proposal.status == 'Review' or @proposal.status == 'Pre-Voting'
     = link_to('Table', table_proposal_path(@proposal), :method => :put)
     |
-    - if can? :revise, @proposal
+    - if policy(@proposal).revise?
       = link_to 'Revise', new_proposal_revision_path(@proposal)
       |
 %br
@@ -76,7 +76,7 @@ on #{@proposal.submit_date}
     - @proposal.revisions.each do |rev|
       %dt
         %b
-          - if can? :read, rev
+          - if policy(rev).show?
             = link_to('Revision ' + rev.num.to_s, proposal_revision_path(@proposal, rev))
           - else
             = 'Revision ' + rev.num.to_s
@@ -90,5 +90,5 @@ on #{@proposal.submit_date}
   = render :partial => "/proposals/vote_summary", :object => @proposal
   %p
     - @proposal.votes.each do |v|
-      - if can? :read, v
+      - if policy(v).show?
         = render :partial => "/votes/show", :object => v

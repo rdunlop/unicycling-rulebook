@@ -1,16 +1,13 @@
 class DiscussionsController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource :committee, except: [:show, :close]
-  before_action :set_committee_breadcrumb, except: [:show, :close]
-  before_action :load_new_discussion, only: :create
-  load_and_authorize_resource through: :committee, except: [:show, :close]
-  load_and_authorize_resource only: [:show, :close]
+  before_action :load_committee, only: [:new, :create]
+  before_action :set_committee_breadcrumb, only: [:new, :create]
+  before_action :load_discussion, only: [:show, :close]
 
   # GET /discussions/1
   def show
-    if can?(:create, Comment)
-      @comment = @discussion.comments.new
-    end
+    authorize @discussion
+    @comment = @discussion.comments.new
 
     set_committee_breadcrumb(@discussion.committee)
     add_breadcrumb @discussion.title
@@ -22,6 +19,8 @@ class DiscussionsController < ApplicationController
 
   # GET /committees/1/discussions/new
   def new
+    @discussion = @committee.discussions.new
+    authorize @discussion
     add_breadcrumb "New Discussion"
     respond_to do |format|
       format.html # new.html.erb
@@ -30,29 +29,41 @@ class DiscussionsController < ApplicationController
 
   # POST /committees/1/discussions/
   def create
+    load_new_discussion
+    authorize @discussion
     respond_to do |format|
       if @discussion.save
         InformCommitteeMembers.discussion_created(@discussion)
         format.html { redirect_to [@discussion], notice: 'Discussion was successfully created.' }
       else
-        flash[:alert] = "Unable to create discussion"
+        flash.now[:alert] = "Unable to create discussion"
         format.html { render action: "new" }
       end
     end
   end
 
   def close
+    authorize @discussion
     respond_to do |format|
       if @discussion.close
         format.html { redirect_to @discussion, notice: "Discussion has been closed." }
       else
-        flash[:alert] = "Unable to close this discussion"
+        @comment = @discussion.comments.new
+        flash.now[:alert] = "Unable to close this discussion"
         format.html { render action: "show" }
       end
     end
   end
 
   private
+
+  def load_committee
+    @committee = Committee.find(params[:committee_id])
+  end
+
+  def load_discussion
+    @discussion = Discussion.find(params[:id])
+  end
 
   def load_new_discussion
     @discussion = Discussion.new(discussion_params)

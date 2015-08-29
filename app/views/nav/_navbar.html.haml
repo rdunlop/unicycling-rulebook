@@ -6,13 +6,13 @@
     %ul.right
       %li= link_to('Home', root_path)
       %li= link_to('FAQ', welcome_help_path)
-      - if can? :membership, Committee
+      - if policy(Committee).membership?
         %li= link_to('Members', membership_committees_path)
-      - if can? :passed, Proposal
+      - if policy(Proposal).passed?
         %li= link_to('View Approved Proposals', passed_proposals_path)
-      - if can? :read, Committee
+      - if policy(Committee).index?
         %li= link_to('Committees', committees_path)
-      - if can? :manage, Rulebook
+      - if policy(Rulebook).edit?
         %li= link_to('App Config (Admin Pages)', configuration_path(@config))
       - if policy(:message).create?
         %li= link_to('Send E-mail Messages', welcome_message_path)

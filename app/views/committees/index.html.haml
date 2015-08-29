@@ -11,14 +11,14 @@
       %td= link_to committee.name, committee
       %td= committee.preliminary ? 'yes' : 'no'
       %td
-        - if can? :read, CommitteeMember
+        - if policy(CommitteeMember.new(committee: committee)).show?
           = link_to('Show Members', committee_committee_members_path(committee))
       %td
-        - if can? :edit, committee
+        - if policy(committee).edit?
           = link_to 'Edit', edit_committee_path(committee)
       %td
-        - if can? :destroy, committee
+        - if policy(committee).destroy?
           = link_to 'Destroy', committee, data: {confirm: 'Are you sure?'}, method: :delete
 %br
-- if can? :create, Committee
+- if policy(Committee).create?
   = link_to 'New Committee', new_committee_path

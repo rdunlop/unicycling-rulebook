@@ -1,11 +1,11 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource :discussion
-  load_and_authorize_resource :comment, through: :discussion
+  before_action :load_discussion
 
   # POST /comments
-  # POST /comments.json
   def create
+    @comment = @discussion.comments.new(comment_params)
+    authorize @comment
     @comment.user = current_user
     respond_to do |format|
       if @comment.save
@@ -19,6 +19,10 @@ class CommentsController < ApplicationController
   end
 
   private
+
+  def load_discussion
+    @discussion = Discussion.find(params[:discussion_id])
+  end
 
   def comment_params
     params.require(:comment).permit(:comment)

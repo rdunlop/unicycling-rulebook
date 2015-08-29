@@ -4,14 +4,14 @@
   Please create and participate in discussions.
   %br
   %h2 Discussions
-  - if can? :create_discussion, @committee
+  - if policy(@committee).create_discussion?
     = link_to "Create New Discussion", new_committee_discussion_path(@committee), class: "primary_button"
 
   = render :partial => "discussions/display_summary"
 
   %hr
   %h2 Proposals
-  - if can? :create_proposal, @committee
+  - if policy(@committee).create_proposal?
     = link_to "Create New Proposal", new_committee_proposal_path(@committee), class: "primary_button"
 
   = render :partial => "/proposals/display_summary", :locals => {:proposals => @proposals, :status => 'Submitted', :header => 'New Unapproved Proposals:', :status_text => '', :votes => @user_votes}

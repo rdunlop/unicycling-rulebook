@@ -1,14 +1,15 @@
 class CommitteesController < ApplicationController
-  before_filter :authenticate_user!, except: [:membership, :show]
-  before_filter :load_committee, only: [:show, :edit, :update, :destroy]
-  before_filter :set_committee_breadcrumb, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  before_action :authenticate_user!, except: [:membership, :show]
+  before_action :load_committee, only: [:show, :edit, :update, :destroy]
+  before_action :set_committee_breadcrumb, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_committee, only: [:show, :edit, :update, :destroy]
 
   # GET /committees
   # GET /committees.json
   def index
     add_breadcrumb "Committees"
     @committees = Committee.all
+    authorize Committee
 
     respond_to do |format|
       format.html # index.html.erb
@@ -19,7 +20,7 @@ class CommitteesController < ApplicationController
   def show
     @proposals = []
     @committee.proposals.each do |p|
-      if can? :read, p
+      if policy(p).show?
         @proposals += [p]
       end
     end
@@ -35,6 +36,7 @@ class CommitteesController < ApplicationController
   def new
     add_breadcrumb "New Committee"
     @committee = Committee.new
+    authorize @committee
 
     respond_to do |format|
       format.html # new.html.erb
@@ -49,6 +51,8 @@ class CommitteesController < ApplicationController
   # POST /committees
   # POST /committees.json
   def create
+    @committee = Committee.new(committee_params)
+    authorize @committee
     respond_to do |format|
       if @committee.save
         format.html { redirect_to committees_path, notice: 'Committee was successfully created.' }
@@ -88,6 +92,7 @@ class CommitteesController < ApplicationController
 
   def membership
     add_breadcrumb "Committee Members"
+    authorize Committee
     @committees = Committee.includes(:committee_members).all
     @users = User.all
   end
@@ -102,4 +107,7 @@ class CommitteesController < ApplicationController
     @committee = Committee.find(params[:id])
   end
 
+  def authorize_committee
+    authorize @committee
+  end
 end
