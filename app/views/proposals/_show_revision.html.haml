@@ -54,15 +54,17 @@ on #{@proposal.submit_date}
       |
 %br
 - # Display Voting Options
-- if not @vote.nil?
-  - if not @vote.new_record?
+- if policy(@vote).create?
+  - # this user is allowed to vote
+  - if @my_vote.present?
     - # if vote already exists for this user
     %b You have already voted:
     %strong.status_message
-      = @vote.vote
+      = @my_vote.vote
     %br
   - else
     = render :partial => "/votes/form", :object => @vote
+
 = render :partial => "/proposals/proposal_details", :locals => {:proposal => @proposal, :revision => @revision }
 %hr
 %h3 Discussion

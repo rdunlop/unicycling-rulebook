@@ -109,7 +109,7 @@ describe VotesController, type: :controller do
       it "should not be possible to create a vote" do
         expect {
           post :create, {vote: valid_attributes, proposal_id: @proposal.id}
-        }.to change(Vote, :count).by(0)
+        }.to raise_error(Pundit::NotAuthorizedError)
       end
     end
 

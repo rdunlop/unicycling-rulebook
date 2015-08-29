@@ -65,19 +65,23 @@ describe ProposalsController, type: :controller do
     it "should not have a vote object by default" do
       proposal = FactoryGirl.create(:proposal)
       get :show, {id: proposal.to_param}
-      expect(assigns(:vote)).to eq(nil)
+      expect(assigns(:my_vote)).to eq(nil)
+      expect(assigns(:vote)).to be_a_new(Vote)
     end
+
     it "should have a blank vote object when in Voting" do
       proposal = FactoryGirl.create(:proposal, status: 'Voting', committee: committee)
       get :show, {id: proposal.to_param}
       expect(assigns(:vote)).to be_a_new(Vote)
     end
+
     it "should have the existing vote object for this user" do
       proposal = FactoryGirl.create(:proposal, status: 'Voting', committee: committee)
       vote = FactoryGirl.create(:vote, proposal: proposal, user: @admin_user)
       get :show, {id: proposal.to_param}
       expect(assigns(:vote)).to eq(vote)
     end
+
     it "should be able to see 'Review' proposal when not logged in" do
       proposal = FactoryGirl.create(:proposal)
       sign_out @admin_user

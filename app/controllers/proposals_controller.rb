@@ -20,26 +20,16 @@ class ProposalsController < ApplicationController
   end
 
   # GET /proposals/1
-  # GET /proposals/1.json
   def show
     @proposal = Proposal.find(params[:id])
 
     set_proposal_breadcrumb
 
-    @proposal.votes.each do |v|
-      if v.user == current_user
-        @vote = v
-      end
-    end
-    if can? :vote, @proposal
-      if @vote.nil?
-        @vote = @proposal.votes.new
-      end
-    end
+    @my_vote = @proposal.votes.find_by(user: current_user)
+    @vote = @my_vote || @proposal.votes.new
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @proposal }
     end
   end
 

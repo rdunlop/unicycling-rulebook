@@ -37,7 +37,6 @@ class Ability
       # (even administrators can't vote if not a voting member with proposal in 'voting' status)
       cannot :vote, Proposal
 
-      can :manage, Vote
       can :manage, Revision
       can :manage, User
       can :manage, Rulebook
@@ -58,9 +57,6 @@ class Ability
     # Only voting members can vote
     can :vote, Proposal do |proposal|
       proposal.status == 'Voting' and user.voting_member(proposal.committee)
-    end
-    can :create, Vote do |vote|
-      vote.proposal.status == 'Voting' and user.voting_member(vote.proposal.committee)
     end
 
     # You must be a voting member in a committee in order to be able to create a Proposal
@@ -109,10 +105,6 @@ class Ability
 
     can :update, Proposal do |proposal|
       user.is_committee_admin(proposal.committee)
-    end
-
-    can :read, Vote do |vote|
-      user.is_committee_admin(vote.proposal.committee)
     end
 
     can [:set_review], Proposal do |proposal|
