@@ -39,15 +39,15 @@ class ApplicationPolicy
   private
 
   def admin?
-    user.admin?
+    user && user.admin?
   end
 
   def committee_admin?(committee = nil)
-    user.is_committee_admin(committee)
+    user && user.is_committee_admin(committee)
   end
 
   def committee_editor?(committee = nil)
-    user.is_committee_editor(committee)
+    user && user.is_committee_editor(committee)
   end
 
   def scope

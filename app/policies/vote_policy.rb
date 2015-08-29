@@ -5,6 +5,7 @@ class VotePolicy < ApplicationPolicy
   end
 
   def create?
+    return false unless user
     # policy(record.proposal).vote?
     record.proposal.status == 'Voting' && user.voting_member(record.proposal.committee)
   end
