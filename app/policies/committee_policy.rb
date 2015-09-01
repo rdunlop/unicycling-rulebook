@@ -25,17 +25,17 @@ class CommitteePolicy < ApplicationPolicy
   end
 
   def create_proposal?
-    if proposals_allowed? || user.is_committee_admin(record)
-      user.voting_member(record)
+    if proposals_allowed? || (user && committee_admin?(record))
+      voting_member?(record)
     end
   end
 
   def create_discussion?
-    user.is_in_committee(record)
+    in_committee?(record)
   end
 
   def read_usernames?
-    user.is_in_committee(record)
+    in_committee?(record)
   end
 
   private

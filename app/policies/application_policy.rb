@@ -50,6 +50,14 @@ class ApplicationPolicy
     user && user.is_committee_editor(committee)
   end
 
+  def in_committee?(committee)
+    user && user.is_in_committee(committee)
+  end
+
+  def voting_member?(committee)
+    user && user.voting_member(committee)
+  end
+
   def scope
     Pundit.policy_scope!(user, record.class)
   end
