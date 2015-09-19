@@ -30,7 +30,7 @@ class Rulebook < ActiveRecord::Base
   end
 
   def self.current_rulebook
-    find_by(subdomain: Apartment::Tenant.current) || Rulebook.first || Rulebook.new
+    find_by(subdomain: Apartment::Tenant.current)
   end
 
   def self.find_first_by_hostname(hostname)

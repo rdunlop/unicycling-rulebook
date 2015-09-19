@@ -1,6 +1,6 @@
 class AllRulebooksListPolicy < ApplicationPolicy
 
   def show?
-    admin?
+    true
   end
 end

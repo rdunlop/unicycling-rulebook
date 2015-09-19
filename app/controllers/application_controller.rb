@@ -36,7 +36,12 @@ class ApplicationController < ActionController::Base
   end
 
   def load_config
-    @config = self.class.get_current_config
+    @config = Rulebook.current_rulebook
+
+    # if there is no subdomain specified, redirect to the 'choose-subdomain' page
+    if @config.nil? && !(controller_name == "welcome" && action_name == "index_all")
+      redirect_to welcome_index_all_path
+    end
   end
 
   def set_base_breadcrumb
