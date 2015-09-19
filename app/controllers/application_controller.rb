@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
     @config = Rulebook.current_rulebook
 
     # if there is no subdomain specified, redirect to the 'choose-subdomain' page
-    if @config.nil? && !(controller_name == "welcome" && action_name == "index_all")
+    if @config.nil? && !(controller_name == "welcome" && (action_name == "index_all" || action_name == "new_location"))
       redirect_to welcome_index_all_path
     end
   end

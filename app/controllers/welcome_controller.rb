@@ -17,6 +17,7 @@ class WelcomeController < ApplicationController
   # tells the user that we have moved the rulebook to its own server
   def new_location
     @rulebook = Rulebook.find_by(subdomain: params[:rulebook_slug])
+    render layout: "global"
   end
 
   def help
