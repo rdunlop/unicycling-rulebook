@@ -1,3 +1,4 @@
+- USE SES
 Amazon Ec2 installation:
 - yum update
 - yum groupinstall "Development Tools" (may not be required)
