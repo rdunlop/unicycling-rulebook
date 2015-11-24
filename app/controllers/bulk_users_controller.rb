@@ -7,7 +7,6 @@ class BulkUsersController < ApplicationController
   end
 
   def create
-
     good_emails = []
     bad_emails = []
 

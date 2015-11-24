@@ -169,8 +169,8 @@ describe RevisionsController, type: :controller do
       end
       it "should set the review_start_date and review_end_date" do
         post :create, {revision: valid_attributes, proposal_id: @proposal.id}
-        expect((assigns(:proposal).review_start_date - DateTime.now()) * 1.days).to be < 1
-        expect((assigns(:proposal).review_end_date - DateTime.now()) * 1.days).to be > 2
+        expect((assigns(:proposal).review_start_date - DateTime.now()) * 1.day).to be < 1
+        expect((assigns(:proposal).review_end_date - DateTime.now()) * 1.day).to be > 2
       end
     end
   end

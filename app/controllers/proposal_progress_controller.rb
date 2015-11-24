@@ -4,7 +4,6 @@ class ProposalProgressController < ApplicationController
 
   # PUT /proposals/1/set_voting
   def set_voting
-
     if @proposal.transition_to("Voting")
       InformCommitteeMembers.proposal_call_for_voting(@proposal)
       redirect_to @proposal, notice: 'Proposal is now in the voting stage.'
@@ -16,7 +15,6 @@ class ProposalProgressController < ApplicationController
 
   # PUT /proposals/1/set_review
   def set_review
-
     was_tabled = @proposal.status == 'Tabled'
 
     if @proposal.transition_to("Review")
@@ -30,7 +28,6 @@ class ProposalProgressController < ApplicationController
 
   # PUT /proposals/1/set_pre_voting
   def set_pre_voting
-
     if @proposal.transition_to("Pre-Voting")
       @proposal.votes.delete_all
       redirect_to @proposal, notice: 'Proposal is now in the Pre-Voting stage. All votes have been deleted'
@@ -42,7 +39,6 @@ class ProposalProgressController < ApplicationController
 
   # PUT /proposals/1/table
   def table
-
     if @proposal.transition_to("Tabled")
       redirect_to @proposal, notice: 'Proposal has been Set-Aside'
     else
@@ -74,5 +70,4 @@ class ProposalProgressController < ApplicationController
   def revision_params
     params.require(:revision).permit(:rule_text, :body, :change_description, :background, :references)
   end
-
 end

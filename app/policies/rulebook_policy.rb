@@ -1,5 +1,4 @@
 class RulebookPolicy < ApplicationPolicy
-
   def show?
     admin?
   end

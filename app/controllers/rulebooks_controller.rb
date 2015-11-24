@@ -15,7 +15,6 @@ class RulebooksController < ApplicationController
 
   # GET /rulebooks/1
   def show
-
     respond_to do |format|
       format.html # show.html.erb
     end
@@ -57,5 +56,4 @@ class RulebooksController < ApplicationController
   def load_rulebook
     @rulebook = Rulebook.find(params[:id])
   end
-
 end

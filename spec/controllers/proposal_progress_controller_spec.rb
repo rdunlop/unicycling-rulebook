@@ -42,7 +42,7 @@ describe ProposalProgressController, type: :controller do
     it "changes the status to voting" do
       proposal = FactoryGirl.create(:proposal, :with_admin, status: "Pre-Voting")
 
-      put :set_voting, {id: proposal.to_param}
+      put :set_voting, id: proposal.to_param
 
       expect(response).to redirect_to(proposal_path(proposal))
       proposal = Proposal.find(proposal.id)
@@ -54,7 +54,7 @@ describe ProposalProgressController, type: :controller do
     it "should not be allowed to change unless the status is Pre-Voting" do
       proposal = FactoryGirl.create(:proposal, :with_admin, status: "Tabled")
 
-      put :set_voting, {id: proposal.to_param}
+      put :set_voting, id: proposal.to_param
 
       expect(response).to redirect_to(root_path)
       proposal = Proposal.find(proposal.id)
@@ -64,7 +64,7 @@ describe ProposalProgressController, type: :controller do
       proposal = FactoryGirl.create(:proposal, :with_admin, status: "Pre-Voting")
       ActionMailer::Base.deliveries.clear
 
-      put :set_voting, {id: proposal.to_param}
+      put :set_voting, id: proposal.to_param
       num_deliveries = ActionMailer::Base.deliveries.size
       expect(num_deliveries).to eq(1)
     end
@@ -77,7 +77,7 @@ describe ProposalProgressController, type: :controller do
         sign_in @cm_admin_user
       end
       it "should be able to set_voting" do
-        put :set_voting, {id: @proposal.to_param}
+        put :set_voting, id: @proposal.to_param
 
         expect(response).to redirect_to(proposal_path(@proposal))
       end
@@ -93,7 +93,7 @@ describe ProposalProgressController, type: :controller do
     it "changes the status to Review" do
       proposal = @proposal
 
-      put :set_review, {id: proposal.to_param}
+      put :set_review, id: proposal.to_param
 
       expect(response).to redirect_to(proposal_path(proposal))
       proposal = Proposal.find(proposal.id)
@@ -105,7 +105,7 @@ describe ProposalProgressController, type: :controller do
       proposal = @proposal
       ActionMailer::Base.deliveries.clear
 
-      put :set_review, {id: proposal.to_param}
+      put :set_review, id: proposal.to_param
 
       num_deliveries = ActionMailer::Base.deliveries.size
       expect(num_deliveries).to eq(1)
@@ -114,7 +114,7 @@ describe ProposalProgressController, type: :controller do
     it "changes the status to Review from Tabled status" do
       proposal = @proposal
 
-      put :set_review, {id: proposal.to_param}
+      put :set_review, id: proposal.to_param
 
       expect(response).to redirect_to(proposal_path(proposal))
       proposal = Proposal.find(proposal.id)
@@ -128,7 +128,7 @@ describe ProposalProgressController, type: :controller do
       @proposal.save
       proposal = @proposal
 
-      put :set_review, {id: proposal.to_param}
+      put :set_review, id: proposal.to_param
 
       expect(response).to redirect_to(root_path)
       proposal = Proposal.find(proposal.id)
@@ -142,7 +142,7 @@ describe ProposalProgressController, type: :controller do
         sign_in @cm_admin_user
       end
       it "should be able to set_review" do
-        put :set_review, {id: @proposal.to_param}
+        put :set_review, id: @proposal.to_param
 
         expect(response).to redirect_to(proposal_path(@proposal))
       end
@@ -157,7 +157,7 @@ describe ProposalProgressController, type: :controller do
         @proposal.save
         proposal = @proposal
 
-        put :set_review, {id: proposal.to_param}
+        put :set_review, id: proposal.to_param
 
         expect(response).to redirect_to(proposal_path(proposal))
         proposal.reload
@@ -175,7 +175,7 @@ describe ProposalProgressController, type: :controller do
     it "changes the status to Pre-Voting" do
       proposal = FactoryGirl.create(:proposal, status: "Voting")
 
-      put :set_pre_voting, {id: proposal.to_param}
+      put :set_pre_voting, id: proposal.to_param
 
       expect(response).to redirect_to(proposal_path(proposal))
       proposal = Proposal.find(proposal.id)
@@ -188,7 +188,7 @@ describe ProposalProgressController, type: :controller do
 
       expect(proposal.votes.count).to eq(1)
 
-      put :set_pre_voting, {id: proposal.to_param}
+      put :set_pre_voting, id: proposal.to_param
 
       expect(response).to redirect_to(proposal_path(proposal))
       proposal = Proposal.find(proposal.id)
@@ -199,7 +199,7 @@ describe ProposalProgressController, type: :controller do
     it "should not be allowed to change unless the status is Voting" do
       proposal = FactoryGirl.create(:proposal, status: "Tabled")
 
-      put :set_pre_voting, {id: proposal.to_param}
+      put :set_pre_voting, id: proposal.to_param
 
       expect(response).to redirect_to(root_path)
       proposal = Proposal.find(proposal.id)
@@ -214,8 +214,7 @@ describe ProposalProgressController, type: :controller do
         sign_in @cm_admin_user
       end
       it "can set pre voting" do
-
-        put :set_pre_voting, {id: @proposal.to_param}
+        put :set_pre_voting, id: @proposal.to_param
 
         expect(response).to redirect_to(proposal_path(@proposal))
         @proposal.reload
@@ -232,7 +231,7 @@ describe ProposalProgressController, type: :controller do
     it "changes the status to Tabled from review" do
       proposal = FactoryGirl.create(:proposal, status: "Review")
 
-      put :table, {id: proposal.to_param}
+      put :table, id: proposal.to_param
 
       expect(response).to redirect_to(proposal_path(proposal))
       proposal = Proposal.find(proposal.id)
@@ -243,7 +242,7 @@ describe ProposalProgressController, type: :controller do
     it "changes the status to Tabled from Pre-Voting" do
       proposal = FactoryGirl.create(:proposal, status: "Pre-Voting")
 
-      put :table, {id: proposal.to_param}
+      put :table, id: proposal.to_param
 
       expect(response).to redirect_to(proposal_path(proposal))
       proposal = Proposal.find(proposal.id)
@@ -252,7 +251,7 @@ describe ProposalProgressController, type: :controller do
     it "should set the tabled_date" do
       proposal = FactoryGirl.create(:proposal, status: "Pre-Voting")
 
-      put :table, {id: proposal.to_param}
+      put :table, id: proposal.to_param
 
       proposal.reload
       expect(proposal.tabled_date).to eq(Date.today)
@@ -260,7 +259,7 @@ describe ProposalProgressController, type: :controller do
     it "does not allow changing to Tabled from Voting" do
       proposal = FactoryGirl.create(:proposal, status: "Voting")
 
-      put :table, {id: proposal.to_param}
+      put :table, id: proposal.to_param
 
       expect(response).to redirect_to root_path
       proposal = Proposal.find(proposal.id)
@@ -276,7 +275,7 @@ describe ProposalProgressController, type: :controller do
       it "can table a Submitted proposal" do
         proposal = FactoryGirl.create(:proposal, owner: @user, status: "Pre-Voting")
 
-        put :table, {id: proposal.to_param}
+        put :table, id: proposal.to_param
         proposal.reload
         expect(proposal.status).to eq("Tabled")
       end

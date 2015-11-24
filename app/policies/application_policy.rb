@@ -5,7 +5,7 @@ class ApplicationPolicy
     @user = user
     @record = record
 
-    #raise Pundit::NotAuthorizedError, "must be logged in" unless @user
+    # raise Pundit::NotAuthorizedError, "must be logged in" unless @user
   end
 
   def index?

@@ -1,9 +1,7 @@
 class RevisionPolicy < ApplicationPolicy
-
   def create?
     true
   end
-
 
   def show?
     return true if admin?

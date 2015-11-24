@@ -1,5 +1,4 @@
 class VotePolicy < ApplicationPolicy
-
   def show?
     admin_or_committee_admin?
   end

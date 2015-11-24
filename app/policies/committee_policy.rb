@@ -1,5 +1,4 @@
 class CommitteePolicy < ApplicationPolicy
-
   def index?
     true
   end

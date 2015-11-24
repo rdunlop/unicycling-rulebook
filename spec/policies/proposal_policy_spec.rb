@@ -56,5 +56,4 @@ describe ProposalPolicy do
       end
     end
   end
-
 end

@@ -1,5 +1,4 @@
 class CommitteeMemberPolicy < ApplicationPolicy
-
   def index?
     admin? || committee_admin?
   end
