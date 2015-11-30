@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 ruby "2.2.3"
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.5'
 
 # authorization
 gem 'devise'
@@ -28,7 +28,7 @@ gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 gem 'apartment'
 gem 'exception_notification'
-gem 'aws-sdk'
+gem 'aws-sdk-rails'
 gem 'mailjet'
 gem 'newrelic_rpm'
 
@@ -37,6 +37,7 @@ gem 'rake'
 gem 'pg'
 gem 'unicorn'
 gem 'redis-rails'
+gem 'redis-namespace'
 gem 'sidekiq'
 # if you require 'sinatra' you get the Sinatra DSL extended to Object
 gem 'sinatra', '>= 1.3.0', require: nil # necessary for sidekiq
@@ -54,8 +55,7 @@ gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
 group :development, :test, :cucumber do
   gem 'html2haml'
   gem 'consistency_fail'
-  gem 'better_errors'
-  gem "binding_of_caller"
+  gem 'web-console', '~> 2.0'
   gem 'brakeman'
   gem 'annotate'
   gem 'factory_girl_rails'
