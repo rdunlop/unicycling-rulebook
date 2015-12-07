@@ -37,11 +37,10 @@ RulebookApp::Application.routes.draw do
   end
   resources :bulk_users, only: [:index, :create]
 
-  devise_for :users, controllers: {confirmations: 'confirmations'}
-
-  devise_scope :user do
-    patch "/confirm" => "confirmations#confirm"
+  as :user do
+    patch '/user/confirmation' => 'confirmations#update', :via => :patch, :as => :update_user_confirmation
   end
+  devise_for :users, controllers: {confirmations: 'confirmations'}
 
   # this causes devise to direct just-signed-in-users to the welcome/index
   # get 'welcome/index' => "welcome#index", as: :user_root
