@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
-//= require chosen-jquery
+//= require select2
 //= require tinymce
 //= require_tree .
 //= require moment

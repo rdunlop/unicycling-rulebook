@@ -12,7 +12,7 @@ gem 'pundit'
 gem 'haml'
 gem 'momentjs-rails'
 gem 'tinymce-rails'
-gem 'chosen-rails'
+gem 'select2-rails'
 gem 'formtastic' # currently user for user-confirmation step only
 gem 'breadcrumbs_on_rails'
 gem 'sass-rails'
