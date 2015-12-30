@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: committees
+#
+#  id          :integer          not null, primary key
+#  name        :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  preliminary :boolean          default(TRUE), not null
+#
+
 class CommitteesController < ApplicationController
   before_action :authenticate_user!, except: [:membership, :show]
   before_action :load_committee, only: [:show, :edit, :update, :destroy]

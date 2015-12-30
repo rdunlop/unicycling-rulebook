@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: discussions
+#
+#  id           :integer          not null, primary key
+#  proposal_id  :integer
+#  title        :string(255)
+#  status       :string(255)
+#  owner_id     :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#  committee_id :integer
+#  body         :text
+#
+
 class DiscussionsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_committee, only: [:new, :create]

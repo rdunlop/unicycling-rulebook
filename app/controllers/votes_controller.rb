@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: votes
+#
+#  id          :integer          not null, primary key
+#  proposal_id :integer
+#  user_id     :integer
+#  vote        :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  comment     :text
+#
+
 class VotesController < ApplicationController
   before_action :authenticate_user!
   before_action :load_proposal

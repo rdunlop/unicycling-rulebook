@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: comments
+#
+#  id            :integer          not null, primary key
+#  user_id       :integer
+#  comment       :text
+#  created_at    :datetime
+#  updated_at    :datetime
+#  discussion_id :integer
+#
+
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_discussion

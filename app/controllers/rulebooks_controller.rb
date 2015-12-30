@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: public.rulebooks
+#
+#  id                 :integer          not null, primary key
+#  rulebook_name      :string(255)
+#  front_page         :text
+#  faq                :text
+#  created_at         :datetime
+#  updated_at         :datetime
+#  copyright          :string(255)
+#  subdomain          :string(255)
+#  admin_upgrade_code :string(255)
+#  proposals_allowed  :boolean          default(TRUE), not null
+#
+
 class RulebooksController < ApplicationController
   before_action :skip_authorization, only: [:new, :create, :index, :show]
   before_action :load_rulebook, only: [:show]
