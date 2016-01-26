@@ -333,7 +333,7 @@ GEM
     thread_safe (0.3.5)
     tilt (2.0.1)
     tins (1.6.0)
-    tinymce-rails (4.3.2)
+    tinymce-rails (4.3.3)
       railties (>= 3.1.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
