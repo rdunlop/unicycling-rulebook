@@ -27,13 +27,6 @@ class ProposalPolicy < ApplicationPolicy
     admin? || committee_admin?(record.committee)
   end
 
-  # Only voting members can vote
-  def vote?
-    return false unless user
-
-    record.status == 'Voting' && voting_member?(record.committee)
-  end
-
   def read_email?
     committee_admin?(record.committee) || record.try(:owner) == user || committee_editor?(record.committee)
   end

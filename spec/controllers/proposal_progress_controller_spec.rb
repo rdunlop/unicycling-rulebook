@@ -20,7 +20,7 @@ require 'spec_helper'
 
 describe ProposalProgressController, type: :controller do
   let(:committee) { FactoryGirl.create(:committee) }
-  before (:each) do
+  before do
     @user = FactoryGirl.create(:user)
     @admin_user = FactoryGirl.create(:admin_user)
     sign_in @admin_user
@@ -47,8 +47,8 @@ describe ProposalProgressController, type: :controller do
       expect(response).to redirect_to(proposal_path(proposal))
       proposal = Proposal.find(proposal.id)
       expect(proposal.status).to eq("Voting")
-      expect(proposal.vote_start_date).to eq(Date.today)
-      expect(proposal.vote_end_date - Date.today).to eq(7)
+      expect(proposal.vote_start_date).to eq(Date.current)
+      expect(proposal.vote_end_date - Date.current).to eq(7)
     end
 
     it "should not be allowed to change unless the status is Pre-Voting" do
@@ -98,8 +98,8 @@ describe ProposalProgressController, type: :controller do
       expect(response).to redirect_to(proposal_path(proposal))
       proposal = Proposal.find(proposal.id)
       expect(proposal.status).to eq("Review")
-      expect(proposal.review_start_date).to eq(Date.today)
-      expect(proposal.review_end_date - Date.today).to eq(10)
+      expect(proposal.review_start_date).to eq(Date.current)
+      expect(proposal.review_end_date - Date.current).to eq(10)
     end
     it "should send an e-mail" do
       proposal = @proposal
@@ -119,8 +119,8 @@ describe ProposalProgressController, type: :controller do
       expect(response).to redirect_to(proposal_path(proposal))
       proposal = Proposal.find(proposal.id)
       expect(proposal.status).to eq("Review")
-      expect(proposal.review_start_date).to eq(Date.today)
-      expect(proposal.review_end_date - Date.today).to eq(10)
+      expect(proposal.review_start_date).to eq(Date.current)
+      expect(proposal.review_end_date - Date.current).to eq(10)
     end
 
     it "should not be allowed to change unless the status is Submitted" do
@@ -184,7 +184,7 @@ describe ProposalProgressController, type: :controller do
 
     it "changes the status to Pre-Voting should remove any votes" do
       proposal = FactoryGirl.create(:proposal, status: "Voting")
-      vote = FactoryGirl.create(:vote, proposal: proposal)
+      FactoryGirl.create(:vote, proposal: proposal)
 
       expect(proposal.votes.count).to eq(1)
 
@@ -236,7 +236,7 @@ describe ProposalProgressController, type: :controller do
       expect(response).to redirect_to(proposal_path(proposal))
       proposal = Proposal.find(proposal.id)
       expect(proposal.status).to eq("Tabled")
-      proposal.tabled_date == Date.today
+      proposal.tabled_date == Date.current
     end
 
     it "changes the status to Tabled from Pre-Voting" do
@@ -254,7 +254,7 @@ describe ProposalProgressController, type: :controller do
       put :table, id: proposal.to_param
 
       proposal.reload
-      expect(proposal.tabled_date).to eq(Date.today)
+      expect(proposal.tabled_date).to eq(Date.current)
     end
     it "does not allow changing to Tabled from Voting" do
       proposal = FactoryGirl.create(:proposal, status: "Voting")

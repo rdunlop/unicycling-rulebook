@@ -24,9 +24,9 @@ class CommitteePolicy < ApplicationPolicy
   end
 
   def create_proposal?
-    if proposals_allowed? || (user && committee_admin?(record))
-      voting_member?(record)
-    end
+    return false unless proposals_allowed? || (user && committee_admin?(record))
+
+    voting_member?(record)
   end
 
   def create_discussion?
