@@ -41,7 +41,7 @@ gem 'redis-namespace'
 gem 'sidekiq'
 # if you require 'sinatra' you get the Sinatra DSL extended to Object
 gem 'sinatra', '>= 1.3.0', require: nil # necessary for sidekiq
-gem 'apartment-sidekiq'
+gem 'apartment-sidekiq', '= 0.2.0' # upgrading to 1.0.0 caused ActiveRecord::ConnectionTimeoutError
 gem 'whenever'
 
 # deployment
