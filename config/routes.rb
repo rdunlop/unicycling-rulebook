@@ -36,6 +36,7 @@ RulebookApp::Application.routes.draw do
     resources :proposals, only: [:new, :create]
   end
   resources :bulk_users, only: [:index, :create]
+  resources :statistics, only: :index
 
   as :user do
     patch '/user/confirmation' => 'confirmations#update', :via => :patch, :as => :update_user_confirmation

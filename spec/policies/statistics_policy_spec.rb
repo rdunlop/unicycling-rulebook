@@ -1,0 +1,14 @@
+require "spec_helper"
+
+describe StatisticsPolicy do
+  let(:user) { FactoryGirl.create(:user) }
+  let(:admin) { FactoryGirl.create(:admin_user) }
+
+  let(:subject) { described_class }
+  let(:committee) { FactoryGirl.create :committee }
+
+  permissions :index? do
+    it { expect(subject).to permit(admin) }
+    it { expect(subject).not_to permit(user) }
+  end
+end

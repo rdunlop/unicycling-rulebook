@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
   has_many :committee_members, inverse_of: :user
   has_many :committees, through: :committee_members
   has_many :votes
+  has_many :discussion_comments, class_name: "Comment"
 
   scope :admin, -> { where(admin: true) }
   scope :email_notifications, -> { where(no_emails: false).where.not(confirmed_at: nil) }

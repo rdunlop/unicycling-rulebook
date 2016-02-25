@@ -366,7 +366,7 @@ PLATFORMS
 DEPENDENCIES
   annotate
   apartment
-  apartment-sidekiq
+  apartment-sidekiq (= 0.2.0)
   aws-sdk-rails
   brakeman
   breadcrumbs_on_rails
@@ -416,4 +416,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.10.6
+   1.11.2

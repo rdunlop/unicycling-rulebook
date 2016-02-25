@@ -1,0 +1,16 @@
+%h1 User Statistics
+
+%table
+  %thead
+    %tr
+      %th User Name
+      %th Email
+      %th # Votes
+      %th # Comments
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= user.name
+        %td= user.email
+        %td= user.votes.size
+        %td= user.discussion_comments.size

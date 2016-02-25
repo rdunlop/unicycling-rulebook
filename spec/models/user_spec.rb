@@ -83,6 +83,15 @@ describe User, type: :model do
     expect(u).to be_valid
   end
 
+  context "with discussion comments" do
+    let(:user) { FactoryGirl.create(:user) }
+    let!(:discussion_comment) { FactoryGirl.create(:comment, user: user) }
+
+    it "returns the discussion comments" do
+      expect(user.discussion_comments).to match_array([discussion_comment])
+    end
+  end
+
   it "should be able to be created with comments" do
     user = User.new({name: "Robin",
                      email: "email@robin.com",
