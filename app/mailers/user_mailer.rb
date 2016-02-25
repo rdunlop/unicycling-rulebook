@@ -5,11 +5,11 @@ class UserMailer < TenantAwareMailer
     if from_email.nil?
       from_email = "unicycling@dunlopweb.com"
     end
-    if from_name.nil?
-      from_string = from_email
-    else
-      from_string = "\"#{from_name}\" <#{from_email}>"
-    end
+    from_string = if from_name.nil?
+                    from_email
+                  else
+                    "\"#{from_name}\" <#{from_email}>"
+                  end
     from_string
   end
 

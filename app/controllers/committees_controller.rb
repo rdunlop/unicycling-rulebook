@@ -35,11 +35,11 @@ class CommitteesController < ApplicationController
         @proposals += [p]
       end
     end
-    if user_signed_in?
-      @user_votes = current_user.votes
-    else
-      @user_votes = []
-    end
+    @user_votes = if user_signed_in?
+                    current_user.votes
+                  else
+                    []
+                  end
   end
 
   # GET /committees/new

@@ -47,7 +47,7 @@ describe Vote, type: :model do
   end
 
   it "should display a summary" do
-    date =  DateTime.new(2012, 1, 10, 11, 45, 0, '-6:00')
+    date = DateTime.new(2012, 1, 10, 11, 45, 0, '-6:00')
 
     user = FactoryGirl.create(:user, email: 'robin@dunlopweb.com', name: "Robin Dunlop")
     vote = FactoryGirl.create(:vote, vote: 'agree', comment: "my comment", user: user,

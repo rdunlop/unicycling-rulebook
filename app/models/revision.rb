@@ -25,11 +25,11 @@ class Revision < ActiveRecord::Base
   before_validation :determine_num
 
   def determine_num
-    if proposal.nil? or proposal.new_record?
-      self.num = 1
-    else
-      self.num = proposal.revisions.count + 1
-    end
+    self.num = if proposal.nil? or proposal.new_record?
+                 1
+               else
+                 proposal.revisions.count + 1
+               end
   end
 
 

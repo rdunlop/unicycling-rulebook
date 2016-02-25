@@ -3,13 +3,13 @@ require 'spec_helper'
 describe "rulebooks/index", type: :view do
   before(:each) do
     assign(:rulebooks, [
-      FactoryGirl.build_stubbed(:rulebook,
-        rulebook_name: "Rulebook Name",
-        front_page: "Front Page",
-        faq: "Faq",
-        copyright: "My Copy"
-      )
-    ])
+             FactoryGirl.build_stubbed(:rulebook,
+               rulebook_name: "Rulebook Name",
+               front_page: "Front Page",
+               faq: "Faq",
+               copyright: "My Copy"
+             )
+           ])
   end
 
   it "renders a list of rulebooks" do

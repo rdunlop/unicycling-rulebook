@@ -5,11 +5,11 @@ class InformCommitteeMembers
   # and those who have opted out
   #
   def self.comment_added(comment)
-    if comment.discussion.try(:proposal).try(:status) == "Submitted"
-      emails = committee_admin_members_emails(comment.discussion.committee, comment.user.email)
-    else
-      emails = committee_members_emails(comment.discussion.committee, comment.user.email)
-    end
+    emails = if comment.discussion.try(:proposal).try(:status) == "Submitted"
+               committee_admin_members_emails(comment.discussion.committee, comment.user.email)
+             else
+               committee_members_emails(comment.discussion.committee, comment.user.email)
+             end
 
     Rails.logger.warn "Comment added, sending comment #{comment.id} to #{emails}"
     UserMailer.delay.discussion_comment_added(comment, emails) unless emails.none?
@@ -19,11 +19,11 @@ class InformCommitteeMembers
   # except the originator
   # If the proposal is in "Submitted" state, only inform the committee admins, not regular users
   def self.proposal_revised(revision)
-    if revision.proposal.status == "Submitted"
-      emails = committee_admin_members_emails(revision.proposal.committee, revision.user.email)
-    else
-      emails = committee_members_emails(revision.proposal.committee, revision.user.email)
-    end
+    emails = if revision.proposal.status == "Submitted"
+               committee_admin_members_emails(revision.proposal.committee, revision.user.email)
+             else
+               committee_members_emails(revision.proposal.committee, revision.user.email)
+             end
 
     UserMailer.delay.proposal_revised(revision, emails) unless emails.none?
   end

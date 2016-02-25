@@ -551,7 +551,11 @@ Style/SymbolProc:
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleForMultiline, SupportedStyles.
-Style/TrailingComma:
+Style/TrailingCommaInArguments:
+  Exclude:
+    - 'lib/tasks/auto_annotate_models.rake'
+
+Style/TrailingCommaInLiteral:
   Exclude:
     - 'lib/tasks/auto_annotate_models.rake'
 
