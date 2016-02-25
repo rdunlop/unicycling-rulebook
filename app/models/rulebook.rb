@@ -22,7 +22,7 @@ class Rulebook < ActiveRecord::Base
   end
 
   def copyright_description
-    copyright || "#{Date.today.year} International Unicycling Federation"
+    copyright || "#{Date.current.year} International Unicycling Federation"
   end
 
   def url

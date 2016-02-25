@@ -185,7 +185,7 @@ describe ProposalsController, type: :controller do
       end
       it "sets the submit_date when created" do
         post :create, {committee_id: committee.id, proposal: valid_attributes, revision: @valid_revision_attributes}
-        expect(assigns(:proposal).submit_date).to eq(Date.today)
+        expect(assigns(:proposal).submit_date).to eq(Date.current)
       end
       it "sends an e-mail when a new submission is created" do
         ActionMailer::Base.deliveries.clear
@@ -225,10 +225,10 @@ describe ProposalsController, type: :controller do
       end
       it "can update all of the fields" do
         proposal = FactoryGirl.create(:proposal)
-        review_start_date = Date.today
-        review_end_date = Date.today.next_day(1)
-        vote_start_date = Date.today.next_month(1)
-        vote_end_date = Date.today.next_day(1).next_month(1)
+        review_start_date = Date.current
+        review_end_date = Date.current.next_day(1)
+        vote_start_date = Date.current.next_month(1)
+        vote_end_date = Date.current.next_day(1).next_month(1)
         attrs = {   title: "some",
                     committee_id: proposal.committee,
                     status: "Review",

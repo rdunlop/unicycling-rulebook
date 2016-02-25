@@ -219,7 +219,7 @@ describe Proposal, type: :model do
   describe "with existing Review+Submitted proposals" do
     before(:each) do
       # review proposal which will be advanced
-      @p1 = FactoryGirl.create(:proposal, status: 'Review', review_end_date: Date.today.prev_day(1))
+      @p1 = FactoryGirl.create(:proposal, status: 'Review', review_end_date: Date.current.prev_day(1))
       @r1 = FactoryGirl.create(:revision, proposal: @p1)
 
       # submitted proposal which will not be advanced
@@ -227,7 +227,7 @@ describe Proposal, type: :model do
       @r2 = FactoryGirl.create(:revision, proposal: @p2)
 
       # review proposal which will NOT be advanced (due to date)
-      @p3 = FactoryGirl.create(:proposal, status: 'Review', review_end_date: Date.today)
+      @p3 = FactoryGirl.create(:proposal, status: 'Review', review_end_date: Date.current)
       @r3 = FactoryGirl.create(:revision, proposal: @p3)
 
       ActionMailer::Base.deliveries.clear
@@ -259,11 +259,11 @@ describe Proposal, type: :model do
   describe "with 'Voting' proposals" do
     before(:each) do
       # voting proposal which will NOT be advanced (due to date)
-      @p4 = FactoryGirl.create(:proposal, status: 'Voting', vote_end_date: Date.today)
+      @p4 = FactoryGirl.create(:proposal, status: 'Voting', vote_end_date: Date.current)
       @r4 = FactoryGirl.create(:revision, proposal: @p4)
 
       # voting proposal which will be failed (due to no votes)
-      @p5 = FactoryGirl.create(:proposal, status: 'Voting', vote_end_date: Date.today.prev_day(1))
+      @p5 = FactoryGirl.create(:proposal, status: 'Voting', vote_end_date: Date.current.prev_day(1))
       @r5 = FactoryGirl.create(:revision, proposal: @p5)
 
       FactoryGirl.create(:committee_member, committee: @p4.committee)

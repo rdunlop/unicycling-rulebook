@@ -9,7 +9,7 @@ class ProposalCreator
 
     @proposal.owner = user
     @revision.user = user
-    @proposal.submit_date = Date.today
+    @proposal.submit_date = Date.current
     @proposal.status = "Submitted"
   end
 

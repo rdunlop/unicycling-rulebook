@@ -69,6 +69,9 @@ group :development, :test, :cucumber do
   gem 'rubocop', require: false
 end
 
+group :test do
+  gem 'rspec_junit_formatter', '0.2.2' # locked to 0.2.2 as per circleCI https://circleci.com/docs/test-metadata
+end
 
 gem 'jquery-rails'
 

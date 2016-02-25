@@ -14,7 +14,7 @@ class TabledState < BaseState
   can_transition_to "Review"
 
   def on_enter
-    proposal.tabled_date = Date.today()
+    proposal.tabled_date = Date.current
   end
 
   def state_name

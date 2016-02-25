@@ -43,10 +43,10 @@ class Proposal < ActiveRecord::Base
 
   def self.update_proposal_states
     Proposal.all.each do |proposal|
-      if proposal.status == 'Review' and proposal.review_end_date < Date.today
+      if proposal.status == 'Review' and proposal.review_end_date < Date.current
         proposal.update_attribute(:status, 'Pre-Voting')
         UserMailer.delay.proposal_finished_review(proposal)
-      elsif proposal.status == 'Voting' && (proposal.vote_end_date < Date.today || proposal.all_voting_members_voted)
+      elsif proposal.status == 'Voting' && (proposal.vote_end_date < Date.current || proposal.all_voting_members_voted)
         if proposal.have_voting_quorum && proposal.at_least_two_thirds_agree
           proposal.update_attribute(:status, 'Passed')
         else
