@@ -60,6 +60,7 @@ group :development, :test, :cucumber do
   gem 'annotate'
   gem 'factory_girl_rails'
   gem 'rspec-rails'
+  gem 'codeclimate_circle_ci_coverage'
   gem 'capybara'
   gem 'spork'
   gem 'syntax'
