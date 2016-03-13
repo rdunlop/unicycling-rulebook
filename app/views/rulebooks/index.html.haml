@@ -9,7 +9,7 @@
   - @rulebooks.each do |rulebook|
     %tr
       %td= rulebook.rulebook_name
-      %td= rulebook.subdomain
+      %td= link_to rulebook.subdomain, rulebook.url
       %td= l rulebook.created_at
       %td= link_to 'Show', rulebook
 
