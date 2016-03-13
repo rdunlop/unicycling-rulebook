@@ -1,5 +1,4 @@
 RulebookApp::Application.routes.draw do
-
   resources :rulebooks, only: [:index, :new, :create, :show]
 
   require 'sidekiq/web'
@@ -98,6 +97,7 @@ RulebookApp::Application.routes.draw do
   #     resources :products
   #   end
 
+  get "/new", to: redirect("/rulebooks")
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   get '/r/:rulebook_slug/(*other)' => "welcome#new_location" #}redirect("/r/%{rulebook_slug}/welcome/index") # to match /en  to send to /en/welcome

@@ -1,13 +1,16 @@
-%h1 Configure Rulebook Application
+%h1 Existing Rulebook Applications
+
 %table
   %tr
     %th Rulebook name
     %th Subdomain
+    %th Creation date
     %th
   - @rulebooks.each do |rulebook|
     %tr
       %td= rulebook.rulebook_name
       %td= rulebook.subdomain
+      %td= l rulebook.created_at
       %td= link_to 'Show', rulebook
 
 %br

@@ -15,13 +15,9 @@
         %th Explanation
     %tbody
       %tr
-        %td= label_tag :access_code, "Rulebook Creation Access Code"
-        %td= text_field_tag :access_code
-        %td This is necessary to submit this form successfully (get this from the site admin)
-      %tr
         %td= f.label :admin_upgrade_code
         %td= f.text_field :admin_upgrade_code
-        %td Specify the code you want to use to upgrade your user account to an Admin account
+        %td Specify the code you will need to enter to upgrade your user account to an Admin account from the "Account Settings" page.
       %tr
         %td= f.label :rulebook_name
         %td= f.text_field :rulebook_name
@@ -42,5 +38,9 @@
         %td= f.label :copyright
         %td= f.text_field :copyright, class: "js--wysiwyg"
         %td Copyright footer
+      %tr
+        %td.creation_code_field= label_tag :access_code, "Rulebook Creation Access Code"
+        %td.creation_code_field= text_field_tag :access_code
+        %td.creation_code_field This is necessary to submit this form successfully (get this from an IUF board member)
   .actions
     = f.submit
