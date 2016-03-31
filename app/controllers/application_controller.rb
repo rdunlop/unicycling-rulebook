@@ -48,10 +48,6 @@ class ApplicationController < ActionController::Base
     add_breadcrumb @config.rulebook_name, root_url if @config
   end
 
-  def self.get_current_config
-    Rulebook.current_rulebook
-  end
-
   def current_ablity
     current_user.ability
   end

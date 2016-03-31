@@ -16,10 +16,8 @@ class InformAdminUsers
     end
   end
 
-
-  private
-
   def self.admin_emails
     User.admin.email_notifications.map(&:email)
   end
+  private_class_method :admin_emails
 end

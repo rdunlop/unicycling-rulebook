@@ -1,5 +1,4 @@
 class InformCommitteeMembers
-
   # Send e-mail to all committee members
   # except the originator
   # and those who have opted out
@@ -52,7 +51,6 @@ class InformCommitteeMembers
     emails = all_possible_emails - already_voted_emails
     emails = emails - non_voting_emails
 
-
     UserMailer.delay.vote_submitted(vote, emails) unless emails.none?
   end
 
@@ -74,8 +72,6 @@ class InformCommitteeMembers
     UserMailer.delay.discussion_created(discussion, emails) unless emails.none?
   end
 
-  private
-
   def self.committee_members_emails(committee, exclude)
     committee.committee_members.merge(User.email_notifications).map(&:user).map(&:email) - [exclude]
   end
@@ -83,4 +79,6 @@ class InformCommitteeMembers
   def self.committee_admin_members_emails(committee, exclude)
     committee.committee_members.admin.merge(User.email_notifications).map(&:user).map(&:email) - [exclude]
   end
+  private_class_method :committee_members_emails
+  private_class_method :committee_admin_members_emails
 end
