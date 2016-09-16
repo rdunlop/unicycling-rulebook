@@ -6,8 +6,7 @@ describe "rulebooks/show", type: :view do
       rulebook_name: "Rulebook Name",
       front_page: "Front Page",
       faq: "Faq",
-      copyright: "Some Copy"
-    ))
+      copyright: "Some Copy"))
   end
 
   it "renders attributes in <p>" do

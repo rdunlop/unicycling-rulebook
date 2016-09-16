@@ -46,8 +46,7 @@ describe VotesController, type: :controller do
   # update the return value of this method accordingly.
   def valid_attributes
     { vote: 'agree',
-      comment: ''
-    }
+      comment: ''}
   end
 
   describe "GET index" do

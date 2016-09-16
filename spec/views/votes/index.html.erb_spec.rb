@@ -6,7 +6,8 @@ describe "votes/index", type: :view do
     @user = FactoryGirl.create(:user)
     assign(:votes, [
         FactoryGirl.create(:vote, proposal: @proposal, user: @user),
-        FactoryGirl.create(:vote, proposal: @proposal)])
+        FactoryGirl.create(:vote, proposal: @proposal)
+])
   end
 
   it "renders a list of votes" do

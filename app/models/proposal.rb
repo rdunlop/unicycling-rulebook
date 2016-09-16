@@ -63,7 +63,7 @@ class Proposal < ActiveRecord::Base
   end
 
   def have_voting_quorum
-    return false if number_of_voting_members == 0
+    return false if number_of_voting_members.zero?
 
     (votes.count / number_of_voting_members.to_f) >= 0.50
   end

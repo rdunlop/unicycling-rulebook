@@ -6,8 +6,7 @@ describe "rulebooks/new", type: :view do
       rulebook_name: "MyString",
       front_page: "MyString",
       faq: "MyString",
-      copyright: "Robin Copy"
-    ))
+      copyright: "Robin Copy"))
   end
 
   it "renders new rulebook form" do

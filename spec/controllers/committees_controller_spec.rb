@@ -41,8 +41,7 @@ describe CommitteesController, type: :controller do
   # update the return value of this method accordingly.
   def valid_attributes
     { name: "MyName",
-      preliminary: false
-    }
+      preliminary: false}
   end
 
   describe "GET index" do

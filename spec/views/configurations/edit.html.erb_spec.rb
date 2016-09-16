@@ -6,8 +6,7 @@ describe "configurations/edit", type: :view do
       rulebook_name: "MyString",
       front_page: "MyString",
       faq: "MyString",
-      copyright: "My Copy"
-    ))
+      copyright: "My Copy"))
   end
 
   it "renders the edit rulebook form" do

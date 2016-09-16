@@ -35,7 +35,8 @@ describe ProposalProgressController, type: :controller do
   def valid_attributes
     {
         title: "My Title",
-        committee_id: committee.id}
+        committee_id: committee.id
+}
   end
 
   describe "PUT set_voting" do

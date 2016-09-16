@@ -8,7 +8,8 @@ describe "committees/show", type: :view do
       @proposals = [@proposal]
       assign(:votes, [
           FactoryGirl.create(:vote, proposal: @proposal),
-          FactoryGirl.create(:vote, proposal: @proposal)])
+          FactoryGirl.create(:vote, proposal: @proposal)
+])
       render
     end
     it "should find the proposal title" do

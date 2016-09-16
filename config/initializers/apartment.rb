@@ -17,7 +17,7 @@ Apartment.configure do |config|
   #
   # config.excluded_models = %w{Tenant}
   #
-  config.excluded_models = %w{ Rulebook }
+  config.excluded_models = %w{Rulebook}
 
   # use postgres schemas?
   config.use_schemas = true

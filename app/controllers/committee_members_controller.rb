@@ -57,7 +57,8 @@ class CommitteeMembersController < ApplicationController
           user_id: user,
           voting: params[:committee_member][:voting],
           admin: params[:committee_member][:admin],
-          editor: params[:committee_member][:editor])
+          editor: params[:committee_member][:editor]
+        )
         @committee_member.committee = @committee
         authorize @committee_member
         unless @committee_member.save

@@ -47,8 +47,7 @@ describe CommitteeMembersController, type: :controller do
     { user_id: [@user.id],
       admin: false,
       editor: false,
-      voting: true
-    }
+      voting: true}
   end
 
   describe "GET index" do

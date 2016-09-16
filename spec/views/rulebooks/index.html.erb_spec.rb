@@ -7,8 +7,7 @@ describe "rulebooks/index", type: :view do
                rulebook_name: "Rulebook Name",
                front_page: "Front Page",
                faq: "Faq",
-               copyright: "My Copy"
-             )
+               copyright: "My Copy")
            ])
   end
 

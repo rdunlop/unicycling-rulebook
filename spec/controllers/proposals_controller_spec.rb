@@ -55,7 +55,8 @@ describe ProposalsController, type: :controller do
   def valid_attributes
     {
         title: "My Title",
-        committee_id: committee.id}
+        committee_id: committee.id
+}
   end
 
   describe "GET passed" do
@@ -158,7 +159,8 @@ describe ProposalsController, type: :controller do
         @valid_revision_attributes = {
           background: "some background",
           body: "some body",
-          references: "some references"}
+          references: "some references"
+}
       end
       it "creates a new Proposal" do
         expect {

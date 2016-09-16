@@ -19,7 +19,8 @@ class MoveCommentsToDiscussion < ActiveRecord::Migration
         proposal_id: proposal.id,
         title: proposal.title,
         status: determine_status(proposal.status),
-        owner_id: proposal.owner_id)
+        owner_id: proposal.owner_id
+      )
       discussion.save!
       proposal.comments.each do |comment|
         comment.discussion = discussion
