@@ -4,6 +4,7 @@ describe "proposals/show", type: :view do
   before(:each) do
     @proposal = FactoryGirl.create(:proposal, title: "thetitle")
     @revision = FactoryGirl.create(:revision, proposal: @proposal, background: "thebackground")
+    @proposal.reload
     @discussion = FactoryGirl.create(:discussion, proposal: @proposal)
     @comment = @discussion.comments.new
     @vote = @proposal.votes.new
@@ -20,6 +21,7 @@ describe "proposals/show", type: :view do
     before(:each) do
       @proposal = FactoryGirl.create(:proposal, title: "thetitle", status: "Voting")
       @revision = FactoryGirl.create(:revision, proposal: @proposal, background: "thebackground")
+      @proposal.reload
       @discussion = FactoryGirl.create(:discussion, proposal: @proposal)
 
       @comment = @proposal.comments.new

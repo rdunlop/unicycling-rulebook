@@ -32,7 +32,6 @@ class Revision < ApplicationRecord
                end
   end
 
-
   def change_description_required_for_updates
     if not self.new_record?
       return

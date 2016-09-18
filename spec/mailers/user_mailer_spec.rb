@@ -6,6 +6,7 @@ describe UserMailer, type: :mailer do
     @discussion = FactoryGirl.create(:discussion, proposal: @proposal, committee: @proposal.committee)
     @comment = FactoryGirl.create(:comment, discussion: @discussion, comment: 'This is what I "Said"')
     FactoryGirl.create(:revision, proposal: @proposal, rule_text: "This is what I \"Like\" to do", body: "Sometimes I <link> somewhere")
+    @proposal.reload
     @user = @comment.user
 
     @committee = @proposal.committee

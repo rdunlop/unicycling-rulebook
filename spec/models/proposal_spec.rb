@@ -82,7 +82,7 @@ describe Proposal, type: :model do
 
   it "should have a latest_revision_number" do
     revision = FactoryGirl.create(:revision)
-    prop = revision.proposal
+    prop = revision.proposal.reload
 
     expect(prop.latest_revision_number).to eq(revision.num)
   end
@@ -91,7 +91,7 @@ describe Proposal, type: :model do
     rev1 = FactoryGirl.create(:revision, proposal: prop)
     rev2 = FactoryGirl.create(:revision, proposal: prop)
 
-    expect(prop.revisions).to eq([rev2, rev1])
+    expect(prop.reload.revisions).to eq([rev2, rev1])
   end
 
   describe "when checking the 'status_string'" do
@@ -141,6 +141,7 @@ describe Proposal, type: :model do
       @prop = FactoryGirl.create(:proposal)
       @rev1 = FactoryGirl.create(:revision, proposal: @prop)
       @rev2 = FactoryGirl.create(:revision, proposal: @prop)
+      @prop.reload
     end
     it "should return the latest background" do
       expect(@prop.background).to eq(@rev1.background)

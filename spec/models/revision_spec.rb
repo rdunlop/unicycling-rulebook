@@ -43,6 +43,7 @@ describe Revision, type: :model do
     rev = FactoryGirl.create(:revision, proposal: prop)
     expect(rev.num).to eq(1)
 
+    prop.reload
     rev2 = FactoryGirl.create(:revision, proposal: prop)
     expect(rev2.num).to eq(2)
   end
