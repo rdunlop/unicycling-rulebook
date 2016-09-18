@@ -80,10 +80,3 @@ RulebookApp::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 end
-
-RulebookApp::Application.config.middleware.use ExceptionNotification::Rack,
-  email: {
-      email_prefix: "[stage][Rulebook Exception] ",
-      sender_address: Rails.application.secrets.mail_full_email,
-      exception_recipients: %w{robin@dunlopweb.com}
-  }

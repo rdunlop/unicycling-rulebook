@@ -26,7 +26,7 @@ gem 'foundation-rails'
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 gem 'apartment'
-gem 'exception_notification'
+gem 'rollbar'
 gem 'aws-sdk-rails'
 gem 'mailjet'
 gem 'newrelic_rpm'

@@ -145,9 +145,6 @@ GEM
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
-    exception_notification (4.1.4)
-      actionmailer (~> 4.0)
-      activesupport (~> 4.0)
     execjs (2.7.0)
     eye (0.8.1)
       celluloid (~> 0.17.3)
@@ -204,6 +201,7 @@ GEM
     minitest (5.9.0)
     momentjs-rails (2.11.1)
       railties (>= 3.1)
+    multi_json (1.12.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.2.0)
@@ -283,6 +281,8 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    rollbar (2.13.0)
+      multi_json
     rspec-core (3.5.3)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -397,7 +397,6 @@ DEPENDENCIES
   coffee-rails
   consistency_fail
   devise
-  exception_notification
   eye-patch
   factory_girl_rails
   foreman
@@ -417,6 +416,7 @@ DEPENDENCIES
   rake
   redis-namespace
   redis-rails
+  rollbar
   rspec-rails
   rspec_junit_formatter
   rubocop

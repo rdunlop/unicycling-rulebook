@@ -80,10 +80,3 @@ RulebookApp::Application.configure do
   require 'uglifier'
   config.assets.js_compressor = Uglifier.new(output: {ascii_only: true, quote_keys: true})
 end
-
-RulebookApp::Application.config.middleware.use ExceptionNotification::Rack,
-  email: {
-      email_prefix: "[Rulebook Exception] ",
-      sender_address: Rails.application.secrets.mail_full_email,
-      exception_recipients: %w{robin@dunlopweb.com}
-  }
