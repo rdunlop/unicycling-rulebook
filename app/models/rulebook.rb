@@ -14,7 +14,7 @@
 #  proposals_allowed  :boolean          default(TRUE), not null
 #
 
-class Rulebook < ActiveRecord::Base
+class Rulebook < ApplicationRecord
   validates :subdomain, uniqueness: true
 
   def rulebook

@@ -10,7 +10,7 @@
 #  discussion_id :integer
 #
 
-class Comment < ActiveRecord::Base
+class Comment < ApplicationRecord
   belongs_to :discussion, touch: true
   belongs_to :user
 

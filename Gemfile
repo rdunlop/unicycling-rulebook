@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 ruby "2.2.3"
-gem 'rails', '4.2.7.1'
+gem 'rails'
 
 # authorization
 gem 'devise'
@@ -39,7 +39,8 @@ gem 'redis-rails'
 gem 'redis-namespace'
 gem 'sidekiq'
 # if you require 'sinatra' you get the Sinatra DSL extended to Object
-gem 'sinatra', '>= 1.3.0', require: nil # necessary for sidekiq
+# necessary for sidekiq
+gem 'sinatra', '= 2.0.0.beta2', require: nil # 2.0.0.beta2 for rails 5
 gem 'apartment-sidekiq'
 gem 'whenever'
 
@@ -70,6 +71,7 @@ end
 
 group :test do
   gem 'rspec_junit_formatter' # as per circleCI https://circleci.com/docs/test-metadata
+  gem 'rails-controller-testing'
 end
 
 gem 'jquery-rails'

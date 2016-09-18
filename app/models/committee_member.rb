@@ -12,7 +12,7 @@
 #  editor       :boolean          default(FALSE), not null
 #
 
-class CommitteeMember < ActiveRecord::Base
+class CommitteeMember < ApplicationRecord
   belongs_to :committee, inverse_of: :committee_members
   belongs_to :user, inverse_of: :committee_members
 

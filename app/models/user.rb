@@ -30,7 +30,7 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   attr_accessor :confirming # indicates that we are about to confirm this user
 
   # Include default devise modules. Others available are:

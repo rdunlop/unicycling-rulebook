@@ -1,4 +1,4 @@
-RulebookApp::Application.routes.draw do
+Rails.application.routes.draw do
   resources :rulebooks, only: [:index, :new, :create, :show]
 
   require 'sidekiq/web'

@@ -15,7 +15,7 @@
 #  rule_text          :text
 #
 
-class Revision < ActiveRecord::Base
+class Revision < ApplicationRecord
   belongs_to :proposal, touch: true
   belongs_to :user
 

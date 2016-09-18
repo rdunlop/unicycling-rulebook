@@ -9,7 +9,7 @@
 #  preliminary :boolean          default(TRUE), not null
 #
 
-class Committee < ActiveRecord::Base
+class Committee < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   has_many :committee_members, -> { includes(:user).order("users.name") }, inverse_of: :committee

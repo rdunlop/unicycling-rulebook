@@ -13,7 +13,7 @@
 #  body         :text
 #
 
-class Discussion < ActiveRecord::Base
+class Discussion < ApplicationRecord
   belongs_to :owner, class_name: "User"
   belongs_to :proposal, touch: true, inverse_of: :discussion
   belongs_to :committee

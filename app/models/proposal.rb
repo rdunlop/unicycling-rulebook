@@ -19,7 +19,7 @@
 #  mail_messageid              :string(255)
 #
 
-class Proposal < ActiveRecord::Base
+class Proposal < ApplicationRecord
   belongs_to :owner, class_name: "User"
   belongs_to :committee
   has_many :votes, -> { order("created_at ASC") }
