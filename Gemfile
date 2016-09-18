@@ -41,7 +41,7 @@ gem 'redis-namespace'
 gem 'sidekiq'
 # if you require 'sinatra' you get the Sinatra DSL extended to Object
 gem 'sinatra', '>= 1.3.0', require: nil # necessary for sidekiq
-gem 'apartment-sidekiq', '= 0.2.0' # upgrading to 1.0.0 caused ActiveRecord::ConnectionTimeoutError
+gem 'apartment-sidekiq'
 gem 'whenever'
 
 # deployment
@@ -69,7 +69,7 @@ group :development, :test, :cucumber do
 end
 
 group :test do
-  gem 'rspec_junit_formatter', '0.2.2' # locked to 0.2.2 as per circleCI https://circleci.com/docs/test-metadata
+  gem 'rspec_junit_formatter' # as per circleCI https://circleci.com/docs/test-metadata
 end
 
 gem 'jquery-rails'
