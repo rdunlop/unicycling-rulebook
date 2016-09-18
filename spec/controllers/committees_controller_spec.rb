@@ -158,16 +158,6 @@ describe CommitteesController, type: :controller do
       sign_in @admin_user
     end
     describe "with valid params" do
-      it "updates the requested committee" do
-        committee = Committee.create! valid_attributes
-        # Assuming there are no other events in the database, this
-        # specifies that the Committee created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        expect_any_instance_of(Committee).to receive(:update_attributes).with({})
-        put :update, {id: committee.to_param, committee: {'these' => 'params'}}
-      end
-
       it "assigns the requested committee as @committee" do
         committee = Committee.create! valid_attributes
         put :update, {id: committee.to_param, committee: valid_attributes}

@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_action :configure_permitted_parameters, if: :devise_controller?
   layout "rulebook"
-  before_filter :load_config
+  before_action :load_config
   before_action :set_base_breadcrumb
 
   after_action :verify_authorized, unless: :devise_controller?

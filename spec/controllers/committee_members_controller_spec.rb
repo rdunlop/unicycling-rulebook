@@ -206,16 +206,6 @@ describe CommitteeMembersController, type: :controller do
       sign_in @admin_user
     end
     describe "with valid params" do
-      it "updates the requested committee" do
-        committee_member = FactoryGirl.create(:committee_member, committee: @committee)
-        # Assuming there are no other events in the database, this
-        # specifies that the CommitteeMember created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        expect_any_instance_of(CommitteeMember).to receive(:update_attributes).with({})
-        put :update, {id: committee_member.to_param, committee_member: {'these' => 'params'}, committee_id: @committee.id}
-      end
-
       it "assigns the requested committee_member as @committee" do
         committee_member = FactoryGirl.create(:committee_member, committee: @committee)
         put :update, {id: committee_member.to_param, committee_member: {user_id: @user.id, admin: false, voting: true }, committee_id: @committee.id}

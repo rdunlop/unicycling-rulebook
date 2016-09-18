@@ -216,15 +216,6 @@ describe ProposalsController, type: :controller do
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested proposal" do
-        proposal = FactoryGirl.create(:proposal)
-        # Assuming there are no other proposals in the database, this
-        # specifies that the Proposal created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        expect_any_instance_of(Proposal).to receive(:update_attributes).with({})
-        put :update, {id: proposal.to_param, proposal: {'these' => 'params'}}
-      end
       it "can update all of the fields" do
         proposal = FactoryGirl.create(:proposal)
         review_start_date = Date.current

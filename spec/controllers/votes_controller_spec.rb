@@ -152,15 +152,6 @@ describe VotesController, type: :controller do
         sign_out @user
         sign_in @admin_user
       end
-      it "updates the requested vote" do
-        # Assuming there are no other votes in the database, this
-        # specifies that the Vote created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        expect_any_instance_of(Vote).to receive(:update_attributes).with({})
-        put :update, {id: @vote.to_param, vote: {'these' => 'params'}, proposal_id: @proposal.id}
-      end
-
       it "assigns the requested vote as @vote" do
         put :update, {id: @vote.to_param, vote: valid_attributes, proposal_id: @proposal.id}
         expect(assigns(:vote)).to eq(@vote)

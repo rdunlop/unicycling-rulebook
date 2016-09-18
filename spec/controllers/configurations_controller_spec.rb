@@ -39,15 +39,6 @@ describe ConfigurationsController, type: :controller do
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested rulebook" do
-        # Assuming there are no other rulebooks in the database, this
-        # specifies that the Rulebook created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        expect_any_instance_of(Rulebook).to receive(:update_attributes).with({})
-        put :update, {id: rulebook.to_param, rulebook: {'these' => 'params'}}
-      end
-
       it "assigns the requested rulebook as @rulebook" do
         put :update, {id: rulebook.to_param, rulebook: valid_attributes}
         expect(assigns(:rulebook)).to eq(rulebook)
