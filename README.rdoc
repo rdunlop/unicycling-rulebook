@@ -9,8 +9,7 @@
 This application depends on the following services:
 
 - Email (required) - Using either an SMTP or AWS SES e-mailer for sending e-mails when action occur
-- Heroku (required?) - Where the application is designed to be hosted
-- Google Analytis (optional) - Report activity for metrics
+- Google Analytics (optional) - Report activity for metrics
 - Redis (caching) - If On Mac: `brew install redis`
 
 == Set the configuration variables (for local work)
@@ -18,23 +17,13 @@ This application depends on the following services:
     echo "RACK_ENV=development" > .env
     echo "PORT=9292" >> .env
 
-    cp config/secrets.yml.template config/secrets.yml
+    cp config/eye.yml.template config/secrets.yml.template config/secrets.yml
 
     Open secrets.yml:
 
       update the mail settings to match your mail settings
 
       Set the code for creation of new rulebooks
-
-== Set up the configuration variables (on heroku)
-
-    This will set up Environment settings on heroku for all settings in the secrets.yml
-
-    rake heroku:secrets[<app-name>] RAILS_ENV=production
-
-    Example:
-    rake heroku:secrets[unirulebook2000] RAILS_ENV=production
-
 
 == Set up the local database
 
@@ -49,56 +38,8 @@ This application depends on the following services:
 
     Browse to http://localhost:9292
 
-== Heroku info
 
-1. Install the heroku toolchain
-2. heroku login
-3. heroku keys:add (creates a new Ssh key pair for upload)
-4. git push heroku master
-5. heroku run rake db:migrate
+= Log Rotation settings:
 
-
-== Deploying to Heroku
-
-1. Create a new heroku instance
-
-    heroku create cedar <something>
-    Example: heroku create usarulebook2013
-
-2. Add the heroku instance to the git remote list
-
-    heroku git:remote -a <name of new heroku instance> -r <alias_that you want to use>
-    Example: heroku git:remote -a usarulebook2013 -r rulebook
-
-3a. Set your production settings
-
-    in secrets.yml, set your production settings in the 'production' scope
-
-3b. Upload the settings/secrets
-
-    rake heroku:secrets[rulebook] RAILS_ENV=production
-
-3. Upload the code
-
-    git push rulebook master
-
-4. Load the database
-
-    heroku run rake db:schema:load --app usarulebook2013
-
-5. Install the scheduling addon:
-
-    heroku addons:add scheduler:standard --app usarulebook2013
-
-6. Configure the scheduler via the webpage interface:
-
-    heroku addons:open scheduler --app usarulebook2013
-    Add Job: "rake update_proposal_states" - Daily - 05:00 UTC
-
-7. Restart the Dyno
-
-    heroku restart --app usarulebook2013
-
-8. Start creating new rulebooks
-
-   Browse to your server via web browser.
+It is assumed that the server is running logrotate.
+In order to have the production logs backed up in a rotating basis, install the logrotation file `server_config/unicorn-unicycling-rulebook-logs` into the `/etc/logrotate.d/` directory.

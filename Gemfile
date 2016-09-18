@@ -49,7 +49,8 @@ gem 'capistrano-rails'
 gem 'capistrano-rvm'
 gem 'capistrano-bundler'
 gem 'capistrano3-unicorn'
-gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
+gem "capistrano-deploytags", require: false
+gem 'eye-patch', require: false
 
 group :development, :test, :cucumber do
   gem 'html2haml'
