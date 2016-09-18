@@ -18,13 +18,4 @@
 //= require_tree .
 //= require moment
 
-$(document).ready(function () {
-  if (!$('input').hasClass("multiclick")) {
-    $('form').submit(function() {
-      $("input[type='submit']", this).attr("disabled", "disabled");
-      $("input[type='submit']", this).val("Please wait...");
-    });
-  }
-});
-
 $(function(){ $(document).foundation(); });
