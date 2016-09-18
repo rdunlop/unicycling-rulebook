@@ -15,7 +15,7 @@
 
 class Discussion < ApplicationRecord
   belongs_to :owner, class_name: "User"
-  belongs_to :proposal, touch: true, inverse_of: :discussion
+  belongs_to :proposal, touch: true, inverse_of: :discussion, optional: true
   belongs_to :committee
   has_many :comments, -> { order("created_at ASC") }
 

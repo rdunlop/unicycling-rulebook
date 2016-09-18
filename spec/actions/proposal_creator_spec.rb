@@ -7,7 +7,7 @@ describe ProposalCreator do
   #let!(:member) { FactoryGirl.create(:committee_member, committee: committee, user: user) }
 
   let(:new_proposal) { committee.proposals.build(title: "Hello") }
-  let(:new_revision) { Revision.new(body: "The proposal") }
+  let(:new_revision) { new_proposal.revisions.build(body: "The proposal") }
 
   describe "when a discussion already exists" do
     let(:do_action) { described_class.new(new_proposal, new_revision, discussion, user).perform }

@@ -74,7 +74,7 @@ class ProposalsController < ApplicationController
   def create
     @proposal = Proposal.new(proposal_params)
     @proposal.committee = @committee
-    @revision = Revision.new(revision_params)
+    @revision = @proposal.revisions.build(revision_params)
 
     @discussion = Discussion.find(params[:discussion_id]) if params[:discussion_id].present?
     @proposal.discussion = @discussion

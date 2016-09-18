@@ -25,7 +25,7 @@ class Proposal < ApplicationRecord
   has_many :votes, -> { order("created_at ASC") }
   has_many :comments, through: :discussion
   has_one :discussion, inverse_of: :proposal
-  has_many :revisions, -> { order("id DESC") }
+  has_many :revisions, -> { order("id DESC") }, inverse_of: :proposal
 
   validates :owner, presence: true
   validates :title, presence: true

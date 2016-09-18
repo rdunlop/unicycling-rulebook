@@ -16,7 +16,7 @@
 #
 
 class Revision < ApplicationRecord
-  belongs_to :proposal, touch: true
+  belongs_to :proposal, touch: true, inverse_of: :revisions
   belongs_to :user
 
   validates :body, presence: true
