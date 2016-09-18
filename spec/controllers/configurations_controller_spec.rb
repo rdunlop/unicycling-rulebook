@@ -24,14 +24,14 @@ describe ConfigurationsController, type: :controller do
 
   describe "GET show" do
     it "assigns the requested rulebook as @rulebook" do
-      get :show, {id: rulebook.to_param}
+      get :show, params: {id: rulebook.to_param}
       expect(assigns(:rulebook)).to eq(rulebook)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested rulebook as @rulebook" do
-      get :edit, {id: rulebook.to_param}
+      get :edit, params: {id: rulebook.to_param}
       expect(assigns(:rulebook)).to eq(rulebook)
     end
   end
@@ -40,12 +40,12 @@ describe ConfigurationsController, type: :controller do
   describe "PUT update" do
     describe "with valid params" do
       it "assigns the requested rulebook as @rulebook" do
-        put :update, {id: rulebook.to_param, rulebook: valid_attributes}
+        put :update, params: {id: rulebook.to_param, rulebook: valid_attributes}
         expect(assigns(:rulebook)).to eq(rulebook)
       end
 
       it "redirects to the rulebook" do
-        put :update, {id: rulebook.to_param, rulebook: valid_attributes}
+        put :update, params: {id: rulebook.to_param, rulebook: valid_attributes}
         expect(response).to redirect_to(configuration_path(rulebook))
       end
     end
@@ -54,14 +54,14 @@ describe ConfigurationsController, type: :controller do
       it "assigns the rulebook as @rulebook" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Rulebook).to receive(:save).and_return(false)
-        put :update, {id: rulebook.to_param, rulebook: {rulebook_name: 'the book'}}
+        put :update, params: {id: rulebook.to_param, rulebook: {rulebook_name: 'the book'}}
         expect(assigns(:rulebook)).to eq(rulebook)
       end
 
       it "re-renders the 'edit' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Rulebook).to receive(:save).and_return(false)
-        put :update, {id: rulebook.to_param, rulebook: {rulebook_name: 'the book'}}
+        put :update, params: {id: rulebook.to_param, rulebook: {rulebook_name: 'the book'}}
         expect(response).to render_template("edit")
       end
     end
@@ -70,12 +70,12 @@ describe ConfigurationsController, type: :controller do
   describe "DELETE destroy" do
     it "destroys the requested rulebook" do
       expect {
-        delete :destroy, {id: rulebook.to_param}
+        delete :destroy, params: {id: rulebook.to_param}
       }.to change(Rulebook, :count).by(-1)
     end
 
     it "redirects to the rulebooks list" do
-      delete :destroy, {id: rulebook.to_param}
+      delete :destroy, params: {id: rulebook.to_param}
       expect(response).to redirect_to(welcome_index_all_path)
     end
   end

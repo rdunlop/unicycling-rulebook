@@ -35,14 +35,14 @@ describe DiscussionsController, type: :controller do
     it "assigns the requested revision as @revision" do
       discussion = FactoryGirl.create(:discussion)
 
-      get :show, { id: discussion.to_param }
+      get :show, params: { id: discussion.to_param }
 
       expect(assigns(:discussion)).to eq(discussion)
     end
     it "should have a blank comment object" do
       discussion = FactoryGirl.create(:discussion)
 
-      get :show, {id: discussion.to_param}
+      get :show, params: {id: discussion.to_param}
 
       expect(assigns(:comment)).to be_a_new(Comment)
     end
@@ -50,7 +50,7 @@ describe DiscussionsController, type: :controller do
 
   describe "GET new" do
     it "assigns a new discussion as @discussion" do
-      get :new, { committee_id: committee.id }
+      get :new, params: { committee_id: committee.id }
       expect(assigns(:discussion)).to be_a_new(Discussion)
     end
   end
@@ -63,14 +63,14 @@ describe DiscussionsController, type: :controller do
         end
         it "creates a new Discussion" do
           expect {
-            post :create, { discussion: valid_attributes, committee_id: committee.id}
+            post :create, params: { discussion: valid_attributes, committee_id: committee.id}
           }.to change(Discussion, :count).by(1)
         end
       end
       describe "as a non-comimttee member" do
         it "does not create a new Discussion" do
           expect {
-            post :create, { discussion: valid_attributes, committee_id: committee.id}
+            post :create, params: { discussion: valid_attributes, committee_id: committee.id}
           }.to change(Discussion, :count).by(0)
         end
       end

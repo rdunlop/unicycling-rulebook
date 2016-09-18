@@ -71,7 +71,7 @@ describe CommitteesController, type: :controller do
       sign_out @user
       sign_in @admin_user
       committee = Committee.create! valid_attributes
-      get :index, {}
+      get :index
       expect(assigns(:committees)).to eq([committee])
     end
   end
@@ -86,7 +86,7 @@ describe CommitteesController, type: :controller do
         # @proposal is 'Submitted'
         committee = FactoryGirl.create(:committee)
         proposal = FactoryGirl.create(:proposal, status: 'Review', committee: committee)
-        get :show, { id: committee.id }
+        get :show, params: { id: committee.id }
         expect(assigns(:proposals)).to eq([proposal])
       end
     end
@@ -96,7 +96,7 @@ describe CommitteesController, type: :controller do
     it "assigns a new committee as @committee" do
       sign_out @user
       sign_in @admin_user
-      get :new, {}
+      get :new
       expect(assigns(:committee)).to be_a_new(Committee)
     end
   end
@@ -106,7 +106,7 @@ describe CommitteesController, type: :controller do
       sign_out @user
       sign_in @admin_user
       committee = Committee.create! valid_attributes
-      get :edit, {id: committee.to_param}
+      get :edit, params: {id: committee.to_param}
       expect(assigns(:committee)).to eq(committee)
     end
   end
@@ -119,18 +119,18 @@ describe CommitteesController, type: :controller do
     describe "with valid params" do
       it "creates a new Committee" do
         expect {
-          post :create, {committee: valid_attributes}
+          post :create, params: {committee: valid_attributes}
         }.to change(Committee, :count).by(1)
       end
 
       it "assigns a newly created committee as @committee" do
-        post :create, {committee: valid_attributes}
+        post :create, params: {committee: valid_attributes}
         expect(assigns(:committee)).to be_a(Committee)
         expect(assigns(:committee)).to be_persisted
       end
 
       it "redirects to the created committee" do
-        post :create, {committee: valid_attributes}
+        post :create, params: {committee: valid_attributes}
         expect(response).to redirect_to(committees_path)
       end
     end
@@ -139,14 +139,14 @@ describe CommitteesController, type: :controller do
       it "assigns a newly created but unsaved committee as @committee" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Committee).to receive(:save).and_return(false)
-        post :create, {committee: {name: 'fake'}}
+        post :create, params: {committee: {name: 'fake'}}
         expect(assigns(:committee)).to be_a_new(Committee)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Committee).to receive(:save).and_return(false)
-        post :create, {committee: {name: 'fake'}}
+        post :create, params: {committee: {name: 'fake'}}
         expect(response).to render_template("new")
       end
     end
@@ -160,13 +160,13 @@ describe CommitteesController, type: :controller do
     describe "with valid params" do
       it "assigns the requested committee as @committee" do
         committee = Committee.create! valid_attributes
-        put :update, {id: committee.to_param, committee: valid_attributes}
+        put :update, params: {id: committee.to_param, committee: valid_attributes}
         expect(assigns(:committee)).to eq(committee)
       end
 
       it "redirects to the committee" do
         committee = Committee.create! valid_attributes
-        put :update, {id: committee.to_param, committee: valid_attributes}
+        put :update, params: {id: committee.to_param, committee: valid_attributes}
         expect(response).to redirect_to(committees_path)
       end
     end
@@ -176,7 +176,7 @@ describe CommitteesController, type: :controller do
         committee = Committee.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Committee).to receive(:save).and_return(false)
-        put :update, {id: committee.to_param, committee: {name: 'fake'}}
+        put :update, params: {id: committee.to_param, committee: {name: 'fake'}}
         expect(assigns(:committee)).to eq(committee)
       end
 
@@ -184,7 +184,7 @@ describe CommitteesController, type: :controller do
         committee = Committee.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Committee).to receive(:save).and_return(false)
-        put :update, {id: committee.to_param, committee: {name: 'fake'}}
+        put :update, params: {id: committee.to_param, committee: {name: 'fake'}}
         expect(response).to render_template("edit")
       end
     end
@@ -198,13 +198,13 @@ describe CommitteesController, type: :controller do
     it "destroys the requested committee" do
       committee = Committee.create! valid_attributes
       expect {
-        delete :destroy, {id: committee.to_param}
+        delete :destroy, params: {id: committee.to_param}
       }.to change(Committee, :count).by(-1)
     end
 
     it "redirects to the committee list" do
       committee = Committee.create! valid_attributes
-      delete :destroy, {id: committee.to_param}
+      delete :destroy, params: {id: committee.to_param}
       expect(response).to redirect_to(committees_url)
     end
   end

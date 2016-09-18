@@ -55,24 +55,24 @@ describe CommentsController, type: :controller do
     describe "with valid params" do
       it "creates a new Comment" do
         expect {
-          post :create, {comment: valid_attributes, discussion_id: @discussion.id }
+          post :create, params: {comment: valid_attributes, discussion_id: @discussion.id }
         }.to change(Comment, :count).by(1)
       end
 
       it "assigns a newly created comment as @comment" do
-        post :create, {comment: valid_attributes, discussion_id: @discussion.id }
+        post :create, params: {comment: valid_attributes, discussion_id: @discussion.id }
         expect(assigns(:comment)).to be_a(Comment)
         expect(assigns(:comment)).to be_persisted
       end
 
       it "redirects to the created comment" do
-        post :create, {comment: valid_attributes, discussion_id: @discussion.id }
+        post :create, params: {comment: valid_attributes, discussion_id: @discussion.id }
         expect(response).to redirect_to(@discussion)
       end
 
       it "sends an e-mail" do
         ActionMailer::Base.deliveries.clear
-        post :create, {comment: valid_attributes, discussion_id: @discussion.id }
+        post :create, params: {comment: valid_attributes, discussion_id: @discussion.id }
         num_deliveries = ActionMailer::Base.deliveries.size
         expect(num_deliveries).to eq(1)
       end
@@ -82,14 +82,14 @@ describe CommentsController, type: :controller do
       it "assigns a newly created but unsaved comment as @comment" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Comment).to receive(:save).and_return(false)
-        post :create, {comment: {comment: "None"}, discussion_id: @discussion.id }
+        post :create, params: {comment: {comment: "None"}, discussion_id: @discussion.id }
         expect(assigns(:comment)).to be_a_new(Comment)
       end
 
       #it "re-renders the 'proposals/show' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         #Comment.any_instance.stub(:save).and_return(false)
-        #post :create, {:comment => {}, discussion_id: @discussion.id }
+        #post :create, params: {:comment => {}, discussion_id: @discussion.id }
         #response.should render_template("propsals/show, layouts/application")
       #end
     end
