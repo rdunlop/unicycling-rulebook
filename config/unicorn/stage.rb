@@ -8,13 +8,13 @@ env = ENV['RAILS_ENV'] || "stage"
 worker_processes 1
 
 # listen
-listen "/tmp/unicorn-unicycling-rulebooktest.socket", backlog: 64
+listen "/tmp/unicorn-unicycling-rulebook.socket", backlog: 64
 
 # preload
 preload_app true
 
 # paths
-app_path = "/home/ec2-user/unicycling-rulebooktest"
+app_path = "/home/ec2-user/unicycling-rulebook"
 working_directory "#{app_path}/current"
 pid "tmp/pids/unicorn.pid"
 

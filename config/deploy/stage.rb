@@ -1,4 +1,4 @@
-set :deploy_to, '/home/ec2-user/unicycling-rulebooktest'
+set :deploy_to, '/home/ec2-user/unicycling-rulebook'
 set :rails_env, 'stage'
 set :branch, 'master'
 
