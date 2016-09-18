@@ -28,7 +28,7 @@ class Revision < ApplicationRecord
     self.num = if proposal.nil? or proposal.new_record?
                  1
                else
-                 proposal.revisions.count + 1
+                 (proposal.revisions - [self]).count + 1
                end
   end
 
