@@ -1,5 +1,5 @@
-# config valid only for Capistrano 3.4
-lock '3.4.0'
+# config valid only for Capistrano 3.6
+lock '3.6.1'
 
 set :application, 'unicycling-rulebook'
 set :repo_url, 'git@github.com:rdunlop/unicycling-rulebook.git'
