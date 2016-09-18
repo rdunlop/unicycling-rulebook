@@ -1,32 +1,34 @@
-.top-bar
-  %ul.title-area
-    %li.name
-      %h1= link_to "#{@config.rulebook_name} Rulebook", root_path
-  %section.top-bar-section
-    %ul.right
-      %li= link_to('Home', root_path)
-      %li= link_to('FAQ', welcome_help_path)
-      - if policy(Committee).membership?
-        %li= link_to('Members', membership_committees_path)
-      - if policy(Proposal).passed?
-        %li= link_to('View Approved Proposals', passed_proposals_path)
-      - if policy(Committee).index?
-        %li= link_to('Committees', committees_path)
-      - if policy(Rulebook).edit?
-        %li= link_to('App Config (Admin Pages)', configuration_path(@config))
-      - if policy(:message).create?
-        %li= link_to('Send E-mail Messages', welcome_message_path)
-      - if policy(:bulk_users).create?
-        %li= link_to('Create multiple user accounts', bulk_users_path)
-      - if policy(:all_rulebooks_list).show?
-        %li= link_to "All Rulebooks", welcome_index_all_path
-      - if policy(:statistics).index?
-        %li= link_to "Statistics", statistics_path
-      - if user_signed_in?
-        %li= link_to('Account Settings', edit_user_registration_path)
-        %li= link_to('Logout', destroy_user_session_path, :method => :delete)
-        - if User.count < 3
-          %li= link_to("Upgrade Account", new_admin_upgrade_path)
-      - if not user_signed_in?
-        %li= link_to('Login', new_user_session_path)
-        %li= link_to('Sign-Up', new_user_registration_path)
+%nav.top-bar#main_menu{ data: { topbar: true }, role: "navigation" }
+  %span{ data: { responsive_toggle: "responsive-menu", hide_for: "medium" } }
+    .top-bar-title{ data: { toggle: true } }
+      %button.menu-icon{ type: "button" }
+      = link_to "#{@config.rulebook_name} Rulebook", "#"
+  #responsive-menu
+    .top-bar-left
+      %ul.menu.vertical.medium-horizontal
+        %li= link_to('Home', root_path)
+        %li= link_to('FAQ', welcome_help_path)
+        - if policy(Committee).membership?
+          %li= link_to('Members', membership_committees_path)
+        - if policy(Proposal).passed?
+          %li= link_to('View Approved Proposals', passed_proposals_path)
+        - if policy(Committee).index?
+          %li= link_to('Committees', committees_path)
+        - if policy(Rulebook).edit?
+          %li= link_to('App Config (Admin Pages)', configuration_path(@config))
+        - if policy(:message).create?
+          %li= link_to('Send E-mail Messages', welcome_message_path)
+        - if policy(:bulk_users).create?
+          %li= link_to('Create multiple user accounts', bulk_users_path)
+        - if policy(:all_rulebooks_list).show?
+          %li= link_to "All Rulebooks", welcome_index_all_path
+        - if policy(:statistics).index?
+          %li= link_to "Statistics", statistics_path
+        - if user_signed_in?
+          %li= link_to('Account Settings', edit_user_registration_path)
+          %li= link_to('Logout', destroy_user_session_path, :method => :delete)
+          - if User.count < 3
+            %li= link_to("Upgrade Account", new_admin_upgrade_path)
+        - if not user_signed_in?
+          %li= link_to('Login', new_user_session_path)
+          %li= link_to('Sign-Up', new_user_registration_path)

@@ -8,7 +8,6 @@
     %title= content_for?(:title) ? yield(:title) : "Rulebook"
 
     = stylesheet_link_tag "application"
-    = javascript_include_tag "vendor/modernizr"
     = javascript_include_tag "application", 'data-turbolinks-track' => true
     = csrf_meta_tag
     = render "shared/analytics/google"
@@ -16,8 +15,11 @@
   %body
     - if content_for?(:top_nav)
       = yield :top_nav
-    .off-canvas-wrap{ data: { offcanvas: true } }
-      .inner-wrap
+    .off-canvas-wrapper
+      .off-canvas-wrapper-inner{ data: { off_canvas_wrapper: true } }
+        .off-canvas.position-left#offCanvas{ data: { off_canvas: true } }
+        .off-canvas-content{ data: { off_canvas_content: true } }
+
         #container
           = render "shared/breadcrumbs"
           #main.row

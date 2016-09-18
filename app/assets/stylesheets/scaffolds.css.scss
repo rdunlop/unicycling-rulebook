@@ -12,16 +12,16 @@ p, ol, ul, td {
   line-height: 18px;
 }
 
-a {
-  color: #000;
-  &:visited {
-    color: #666;
-  }
-  &:hover {
-    color: #fff;
-    background-color: #000;
+.top-bar {
+  a {
+    color: white;
   }
 }
+
+.breadcrumbs {
+  padding: 0.5em 1em;
+}
+
 
 div {
   &.field, &.actions {
