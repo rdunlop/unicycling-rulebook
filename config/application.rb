@@ -40,6 +40,10 @@ module RulebookApp
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
+    # In order for Devise to send e-mail asynchronously, we have to
+    # configure an ActiveJob queue Adapter
+    config.active_job.queue_adapter = :sidekiq
+
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 

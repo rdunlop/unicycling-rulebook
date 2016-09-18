@@ -5,7 +5,6 @@ gem 'rails', '4.2.7.1'
 
 # authorization
 gem 'devise'
-gem "devise-async"
 gem 'pundit'
 
 # front end

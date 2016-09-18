@@ -6,3 +6,4 @@ production:
   :concurrency: 1
 :queues:
   - default
+  - mailers # for Action Mailer

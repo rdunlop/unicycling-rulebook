@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable, :async
+         :recoverable, :rememberable, :trackable, :validatable
 
   has_many :committee_members, inverse_of: :user
   has_many :committees, through: :committee_members
@@ -65,6 +65,12 @@ class User < ActiveRecord::Base
     else
       !password.nil? || !password_confirmation.nil?
     end
+  end
+
+  # Cause devise mail to be sent asynchronously
+  # https://github.com/plataformatec/devise#activejob-integration
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
   end
 
   def password_match?
