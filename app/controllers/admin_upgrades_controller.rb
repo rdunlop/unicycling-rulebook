@@ -1,5 +1,5 @@
 class AdminUpgradesController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
   before_action :skip_authorization
 
   def new

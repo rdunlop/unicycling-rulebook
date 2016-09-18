@@ -158,7 +158,7 @@ describe CommitteesController, type: :controller do
       sign_in @admin_user
     end
     describe "with valid params" do
-      it "assigns the requested committee as @committee" do
+      it "assigns the requesFted committee as @committee" do
         committee = Committee.create! valid_attributes
         put :update, params: {id: committee.to_param, committee: valid_attributes}
         expect(assigns(:committee)).to eq(committee)

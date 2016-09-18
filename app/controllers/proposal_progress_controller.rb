@@ -9,7 +9,7 @@ class ProposalProgressController < ApplicationController
       redirect_to @proposal, notice: 'Proposal is now in the voting stage.'
     else
       flash[:alert] = "Unable to set to voting"
-      redirect_to :back
+      redirect_back(fallback_location: proposal_path(@proposal))
     end
   end
 
@@ -22,7 +22,7 @@ class ProposalProgressController < ApplicationController
       redirect_to @proposal, notice: 'Proposal is now in the review stage.'
     else
       flash[:alert] = "Unable to set to review"
-      redirect_to :back
+      redirect_back(fallback_location: proposal_path(@proposal))
     end
   end
 
@@ -33,7 +33,7 @@ class ProposalProgressController < ApplicationController
       redirect_to @proposal, notice: 'Proposal is now in the Pre-Voting stage. All votes have been deleted'
     else
       flash[:alert] = "Unable to set to pre-voting"
-      redirect_to :back
+      redirect_back(fallback_location: proposal_path(@proposal))
     end
   end
 
@@ -43,7 +43,7 @@ class ProposalProgressController < ApplicationController
       redirect_to @proposal, notice: 'Proposal has been Set-Aside'
     else
       flash[:alert] = "Unable to set status to Tabled unless in 'Pre-Voting' or 'Review' state"
-      redirect_to :back
+      redirect_back(fallback_location: proposal_path(@proposal))
     end
   end
 

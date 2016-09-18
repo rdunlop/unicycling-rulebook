@@ -1,5 +1,5 @@
 class ConfigurationsController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
   before_action :load_rulebook
   before_action :authorize_rulebook
   before_action :ensure_current_rulebook
