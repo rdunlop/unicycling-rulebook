@@ -38,9 +38,6 @@ gem 'unicorn'
 gem 'redis-rails'
 gem 'redis-namespace'
 gem 'sidekiq'
-# if you require 'sinatra' you get the Sinatra DSL extended to Object
-# necessary for sidekiq
-gem 'sinatra', '= 2.0.0.beta2', require: nil # 2.0.0.beta2 for rails 5
 gem 'apartment-sidekiq'
 gem 'whenever'
 
