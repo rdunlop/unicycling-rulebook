@@ -3,7 +3,7 @@ class InformAdminUsers
   # send an e-mail to all Admin users
   def self.new_applicant(user)
     if admin_emails.any?
-      UserMailer.delay.new_committee_applicant(user, admin_emails)
+      UserMailer.new_committee_applicant(user, admin_emails).deliver_later
     end
   end
 
@@ -12,7 +12,7 @@ class InformAdminUsers
   # so that future e-mails are all threaded similarly
   def self.submit_proposal(proposal)
     if admin_emails.any?
-      UserMailer.delay.proposal_submitted(proposal, admin_emails)
+      UserMailer.proposal_submitted(proposal, admin_emails).deliver_later
     end
   end
 

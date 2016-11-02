@@ -55,7 +55,7 @@ class WelcomeController < ApplicationController
     if @committee_numbers.empty?
       flash[:alert] = "No Target Selected"
     else
-      if UserMailer.delay.mass_email(@committee_numbers, @subject, @body, @reply_email)
+      if UserMailer.mass_email(@committee_numbers, @subject, @body, @reply_email).deliver_later
         flash[:notice] = "Message Successfully Sent"
       else
         flash[:alert] = "Message Send Error"
