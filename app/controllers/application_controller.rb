@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
     # if there is no subdomain specified, redirect to the 'choose-subdomain' page
     if @config.nil? && !(controller_name == "welcome" && (action_name == "index_all" || action_name == "new_location"))
-      redirect_to welcome_index_all_path
+      redirect_to welcome_index_all_path, flash: { alert: "Invalid subdomain" }
     end
   end
 
