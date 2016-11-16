@@ -67,7 +67,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :controller) do
-    request.env['HTTPS'] = 'on'
+    # request.env['HTTPS'] = 'on'
   end
 
   config.around(:each) do |example|
