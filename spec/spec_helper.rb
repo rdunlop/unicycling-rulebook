@@ -66,7 +66,7 @@ RSpec.configure do |config|
     Apartment::Tenant.switch! rulebook.subdomain
   end
 
-  config.before(:each) do
+  config.before(:each, type: :controller) do
     request.env['HTTPS'] = 'on'
   end
 
