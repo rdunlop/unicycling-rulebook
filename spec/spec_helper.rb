@@ -66,6 +66,10 @@ RSpec.configure do |config|
     Apartment::Tenant.switch! rulebook.subdomain
   end
 
+  config.before(:each) do
+    request.env['HTTPS'] = 'on'
+  end
+
   config.around(:each) do |example|
     if example.metadata[:sidekiq] == :fake
       Sidekiq::Testing.fake!(&example)
