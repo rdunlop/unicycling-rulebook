@@ -147,14 +147,6 @@ class User < ApplicationRecord
     email.truncate(9)
   end
 
-  # new function to set the password without knowing the current password used in our confirmation controller.
-  def attempt_set_password(params)
-    p = {}
-    p[:password] = params[:password]
-    p[:password_confirmation] = params[:password_confirmation]
-    update_attributes(p)
-  end
-
   # new function to return whether a password has been set
   def has_no_password?
     self.encrypted_password.blank?

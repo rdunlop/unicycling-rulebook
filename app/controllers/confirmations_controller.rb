@@ -9,8 +9,10 @@ class ConfirmationsController < Devise::ConfirmationsController
   def update
     with_unconfirmed_confirmable do
       if @confirmable.has_no_password?
-        @confirmable.attempt_set_password(params[:user])
+        @confirmable.assign_attributes(update_params) # assign location, name, password, password_confirmation
+        @confirmable.confirming = true # cause the name-field to be required
         if @confirmable.valid? and @confirmable.password_match?
+          @confirmable.save!
           do_confirm
         else
           do_show
@@ -43,6 +45,10 @@ class ConfirmationsController < Devise::ConfirmationsController
   end
 
   protected
+
+  def update_params
+    params.require(:user).permit(:name, :location, :password, :password_confirmation)
+  end
 
   def with_unconfirmed_confirmable
     @confirmable = User.find_or_initialize_with_error_by(:confirmation_token, params[:confirmation_token])
