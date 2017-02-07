@@ -26,7 +26,11 @@ class Rulebook < ApplicationRecord
   end
 
   def url
-    "http://#{subdomain}.#{Rails.application.secrets.domain}"
+    "http://#{permanent_url}"
+  end
+
+  def permanent_url
+    "#{subdomain}.#{Rails.application.secrets.domain}"
   end
 
   def self.current_rulebook

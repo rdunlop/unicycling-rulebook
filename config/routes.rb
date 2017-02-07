@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   authenticate :user, ->(u) { u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
+
+  mount ApartmentAcmeClient::Engine => '/aac'
+
   resources :admin_upgrades, only: %i[new create]
   resources :configurations, except: %i[index new create]
   resources :proposals, except: %i[index new create] do
