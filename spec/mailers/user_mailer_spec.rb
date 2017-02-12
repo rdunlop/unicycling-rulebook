@@ -115,22 +115,6 @@ describe UserMailer, type: :mailer do
     end
   end
 
-  describe "vote_changed" do
-    let(:mail) { UserMailer.vote_changed(@proposal, @user, 'disagree', 'abstain', [@user.email]) }
-
-    it "renders the headers" do
-      expect(mail.subject).to eq(@proposal_id_title_and_committee)
-      expect(mail.from).to eq(["unicycling@dunlopweb.com"])
-    end
-
-    it "renders the body" do
-      expect(mail.body.encoded).to match("A vote was changed from disagree to abstain by the administrator")
-    end
-    it "should have a in-reply-to set" do
-      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
-    end
-  end
-
   describe "new_committee_applicant" do
     let(:user) { FactoryGirl.create(:user, comments: "Please add me") }
     let(:admin_user) { FactoryGirl.create(:admin_user) }

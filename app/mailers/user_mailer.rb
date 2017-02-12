@@ -100,21 +100,6 @@ class UserMailer < TenantAwareMailer
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
-  #   en.user_mailer.vote_changed.subject
-  #
-  def vote_changed(proposal, user, old_vote_string, new_vote_string, members_emails)
-    @name = user.to_s
-    @old_vote = old_vote_string
-    @new_vote = new_vote_string
-
-    set_threading_header(proposal)
-
-    send_mail(members_emails, proposal, nil)
-  end
-
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
   #   en.user_mailer.new_committee_applicant.subject
   #
   def new_committee_applicant(user, admin_emails)

@@ -26,12 +26,6 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.proposal_status_review(proposal, was_tabled, committee_emails)
   end
 
-  def vote_changed
-    old_vote_string = "agree"
-    new_vote_string = "disagree"
-    UserMailer.vote_changed(proposal, user, old_vote_string, new_vote_string, committee_emails)
-  end
-
   def new_committee_applicant
     UserMailer.new_committee_applicant(user, admin_emails)
   end

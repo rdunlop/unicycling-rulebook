@@ -161,16 +161,6 @@ describe VotesController, type: :controller do
         put :update, params: {id: @vote.to_param, vote: valid_attributes, proposal_id: @proposal.id}
         expect(response).to redirect_to([@proposal, @vote])
       end
-      it "sends an e-mail" do
-        ActionMailer::Base.deliveries.clear
-        put :update, params: {id: @vote.to_param, vote: {vote: 'disagree'}, proposal_id: @proposal.id}
-        num_deliveries = ActionMailer::Base.deliveries.size
-        expect(num_deliveries).to eq(1)
-
-        note = ActionMailer::Base.deliveries.first
-        # because it's a 2-part email, grab the first part
-        expect(note.parts.first.body).to match(' agree to disagree')
-      end
     end
 
     describe "with admin and invalid params" do
