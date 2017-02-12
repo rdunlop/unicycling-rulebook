@@ -1,6 +1,6 @@
 class VotePolicy < ApplicationPolicy
   def show?
-    admin_or_committee_admin?
+    (record.user == user) || admin_or_committee_admin?
   end
 
   def create?
