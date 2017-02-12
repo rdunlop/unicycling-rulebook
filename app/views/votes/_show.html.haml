@@ -1,6 +1,10 @@
 - return if show.new_record?
-%b= show.user
-voted
+%b
+  - if show.user == current_user
+    You (#{show.user})
+  - else
+    = show.user
+  voted
 
 %time.js--days-ago{ datetime: show.created_at.iso8601 }
 (#{l(show.created_at, format: :short)})
