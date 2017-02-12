@@ -1,14 +1,17 @@
 %h3 Votes on this proposal:
-- if policy(vote_summary).view_vote_summary?
-  %b Agree:
-  = succeed "," do
-    %strong.status_message= vote_summary.agree_votes
-  %b Disagree:
-  = succeed "," do
-    %strong.status_message= vote_summary.disagree_votes
-  %b Abstain:
-  = succeed "." do
-    %strong.status_message= vote_summary.abstain_votes
-- else
+%p
   %strong.status_message= vote_summary.votes.count
-  committee members have voted.
+  out of
+  %b #{vote_summary.number_of_voting_members}
+  voting members have voted.
+%p
+  - if policy(vote_summary).view_vote_summary?
+    %b Agree:
+    = succeed "," do
+      %strong.status_message= vote_summary.agree_votes
+    %b Disagree:
+    = succeed "," do
+      %strong.status_message= vote_summary.disagree_votes
+    %b Abstain:
+    = succeed "." do
+      %strong.status_message= vote_summary.abstain_votes
