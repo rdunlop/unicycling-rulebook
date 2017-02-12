@@ -10,6 +10,5 @@
   = succeed "." do
     %strong.status_message= vote_summary.abstain_votes
 - else
-  %b Votes:
-  = succeed "." do
-    %strong.status_message= vote_summary.votes.count
+  %strong.status_message= vote_summary.votes.count
+  committee members have voted.

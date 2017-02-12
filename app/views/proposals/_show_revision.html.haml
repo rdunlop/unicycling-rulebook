@@ -86,7 +86,9 @@ on #{@proposal.submit_date}
       %dd= rev.change_description.try(:html_safe)
 - if @proposal.votes.count > 0
   %hr
-  = render :partial => "/proposals/vote_summary", :object => @proposal
+  %p
+    = render :partial => "/proposals/vote_summary", :object => @proposal
+
   %p
     - @proposal.votes.each do |v|
       - if policy(v).show?
