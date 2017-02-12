@@ -57,6 +57,10 @@ class Proposal < ApplicationRecord
     end
   end
 
+  def voting_finished?
+    status.in?(["Passed", "Failed"])
+  end
+
   def at_least_two_thirds_agree
     votes_which_count = agree_votes + disagree_votes
     (self.agree_votes / votes_which_count.to_f) >= (2 / 3.0)

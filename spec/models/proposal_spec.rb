@@ -80,6 +80,21 @@ describe Proposal, type: :model do
     expect(proposal.valid?).to eq(false)
   end
 
+  it "is finished when passed or failed" do
+    proposal = FactoryGirl.create(:proposal)
+    proposal.status = "Tabled"
+    expect(proposal.voting_finished?).to eq(false)
+
+    proposal.status = "Passed"
+    expect(proposal.voting_finished?).to eq(true)
+
+    proposal.status = "Failed"
+    expect(proposal.voting_finished?).to eq(true)
+
+    proposal.status = "Robin"
+    expect(proposal.voting_finished?).to eq(false)
+  end
+
   it "should have a latest_revision_number" do
     revision = FactoryGirl.create(:revision)
     prop = revision.proposal.reload

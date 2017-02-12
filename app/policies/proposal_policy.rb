@@ -35,6 +35,10 @@ class ProposalPolicy < ApplicationPolicy
     admin? || committee_admin?(record.committee)
   end
 
+  def view_vote_summary?
+    admin? || committee_admin?(record.committee) || record.voting_finished?
+  end
+
   # State transitions
   def set_voting?
     return true if admin?

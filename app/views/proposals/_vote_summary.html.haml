@@ -1,10 +1,15 @@
 %h3 Votes on this proposal:
-%b Agree:
-= succeed "," do
-  %strong.status_message= vote_summary.agree_votes
-%b Disagree:
-= succeed "," do
-  %strong.status_message= vote_summary.disagree_votes
-%b Abstain:
-= succeed "." do
-  %strong.status_message= vote_summary.abstain_votes
+- if policy(vote_summary).view_vote_summary?
+  %b Agree:
+  = succeed "," do
+    %strong.status_message= vote_summary.agree_votes
+  %b Disagree:
+  = succeed "," do
+    %strong.status_message= vote_summary.disagree_votes
+  %b Abstain:
+  = succeed "." do
+    %strong.status_message= vote_summary.abstain_votes
+- else
+  %b Votes:
+  = succeed "." do
+    %strong.status_message= vote_summary.votes.count
