@@ -89,6 +89,7 @@ class CommitteeMembersController < ApplicationController
       if @committee_member.update_attributes(committee_member_params)
         format.html { redirect_to committee_committee_members_path(@committee), notice: 'Committee member was successfully updated.' }
       else
+        @users = User.all
         format.html { render action: "edit" }
       end
     end

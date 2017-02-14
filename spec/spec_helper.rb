@@ -28,6 +28,8 @@ RSpec.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
 
+  config.render_views
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

@@ -31,15 +31,16 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe CommentsController, type: :controller do
-  before(:each) do
+  let(:proposal) { FactoryGirl.create(:proposal, :review) }
 
-    @proposal = FactoryGirl.create(:proposal, discussion: @discussion, status: "Review")
-    @discussion = FactoryGirl.create(:discussion, status: 'active', committee: @proposal.committee)
+  before(:each) do
+    @discussion = proposal.discussion
+    @discussion.update(status: 'active')
 
     @user = FactoryGirl.create(:user)
-    FactoryGirl.create(:committee_member, committee: @proposal.committee, user: @user)
+    FactoryGirl.create(:committee_member, committee: proposal.committee, user: @user)
     # another member, so that an e-mail is generated
-    FactoryGirl.create(:committee_member, committee: @proposal.committee)
+    FactoryGirl.create(:committee_member, committee: proposal.committee)
 
     sign_in @user
   end

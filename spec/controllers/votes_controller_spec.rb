@@ -34,6 +34,7 @@ require 'spec_helper'
 describe VotesController, type: :controller do
   before(:each) do
     @proposal = FactoryGirl.create(:proposal, :with_admin, status: 'Voting')
+    FactoryGirl.create(:revision, proposal: @proposal)
     @admin_user = FactoryGirl.create(:admin_user)
     @user = FactoryGirl.create(:user)
     FactoryGirl.create(:committee_member, committee: @proposal.committee, voting: true, user: @user)

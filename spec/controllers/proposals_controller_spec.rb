@@ -64,7 +64,9 @@ describe ProposalsController, type: :controller do
       com = FactoryGirl.create(:committee, preliminary: true)
       @preliminary_proposal = FactoryGirl.create(:proposal, status: 'Passed', committee: com)
       @proposal = FactoryGirl.create(:proposal, status: 'Passed')
+      FactoryGirl.create(:revision, proposal: @proposal)
       @other_proposal = FactoryGirl.create(:proposal, status: 'Failed')
+      FactoryGirl.create(:revision, proposal: @preliminary_proposal)
     end
     it "assigns all proposals as @proposals" do
       get :passed
@@ -80,6 +82,7 @@ describe ProposalsController, type: :controller do
   describe "GET show" do
     it "assigns the requested proposal as @proposal" do
       proposal = FactoryGirl.create(:proposal)
+      FactoryGirl.create(:revision, proposal: proposal)
       get :show, params: {id: proposal.to_param}
       expect(assigns(:proposal)).to eq(proposal)
     end
@@ -115,7 +118,7 @@ describe ProposalsController, type: :controller do
       revision = FactoryGirl.create(:revision, proposal: proposal)
       get :edit, params: {id: proposal.to_param}
       expect(assigns(:proposal)).to eq(proposal)
-      expect(assigns(:committees)).to eq([committee])
+      expect(assigns(:committees)).to match_array([committee])
     end
     it "should not show committees that I am not an administrator of" do
       @other_committee = FactoryGirl.create(:committee)
@@ -135,7 +138,7 @@ describe ProposalsController, type: :controller do
       revision = FactoryGirl.create(:revision, proposal: proposal)
       cm = FactoryGirl.create(:committee)
       get :edit, params: {id: proposal.to_param}
-      expect(assigns(:committees)).to eq([committee, cm])
+      expect(assigns(:committees)).to match_array([committee, cm])
     end
     describe "as a committee-admin for the same committee" do
       before(:each) do
@@ -267,6 +270,7 @@ describe ProposalsController, type: :controller do
     describe "with invalid params" do
       it "assigns the proposal as @proposal" do
         proposal = FactoryGirl.create(:proposal)
+        FactoryGirl.create(:revision, proposal: proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Proposal).to receive(:save).and_return(false)
         put :update, params: {id: proposal.to_param, proposal: {title: 'the prop'}}
@@ -275,6 +279,7 @@ describe ProposalsController, type: :controller do
 
       it "re-renders the 'edit' template" do
         proposal = FactoryGirl.create(:proposal)
+        FactoryGirl.create(:revision, proposal: proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Proposal).to receive(:save).and_return(false)
         put :update, params: {id: proposal.to_param, proposal: {title: 'the prop'}}

@@ -24,6 +24,7 @@ class ProposalsController < ApplicationController
   before_action :load_committee, only: [:new, :create]
   before_action :set_committee_breadcrumb, only: [:new, :create]
   before_action :load_and_authorize_proposal, only: [:show, :edit, :update, :destroy]
+  before_action :load_committees, only: [:edit, :update]
 
   # GET /proposals/passed
   def passed
@@ -66,8 +67,6 @@ class ProposalsController < ApplicationController
   def edit
     set_committee_breadcrumb(@proposal.committee)
     add_breadcrumb "Revise Proposal Dates & Status"
-
-    @committees = current_user.accessible_committees
   end
 
   # POST /committees/2/proposals
@@ -126,6 +125,10 @@ class ProposalsController < ApplicationController
 
   def load_committee
     @committee = Committee.find(params[:committee_id])
+  end
+
+  def load_committees
+    @committees = current_user.accessible_committees
   end
 
   def proposal_params
