@@ -46,7 +46,7 @@ class User < ApplicationRecord
   scope :admin, -> { where(admin: true) }
   scope :email_notifications, -> { where(no_emails: false).where.not(confirmed_at: nil) }
 
-  after_create :send_email_to_admins
+  after_commit :send_email_to_admins, on: :create
 
   after_initialize :init
 
