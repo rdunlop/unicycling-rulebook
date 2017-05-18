@@ -23,8 +23,8 @@ class Proposal < ApplicationRecord
   belongs_to :owner, class_name: "User"
   belongs_to :committee
   has_many :votes, -> { order("created_at ASC") }
-  has_many :comments, through: :discussion
   has_one :discussion, inverse_of: :proposal
+  has_many :comments, through: :discussion
   has_many :revisions, -> { order("id DESC") }, inverse_of: :proposal
 
   validates :owner, presence: true
