@@ -1,6 +1,3 @@
-# config valid only for Capistrano 3.6
-lock '3.6.1'
-
 set :eye_env, -> { {rails_env: fetch(:rails_env)} }
 set :application, 'unicycling-rulebook'
 set :repo_url, 'git@github.com:rdunlop/unicycling-rulebook.git'
