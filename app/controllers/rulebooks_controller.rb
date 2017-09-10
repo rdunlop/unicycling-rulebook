@@ -15,7 +15,7 @@
 #
 
 class RulebooksController < ApplicationController
-  before_action :skip_authorization, only: [:new, :create, :index, :show]
+  before_action :skip_authorization, only: %i[new create index show]
   before_action :load_rulebook, only: [:show]
   layout "global"
 

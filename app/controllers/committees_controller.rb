@@ -10,10 +10,10 @@
 #
 
 class CommitteesController < ApplicationController
-  before_action :authenticate_user!, except: [:membership, :show]
-  before_action :load_committee, only: [:show, :edit, :update, :destroy]
-  before_action :set_committee_breadcrumb, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_committee, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: %i[membership show]
+  before_action :load_committee, only: %i[show edit update destroy]
+  before_action :set_committee_breadcrumb, only: %i[show edit update destroy]
+  before_action :authorize_committee, only: %i[show edit update destroy]
 
   # GET /committees
   # GET /committees.json
@@ -56,8 +56,7 @@ class CommitteesController < ApplicationController
   end
 
   # GET /committees/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /committees
   # POST /committees.json

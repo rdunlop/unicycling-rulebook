@@ -23,7 +23,6 @@ class UserMailer < TenantAwareMailer
     end
   end
 
-
   def create_proposal_subject(proposal)
     "[" + proposal.committee.to_s + "] " + proposal.title + " (#" + proposal.id.to_s + ")"
   end

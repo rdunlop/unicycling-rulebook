@@ -19,3 +19,10 @@ Style/FrozenStringLiteralComment:
 Rails/ApplicationRecord:
   Exclude:
     - "db/migrate/*"
+
+Metrics/BlockLength:
+  Enabled: false
+
+# We do a lot of this, but on purpose
+Rails/SkipsModelValidations:
+  Enabled: false

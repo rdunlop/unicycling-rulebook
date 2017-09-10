@@ -11,7 +11,7 @@ FactoryGirl.define do
                                discussion.proposal.committee
                              else
                                FactoryGirl.build(:committee)
-                            end
+                             end
     end
   end
 end
