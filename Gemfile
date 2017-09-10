@@ -8,16 +8,16 @@ gem 'devise'
 gem 'pundit'
 
 # front end
+gem 'breadcrumbs_on_rails'
+gem 'coffee-rails'
+gem 'formtastic' # currently user for user-confirmation step only
+gem 'foundation-rails'
 gem 'haml'
 gem 'momentjs-rails'
-gem 'tinymce-rails'
-gem 'select2-rails'
-gem 'formtastic' # currently user for user-confirmation step only
-gem 'breadcrumbs_on_rails'
 gem 'sass-rails'
-gem 'coffee-rails'
+gem 'select2-rails'
+gem 'tinymce-rails'
 gem 'uglifier', '>= 1.0.3'
-gem 'foundation-rails'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 #gem 'therubyracer'
@@ -26,49 +26,49 @@ gem 'foundation-rails'
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 gem 'apartment'
-gem 'rollbar'
 gem 'aws-sdk-rails'
 gem 'mailjet'
 gem 'newrelic_rpm'
+gem 'rollbar'
 
 # other
-gem 'rake'
-gem 'pg'
-gem 'unicorn'
-gem 'redis-rails'
-gem 'redis-namespace'
-gem 'sidekiq'
 gem 'apartment-sidekiq'
+gem 'pg'
+gem 'rake'
+gem 'redis-namespace'
+gem 'redis-rails'
+gem 'sidekiq'
+gem 'unicorn'
 gem 'whenever'
 
 # deployment
 gem 'capistrano'
+gem 'capistrano-bundler'
+gem "capistrano-deploytags", require: false
 gem 'capistrano-rails'
 gem 'capistrano-rvm'
-gem 'capistrano-bundler'
 gem 'capistrano3-unicorn'
-gem "capistrano-deploytags", require: false
 gem 'eye-patch', require: false
 
 group :development, :test, :cucumber do
-  gem 'html2haml'
-  gem 'consistency_fail'
-  gem 'brakeman'
   gem 'annotate'
-  gem 'factory_girl_rails'
-  gem 'rspec-rails'
-  gem 'codeclimate_circle_ci_coverage'
+  gem 'brakeman'
   gem 'capybara'
+  gem 'codeclimate_circle_ci_coverage'
+  gem 'consistency_fail'
+  gem 'factory_girl_rails'
+  gem 'foreman'
+  gem 'html2haml'
+  gem 'pry'
+  gem 'rspec-rails'
+  gem 'rubocop', require: false
   gem 'syntax'
   gem 'watchr'
-  gem 'foreman'
-  gem 'pry'
-  gem 'rubocop', require: false
 end
 
 group :test do
-  gem 'rspec_junit_formatter' # as per circleCI https://circleci.com/docs/test-metadata
   gem 'rails-controller-testing'
+  gem 'rspec_junit_formatter' # as per circleCI https://circleci.com/docs/test-metadata
 end
 
 gem 'jquery-rails'

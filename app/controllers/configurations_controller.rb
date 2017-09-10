@@ -14,8 +14,7 @@ class ConfigurationsController < ApplicationController
   end
 
   # GET /configurations/1/edit
-  def edit
-  end
+  def edit; end
 
   # PUT /configurations/1
   def update

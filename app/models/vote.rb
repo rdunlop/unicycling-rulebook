@@ -18,14 +18,14 @@ class Vote < ApplicationRecord
   validates :proposal, presence: true
   validates :user, presence: true
   validates :user_id, uniqueness: {scope: [:proposal_id]}
-  validates :vote, inclusion: { in: %w(agree disagree abstain) }
+  validates :vote, inclusion: { in: %w[agree disagree abstain] }
 
   def to_s
     if self.new_record?
       return ""
     end
     res = user.to_s + " voted " + self.vote + " on " + self.created_at.strftime("%B %d, %Y, %I:%M %p")
-    if not comment.blank?
+    if comment.present?
       res += " (" + self.comment + ")"
     end
     res

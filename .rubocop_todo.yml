@@ -140,7 +140,7 @@ Rails/Validation:
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/AccessModifierIndentation:
+Layout/AccessModifierIndentation:
   Enabled: false
 
 # Offense count: 4
@@ -152,7 +152,7 @@ Style/AccessorMethodName:
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle, SupportedLastArgumentHashStyles.
-Style/AlignHash:
+Layout/AlignHash:
   Exclude:
     - 'spec/models/committee_member_spec.rb'
     - 'spec/models/vote_spec.rb'
@@ -160,7 +160,7 @@ Style/AlignHash:
 # Offense count: 6
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/AlignParameters:
+Layout/AlignParameters:
   Exclude:
     - 'config/environments/production.rb'
     - 'config/environments/stage.rb'
@@ -211,7 +211,7 @@ Style/BracesAroundHashParameters:
 
 # Offense count: 4
 # Cop supports --auto-correct.
-Style/ClosingParenthesisIndentation:
+Layout/ClosingParenthesisIndentation:
   Exclude:
     - 'spec/views/configurations/edit.html.erb_spec.rb'
     - 'spec/views/rulebooks/index.html.erb_spec.rb'
@@ -227,7 +227,7 @@ Style/CommentAnnotation:
 
 # Offense count: 3
 # Cop supports --auto-correct.
-Style/CommentIndentation:
+Layout/CommentIndentation:
   Exclude:
     - 'app/models/ability.rb'
     - 'spec/controllers/comments_controller_spec.rb'
@@ -239,20 +239,20 @@ Style/Documentation:
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/DotPosition:
+Layout/DotPosition:
   Enabled: false
 
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: AllowAdjacentOneLineDefs.
-Style/EmptyLineBetweenDefs:
+Layout/EmptyLineBetweenDefs:
   Exclude:
     - 'app/models/proposal.rb'
     - 'db/migrate/20121025021107_add_rule_text_to_revision.rb'
 
 # Offense count: 14
 # Cop supports --auto-correct.
-Style/EmptyLines:
+Layout/EmptyLines:
   Exclude:
     - 'Gemfile'
     - 'app/actions/inform_admin_users.rb'
@@ -271,7 +271,7 @@ Style/EmptyLines:
 
 # Offense count: 3
 # Cop supports --auto-correct.
-Style/EmptyLinesAroundAccessModifier:
+Layout/EmptyLinesAroundAccessModifier:
   Exclude:
     - 'app/controllers/confirmations_controller.rb'
     - 'app/models/proposal.rb'
@@ -279,7 +279,7 @@ Style/EmptyLinesAroundAccessModifier:
 # Offense count: 13
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/EmptyLinesAroundBlockBody:
+Layout/EmptyLinesAroundBlockBody:
   Exclude:
     - 'config/initializers/apartment.rb'
     - 'config/routes.rb'
@@ -297,7 +297,7 @@ Style/EmptyLinesAroundBlockBody:
 # Offense count: 11
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/EmptyLinesAroundClassBody:
+Layout/EmptyLinesAroundClassBody:
   Exclude:
     - 'app/actions/inform_admin_users.rb'
     - 'app/actions/inform_committee_members.rb'
@@ -313,7 +313,7 @@ Style/EmptyLinesAroundClassBody:
 
 # Offense count: 4
 # Cop supports --auto-correct.
-Style/EmptyLinesAroundMethodBody:
+Layout/EmptyLinesAroundMethodBody:
   Exclude:
     - 'app/controllers/configurations_controller.rb'
     - 'app/mailers/user_mailer.rb'
@@ -322,7 +322,7 @@ Style/EmptyLinesAroundMethodBody:
 # Offense count: 8
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment.
-Style/ExtraSpacing:
+Layout/ExtraSpacing:
   Exclude:
     - 'app/controllers/bulk_users_controller.rb'
     - 'config.ru'
@@ -358,7 +358,7 @@ Style/IfUnlessModifier:
 
 # Offense count: 3
 # Cop supports --auto-correct.
-Style/IndentArray:
+Layout/IndentArray:
   Exclude:
     - 'spec/views/committee_members/index.html.erb_spec.rb'
     - 'spec/views/committees/show.html.erb_spec.rb'
@@ -367,13 +367,13 @@ Style/IndentArray:
 # Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/IndentHash:
+Layout/IndentHash:
   Enabled: false
 
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/IndentationConsistency:
+Layout/IndentationConsistency:
   Exclude:
     - 'app/controllers/confirmations_controller.rb'
     - 'config/routes.rb'
@@ -386,7 +386,7 @@ Style/Lambda:
 
 # Offense count: 24
 # Cop supports --auto-correct.
-Style/LeadingCommentSpace:
+Layout/LeadingCommentSpace:
   Exclude:
     - 'Gemfile'
     - 'app/mailers/user_mailer.rb'
@@ -404,7 +404,7 @@ Style/LeadingCommentSpace:
 
 # Offense count: 6
 # Cop supports --auto-correct.
-Style/MethodCallParentheses:
+Style/MethodCallWithoutArgsParentheses:
   Exclude:
     - 'app/controllers/revisions_controller.rb'
     - 'app/proposal_states/tabled_state.rb'
@@ -520,19 +520,19 @@ Style/SingleLineMethods:
 # Offense count: 8
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/SpaceBeforeBlockBraces:
+Layout/SpaceBeforeBlockBraces:
   Enabled: false
 
 # Offense count: 14
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
-Style/SpaceInsideBlockBraces:
+Layout/SpaceInsideBlockBraces:
   Enabled: false
 
 # Offense count: 383
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces, SupportedStyles.
-Style/SpaceInsideHashLiteralBraces:
+Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
 
 # Offense count: 1034

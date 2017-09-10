@@ -15,9 +15,9 @@
 
 class DiscussionsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  before_action :load_committee, only: [:new, :create]
-  before_action :set_committee_breadcrumb, only: [:new, :create]
-  before_action :load_discussion, only: [:show, :close]
+  before_action :load_committee, only: %i[new create]
+  before_action :set_committee_breadcrumb, only: %i[new create]
+  before_action :load_discussion, only: %i[show close]
 
   # GET /discussions/1
   def show

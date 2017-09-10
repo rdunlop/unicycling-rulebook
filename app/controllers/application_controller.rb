@@ -14,8 +14,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :location, :comments])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :location, :comments, :no_emails])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name location comments])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[name location comments no_emails])
   end
 
   # Prevent stored_location_for redirecting to a different tenant
