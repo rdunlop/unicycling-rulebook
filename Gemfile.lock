@@ -369,7 +369,7 @@ GEM
     tilt (2.0.8)
     timers (4.1.2)
       hitimes
-    tinymce-rails (4.4.3)
+    tinymce-rails (4.6.6)
       railties (>= 3.1.1)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
