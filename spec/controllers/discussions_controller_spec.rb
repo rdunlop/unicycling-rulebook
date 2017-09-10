@@ -16,7 +16,6 @@
 require 'spec_helper'
 
 describe DiscussionsController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Revision. As you add validations to Revision, be sure to
   # update the return value of this method accordingly.

@@ -38,7 +38,7 @@ class Revision < ApplicationRecord
     end
     if self.change_description.blank?
       if self.proposal
-        if self.proposal.revisions.count > 0
+        if self.proposal.revisions.count.positive?
           errors[:change_description] << "Change Description field must be present for all Revisions"
         end
       end
