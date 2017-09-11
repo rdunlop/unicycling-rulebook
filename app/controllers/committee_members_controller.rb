@@ -16,7 +16,7 @@ class CommitteeMembersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_committee
   before_action :set_committee_breadcrumb
-  before_action :load_committee_member, only: [:edit, :update, :destroy]
+  before_action :load_committee_member, only: %i[edit update destroy]
 
   # GET /committee_members
   def index

@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
-  resources :rulebooks, only: [:index, :new, :create, :show]
+  resources :rulebooks, only: %i[index new create show]
 
   require 'sidekiq/web'
   authenticate :user, ->(u) { u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
-  resources :admin_upgrades, only: [:new, :create]
-  resources :configurations, except: [:index, :new, :create]
-  resources :proposals, except: [:index, :new, :create] do
+  resources :admin_upgrades, only: %i[new create]
+  resources :configurations, except: %i[index new create]
+  resources :proposals, except: %i[index new create] do
     collection do
       get 'passed'
     end
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       put 'table', to: 'proposal_progress#table'
     end
     resources :votes, except: [:show]
-    resources :revisions, except: [:edit, :index, :put, :destroy]
+    resources :revisions, except: %i[edit index put destroy]
   end
 
   resources :discussions, only: [:show] do
@@ -31,10 +31,10 @@ Rails.application.routes.draw do
       get 'membership'
     end
     resources :committee_members, except: [:show]
-    resources :discussions, only: [:index, :create, :new]
-    resources :proposals, only: [:new, :create]
+    resources :discussions, only: %i[index create new]
+    resources :proposals, only: %i[new create]
   end
-  resources :bulk_users, only: [:index, :create]
+  resources :bulk_users, only: %i[index create]
   resources :statistics, only: :index
 
   as :user do

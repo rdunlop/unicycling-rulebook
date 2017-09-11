@@ -14,8 +14,8 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
   before_action :load_proposal
-  before_action :load_vote, only: [:edit, :update, :destroy]
-  before_action :authorize_vote, only: [:edit, :update, :destroy]
+  before_action :load_vote, only: %i[edit update destroy]
+  before_action :authorize_vote, only: %i[edit update destroy]
 
   # GET /proposals/:proposal_id/votes
   def index
@@ -39,8 +39,7 @@ class VotesController < ApplicationController
   end
 
   # GET /proposals/:proposal_id/votes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /proposals/:proposal_id/votes
   def create
