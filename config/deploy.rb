@@ -13,3 +13,7 @@ set :whenever_command,      ->{ %i[bundle exec whenever] }
 set :whenever_environment,  ->{ fetch :rails_env }
 set :whenever_identifier,   ->{ fetch :application }
 set :whenever_roles,        ->{ %i[db app] }
+
+set :rollbar_token, ENV["ROLLBAR_ACCESS_TOKEN"]
+set :rollbar_env, proc { fetch :rails_env }
+set :rollbar_role, proc { :app }
