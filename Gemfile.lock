@@ -4,15 +4,6 @@ GIT
   specs:
     heroku_secrets (0.0.2)
 
-GIT
-  remote: git://github.com/rdunlop/apartment_acme_client.git
-  revision: 9b22e59336b70762a1a54243c66e54cf06fa8e0c
-  specs:
-    apartment_acme_client (0.0.1)
-      acme-client (~> 0.3.1)
-      aws-sdk-s3 (~> 1)
-      rails (>= 4.1.0, < 5.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -69,6 +60,10 @@ GEM
     apartment-sidekiq (1.1.0)
       apartment (~> 1.0)
       sidekiq (>= 2.11)
+    apartment_acme_client (0.0.1)
+      acme-client (~> 0.3.1)
+      aws-sdk-s3 (~> 1)
+      rails (>= 4.1.0, < 5.2)
     arel (8.0.0)
     ast (2.3.0)
     aws-partitions (1.34.0)
@@ -439,7 +434,7 @@ DEPENDENCIES
   annotate
   apartment
   apartment-sidekiq
-  apartment_acme_client!
+  apartment_acme_client
   aws-sdk-rails
   brakeman
   breadcrumbs_on_rails

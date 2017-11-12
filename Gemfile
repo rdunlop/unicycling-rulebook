@@ -40,7 +40,7 @@ gem 'redis-rails'
 gem 'sidekiq'
 gem 'unicorn'
 gem 'whenever'
-gem 'apartment_acme_client', github: 'rdunlop/apartment_acme_client'
+gem 'apartment_acme_client'
 
 # deployment
 gem 'capistrano'
