@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/rdunlop/apartment_acme_client.git
-  revision: a280f453e7321ec90bf02acc4a3f71b976f770ed
+  revision: 9b22e59336b70762a1a54243c66e54cf06fa8e0c
   specs:
     apartment_acme_client (0.0.1)
       acme-client (~> 0.3.1)
