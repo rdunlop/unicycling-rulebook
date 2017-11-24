@@ -17,3 +17,5 @@ set :whenever_roles,        ->{ %i[db app] }
 set :rollbar_token, ENV["ROLLBAR_ACCESS_TOKEN"]
 set :rollbar_env, proc { fetch :rails_env }
 set :rollbar_role, proc { :app }
+
+before 'deploy', 'rvm1:install:rvm'  # install/update RVM
