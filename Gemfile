@@ -48,6 +48,7 @@ gem 'capistrano-bundler'
 gem "capistrano-deploytags", require: false
 gem 'capistrano-rails'
 gem 'capistrano-rvm'
+gem 'rvm1-capistrano3', require: false
 gem 'capistrano3-unicorn'
 gem 'eye-patch', require: false
 
