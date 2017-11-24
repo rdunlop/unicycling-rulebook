@@ -442,7 +442,6 @@ DEPENDENCIES
   brakeman
   breadcrumbs_on_rails
   capistrano
-  capistrano-bundler
   capistrano-deploytags
   capistrano-rails
   capistrano-rvm

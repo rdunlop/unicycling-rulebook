@@ -44,7 +44,7 @@ gem 'apartment_acme_client'
 
 # deployment
 gem 'capistrano'
-gem 'capistrano-bundler'
+# gem 'capistrano-bundler'
 gem "capistrano-deploytags", require: false
 gem 'capistrano-rails'
 gem 'capistrano-rvm'
