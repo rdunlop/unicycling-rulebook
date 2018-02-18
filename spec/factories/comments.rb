@@ -1,9 +1,9 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# Read about factories at https://github.com/thoughtbot/factory_bot
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :comment do
-    discussion # FactoryGirl
-    user # FactoryGirl
+    discussion # FactoryBot
+    user # FactoryBot
     comment "MyText"
   end
 end

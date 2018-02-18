@@ -6,7 +6,7 @@ describe ConfigurationsController, type: :controller do
   before (:each) do
     Apartment::Tenant.create(rulebook.subdomain)
     Apartment::Tenant.switch!(rulebook.subdomain)
-    @admin_user = FactoryGirl.create(:admin_user)
+    @admin_user = FactoryBot.create(:admin_user)
     sign_in @admin_user
   end
 

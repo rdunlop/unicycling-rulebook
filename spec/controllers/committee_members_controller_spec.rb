@@ -34,9 +34,9 @@ require 'spec_helper'
 
 describe CommitteeMembersController, type: :controller do
   before (:each) do
-    @committee = FactoryGirl.create(:committee)
-    @user = FactoryGirl.create(:user)
-    @admin_user = FactoryGirl.create(:admin_user)
+    @committee = FactoryBot.create(:committee)
+    @user = FactoryBot.create(:user)
+    @admin_user = FactoryBot.create(:admin_user)
     sign_in @user
   end
 
@@ -63,21 +63,21 @@ describe CommitteeMembersController, type: :controller do
         sign_in @admin_user
       end
       it "assigns all committee_members as @committee_members" do
-        cm = FactoryGirl.create(:committee_member, committee: @committee)
+        cm = FactoryBot.create(:committee_member, committee: @committee)
         get :index, params: {committee_id: @committee.id}
         expect(assigns(:committee_members)).to eq([cm])
       end
       it "should only show members for this committee" do
-        cm = FactoryGirl.create(:committee_member, committee: @committee)
-        other_cm = FactoryGirl.create(:committee_member)
+        cm = FactoryBot.create(:committee_member, committee: @committee)
+        other_cm = FactoryBot.create(:committee_member)
         get :index, params: {committee_id: @committee.id}
         expect(assigns(:committee_members)).to eq([cm])
       end
     end
     describe "as committee_admin user" do
       before(:each) do
-        @committee_admin = FactoryGirl.create(:user)
-        @cm = FactoryGirl.create(:committee_member, admin: true, user: @committee_admin)
+        @committee_admin = FactoryBot.create(:user)
+        @cm = FactoryBot.create(:committee_member, admin: true, user: @committee_admin)
         sign_out @user
         sign_in @committee_admin
       end
@@ -109,7 +109,7 @@ describe CommitteeMembersController, type: :controller do
         expect(assigns(:users)).to match_array([@user, @admin_user])
       end
       it "only assigns new members to @users" do
-        FactoryGirl.create(:committee_member, committee: @committee, user: @admin_user)
+        FactoryBot.create(:committee_member, committee: @committee, user: @admin_user)
         get :new, params: {committee_id: @committee.id}
         expect(assigns(:users)).to match_array([@user])
       end
@@ -120,14 +120,14 @@ describe CommitteeMembersController, type: :controller do
     it "assigns the requested committee as @committee" do
       sign_out @user
       sign_in @admin_user
-      committee_member = FactoryGirl.create(:committee_member, committee: @committee)
+      committee_member = FactoryBot.create(:committee_member, committee: @committee)
       get :edit, params: {id: committee_member.to_param, committee_id: @committee.id}
       expect(assigns(:committee_member)).to eq(committee_member)
     end
     describe "as committee_admin user" do
       before(:each) do
-        @committee_admin = FactoryGirl.create(:user)
-        @cm = FactoryGirl.create(:committee_member, admin: true, user: @committee_admin)
+        @committee_admin = FactoryBot.create(:user)
+        @cm = FactoryBot.create(:committee_member, admin: true, user: @committee_admin)
         sign_out @user
         sign_in @committee_admin
       end
@@ -151,7 +151,7 @@ describe CommitteeMembersController, type: :controller do
         }.to change(CommitteeMember, :count).by(1)
       end
       it "creates multiple committee Members" do
-        @user2 = FactoryGirl.create(:user)
+        @user2 = FactoryBot.create(:user)
         expect {
           post :create, params: {committee_member: {user_id: [@user.id, @user2.id], admin: false, editor: false, voting: false}, committee_id: @committee.id}
         }.to change(CommitteeMember, :count).by(2)
@@ -207,19 +207,19 @@ describe CommitteeMembersController, type: :controller do
     end
     describe "with valid params" do
       it "assigns the requested committee_member as @committee" do
-        committee_member = FactoryGirl.create(:committee_member, committee: @committee)
+        committee_member = FactoryBot.create(:committee_member, committee: @committee)
         put :update, params: {id: committee_member.to_param, committee_member: {user_id: @user.id, admin: false, voting: true }, committee_id: @committee.id}
         expect(assigns(:committee_member)).to eq(committee_member)
       end
 
       it "redirects to the committee" do
-        committee_member = FactoryGirl.create(:committee_member, committee: @committee)
+        committee_member = FactoryBot.create(:committee_member, committee: @committee)
         put :update, params: {id: committee_member.to_param, committee_member: {user_id: @user.id, admin: false, voting: true}, committee_id: @committee.id}
         expect(response).to redirect_to(committee_committee_members_path(@committee))
       end
 
       it "sets the editor flag" do
-        committee_member = FactoryGirl.create(:committee_member, committee: @committee)
+        committee_member = FactoryBot.create(:committee_member, committee: @committee)
         put :update, params: {id: committee_member.to_param, committee_member: {user_id: @user.id, editor: true, voting: true}, committee_id: @committee.id}
         cm = CommitteeMember.find(committee_member.id)
         expect(cm.editor).to eq(true)
@@ -228,7 +228,7 @@ describe CommitteeMembersController, type: :controller do
 
     describe "with invalid params" do
       it "assigns the committee_member as @committee" do
-        committee_member = FactoryGirl.create(:committee_member, committee: @committee)
+        committee_member = FactoryBot.create(:committee_member, committee: @committee)
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CommitteeMember).to receive(:save).and_return(false)
         put :update, params: {id: committee_member.to_param, committee_member: {admin: true}, committee_id: @committee.id}
@@ -236,7 +236,7 @@ describe CommitteeMembersController, type: :controller do
       end
 
       it "re-renders the 'edit' template" do
-        committee_member = FactoryGirl.create(:committee_member, committee: @committee)
+        committee_member = FactoryBot.create(:committee_member, committee: @committee)
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CommitteeMember).to receive(:save).and_return(false)
         put :update, params: {id: committee_member.to_param, committee_member: {admin: true}, committee_id: @committee.id}
@@ -251,14 +251,14 @@ describe CommitteeMembersController, type: :controller do
       sign_in @admin_user
     end
     it "destroys the requested committee" do
-      committee_member = FactoryGirl.create(:committee_member, committee: @committee)
+      committee_member = FactoryBot.create(:committee_member, committee: @committee)
       expect {
         delete :destroy, params: {id: committee_member.to_param, committee_id: @committee.id}
       }.to change(CommitteeMember, :count).by(-1)
     end
 
     it "redirects to the committee_member list" do
-      committee_member = FactoryGirl.create(:committee_member, committee: @committee)
+      committee_member = FactoryBot.create(:committee_member, committee: @committee)
       delete :destroy, params: {id: committee_member.to_param, committee_id: @committee.id}
       expect(response).to redirect_to(committee_committee_members_path(@committee))
     end

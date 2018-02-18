@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "votes/new", type: :view do
   before(:each) do
-    vote = assign(:vote, FactoryGirl.create(:vote))
+    vote = assign(:vote, FactoryBot.create(:vote))
     @proposal = vote.proposal
   end
 

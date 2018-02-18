@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "rulebooks/new", type: :view do
   before(:each) do
-    assign(:rulebook, FactoryGirl.build_stubbed(:rulebook,
+    assign(:rulebook, FactoryBot.build_stubbed(:rulebook,
       rulebook_name: "MyString",
       front_page: "MyString",
       faq: "MyString",

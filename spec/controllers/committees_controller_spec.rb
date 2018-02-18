@@ -31,8 +31,8 @@ require 'spec_helper'
 
 describe CommitteesController, type: :controller do
   before (:each) do
-    @user = FactoryGirl.create(:user)
-    @admin_user = FactoryGirl.create(:admin_user)
+    @user = FactoryBot.create(:user)
+    @admin_user = FactoryBot.create(:admin_user)
     sign_in @user
   end
 
@@ -52,8 +52,8 @@ describe CommitteesController, type: :controller do
     end
     describe "for a committee_admin" do
       before(:each) do
-        @committee_admin = FactoryGirl.create(:user)
-        @cm = FactoryGirl.create(:committee_member, admin: true, user: @committee_admin)
+        @committee_admin = FactoryBot.create(:user)
+        @cm = FactoryBot.create(:committee_member, admin: true, user: @committee_admin)
         sign_out @user
         sign_in @committee_admin
       end
@@ -84,8 +84,8 @@ describe CommitteesController, type: :controller do
 
       it "should show all proposals that are not 'Submitted'" do
         # @proposal is 'Submitted'
-        committee = FactoryGirl.create(:committee)
-        proposal = FactoryGirl.create(:proposal, status: 'Review', committee: committee)
+        committee = FactoryBot.create(:committee)
+        proposal = FactoryBot.create(:proposal, status: 'Review', committee: committee)
         get :show, params: { id: committee.id }
         expect(assigns(:proposals)).to eq([proposal])
       end
@@ -211,7 +211,7 @@ describe CommitteesController, type: :controller do
 
   describe "GET membership" do
     it "assigns all committees as @committees" do
-      committee = FactoryGirl.create(:committee)
+      committee = FactoryBot.create(:committee)
       get :membership
       expect(response).to be_success
       expect(assigns(:committees)).to eq([committee])

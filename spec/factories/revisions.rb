@@ -1,14 +1,14 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# Read about factories at https://github.com/thoughtbot/factory_bot
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :revision do
-    proposal # FactoryGirl
+    proposal # FactoryBot
     rule_text "Rule Text"
     body "MyText1"
     background "MyText2"
     references "MyText3"
     change_description "MyText4"
-    user # FactoryGirl
+    user # FactoryBot
     num 1
   end
 end

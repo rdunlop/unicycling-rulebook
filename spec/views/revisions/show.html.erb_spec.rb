@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe "revisions/show", type: :view do
   before(:each) do
-    @revision = FactoryGirl.create(:revision)
+    @revision = FactoryBot.create(:revision)
     @proposal = @revision.proposal
-    @discussion = FactoryGirl.create(:discussion, proposal: @proposal)
+    @discussion = FactoryBot.create(:discussion, proposal: @proposal)
     @proposal.reload
 
     allow(view).to receive(:policy).and_return double(create?: false, read_usernames?: false, set_review?: false, revise?: false, vote?: false)

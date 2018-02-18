@@ -1,8 +1,8 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# Read about factories at https://github.com/thoughtbot/factory_bot
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :proposal do
-    committee # FactoryGirl
+    committee # FactoryBot
     status "Submitted"
     submit_date "2011-08-29 14:43:59"
     review_start_date "2011-08-29 14:43:59"
@@ -16,7 +16,7 @@ FactoryGirl.define do
     mail_messageid nil
 
     after(:create) do |proposal|
-      proposal.discussion = FactoryGirl.create(:discussion, proposal: proposal)
+      proposal.discussion = FactoryBot.create(:discussion, proposal: proposal)
     end
 
     trait :submitted do
@@ -37,7 +37,7 @@ FactoryGirl.define do
 
     trait :with_admin do
       after(:create) do |proposal|
-        FactoryGirl.create(:committee_member, :admin, committee: proposal.committee)
+        FactoryBot.create(:committee_member, :admin, committee: proposal.committee)
       end
     end
   end
