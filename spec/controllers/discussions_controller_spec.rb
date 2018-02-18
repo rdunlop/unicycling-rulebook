@@ -24,12 +24,12 @@ describe DiscussionsController, type: :controller do
       title: 'Something' }
   end
 
-  let(:committee) { FactoryGirl.create(:committee) }
+  let(:committee) { FactoryBot.create(:committee) }
 
   context "when not signed in" do
     describe "GET show" do
       it "assigns the requested revision as @revision" do
-        discussion = FactoryGirl.create(:discussion)
+        discussion = FactoryBot.create(:discussion)
 
         get :show, params: { id: discussion.to_param }
 
@@ -40,20 +40,20 @@ describe DiscussionsController, type: :controller do
 
   context "When signed in" do
     before(:each) do
-      @admin = FactoryGirl.create(:admin_user)
+      @admin = FactoryBot.create(:admin_user)
       sign_in @admin
     end
 
     describe "GET show" do
       it "assigns the requested revision as @revision" do
-        discussion = FactoryGirl.create(:discussion)
+        discussion = FactoryBot.create(:discussion)
 
         get :show, params: { id: discussion.to_param }
 
         expect(assigns(:discussion)).to eq(discussion)
       end
       it "should have a blank comment object" do
-        discussion = FactoryGirl.create(:discussion)
+        discussion = FactoryBot.create(:discussion)
 
         get :show, params: {id: discussion.to_param}
 
@@ -72,7 +72,7 @@ describe DiscussionsController, type: :controller do
       describe "with valid params" do
         describe "as a committee member" do
           before do
-            FactoryGirl.create(:committee_member, committee: committee, user: @admin)
+            FactoryBot.create(:committee_member, committee: committee, user: @admin)
           end
           it "creates a new Discussion" do
             expect {

@@ -7,7 +7,7 @@ describe "welcome/index", type: :view do
 
 
   it "renders a list of committees" do
-    @committee1 = FactoryGirl.create(:committee)
+    @committee1 = FactoryBot.create(:committee)
     @committees = [@committee1]
     render
     expect(rendered).to match(/#{@committee1.name}/)

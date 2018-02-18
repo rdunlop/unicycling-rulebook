@@ -1,9 +1,9 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# Read about factories at https://github.com/thoughtbot/factory_bot
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :vote do
-    proposal # FactoryGirl
-    user # FactoryGirl
+    proposal # FactoryBot
+    user # FactoryBot
     vote "agree"
     comment "my thoughts"
   end

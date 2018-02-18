@@ -64,7 +64,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    rulebook = FactoryGirl.create(:rulebook, :test_schema)
+    rulebook = FactoryBot.create(:rulebook, :test_schema)
     Apartment::Tenant.switch! rulebook.subdomain
   end
 

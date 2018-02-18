@@ -2,22 +2,22 @@ require "spec_helper"
 
 describe UserMailer, type: :mailer do
   before(:each) do
-    @proposal = FactoryGirl.create(:proposal, status: "Review", title: 'A "very" strange title', mail_messageid: "mymessageid")
-    @discussion = FactoryGirl.create(:discussion, proposal: @proposal, committee: @proposal.committee)
-    @comment = FactoryGirl.create(:comment, discussion: @discussion, comment: 'This is what I "Said"')
-    FactoryGirl.create(:revision, proposal: @proposal, rule_text: "This is what I \"Like\" to do", body: "Sometimes I <link> somewhere")
+    @proposal = FactoryBot.create(:proposal, status: "Review", title: 'A "very" strange title', mail_messageid: "mymessageid")
+    @discussion = FactoryBot.create(:discussion, proposal: @proposal, committee: @proposal.committee)
+    @comment = FactoryBot.create(:comment, discussion: @discussion, comment: 'This is what I "Said"')
+    FactoryBot.create(:revision, proposal: @proposal, rule_text: "This is what I \"Like\" to do", body: "Sometimes I <link> somewhere")
     @proposal.reload
     @user = @comment.user
 
     @committee = @proposal.committee
-    @cm = FactoryGirl.create(:committee_member, committee: @committee, user: @user)
-    @other_cm_user = FactoryGirl.create(:user)
-    @cm2 = FactoryGirl.create(:committee_member, committee: @committee, user: @other_cm_user)
+    @cm = FactoryBot.create(:committee_member, committee: @committee, user: @user)
+    @other_cm_user = FactoryBot.create(:user)
+    @cm2 = FactoryBot.create(:committee_member, committee: @committee, user: @other_cm_user)
     @proposal_id_title_and_committee = "[" + @committee.name + "] " + @proposal.title + " (#" + @proposal.id.to_s + ")"
   end
 
   describe "proposal_submitted" do
-    let(:admin_user) { FactoryGirl.create(:admin_user) }
+    let(:admin_user) { FactoryBot.create(:admin_user) }
     let(:mail) { UserMailer.proposal_submitted(@proposal, [admin_user.email]) }
 
     it "renders the headers" do
@@ -116,8 +116,8 @@ describe UserMailer, type: :mailer do
   end
 
   describe "new_committee_applicant" do
-    let(:user) { FactoryGirl.create(:user, comments: "Please add me") }
-    let(:admin_user) { FactoryGirl.create(:admin_user) }
+    let(:user) { FactoryBot.create(:user, comments: "Please add me") }
+    let(:admin_user) { FactoryBot.create(:admin_user) }
     let(:mail) { UserMailer.new_committee_applicant(user, [admin_user.email]) }
 
     it "renders the headers" do
@@ -135,7 +135,7 @@ describe UserMailer, type: :mailer do
 
   describe "vote_submitted" do
     before(:each) do
-      @vote = FactoryGirl.create(:vote, proposal: @proposal)
+      @vote = FactoryBot.create(:vote, proposal: @proposal)
     end
 
     let(:mail) { UserMailer.vote_submitted(@vote, [@user.email]) }
@@ -214,8 +214,8 @@ describe UserMailer, type: :mailer do
       expect(mail.bcc).to match_array([@user.email, @other_cm_user.email])
     end
     it "sends e-mail even when the user is set to 'no-email'" do
-      @user3 = FactoryGirl.create(:user, no_emails: true)
-      @cm = FactoryGirl.create(:committee_member, committee: @committee, user: @user3)
+      @user3 = FactoryBot.create(:user, no_emails: true)
+      @cm = FactoryBot.create(:committee_member, committee: @committee, user: @user3)
       expect(mail.subject).to eq("Some Subject")
       expect(mail.bcc).to eq([@user.email, @other_cm_user.email, @user3.email])
     end

@@ -57,7 +57,7 @@ group :development, :test, :cucumber do
   gem 'capybara'
   gem 'codeclimate_circle_ci_coverage'
   gem 'consistency_fail'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'foreman'
   gem 'html2haml'
   gem 'pry'

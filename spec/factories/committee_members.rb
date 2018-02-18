@@ -1,9 +1,9 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# Read about factories at https://github.com/thoughtbot/factory_bot
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :committee_member do
-    committee # FactoryGirl
-    user #FactoryGirl
+    committee # FactoryBot
+    user #FactoryBot
     admin false
     voting true
     editor false

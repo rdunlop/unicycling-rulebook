@@ -19,13 +19,13 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe ProposalProgressController, type: :controller do
-  let(:committee) { FactoryGirl.create(:committee) }
+  let(:committee) { FactoryBot.create(:committee) }
   before do
-    @user = FactoryGirl.create(:user)
-    @admin_user = FactoryGirl.create(:admin_user)
+    @user = FactoryBot.create(:user)
+    @admin_user = FactoryBot.create(:admin_user)
     sign_in @admin_user
-    @cm = FactoryGirl.create(:committee_member, committee: committee, user: @admin_user)
-    @cm2 = FactoryGirl.create(:committee_member, committee: committee, user: @user)
+    @cm = FactoryBot.create(:committee_member, committee: committee, user: @admin_user)
+    @cm2 = FactoryBot.create(:committee_member, committee: committee, user: @user)
     request.env["HTTP_REFERER"] = root_url
   end
 
@@ -41,7 +41,7 @@ describe ProposalProgressController, type: :controller do
 
   describe "PUT set_voting" do
     it "changes the status to voting" do
-      proposal = FactoryGirl.create(:proposal, :with_admin, status: "Pre-Voting")
+      proposal = FactoryBot.create(:proposal, :with_admin, status: "Pre-Voting")
 
       put :set_voting, params: { id: proposal.to_param }
 
@@ -53,7 +53,7 @@ describe ProposalProgressController, type: :controller do
     end
 
     it "should not be allowed to change unless the status is Pre-Voting" do
-      proposal = FactoryGirl.create(:proposal, :with_admin, status: "Tabled")
+      proposal = FactoryBot.create(:proposal, :with_admin, status: "Tabled")
 
       put :set_voting, params: { id: proposal.to_param }
 
@@ -62,7 +62,7 @@ describe ProposalProgressController, type: :controller do
       expect(proposal.status).to eq("Tabled")
     end
     it "should send an e-mail" do
-      proposal = FactoryGirl.create(:proposal, :with_admin, status: "Pre-Voting")
+      proposal = FactoryBot.create(:proposal, :with_admin, status: "Pre-Voting")
       ActionMailer::Base.deliveries.clear
 
       put :set_voting, params: { id: proposal.to_param }
@@ -71,9 +71,9 @@ describe ProposalProgressController, type: :controller do
     end
     describe "as a committee-admin for the same committee" do
       before(:each) do
-        @proposal = FactoryGirl.create(:proposal, :with_admin, status: "Pre-Voting")
+        @proposal = FactoryBot.create(:proposal, :with_admin, status: "Pre-Voting")
         sign_out @admin_user
-        cm = FactoryGirl.create(:committee_member, committee: @proposal.committee, admin: true)
+        cm = FactoryBot.create(:committee_member, committee: @proposal.committee, admin: true)
         @cm_admin_user = cm.user
         sign_in @cm_admin_user
       end
@@ -87,8 +87,8 @@ describe ProposalProgressController, type: :controller do
 
   describe "PUT set_review" do
     before(:each) do
-      @proposal = FactoryGirl.create(:proposal, :with_admin, status: "Submitted")
-      @revision = FactoryGirl.create(:revision, proposal: @proposal)
+      @proposal = FactoryBot.create(:proposal, :with_admin, status: "Submitted")
+      @revision = FactoryBot.create(:revision, proposal: @proposal)
     end
 
     it "changes the status to Review" do
@@ -138,7 +138,7 @@ describe ProposalProgressController, type: :controller do
     describe "as a committee-admin for the same committee" do
       before(:each) do
         sign_out @admin_user
-        cm = FactoryGirl.create(:committee_member, committee: @proposal.committee, admin: true)
+        cm = FactoryBot.create(:committee_member, committee: @proposal.committee, admin: true)
         @cm_admin_user = cm.user
         sign_in @cm_admin_user
       end
@@ -174,7 +174,7 @@ describe ProposalProgressController, type: :controller do
     end
 
     it "changes the status to Pre-Voting" do
-      proposal = FactoryGirl.create(:proposal, status: "Voting")
+      proposal = FactoryBot.create(:proposal, status: "Voting")
 
       put :set_pre_voting, params: { id: proposal.to_param }
 
@@ -184,8 +184,8 @@ describe ProposalProgressController, type: :controller do
     end
 
     it "changes the status to Pre-Voting should remove any votes" do
-      proposal = FactoryGirl.create(:proposal, status: "Voting")
-      FactoryGirl.create(:vote, proposal: proposal)
+      proposal = FactoryBot.create(:proposal, status: "Voting")
+      FactoryBot.create(:vote, proposal: proposal)
 
       expect(proposal.votes.count).to eq(1)
 
@@ -198,7 +198,7 @@ describe ProposalProgressController, type: :controller do
     end
 
     it "should not be allowed to change unless the status is Voting" do
-      proposal = FactoryGirl.create(:proposal, status: "Tabled")
+      proposal = FactoryBot.create(:proposal, status: "Tabled")
 
       put :set_pre_voting, params: { id: proposal.to_param }
 
@@ -208,9 +208,9 @@ describe ProposalProgressController, type: :controller do
     end
     describe "as a committee admin" do
       before(:each) do
-        @proposal = FactoryGirl.create(:proposal, status: "Voting")
+        @proposal = FactoryBot.create(:proposal, status: "Voting")
         sign_out @admin_user
-        cm = FactoryGirl.create(:committee_member, committee: @proposal.committee, admin: true)
+        cm = FactoryBot.create(:committee_member, committee: @proposal.committee, admin: true)
         @cm_admin_user = cm.user
         sign_in @cm_admin_user
       end
@@ -230,7 +230,7 @@ describe ProposalProgressController, type: :controller do
     end
 
     it "changes the status to Tabled from review" do
-      proposal = FactoryGirl.create(:proposal, status: "Review")
+      proposal = FactoryBot.create(:proposal, status: "Review")
 
       put :table, params: { id: proposal.to_param }
 
@@ -241,7 +241,7 @@ describe ProposalProgressController, type: :controller do
     end
 
     it "changes the status to Tabled from Pre-Voting" do
-      proposal = FactoryGirl.create(:proposal, status: "Pre-Voting")
+      proposal = FactoryBot.create(:proposal, status: "Pre-Voting")
 
       put :table, params: { id: proposal.to_param }
 
@@ -250,7 +250,7 @@ describe ProposalProgressController, type: :controller do
       expect(proposal.status).to eq("Tabled")
     end
     it "should set the tabled_date" do
-      proposal = FactoryGirl.create(:proposal, status: "Pre-Voting")
+      proposal = FactoryBot.create(:proposal, status: "Pre-Voting")
 
       put :table, params: { id: proposal.to_param }
 
@@ -258,7 +258,7 @@ describe ProposalProgressController, type: :controller do
       expect(proposal.tabled_date).to eq(Date.current)
     end
     it "does not allow changing to Tabled from Voting" do
-      proposal = FactoryGirl.create(:proposal, status: "Voting")
+      proposal = FactoryBot.create(:proposal, status: "Voting")
 
       put :table, params: { id: proposal.to_param }
 
@@ -274,7 +274,7 @@ describe ProposalProgressController, type: :controller do
         sign_in @user
       end
       it "can table a Submitted proposal" do
-        proposal = FactoryGirl.create(:proposal, owner: @user, status: "Pre-Voting")
+        proposal = FactoryBot.create(:proposal, owner: @user, status: "Pre-Voting")
 
         put :table, params: { id: proposal.to_param }
         proposal.reload

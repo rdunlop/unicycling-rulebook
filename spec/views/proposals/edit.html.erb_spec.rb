@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe "proposals/edit", type: :view do
-  let(:committee) { FactoryGirl.create(:committee) }
+  let(:committee) { FactoryBot.create(:committee) }
   before(:each) do
-    @proposal = FactoryGirl.create(:proposal, committee: committee)
-    @revision = FactoryGirl.create(:revision, proposal: @proposal)
+    @proposal = FactoryBot.create(:proposal, committee: committee)
+    @revision = FactoryBot.create(:revision, proposal: @proposal)
     @committees = [committee]
   end
 

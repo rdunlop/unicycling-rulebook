@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Rulebook, type: :model do
   it "should allow 2 rulebooks to exist" do
-    FactoryGirl.create(:rulebook)
+    FactoryBot.create(:rulebook)
     ac = described_class.new
     ac.subdomain = "new2"
     expect(ac).to be_valid

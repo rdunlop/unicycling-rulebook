@@ -10,20 +10,20 @@ describe Committee, type: :model do
   end
 
   it "should return it's name as the string" do
-    committee = FactoryGirl.create(:committee)
+    committee = FactoryBot.create(:committee)
 
     expect(committee.to_s).to eq(committee.name)
   end
 
   it "should be able to look up related proposals" do
-    proposal = FactoryGirl.create(:proposal)
+    proposal = FactoryBot.create(:proposal)
     committee = proposal.committee
 
     expect(committee.proposals).to eq([proposal])
   end
 
   it "should be able to look up its members" do
-    committee_member = FactoryGirl.create(:committee_member)
+    committee_member = FactoryBot.create(:committee_member)
     com = committee_member.committee
     expect(com.committee_members).to eq([committee_member])
   end
@@ -34,21 +34,21 @@ describe Committee, type: :model do
   end
 
   it "should list the members alphabetically" do
-    committee = FactoryGirl.create(:committee)
-    user_b = FactoryGirl.create(:user, name: "Bravo")
-    user_a = FactoryGirl.create(:user, name: "Alpha")
-    user_c = FactoryGirl.create(:user, name: "Charlie")
-    cm_b = FactoryGirl.create(:committee_member, committee: committee, user: user_b)
-    cm_a = FactoryGirl.create(:committee_member, committee: committee, user: user_a)
-    cm_c = FactoryGirl.create(:committee_member, committee: committee, user: user_c)
+    committee = FactoryBot.create(:committee)
+    user_b = FactoryBot.create(:user, name: "Bravo")
+    user_a = FactoryBot.create(:user, name: "Alpha")
+    user_c = FactoryBot.create(:user, name: "Charlie")
+    cm_b = FactoryBot.create(:committee_member, committee: committee, user: user_b)
+    cm_a = FactoryBot.create(:committee_member, committee: committee, user: user_a)
+    cm_c = FactoryBot.create(:committee_member, committee: committee, user: user_c)
 
     expect(committee.committee_members).to eq([cm_a, cm_b, cm_c])
   end
 
   describe "with multiple committees" do
-    let!(:base) { FactoryGirl.create(:committee, preliminary: false) }
-    let!(:prelim2) { FactoryGirl.create(:committee, preliminary: true, name: "The Bravo Committee") }
-    let!(:prelim1) { FactoryGirl.create(:committee, preliminary: true, name: "The Alpha Committee") }
+    let!(:base) { FactoryBot.create(:committee, preliminary: false) }
+    let!(:prelim2) { FactoryBot.create(:committee, preliminary: true, name: "The Bravo Committee") }
+    let!(:prelim1) { FactoryBot.create(:committee, preliminary: true, name: "The Alpha Committee") }
     let(:committees) { Committee.ordered.all }
 
     it "sorts the base committee first" do

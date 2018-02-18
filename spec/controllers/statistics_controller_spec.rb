@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe StatisticsController, type: :controller do
-  let(:admin_user) { FactoryGirl.create(:admin_user) }
+  let(:admin_user) { FactoryBot.create(:admin_user) }
 
   before(:each) do
     sign_in admin_user
@@ -9,8 +9,8 @@ describe StatisticsController, type: :controller do
 
   describe "GET index" do
     before do
-      FactoryGirl.create(:comment) # with a user
-      FactoryGirl.create(:vote) # with another user
+      FactoryBot.create(:comment) # with a user
+      FactoryBot.create(:vote) # with another user
     end
 
     it "displays" do
