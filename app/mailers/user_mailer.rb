@@ -126,7 +126,7 @@ class UserMailer < TenantAwareMailer
   end
 
   def proposal_finished_review(proposal)
-    @REVISIONTIME_TEXT = "3 days"
+    @REVISIONTIME_TEXT = "3 days" # rubocop:disable Naming/VariableName
     @proposal = proposal
 
     set_threading_header(proposal)
