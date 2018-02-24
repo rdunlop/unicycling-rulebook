@@ -4,10 +4,10 @@ describe "rulebooks/index", type: :view do
   before(:each) do
     assign(:rulebooks, [
              FactoryBot.build_stubbed(:rulebook,
-               rulebook_name: "Rulebook Name",
-               front_page: "Front Page",
-               faq: "Faq",
-               copyright: "My Copy")
+                                      rulebook_name: "Rulebook Name",
+                                      front_page: "Front Page",
+                                      faq: "Faq",
+                                      copyright: "My Copy")
            ])
   end
 

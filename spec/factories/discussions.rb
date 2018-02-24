@@ -2,10 +2,10 @@
 
 FactoryBot.define do
   factory :discussion do
-    #proposal # FactoryBot
+    # proposal # FactoryBot
     status "active"
     owner
-    sequence(:title) {|e| "Discussion Title #{e}" }
+    sequence(:title) { |e| "Discussion Title #{e}" }
     after(:build) do |discussion|
       discussion.committee = if discussion.proposal.present?
                                discussion.proposal.committee

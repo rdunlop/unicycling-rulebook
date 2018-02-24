@@ -123,7 +123,6 @@ class CommitteeMembersController < ApplicationController
     @committee_member = CommitteeMember.new
     @committee_member.committee = @committee
     @users = User.all
-    @users -= @committee.committee_members.map{|member| member.user}
+    @users -= @committee.committee_members.map { |member| member.user }
   end
-
 end

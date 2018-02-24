@@ -6,7 +6,6 @@ describe User, type: :model do
       @admin = FactoryBot.create(:admin_user)
     end
     it "should have a to: address in new_applicant_email" do
-
       ActionMailer::Base.deliveries.clear
 
       user = FactoryBot.create(:user)

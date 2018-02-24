@@ -87,12 +87,12 @@ describe CommentsController, type: :controller do
         expect(assigns(:comment)).to be_a_new(Comment)
       end
 
-      #it "re-renders the 'proposals/show' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        #Comment.any_instance.stub(:save).and_return(false)
-        #post :create, params: {:comment => {}, discussion_id: @discussion.id }
-        #response.should render_template("propsals/show, layouts/application")
-      #end
+      # it "re-renders the 'proposals/show' template" do
+      # Trigger the behavior that occurs when invalid params are submitted
+      # Comment.any_instance.stub(:save).and_return(false)
+      # post :create, params: {:comment => {}, discussion_id: @discussion.id }
+      # response.should render_template("propsals/show, layouts/application")
+      # end
     end
   end
 end

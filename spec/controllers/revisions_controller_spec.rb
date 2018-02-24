@@ -119,7 +119,6 @@ describe RevisionsController, type: :controller do
           expect(assigns(:revision)).to be_persisted
           expect(response).to redirect_to([@prop, Revision.last])
         end
-
       end
 
       it "assigns a newly created revision as @revision" do

@@ -20,7 +20,7 @@ gem 'tinymce-rails'
 gem 'uglifier', '>= 1.0.3'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-#gem 'therubyracer'
+# gem 'therubyracer'
 
 # allows storing of secrets in ENV for heroku
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'

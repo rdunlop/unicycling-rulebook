@@ -5,9 +5,9 @@ describe "votes/index", type: :view do
     @proposal = FactoryBot.create(:proposal)
     @user = FactoryBot.create(:user)
     assign(:votes, [
-        FactoryBot.create(:vote, proposal: @proposal, user: @user),
-        FactoryBot.create(:vote, proposal: @proposal)
-])
+             FactoryBot.create(:vote, proposal: @proposal, user: @user),
+             FactoryBot.create(:vote, proposal: @proposal)
+           ])
   end
 
   it "renders a list of votes" do

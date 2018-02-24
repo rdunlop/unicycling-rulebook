@@ -103,7 +103,7 @@ Rails.application.routes.draw do
   get "/new", to: redirect("/rulebooks")
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  get '/r/:rulebook_slug/(*other)' => "welcome#new_location" #}redirect("/r/%{rulebook_slug}/welcome/index") # to match /en  to send to /en/welcome
+  get '/r/:rulebook_slug/(*other)' => "welcome#new_location" # }redirect("/r/%{rulebook_slug}/welcome/index") # to match /en  to send to /en/welcome
   root to: 'welcome#index'
 
   # See how all your routes lay out with "rake routes"

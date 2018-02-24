@@ -3,10 +3,10 @@ require 'spec_helper'
 describe "rulebooks/new", type: :view do
   before(:each) do
     assign(:rulebook, FactoryBot.build_stubbed(:rulebook,
-      rulebook_name: "MyString",
-      front_page: "MyString",
-      faq: "MyString",
-      copyright: "Robin Copy"))
+                                               rulebook_name: "MyString",
+                                               front_page: "MyString",
+                                               faq: "MyString",
+                                               copyright: "Robin Copy"))
   end
 
   it "renders new rulebook form" do

@@ -31,8 +31,8 @@ class ProposalsController < ApplicationController
     authorize Proposal
     add_breadcrumb "Approved Proposals"
     # the non-preliminary ones go first
-    @proposals = Proposal.select{ |p| p.committee.preliminary == false and p.status == 'Passed'}
-    @proposals += Proposal.select{ |p| p.committee.preliminary == true and p.status == 'Passed'}
+    @proposals = Proposal.select { |p| p.committee.preliminary == false and p.status == 'Passed' }
+    @proposals += Proposal.select { |p| p.committee.preliminary == true and p.status == 'Passed' }
 
     respond_to do |format|
       format.html # passed.html.erb
@@ -143,5 +143,4 @@ class ProposalsController < ApplicationController
   def revision_params
     params.require(:revision).permit(:rule_text, :body, :change_description, :background, :references)
   end
-
 end

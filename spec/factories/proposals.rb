@@ -12,7 +12,7 @@ FactoryBot.define do
     tabled_date "2011-08-29 14:43:59"
     transition_straight_to_vote false
     owner
-    sequence(:title) {|e| "Proposal Title #{e}" }
+    sequence(:title) { |e| "Proposal Title #{e}" }
     mail_messageid nil
 
     after(:create) do |proposal|

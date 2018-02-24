@@ -231,7 +231,6 @@ describe Proposal, type: :model do
     end
   end
 
-
   describe "with existing Review+Submitted proposals" do
     before(:each) do
       # review proposal which will be advanced

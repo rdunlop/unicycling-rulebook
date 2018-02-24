@@ -1,5 +1,4 @@
 class InformAdminUsers
-
   # send an e-mail to all Admin users
   def self.new_applicant(user)
     UserMailer.new_committee_applicant(user, admin_emails).deliver_later if admin_emails.any?

@@ -51,7 +51,7 @@ describe Vote, type: :model do
 
     user = FactoryBot.create(:user, email: 'robin@dunlopweb.com', name: "Robin Dunlop")
     vote = FactoryBot.create(:vote, vote: 'agree', comment: "my comment", user: user,
-    created_at: date)
+                                    created_at: date)
     expect(vote.to_s).to eq("Robin Dunlop voted agree on January 10, 2012, 11:45 AM (my comment)")
   end
   it "can't vote twice on the same proposal by the same user" do
