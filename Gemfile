@@ -33,6 +33,7 @@ gem 'rollbar'
 
 # other
 gem 'apartment-sidekiq'
+gem 'apartment_acme_client'
 gem 'pg'
 gem 'rake'
 gem 'redis-namespace'
@@ -40,7 +41,6 @@ gem 'redis-rails'
 gem 'sidekiq'
 gem 'unicorn'
 gem 'whenever'
-gem 'apartment_acme_client'
 
 # deployment
 gem 'capistrano'
