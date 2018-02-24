@@ -44,9 +44,9 @@ class InformCommitteeMembers
 
     # don't send e-mails to people who have already voted
     all_possible_emails = emails
-    already_voted_emails = vote.proposal.votes.map {|v| v.user.email }
+    already_voted_emails = vote.proposal.votes.map { |v| v.user.email }
     # don't include non-voting members in the e-mail list
-    non_voting_emails = vote.proposal.committee.committee_members.select { |cm| cm.voting == false}.map {|cm| cm.user.email}
+    non_voting_emails = vote.proposal.committee.committee_members.select { |cm| cm.voting == false }.map { |cm| cm.user.email }
 
     emails = all_possible_emails - already_voted_emails
     emails = emails - non_voting_emails

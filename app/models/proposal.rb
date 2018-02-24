@@ -109,18 +109,22 @@ class Proposal < ApplicationRecord
 
   delegate :background, :body, :references, to: :latest_revision
 
-private
+  private
+
   def count_votes(type)
     votes.where(vote: type).count
   end
 
-public
+  public
+
   def agree_votes
     count_votes('agree')
   end
+
   def disagree_votes
     count_votes('disagree')
   end
+
   def abstain_votes
     count_votes('abstain')
   end

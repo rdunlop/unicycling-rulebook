@@ -36,7 +36,6 @@ describe ConfigurationsController, type: :controller do
     end
   end
 
-
   describe "PUT update" do
     describe "with valid params" do
       it "assigns the requested rulebook as @rulebook" do
@@ -79,5 +78,4 @@ describe ConfigurationsController, type: :controller do
       expect(response).to redirect_to(welcome_index_all_path)
     end
   end
-
 end

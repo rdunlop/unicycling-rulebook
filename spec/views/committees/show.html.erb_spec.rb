@@ -7,9 +7,9 @@ describe "committees/show", type: :view do
       @proposal = FactoryBot.create(:proposal)
       @proposals = [@proposal]
       assign(:votes, [
-          FactoryBot.create(:vote, proposal: @proposal),
-          FactoryBot.create(:vote, proposal: @proposal)
-])
+               FactoryBot.create(:vote, proposal: @proposal),
+               FactoryBot.create(:vote, proposal: @proposal)
+             ])
       render
     end
     it "should find the proposal title" do

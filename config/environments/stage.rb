@@ -28,8 +28,8 @@ RulebookApp::Application.configure do
 
   # show mailer previews
   # (only available in Rails 4.2)
-  #config.action_mailer.preview_path = "previews/mailers"
-  #config.action_mailer.preview_enabled = true
+  # config.action_mailer.preview_path = "previews/mailers"
+  # config.action_mailer.preview_enabled = true
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
@@ -53,9 +53,7 @@ RulebookApp::Application.configure do
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
 
-  if Rails.application.secrets.redis
-    config.cache_store = :redis_store, Redis.cache_configuration
-  end
+  config.cache_store = :redis_store, Redis.cache_configuration if Rails.application.secrets.redis
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"

@@ -1,8 +1,8 @@
 class AddRuleTextToRevision < ActiveRecord::Migration
-  #class Revision < ActiveRecord::Base
-  #end
-  #class Proposal < ActiveRecord::Base
-  #end
+  # class Revision < ActiveRecord::Base
+  # end
+  # class Proposal < ActiveRecord::Base
+  # end
   ActiveRecord::Base.record_timestamps = false
 
   def up
@@ -14,6 +14,7 @@ class AddRuleTextToRevision < ActiveRecord::Migration
       last_revision.save
     end
   end
+
   def down
     remove_column :revisions, :rule_text
   end

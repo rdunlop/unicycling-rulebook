@@ -44,7 +44,7 @@ describe UserMailer, type: :mailer do
     let(:mail) { UserMailer.discussion_comment_added(@comment, [@user.email]) }
 
     it "renders the headers" do
-      #mail.subject.should eq(@proposal_id_title_and_committee)
+      # mail.subject.should eq(@proposal_id_title_and_committee)
       expect(mail.from).to eq(["unicycling@dunlopweb.com"])
       expect(mail.header[:from].to_s).to eq("#{@user} <unicycling@dunlopweb.com>")
     end
@@ -54,9 +54,9 @@ describe UserMailer, type: :mailer do
       expect(mail.body.encoded).to match('This is what I "Said"')
       expect(mail.body.encoded).to match(@comment.comment)
     end
-    #it "should have a in-reply-to set" do
+    # it "should have a in-reply-to set" do
     #  mail['In-Reply-To'].to_s.should == @proposal.mail_messageid
-    #end
+    # end
   end
 
   describe "Proposal without mail_messageid commented on" do
@@ -223,5 +223,4 @@ describe UserMailer, type: :mailer do
       expect(mail.reply_to).to eq(["some@dunlopweb.com"])
     end
   end
-
 end

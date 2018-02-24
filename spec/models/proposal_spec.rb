@@ -116,37 +116,37 @@ describe Proposal, type: :model do
     end
     it "should print the review dates for a Review proposal" do
       prop = FactoryBot.create(:proposal, status: 'Review',
-                                           review_start_date: Date.new(2012, 1, 1),
-                                           review_end_date: Date.new(2012, 1, 10))
+                                          review_start_date: Date.new(2012, 1, 1),
+                                          review_end_date: Date.new(2012, 1, 10))
       expect(prop.status_string).to eq("Review from January 01, 2012 to January 10, 2012")
     end
 
     it "should print the review dates for a Pre-Voting proposal" do
       prop = FactoryBot.create(:proposal, status: 'Pre-Voting',
-                                           review_start_date: Date.new(2012, 1, 1),
-                                           review_end_date: Date.new(2012, 1, 10))
+                                          review_start_date: Date.new(2012, 1, 1),
+                                          review_end_date: Date.new(2012, 1, 10))
       expect(prop.status_string).to eq("Pre-Voting (Reviewed from January 01, 2012 to January 10, 2012)")
     end
     it "should print the voting dates for a Voting proposal" do
       prop = FactoryBot.create(:proposal, status: 'Voting',
-                                           vote_start_date: Date.new(2012, 1, 1),
-                                           vote_end_date: Date.new(2012, 1, 10))
+                                          vote_start_date: Date.new(2012, 1, 1),
+                                          vote_end_date: Date.new(2012, 1, 10))
       expect(prop.status_string).to eq("Voting from January 01, 2012 to January 10, 2012")
     end
     it "should print the review dates for a Tabled proposal" do
       prop = FactoryBot.create(:proposal, status: 'Tabled',
-                                           review_start_date: Date.new(2012, 1, 1),
-                                           review_end_date: Date.new(2012, 1, 10))
+                                          review_start_date: Date.new(2012, 1, 1),
+                                          review_end_date: Date.new(2012, 1, 10))
       expect(prop.status_string).to eq("Set-Aside (Reviewed from January 01, 2012 to January 10, 2012)")
     end
     it "should print the vote end dates for a Passed proposal" do
       prop = FactoryBot.create(:proposal, status: 'Passed',
-                                           vote_end_date: Date.new(2012, 2, 1))
+                                          vote_end_date: Date.new(2012, 2, 1))
       expect(prop.status_string).to eq("Passed on February 01, 2012")
     end
     it "should print the vote end dates for a Failde proposal" do
       prop = FactoryBot.create(:proposal, status: 'Failed',
-                                           vote_end_date: Date.new(2012, 2, 1))
+                                          vote_end_date: Date.new(2012, 2, 1))
       expect(prop.status_string).to eq("Failed on February 01, 2012")
     end
   end
@@ -230,7 +230,6 @@ describe Proposal, type: :model do
       end
     end
   end
-
 
   describe "with existing Review+Submitted proposals" do
     before(:each) do

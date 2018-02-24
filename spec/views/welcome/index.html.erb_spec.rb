@@ -5,7 +5,6 @@ describe "welcome/index", type: :view do
     @config = Rulebook.new
   end
 
-
   it "renders a list of committees" do
     @committee1 = FactoryBot.create(:committee)
     @committees = [@committee1]

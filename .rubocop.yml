@@ -4,6 +4,7 @@ AllCops:
     - ".bundle/**/*" # Auto-generated
     - "bin/**/*" # Auto-generated
     - "db/schema.rb" # Auto-generated
+    - "vendor/**/*"  # We cannot solve the world's problems
 Rails:
   Enabled: true
 

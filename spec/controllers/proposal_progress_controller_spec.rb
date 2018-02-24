@@ -34,9 +34,9 @@ describe ProposalProgressController, type: :controller do
   # update the return value of this method accordingly.
   def valid_attributes
     {
-        title: "My Title",
-        committee_id: committee.id
-}
+      title: "My Title",
+      committee_id: committee.id
+    }
   end
 
   describe "PUT set_voting" do

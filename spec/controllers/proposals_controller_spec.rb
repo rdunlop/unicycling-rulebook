@@ -54,9 +54,9 @@ describe ProposalsController, type: :controller do
   # update the return value of this method accordingly.
   def valid_attributes
     {
-        title: "My Title",
-        committee_id: committee.id
-}
+      title: "My Title",
+      committee_id: committee.id
+    }
   end
 
   describe "GET passed" do
@@ -163,7 +163,7 @@ describe ProposalsController, type: :controller do
           background: "some background",
           body: "some body",
           references: "some references"
-}
+        }
       end
       it "creates a new Proposal" do
         expect {

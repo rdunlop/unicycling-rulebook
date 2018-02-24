@@ -18,7 +18,6 @@ class ConfigurationsController < ApplicationController
 
   # PUT /configurations/1
   def update
-
     respond_to do |format|
       if @rulebook.update_attributes(rulebook_params)
         format.html { redirect_to configuration_path(@rulebook), notice: 'Rulebook was successfully updated.' }
@@ -55,5 +54,4 @@ class ConfigurationsController < ApplicationController
   def authorize_rulebook
     authorize @rulebook
   end
-
 end

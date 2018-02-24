@@ -20,7 +20,7 @@ describe CommitteeMember, type: :model do
   it "should not be able to add the same committee/user twice" do
     committee_member = FactoryBot.create(:committee_member)
     committee_member2 = FactoryBot.build(:committee_member, committee: committee_member.committee,
-                                                       user: committee_member.user)
+                                                            user: committee_member.user)
     expect(committee_member2.valid?).to eq(false)
   end
 end

@@ -4,7 +4,7 @@ describe ProposalCreator do
   let(:committee) { FactoryBot.create(:committee) }
   let(:discussion) { FactoryBot.create(:discussion, committee: committee) }
   let(:user) { FactoryBot.create(:user) }
-  #let!(:member) { FactoryBot.create(:committee_member, committee: committee, user: user) }
+  # let!(:member) { FactoryBot.create(:committee_member, committee: committee, user: user) }
 
   let(:new_proposal) { committee.proposals.build(title: "Hello") }
   let(:new_revision) { new_proposal.revisions.build(body: "The proposal") }

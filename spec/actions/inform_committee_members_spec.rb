@@ -86,7 +86,6 @@ describe InformCommitteeMembers do
     it_should_behave_like "only email admins for submitted proposals"
   end
 
-
   context "with a committee member2" do
     let(:proposal) { FactoryBot.create(:proposal, :review) }
     let(:revision) { FactoryBot.create(:revision, proposal: proposal, user: user) }

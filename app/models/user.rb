@@ -154,6 +154,6 @@ class User < ApplicationRecord
 
   # new function to provide access to protected method unless_confirmed
   def only_if_unconfirmed
-    pending_any_confirmation {yield}
+    pending_any_confirmation { yield }
   end
 end

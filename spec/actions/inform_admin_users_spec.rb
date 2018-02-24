@@ -32,5 +32,4 @@ describe InformAdminUsers do
       end
     end
   end
-
 end

@@ -17,7 +17,6 @@
 require 'spec_helper'
 
 describe RulebooksController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Rulebook. As you add validations to Rulebook, be sure to
   # update the return value of this method accordingly.
@@ -52,7 +51,6 @@ describe RulebooksController, type: :controller do
       expect(assigns(:rulebook)).to be_a_new(Rulebook)
     end
   end
-
 
   describe "POST create" do
     describe "with valid params" do
