@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe "committee_members/index", type: :view do
   before(:each) do
-    @committee = FactoryGirl.create(:committee)
+    @committee = FactoryBot.create(:committee)
     @cm = assign(:committee_members, [
-            FactoryGirl.create(:committee_member, committee: @committee, admin: true, voting: false),
-            FactoryGirl.create(:committee_member, committee: @committee, voting: false)
-])
+                   FactoryBot.create(:committee_member, committee: @committee, admin: true, voting: false),
+                   FactoryBot.create(:committee_member, committee: @committee, voting: false)
+                 ])
   end
 
   it "renders a list of committee_members" do

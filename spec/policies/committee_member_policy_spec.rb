@@ -1,17 +1,17 @@
 require "spec_helper"
 
 describe CommitteeMemberPolicy do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:admin) { FactoryGirl.create(:admin_user) }
-  let(:committee_admin) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:admin) { FactoryBot.create(:admin_user) }
+  let(:committee_admin) { FactoryBot.create(:user) }
 
   before do
-    FactoryGirl.create(:committee_member, :admin, committee: committee, user: committee_admin)
+    FactoryBot.create(:committee_member, :admin, committee: committee, user: committee_admin)
   end
 
   let(:subject) { described_class }
-  let(:committee) { FactoryGirl.create :committee }
-  let(:committee_member) { FactoryGirl.create :committee_member, committee: committee }
+  let(:committee) { FactoryBot.create :committee }
+  let(:committee_member) { FactoryBot.create :committee_member, committee: committee }
 
   permissions :show?, :update? do
     it { expect(subject).to permit(committee_admin, committee_member) }

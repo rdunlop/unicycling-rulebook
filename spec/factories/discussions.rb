@@ -1,16 +1,16 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# Read about factories at https://github.com/thoughtbot/factory_bot
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :discussion do
-    #proposal # FactoryGirl
+    # proposal # FactoryBot
     status "active"
     owner
-    sequence(:title) {|e| "Discussion Title #{e}" }
+    sequence(:title) { |e| "Discussion Title #{e}" }
     after(:build) do |discussion|
       discussion.committee = if discussion.proposal.present?
                                discussion.proposal.committee
                              else
-                               FactoryGirl.build(:committee)
+                               FactoryBot.build(:committee)
                              end
     end
   end

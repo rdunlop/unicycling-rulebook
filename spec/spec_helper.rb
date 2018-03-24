@@ -15,7 +15,7 @@ require "pundit/rspec"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -64,7 +64,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    rulebook = FactoryGirl.create(:rulebook, :test_schema)
+    rulebook = FactoryBot.create(:rulebook, :test_schema)
     Apartment::Tenant.switch! rulebook.subdomain
   end
 

@@ -20,7 +20,7 @@ require 'spec_helper'
 
 describe WelcomeController, type: :controller do
   before(:each) do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
 
     sign_in @user
   end
@@ -42,7 +42,7 @@ describe WelcomeController, type: :controller do
     describe "as a super-user" do
       before(:each) do
         sign_out @user
-        @admin = FactoryGirl.create(:admin_user)
+        @admin = FactoryBot.create(:admin_user)
         sign_in @admin
       end
       it "can send a message" do
@@ -57,8 +57,8 @@ describe WelcomeController, type: :controller do
     describe "as a committee-admin" do
       before(:each) do
         sign_out @user
-        @ca = FactoryGirl.create(:user)
-        FactoryGirl.create(:committee_member, user: @ca, admin: true)
+        @ca = FactoryBot.create(:user)
+        FactoryBot.create(:committee_member, user: @ca, admin: true)
         sign_in @ca
       end
       it "can send a message" do
@@ -71,7 +71,7 @@ describe WelcomeController, type: :controller do
   describe "POST send_message" do
     before(:each) do
       sign_out @user
-      @admin_user = FactoryGirl.create(:admin_user)
+      @admin_user = FactoryBot.create(:admin_user)
       sign_in @admin_user
     end
     it "should fail if no committees are selected" do
@@ -79,14 +79,14 @@ describe WelcomeController, type: :controller do
       expect(flash[:alert]).to eq("No Target Selected")
     end
     it "should succeed if a committees is selected" do
-      @com = FactoryGirl.create(:committee)
-      FactoryGirl.create(:committee_member, committee: @com, admin: true)
+      @com = FactoryBot.create(:committee)
+      FactoryBot.create(:committee_member, committee: @com, admin: true)
       post :send_message, params: {committees: [@com.id]}
       expect(flash[:notice]).to eq("Message Successfully Sent")
     end
     it "should set the reply_to address to the user's email" do
-      @com = FactoryGirl.create(:committee)
-      FactoryGirl.create(:committee_member, committee: @com, admin: true)
+      @com = FactoryBot.create(:committee)
+      FactoryBot.create(:committee_member, committee: @com, admin: true)
       ActionMailer::Base.deliveries.clear
       post :send_message, params: {committees: [@com.id]}
       num_deliveries = ActionMailer::Base.deliveries.size
@@ -97,7 +97,7 @@ describe WelcomeController, type: :controller do
 
   describe "GET index" do
     it "assigns all MY proposals as @proposals" do
-      cm = FactoryGirl.create(:committee_member, user: @user)
+      cm = FactoryBot.create(:committee_member, user: @user)
       get :index
       expect(assigns(:committees)).to eq([cm.committee])
     end

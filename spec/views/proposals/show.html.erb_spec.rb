@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe "proposals/show", type: :view do
   before(:each) do
-    @proposal = FactoryGirl.create(:proposal, title: "thetitle")
-    @revision = FactoryGirl.create(:revision, proposal: @proposal, background: "thebackground")
+    @proposal = FactoryBot.create(:proposal, title: "thetitle")
+    @revision = FactoryBot.create(:revision, proposal: @proposal, background: "thebackground")
     @proposal.reload
-    @discussion = FactoryGirl.create(:discussion, proposal: @proposal)
+    @discussion = FactoryBot.create(:discussion, proposal: @proposal)
     @comment = @discussion.comments.new
     @vote = @proposal.votes.new
     allow(view).to receive(:policy).and_return double(create?: false, read_usernames?: false, set_review?: false, revise?: false, vote?: false)
@@ -19,10 +19,10 @@ describe "proposals/show", type: :view do
   end
   describe "with a voting-state proposal" do
     before(:each) do
-      @proposal = FactoryGirl.create(:proposal, title: "thetitle", status: "Voting")
-      @revision = FactoryGirl.create(:revision, proposal: @proposal, background: "thebackground")
+      @proposal = FactoryBot.create(:proposal, title: "thetitle", status: "Voting")
+      @revision = FactoryBot.create(:revision, proposal: @proposal, background: "thebackground")
       @proposal.reload
-      @discussion = FactoryGirl.create(:discussion, proposal: @proposal)
+      @discussion = FactoryBot.create(:discussion, proposal: @proposal)
 
       @comment = @proposal.comments.new
       @vote = @proposal.votes.new

@@ -33,11 +33,11 @@ require 'spec_helper'
 
 describe VotesController, type: :controller do
   before(:each) do
-    @proposal = FactoryGirl.create(:proposal, :with_admin, status: 'Voting')
-    FactoryGirl.create(:revision, proposal: @proposal)
-    @admin_user = FactoryGirl.create(:admin_user)
-    @user = FactoryGirl.create(:user)
-    FactoryGirl.create(:committee_member, committee: @proposal.committee, voting: true, user: @user)
+    @proposal = FactoryBot.create(:proposal, :with_admin, status: 'Voting')
+    FactoryBot.create(:revision, proposal: @proposal)
+    @admin_user = FactoryBot.create(:admin_user)
+    @user = FactoryBot.create(:user)
+    FactoryBot.create(:committee_member, committee: @proposal.committee, voting: true, user: @user)
 
     sign_in @user
   end
@@ -56,13 +56,13 @@ describe VotesController, type: :controller do
       sign_in @admin_user
     end
     it "assigns all votes as @votes" do
-      vote = FactoryGirl.create(:vote, proposal: @proposal)
+      vote = FactoryBot.create(:vote, proposal: @proposal)
       get :index, params: {proposal_id: @proposal.id}
       expect(assigns(:votes)).to eq([vote])
     end
     it "should only show votes from this proposal" do
-      vote = FactoryGirl.create(:vote, proposal: @proposal)
-      other_vote = FactoryGirl.create(:vote)
+      vote = FactoryBot.create(:vote, proposal: @proposal)
+      other_vote = FactoryBot.create(:vote)
       get :index, params: {proposal_id: @proposal.id}
       expect(assigns(:votes)).to eq([vote])
     end
@@ -82,7 +82,7 @@ describe VotesController, type: :controller do
         sign_in @admin_user
       end
       it "assigns the requested vote as @vote" do
-        vote = FactoryGirl.create(:vote, proposal: @proposal)
+        vote = FactoryBot.create(:vote, proposal: @proposal)
         get :edit, params: {id: vote.to_param, proposal_id: @proposal.id}
         expect(assigns(:vote)).to eq(vote)
       end
@@ -145,7 +145,7 @@ describe VotesController, type: :controller do
 
   describe "PUT update" do
     before(:each) do
-      @vote = FactoryGirl.create(:vote, proposal: @proposal)
+      @vote = FactoryBot.create(:vote, proposal: @proposal)
     end
 
     describe "with admin with valid params" do
@@ -170,7 +170,7 @@ describe VotesController, type: :controller do
         sign_in @admin_user
       end
       it "assigns the vote as @vote" do
-        vote = FactoryGirl.create(:vote, proposal: @proposal)
+        vote = FactoryBot.create(:vote, proposal: @proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Vote).to receive(:save).and_return(false)
         put :update, params: {id: vote.to_param, vote: {vote: 'agree'}, proposal_id: @proposal.id}
@@ -178,7 +178,7 @@ describe VotesController, type: :controller do
       end
 
       it "re-renders the 'edit' template" do
-        vote = FactoryGirl.create(:vote, proposal: @proposal)
+        vote = FactoryBot.create(:vote, proposal: @proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Vote).to receive(:save).and_return(false)
         put :update, params: {id: vote.to_param, vote: {vote: 'agree'}, proposal_id: @proposal.id}
@@ -194,18 +194,17 @@ describe VotesController, type: :controller do
         sign_in @admin_user
       end
       it "destroys the requested vote" do
-        vote = FactoryGirl.create(:vote, proposal: @proposal)
+        vote = FactoryBot.create(:vote, proposal: @proposal)
         expect {
           delete :destroy, params: {id: vote.to_param, proposal_id: @proposal.id}
         }.to change(Vote, :count).by(-1)
       end
 
       it "redirects to the votes list" do
-        vote = FactoryGirl.create(:vote, proposal: @proposal)
+        vote = FactoryBot.create(:vote, proposal: @proposal)
         delete :destroy, params: {id: vote.to_param, proposal_id: @proposal.id}
         expect(response).to redirect_to(proposal_url(@proposal))
       end
     end
   end
-
 end

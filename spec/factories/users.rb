@@ -1,10 +1,10 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# Read about factories at https://github.com/thoughtbot/factory_bot
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :user, aliases: [:owner] do
-    sequence(:name) {|n| "person #{n}" }
+    sequence(:name) { |n| "person #{n}" }
     location 'Chicago'
-    sequence(:email) {|n| "person#{n}@example.com" }
+    sequence(:email) { |n| "person#{n}@example.com" }
     password 'please'
     password_confirmation 'please'
     comments ''

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "committees/new", type: :view do
   before(:each) do
-    @committee = assign(:committee, FactoryGirl.create(:committee))
+    @committee = assign(:committee, FactoryBot.create(:committee))
   end
 
   it "renders new committee form" do

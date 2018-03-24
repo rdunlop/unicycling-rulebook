@@ -28,7 +28,7 @@ class ProposalCreator
         revision.save!
       end
       true
-    rescue
+    rescue StandardError
       false
     end
   end

@@ -40,13 +40,13 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe ProposalsController, type: :controller do
-  let(:committee) { FactoryGirl.create(:committee) }
+  let(:committee) { FactoryBot.create(:committee) }
   before (:each) do
-    @user = FactoryGirl.create(:user)
-    @admin_user = FactoryGirl.create(:admin_user)
+    @user = FactoryBot.create(:user)
+    @admin_user = FactoryBot.create(:admin_user)
     sign_in @admin_user
-    @cm = FactoryGirl.create(:committee_member, committee: committee, user: @admin_user)
-    @cm2 = FactoryGirl.create(:committee_member, committee: committee, user: @user)
+    @cm = FactoryBot.create(:committee_member, committee: committee, user: @admin_user)
+    @cm2 = FactoryBot.create(:committee_member, committee: committee, user: @user)
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -54,19 +54,19 @@ describe ProposalsController, type: :controller do
   # update the return value of this method accordingly.
   def valid_attributes
     {
-        title: "My Title",
-        committee_id: committee.id
-}
+      title: "My Title",
+      committee_id: committee.id
+    }
   end
 
   describe "GET passed" do
     before(:each) do
-      com = FactoryGirl.create(:committee, preliminary: true)
-      @preliminary_proposal = FactoryGirl.create(:proposal, status: 'Passed', committee: com)
-      @proposal = FactoryGirl.create(:proposal, status: 'Passed')
-      FactoryGirl.create(:revision, proposal: @proposal)
-      @other_proposal = FactoryGirl.create(:proposal, status: 'Failed')
-      FactoryGirl.create(:revision, proposal: @preliminary_proposal)
+      com = FactoryBot.create(:committee, preliminary: true)
+      @preliminary_proposal = FactoryBot.create(:proposal, status: 'Passed', committee: com)
+      @proposal = FactoryBot.create(:proposal, status: 'Passed')
+      FactoryBot.create(:revision, proposal: @proposal)
+      @other_proposal = FactoryBot.create(:proposal, status: 'Failed')
+      FactoryBot.create(:revision, proposal: @preliminary_proposal)
     end
     it "assigns all proposals as @proposals" do
       get :passed
@@ -81,14 +81,14 @@ describe ProposalsController, type: :controller do
 
   describe "GET show" do
     it "assigns the requested proposal as @proposal" do
-      proposal = FactoryGirl.create(:proposal)
-      FactoryGirl.create(:revision, proposal: proposal)
+      proposal = FactoryBot.create(:proposal)
+      FactoryBot.create(:revision, proposal: proposal)
       get :show, params: {id: proposal.to_param}
       expect(assigns(:proposal)).to eq(proposal)
     end
 
     it "should be able to see 'Review' proposal when not logged in" do
-      proposal = FactoryGirl.create(:proposal)
+      proposal = FactoryBot.create(:proposal)
       sign_out @admin_user
 
       get :show, params: {id: proposal.to_param}
@@ -114,19 +114,19 @@ describe ProposalsController, type: :controller do
 
   describe "GET edit" do
     it "assigns the requested proposal as @proposal" do
-      proposal = FactoryGirl.create(:proposal, committee: committee)
-      revision = FactoryGirl.create(:revision, proposal: proposal)
+      proposal = FactoryBot.create(:proposal, committee: committee)
+      revision = FactoryBot.create(:revision, proposal: proposal)
       get :edit, params: {id: proposal.to_param}
       expect(assigns(:proposal)).to eq(proposal)
       expect(assigns(:committees)).to match_array([committee])
     end
     it "should not show committees that I am not an administrator of" do
-      @other_committee = FactoryGirl.create(:committee)
-      @other_committee_admin_user = FactoryGirl.create(:user)
-      @cm3 = FactoryGirl.create(:committee_member, committee: @other_committee, user: @other_committee_admin_user, admin: true)
-      proposal = FactoryGirl.create(:proposal, owner: @user, committee: @other_committee)
-      revision = FactoryGirl.create(:revision, proposal: proposal)
-      FactoryGirl.create(:committee)
+      @other_committee = FactoryBot.create(:committee)
+      @other_committee_admin_user = FactoryBot.create(:user)
+      @cm3 = FactoryBot.create(:committee_member, committee: @other_committee, user: @other_committee_admin_user, admin: true)
+      proposal = FactoryBot.create(:proposal, owner: @user, committee: @other_committee)
+      revision = FactoryBot.create(:revision, proposal: proposal)
+      FactoryBot.create(:committee)
       sign_out @admin_user
       sign_in @other_committee_admin_user
       get :edit, params: {id: proposal.to_param}
@@ -134,17 +134,17 @@ describe ProposalsController, type: :controller do
       expect(assigns(:committees)).to eq([@other_committee])
     end
     it "as super-admin, should show all of the committees" do
-      proposal = FactoryGirl.create(:proposal, committee: committee)
-      revision = FactoryGirl.create(:revision, proposal: proposal)
-      cm = FactoryGirl.create(:committee)
+      proposal = FactoryBot.create(:proposal, committee: committee)
+      revision = FactoryBot.create(:revision, proposal: proposal)
+      cm = FactoryBot.create(:committee)
       get :edit, params: {id: proposal.to_param}
       expect(assigns(:committees)).to match_array([committee, cm])
     end
     describe "as a committee-admin for the same committee" do
       before(:each) do
-        @proposal = FactoryGirl.create(:proposal, status: "Review")
+        @proposal = FactoryBot.create(:proposal, status: "Review")
         sign_out @admin_user
-        cm = FactoryGirl.create(:committee_member, committee: @proposal.committee, admin: true)
+        cm = FactoryBot.create(:committee_member, committee: @proposal.committee, admin: true)
         @cm_admin_user = cm.user
         sign_in @cm_admin_user
       end
@@ -163,7 +163,7 @@ describe ProposalsController, type: :controller do
           background: "some background",
           body: "some body",
           references: "some references"
-}
+        }
       end
       it "creates a new Proposal" do
         expect {
@@ -220,7 +220,7 @@ describe ProposalsController, type: :controller do
   describe "PUT update" do
     describe "with valid params" do
       it "can update all of the fields" do
-        proposal = FactoryGirl.create(:proposal)
+        proposal = FactoryBot.create(:proposal)
         review_start_date = Date.current
         review_end_date = Date.current.next_day(1)
         vote_start_date = Date.current.next_month(1)
@@ -246,19 +246,19 @@ describe ProposalsController, type: :controller do
       end
 
       it "assigns the requested proposal as @proposal" do
-        proposal = FactoryGirl.create(:proposal)
+        proposal = FactoryBot.create(:proposal)
         put :update, params: {id: proposal.to_param, proposal: valid_attributes}
         expect(assigns(:proposal)).to eq(proposal)
       end
 
       it "redirects to the proposal" do
-        proposal = FactoryGirl.create(:proposal)
+        proposal = FactoryBot.create(:proposal)
         put :update, params: {id: proposal.to_param, proposal: valid_attributes}
         expect(response).to redirect_to(proposal)
       end
       it "can change the committee" do
-        proposal = FactoryGirl.create(:proposal)
-        new_c = FactoryGirl.create(:committee)
+        proposal = FactoryBot.create(:proposal)
+        new_c = FactoryBot.create(:committee)
         put :update, params: {id: proposal.to_param, proposal: {title: "New Title", committee_id: new_c}}
         expect(response).to redirect_to(proposal)
         proposal = Proposal.find(proposal.id)
@@ -269,8 +269,8 @@ describe ProposalsController, type: :controller do
 
     describe "with invalid params" do
       it "assigns the proposal as @proposal" do
-        proposal = FactoryGirl.create(:proposal)
-        FactoryGirl.create(:revision, proposal: proposal)
+        proposal = FactoryBot.create(:proposal)
+        FactoryBot.create(:revision, proposal: proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Proposal).to receive(:save).and_return(false)
         put :update, params: {id: proposal.to_param, proposal: {title: 'the prop'}}
@@ -278,8 +278,8 @@ describe ProposalsController, type: :controller do
       end
 
       it "re-renders the 'edit' template" do
-        proposal = FactoryGirl.create(:proposal)
-        FactoryGirl.create(:revision, proposal: proposal)
+        proposal = FactoryBot.create(:proposal)
+        FactoryBot.create(:revision, proposal: proposal)
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Proposal).to receive(:save).and_return(false)
         put :update, params: {id: proposal.to_param, proposal: {title: 'the prop'}}
@@ -288,9 +288,9 @@ describe ProposalsController, type: :controller do
     end
     describe "as a committee-admin for the same committee" do
       before(:each) do
-        @proposal = FactoryGirl.create(:proposal, status: "Review")
+        @proposal = FactoryBot.create(:proposal, status: "Review")
         sign_out @admin_user
-        cm = FactoryGirl.create(:committee_member, committee: @proposal.committee, admin: true)
+        cm = FactoryBot.create(:committee_member, committee: @proposal.committee, admin: true)
         @cm_admin_user = cm.user
         sign_in @cm_admin_user
       end
@@ -302,16 +302,16 @@ describe ProposalsController, type: :controller do
   end
 
   describe "DELETE destroy" do
-    let(:committee) { FactoryGirl.create(:committee) }
+    let(:committee) { FactoryBot.create(:committee) }
     it "destroys the requested proposal" do
-      proposal = FactoryGirl.create(:proposal, committee: committee)
+      proposal = FactoryBot.create(:proposal, committee: committee)
       expect {
         delete :destroy, params: {id: proposal.to_param}
       }.to change(Proposal, :count).by(-1)
     end
 
     it "redirects to the proposals list" do
-      proposal = FactoryGirl.create(:proposal, committee: committee)
+      proposal = FactoryBot.create(:proposal, committee: committee)
       delete :destroy, params: {id: proposal.to_param}
       expect(response).to redirect_to(committee_path(committee))
     end

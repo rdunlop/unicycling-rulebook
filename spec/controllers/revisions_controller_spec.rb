@@ -18,12 +18,12 @@
 require 'spec_helper'
 describe RevisionsController, type: :controller do
   before(:each) do
-    @proposal = FactoryGirl.create(:proposal, :with_admin)
-    @revision = FactoryGirl.create(:revision, proposal: @proposal, user_id: @proposal.owner.id)
+    @proposal = FactoryBot.create(:proposal, :with_admin)
+    @revision = FactoryBot.create(:revision, proposal: @proposal, user_id: @proposal.owner.id)
     @proposal.reload
-    @discussion = FactoryGirl.create(:discussion, proposal: @proposal, owner_id: @proposal.owner.id, committee: @proposal.committee)
+    @discussion = FactoryBot.create(:discussion, proposal: @proposal, owner_id: @proposal.owner.id, committee: @proposal.committee)
 
-    @admin = FactoryGirl.create(:admin_user)
+    @admin = FactoryBot.create(:admin_user)
     sign_in @admin
   end
 
@@ -38,13 +38,13 @@ describe RevisionsController, type: :controller do
 
   describe "GET show" do
     it "assigns the requested revision as @revision" do
-      revision = FactoryGirl.create(:revision, proposal: @proposal)
+      revision = FactoryBot.create(:revision, proposal: @proposal)
       get :show, params: {id: revision.to_param, proposal_id: @proposal.id}
       expect(assigns(:revision)).to eq(revision)
     end
     it "can see the revision of a 'Submitted' proposal as a normal user" do
       user = @proposal.owner
-      FactoryGirl.create(:committee_member, committee: @proposal.committee, user: user)
+      FactoryBot.create(:committee_member, committee: @proposal.committee, user: user)
       sign_out @admin
       sign_in user
       get :show, params: {id: @revision.to_param, proposal_id: @proposal.id}
@@ -54,9 +54,9 @@ describe RevisionsController, type: :controller do
     end
     describe "as an editor" do
       before(:each) do
-        @editor = FactoryGirl.create(:user)
-        FactoryGirl.create(:committee_member, committee: @proposal.committee, user: @proposal.owner)
-        FactoryGirl.create(:committee_member, committee: @proposal.committee, user: @editor, editor: true)
+        @editor = FactoryBot.create(:user)
+        FactoryBot.create(:committee_member, committee: @proposal.committee, user: @proposal.owner)
+        FactoryBot.create(:committee_member, committee: @proposal.committee, user: @editor, editor: true)
         sign_out @admin
       end
       it "can view revisions" do
@@ -93,9 +93,9 @@ describe RevisionsController, type: :controller do
       describe "as a normal user" do
         before(:each) do
           sign_out @admin
-          @user = FactoryGirl.create(:user)
-          @prop = FactoryGirl.create(:proposal, owner: @user, status: 'Review')
-          cm = FactoryGirl.create(:committee_member, user: @user, committee: @prop.committee)
+          @user = FactoryBot.create(:user)
+          @prop = FactoryBot.create(:proposal, owner: @user, status: 'Review')
+          cm = FactoryBot.create(:committee_member, user: @user, committee: @prop.committee)
           sign_in @user
         end
         it "can create a revision to my own proposal" do
@@ -107,11 +107,11 @@ describe RevisionsController, type: :controller do
       describe "as an editor" do
         before(:each) do
           sign_out @admin
-          @user = FactoryGirl.create(:user)
-          @editor = FactoryGirl.create(:user)
-          @prop = FactoryGirl.create(:proposal, owner: @user, status: 'Review')
-          cm = FactoryGirl.create(:committee_member, user: @user, committee: @prop.committee)
-          cm = FactoryGirl.create(:committee_member, user: @editor, editor: true, committee: @prop.committee)
+          @user = FactoryBot.create(:user)
+          @editor = FactoryBot.create(:user)
+          @prop = FactoryBot.create(:proposal, owner: @user, status: 'Review')
+          cm = FactoryBot.create(:committee_member, user: @user, committee: @prop.committee)
+          cm = FactoryBot.create(:committee_member, user: @editor, editor: true, committee: @prop.committee)
           sign_in @editor
         end
         it "can create a revision to another proposal" do
@@ -119,7 +119,6 @@ describe RevisionsController, type: :controller do
           expect(assigns(:revision)).to be_persisted
           expect(response).to redirect_to([@prop, Revision.last])
         end
-
       end
 
       it "assigns a newly created revision as @revision" do

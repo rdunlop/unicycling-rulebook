@@ -6,7 +6,7 @@ describe ConfigurationsController, type: :controller do
   before (:each) do
     Apartment::Tenant.create(rulebook.subdomain)
     Apartment::Tenant.switch!(rulebook.subdomain)
-    @admin_user = FactoryGirl.create(:admin_user)
+    @admin_user = FactoryBot.create(:admin_user)
     sign_in @admin_user
   end
 
@@ -35,7 +35,6 @@ describe ConfigurationsController, type: :controller do
       expect(assigns(:rulebook)).to eq(rulebook)
     end
   end
-
 
   describe "PUT update" do
     describe "with valid params" do
@@ -79,5 +78,4 @@ describe ConfigurationsController, type: :controller do
       expect(response).to redirect_to(welcome_index_all_path)
     end
   end
-
 end

@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   # Prevent stored_location_for redirecting to a different tenant
   def after_sign_in_path_for(resource)
     location = stored_location_for(resource)
-    if location && location.starts_with?("/r/#{Apartment::Tenant.current}")
+    if location&.starts_with?("/r/#{Apartment::Tenant.current}")
       location
     else
       root_path
@@ -41,9 +41,7 @@ class ApplicationController < ActionController::Base
     @config = Rulebook.current_rulebook
 
     # if there is no subdomain specified, redirect to the 'choose-subdomain' page
-    if @config.nil? && !(controller_name == "welcome" && (action_name == "index_all" || action_name == "new_location"))
-      redirect_to welcome_index_all_path, flash: { alert: "Invalid subdomain" }
-    end
+    redirect_to welcome_index_all_path, flash: { alert: "Invalid subdomain" } if @config.nil? && !(controller_name == "welcome" && (action_name == "index_all" || action_name == "new_location"))
   end
 
   def set_base_breadcrumb

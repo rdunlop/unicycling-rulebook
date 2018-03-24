@@ -6,7 +6,6 @@ class RemoveCommentProposalAssociation < ActiveRecord::Migration
 
   class Discussion < ActiveRecord::Base
     belongs_to :proposal
-
   end
 
   class Proposal < ActiveRecord::Base

@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe "configurations/edit", type: :view do
   before(:each) do
-    @rulebook = assign(:rulebook, FactoryGirl.build_stubbed(:rulebook,
-      rulebook_name: "MyString",
-      front_page: "MyString",
-      faq: "MyString",
-      copyright: "My Copy"))
+    @rulebook = assign(:rulebook, FactoryBot.build_stubbed(:rulebook,
+                                                           rulebook_name: "MyString",
+                                                           front_page: "MyString",
+                                                           faq: "MyString",
+                                                           copyright: "My Copy"))
   end
 
   it "renders the edit rulebook form" do

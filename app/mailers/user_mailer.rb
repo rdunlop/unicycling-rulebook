@@ -59,7 +59,7 @@ class UserMailer < TenantAwareMailer
     @voting_status = comment.user.voting_text(comment.discussion.committee)
     @discussion = comment.discussion
 
-    #set_threading_header(proposal)
+    # set_threading_header(proposal)
     Rails.logger.warn "Discussion Comment Added to #{members_emails} for #{@discussion} from #{comment.user}"
     send_mail(members_emails, @discussion, comment.user)
   end
@@ -126,7 +126,7 @@ class UserMailer < TenantAwareMailer
   end
 
   def proposal_finished_review(proposal)
-    @REVISIONTIME_TEXT = "3 days"
+    @REVISIONTIME_TEXT = "3 days" # rubocop:disable Naming/VariableName
     @proposal = proposal
 
     set_threading_header(proposal)
@@ -166,7 +166,6 @@ class UserMailer < TenantAwareMailer
   end
 
   def mass_email(committee_ids, subject, body, reply_email)
-
     emails = []
     committee_ids.each do |c_id|
       emails += create_committee_email(nil, Committee.find(c_id), false)
@@ -189,5 +188,4 @@ class UserMailer < TenantAwareMailer
     end
     emails
   end
-
 end

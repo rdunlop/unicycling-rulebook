@@ -20,7 +20,7 @@ gem 'tinymce-rails'
 gem 'uglifier', '>= 1.0.3'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-#gem 'therubyracer'
+# gem 'therubyracer'
 
 # allows storing of secrets in ENV for heroku
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
@@ -33,6 +33,7 @@ gem 'rollbar'
 
 # other
 gem 'apartment-sidekiq'
+gem 'apartment_acme_client'
 gem 'pg'
 gem 'rake'
 gem 'redis-namespace'
@@ -40,7 +41,6 @@ gem 'redis-rails'
 gem 'sidekiq'
 gem 'unicorn'
 gem 'whenever'
-gem 'apartment_acme_client'
 
 # deployment
 gem 'capistrano'
@@ -57,7 +57,7 @@ group :development, :test, :cucumber do
   gem 'capybara'
   gem 'codeclimate_circle_ci_coverage'
   gem 'consistency_fail'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'foreman'
   gem 'html2haml'
   gem 'pry'

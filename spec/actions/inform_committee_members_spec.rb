@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe InformCommitteeMembers do
-  # before { FactoryGirl.create(:rulebook, :test_schema) }
+  # before { FactoryBot.create(:rulebook, :test_schema) }
 
   shared_examples_for "only inform members based on no_email flag" do
     it "creates an e-mail" do
@@ -16,8 +16,8 @@ describe InformCommitteeMembers do
     end
 
     context "with user with no_emails set" do
-      let(:user) { FactoryGirl.create(:user, no_emails: true) }
-      let(:other_user) { FactoryGirl.create(:user, no_emails: true) }
+      let(:user) { FactoryBot.create(:user, no_emails: true) }
+      let(:other_user) { FactoryBot.create(:user, no_emails: true) }
 
       it "should send NO e-mail" do
         ActionMailer::Base.deliveries.clear
@@ -26,8 +26,8 @@ describe InformCommitteeMembers do
     end
 
     context "with user who is not yet confirmed" do
-      let(:user) { FactoryGirl.create(:user, no_emails: true) }
-      let(:other_user) { FactoryGirl.create(:user, confirmed_at: nil) }
+      let(:user) { FactoryBot.create(:user, no_emails: true) }
+      let(:other_user) { FactoryBot.create(:user, confirmed_at: nil) }
 
       it "should send NO e-mail" do
         ActionMailer::Base.deliveries.clear
@@ -36,7 +36,7 @@ describe InformCommitteeMembers do
     end
 
     context "with other member who is no-email" do
-      let(:other_user) { FactoryGirl.create(:user, no_emails: true) }
+      let(:other_user) { FactoryBot.create(:user, no_emails: true) }
 
       it "should send NO email" do
         ActionMailer::Base.deliveries.clear
@@ -52,7 +52,7 @@ describe InformCommitteeMembers do
     end
 
     context "when the other user is a committee admin" do
-      let(:other_committee_member) { FactoryGirl.create(:committee_member, :admin, committee: committee, user: other_user) }
+      let(:other_committee_member) { FactoryBot.create(:committee_member, :admin, committee: committee, user: other_user) }
 
       it "informs the committee-admin" do
         ActionMailer::Base.deliveries.clear
@@ -62,34 +62,33 @@ describe InformCommitteeMembers do
     end
   end
 
-  let(:user) { FactoryGirl.create(:user) }
-  let!(:committee_member) { FactoryGirl.create(:committee_member, committee: committee, user: user) }
-  let(:other_user) { FactoryGirl.create(:user) }
-  let!(:other_committee_member) { FactoryGirl.create(:committee_member, committee: committee, user: other_user) }
+  let(:user) { FactoryBot.create(:user) }
+  let!(:committee_member) { FactoryBot.create(:committee_member, committee: committee, user: user) }
+  let(:other_user) { FactoryBot.create(:user) }
+  let!(:other_committee_member) { FactoryBot.create(:committee_member, committee: committee, user: other_user) }
 
   context "with a committee member" do
-    let(:comment) { FactoryGirl.create(:comment, user: user) }
+    let(:comment) { FactoryBot.create(:comment, user: user) }
     let(:committee) { comment.discussion.committee }
-    let!(:other_committee_member) { FactoryGirl.create(:committee_member, committee: comment.discussion.committee, user: other_user) }
+    let!(:other_committee_member) { FactoryBot.create(:committee_member, committee: comment.discussion.committee, user: other_user) }
     let(:do_action) { described_class.comment_added(comment) }
 
     it_should_behave_like "only inform members based on no_email flag"
   end
 
   context "with a submitted proposal" do
-    let(:proposal) { FactoryGirl.create(:proposal, :submitted) }
-    let(:discussion) { FactoryGirl.create(:discussion, proposal: proposal) }
-    let(:comment) { FactoryGirl.create(:comment, discussion: discussion, user: user) }
+    let(:proposal) { FactoryBot.create(:proposal, :submitted) }
+    let(:discussion) { FactoryBot.create(:discussion, proposal: proposal) }
+    let(:comment) { FactoryBot.create(:comment, discussion: discussion, user: user) }
     let(:committee) { discussion.committee }
     let(:do_action) { described_class.comment_added(comment) }
 
     it_should_behave_like "only email admins for submitted proposals"
   end
 
-
   context "with a committee member2" do
-    let(:proposal) { FactoryGirl.create(:proposal, :review) }
-    let(:revision) { FactoryGirl.create(:revision, proposal: proposal, user: user) }
+    let(:proposal) { FactoryBot.create(:proposal, :review) }
+    let(:revision) { FactoryBot.create(:revision, proposal: proposal, user: user) }
     let(:committee) { revision.proposal.committee }
     let(:do_action) { described_class.proposal_revised(revision) }
 
@@ -97,8 +96,8 @@ describe InformCommitteeMembers do
   end
 
   context "with a submitted proposal" do
-    let(:proposal) { FactoryGirl.create(:proposal, :submitted) }
-    let(:revision) { FactoryGirl.create(:revision, proposal: proposal, user: user) }
+    let(:proposal) { FactoryBot.create(:proposal, :submitted) }
+    let(:revision) { FactoryBot.create(:revision, proposal: proposal, user: user) }
     let(:committee) { revision.proposal.committee }
     let(:do_action) { described_class.proposal_revised(revision) }
 
@@ -106,9 +105,9 @@ describe InformCommitteeMembers do
   end
 
   context "when votes have been submitted" do
-    let(:proposal) { FactoryGirl.create(:proposal, :submitted) }
+    let(:proposal) { FactoryBot.create(:proposal, :submitted) }
     let(:committee) { proposal.committee }
-    let!(:vote) { FactoryGirl.create(:vote, proposal: proposal, user: user) }
+    let!(:vote) { FactoryBot.create(:vote, proposal: proposal, user: user) }
     let(:do_action) { described_class.vote_submitted(vote) }
 
     it "should not send e-mail to people who have voted" do
@@ -118,7 +117,7 @@ describe InformCommitteeMembers do
     end
 
     context "when other member is non-voting" do
-      let!(:other_committee_member) { FactoryGirl.create(:committee_member, committee: committee, user: other_user, voting: false) }
+      let!(:other_committee_member) { FactoryBot.create(:committee_member, committee: committee, user: other_user, voting: false) }
 
       it "should not send e-mail to people who are not voting members" do
         expect { do_action }.to change { ActionMailer::Base.deliveries.size }.by(0)

@@ -31,16 +31,16 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe CommentsController, type: :controller do
-  let(:proposal) { FactoryGirl.create(:proposal, :review) }
+  let(:proposal) { FactoryBot.create(:proposal, :review) }
 
   before(:each) do
     @discussion = proposal.discussion
     @discussion.update(status: 'active')
 
-    @user = FactoryGirl.create(:user)
-    FactoryGirl.create(:committee_member, committee: proposal.committee, user: @user)
+    @user = FactoryBot.create(:user)
+    FactoryBot.create(:committee_member, committee: proposal.committee, user: @user)
     # another member, so that an e-mail is generated
-    FactoryGirl.create(:committee_member, committee: proposal.committee)
+    FactoryBot.create(:committee_member, committee: proposal.committee)
 
     sign_in @user
   end
@@ -87,12 +87,12 @@ describe CommentsController, type: :controller do
         expect(assigns(:comment)).to be_a_new(Comment)
       end
 
-      #it "re-renders the 'proposals/show' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        #Comment.any_instance.stub(:save).and_return(false)
-        #post :create, params: {:comment => {}, discussion_id: @discussion.id }
-        #response.should render_template("propsals/show, layouts/application")
-      #end
+      # it "re-renders the 'proposals/show' template" do
+      # Trigger the behavior that occurs when invalid params are submitted
+      # Comment.any_instance.stub(:save).and_return(false)
+      # post :create, params: {:comment => {}, discussion_id: @discussion.id }
+      # response.should render_template("propsals/show, layouts/application")
+      # end
     end
   end
 end

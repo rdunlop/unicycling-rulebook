@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe ProposalCreator do
-  let(:committee) { FactoryGirl.create(:committee) }
-  let(:discussion) { FactoryGirl.create(:discussion, committee: committee) }
-  let(:user) { FactoryGirl.create(:user) }
-  #let!(:member) { FactoryGirl.create(:committee_member, committee: committee, user: user) }
+  let(:committee) { FactoryBot.create(:committee) }
+  let(:discussion) { FactoryBot.create(:discussion, committee: committee) }
+  let(:user) { FactoryBot.create(:user) }
+  # let!(:member) { FactoryBot.create(:committee_member, committee: committee, user: user) }
 
   let(:new_proposal) { committee.proposals.build(title: "Hello") }
   let(:new_revision) { new_proposal.revisions.build(body: "The proposal") }

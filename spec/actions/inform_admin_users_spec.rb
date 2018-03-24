@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe InformAdminUsers do
-  let!(:user) { FactoryGirl.create(:user) }
-  # before { FactoryGirl.create(:rulebook, :test_schema) }
+  let!(:user) { FactoryBot.create(:user) }
+  # before { FactoryBot.create(:rulebook, :test_schema) }
 
   context "with NO admin user" do
     let(:do_action) { described_class.new_applicant(user) }
@@ -14,7 +14,7 @@ describe InformAdminUsers do
   end
 
   context "with an admin user" do
-    let!(:admin_user) { FactoryGirl.create(:admin_user) }
+    let!(:admin_user) { FactoryBot.create(:admin_user) }
     let(:do_action) { described_class.new_applicant(user) }
 
     it "creates an e-mail" do
@@ -23,7 +23,7 @@ describe InformAdminUsers do
     end
 
     context "with an admin with no_emails set" do
-      let(:admin_user2) { FactoryGirl.create(:admin_user, no_emails: true) }
+      let(:admin_user2) { FactoryBot.create(:admin_user, no_emails: true) }
 
       it "should only send to the normal admin" do
         ActionMailer::Base.deliveries.clear
@@ -32,5 +32,4 @@ describe InformAdminUsers do
       end
     end
   end
-
 end

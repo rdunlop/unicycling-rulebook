@@ -21,7 +21,7 @@ ApartmentAcmeClient.public_folder = '/home/ec2-user/unicycling-rulebook/current/
 
 # Directory where to store certificates locally
 # must persist between deployments, so that nginx can reference it permanently
-ApartmentAcmeClient.certificate_storage_folder =  '/home/ec2-user/unicycling-rulebook/current/public/system'
+ApartmentAcmeClient.certificate_storage_folder = '/home/ec2-user/unicycling-rulebook/current/public/system'
 
 # for s3 storage
 ApartmentAcmeClient.aws_region = Rails.application.secrets.aws_region
