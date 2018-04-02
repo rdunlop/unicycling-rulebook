@@ -68,7 +68,7 @@ GEM
       rails (>= 4.1.0, < 5.2)
     arel (8.0.0)
     ast (2.4.0)
-    aws-partitions (1.72.0)
+    aws-partitions (1.76.0)
     aws-sdk-core (3.17.1)
       aws-partitions (~> 1.0)
       aws-sigv4 (~> 1.0)
