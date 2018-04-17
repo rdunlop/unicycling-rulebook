@@ -97,7 +97,7 @@ GEM
     brakeman (4.2.1)
     breadcrumbs_on_rails (3.0.1)
     builder (3.2.3)
-    capistrano (3.10.1)
+    capistrano (3.10.2)
       airbrussh (>= 1.0.0)
       i18n
       rake (>= 10.0.0)
