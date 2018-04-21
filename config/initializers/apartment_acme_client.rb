@@ -30,3 +30,5 @@ ApartmentAcmeClient.aws_bucket = Rails.application.secrets.aws_bucket
 # For use in the nginx configuration
 ApartmentAcmeClient.socket_path = "/tmp/unicorn-unicycling-rulebook.socket"
 ApartmentAcmeClient.nginx_config_path = "/etc/nginx/conf.d/rulebook.conf"
+
+ApartmentAcmeClient.verify_over_https = true

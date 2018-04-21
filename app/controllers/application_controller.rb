@@ -65,6 +65,6 @@ class ApplicationController < ActionController::Base
   #
   # Returns a boolean.
   def ssl_configured?
-    # !Rails.env.development?
+    Rails.application.secrets.ssl_enabled
   end
 end
