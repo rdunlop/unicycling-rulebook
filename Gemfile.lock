@@ -186,9 +186,9 @@ GEM
       kostya-sigar (~> 2.0.0)
       state_machines
       thor
-    eye-patch (1.0.0)
+    eye-patch (1.0.1)
       chronic_duration
-      eye (>= 0.6.2)
+      eye (>= 0.10.0)
     factory_bot (4.10.0)
       activesupport (>= 3.0.0)
     factory_bot_rails (4.10.0)
@@ -232,7 +232,7 @@ GEM
       securecompare
       url_safe_base64
     kgio (2.11.2)
-    kostya-sigar (2.0.1)
+    kostya-sigar (2.0.2)
     loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -261,7 +261,7 @@ GEM
     net-ssh (4.2.0)
     netrc (0.11.0)
     newrelic_rpm (5.1.0.344)
-    nio4r (2.3.0)
+    nio4r (2.3.1)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     numerizer (0.1.1)
