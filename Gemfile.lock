@@ -152,7 +152,7 @@ GEM
       numerizer (~> 0.1.1)
     codeclimate-test-reporter (1.0.8)
       simplecov (<= 0.13)
-    codeclimate_circle_ci_coverage (0.2.1)
+    codeclimate_circle_ci_coverage (0.2.2)
       codeclimate-test-reporter (>= 1.0, < 2)
       simplecov (~> 0.11)
     coderay (1.1.2)
