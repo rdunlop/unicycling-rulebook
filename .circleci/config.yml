@@ -94,20 +94,20 @@ jobs:
           name: Merge and copy coverage data
           command: bundle exec report_coverage --branch develop
 
-  check_db_schema:
-    <<: *default_job_config
-    steps:
-      - attach_workspace:
-          at: ~/tmp
+  # check_db_schema:
+  #   <<: *default_job_config
+  #   steps:
+  #     - attach_workspace:
+  #         at: ~/tmp
 
-      - run:
-          name: Wait for db
-          command: dockerize -wait tcp://localhost:5432 -timeout 2m
+  #     - run:
+  #         name: Wait for db
+  #         command: dockerize -wait tcp://localhost:5432 -timeout 2m
 
-      # # check to ensure that we can migrate from scratch
-      - run: bundle exec rake db:drop db:create db:migrate RAILS_ENV=test
-      # # check that the schema.rb is the same result
-      - run: git diff --exit-code db/schema.rb
+  #     # # check to ensure that we can migrate from scratch
+  #     - run: bundle exec rake db:drop db:create db:migrate RAILS_ENV=test
+  #     # # check that the schema.rb is the same result
+  #     - run: git diff --exit-code db/schema.rb
 
   release_stage:
     <<: *default_job_config
@@ -139,15 +139,15 @@ workflows:
       - bundle_audit:
           requires:
             - build
-      - check_db_schema:
-          requires:
-            - build
+      # - check_db_schema:
+      #     requires:
+      #       - build
       - release_stage:
           requires:
             - rspec
             - rubocop
             - bundle_audit
-            - check_db_schema
+            # - check_db_schema
           filters:
             branches:
               only:
@@ -157,7 +157,7 @@ workflows:
             - rspec
             - rubocop
             - bundle_audit
-            - check_db_schema
+            # - check_db_schema
           filters:
             branches:
               only:
