@@ -54,6 +54,7 @@ gem 'eye-patch', require: false
 group :development, :test, :cucumber do
   gem 'annotate'
   gem 'brakeman'
+  gem 'bundler-audit', require: false
   gem 'capybara'
   gem 'codeclimate_circle_ci_coverage'
   gem 'consistency_fail'
