@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :vote do
     proposal # FactoryBot
     user # FactoryBot
-    vote "agree"
-    comment "my thoughts"
+    vote { "agree" }
+    comment { "my thoughts" }
   end
 end

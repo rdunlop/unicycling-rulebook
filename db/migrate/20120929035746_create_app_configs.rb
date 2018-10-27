@@ -1,4 +1,4 @@
-class CreateAppConfigs < ActiveRecord::Migration
+class CreateAppConfigs < ActiveRecord::Migration[4.2]
   def change
     create_table :app_configs do |t|
       t.string :rulebook_name

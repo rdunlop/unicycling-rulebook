@@ -1,4 +1,4 @@
-class AddRuleTextToRevision < ActiveRecord::Migration
+class AddRuleTextToRevision < ActiveRecord::Migration[4.2]
   # class Revision < ActiveRecord::Base
   # end
   # class Proposal < ActiveRecord::Base

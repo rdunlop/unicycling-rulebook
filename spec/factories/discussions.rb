@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :discussion do
     # proposal # FactoryBot
-    status "active"
+    status { "active" }
     owner
     sequence(:title) { |e| "Discussion Title #{e}" }
     after(:build) do |discussion|

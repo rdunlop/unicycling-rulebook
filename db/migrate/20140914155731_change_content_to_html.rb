@@ -1,4 +1,4 @@
-class ChangeContentToHtml < ActiveRecord::Migration
+class ChangeContentToHtml < ActiveRecord::Migration[4.2]
   include ActionView::Helpers::TextHelper
 
   def up
