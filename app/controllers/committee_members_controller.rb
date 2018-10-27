@@ -49,6 +49,7 @@ class CommitteeMembersController < ApplicationController
 
   # POST /committee_members
   def create
+    authorize CommitteeMember
     @success = true
     if params[:committee_member][:user_id]
       params[:committee_member][:user_id].each do |user|
@@ -60,14 +61,11 @@ class CommitteeMembersController < ApplicationController
           editor: params[:committee_member][:editor]
         )
         @committee_member.committee = @committee
-        authorize @committee_member
         unless @committee_member.save
           @success = false
         end
       end
     else
-      authorize CommitteeMember
-
       @success = false
     end
 
