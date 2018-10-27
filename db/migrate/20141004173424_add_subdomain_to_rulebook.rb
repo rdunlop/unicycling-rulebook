@@ -1,4 +1,4 @@
-class AddSubdomainToRulebook < ActiveRecord::Migration
+class AddSubdomainToRulebook < ActiveRecord::Migration[4.2]
   def change
     add_column :rulebooks, :subdomain, :string
 

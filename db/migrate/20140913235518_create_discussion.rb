@@ -1,4 +1,4 @@
-class CreateDiscussion < ActiveRecord::Migration
+class CreateDiscussion < ActiveRecord::Migration[4.2]
   def change
     create_table :discussions do |t|
       t.integer :proposal_id

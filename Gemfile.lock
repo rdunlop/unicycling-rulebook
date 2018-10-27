@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/alexpeattie/heroku_secrets.git
+  remote: https://github.com/alexpeattie/heroku_secrets.git
   revision: 717af8e0acf399bc88d2c8c1a7e230023942af0f
   specs:
     heroku_secrets (0.0.2)
@@ -101,6 +101,9 @@ GEM
     brakeman (4.3.1)
     breadcrumbs_on_rails (3.0.1)
     builder (3.2.3)
+    bundler-audit (0.6.0)
+      bundler (~> 1.2)
+      thor (~> 0.18)
     capistrano (3.11.0)
       airbrussh (>= 1.0.0)
       i18n
@@ -446,6 +449,7 @@ DEPENDENCIES
   aws-sdk-rails
   brakeman
   breadcrumbs_on_rails
+  bundler-audit
   capistrano
   capistrano-bundler
   capistrano-deploytags

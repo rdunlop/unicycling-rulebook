@@ -1,4 +1,4 @@
-class AddNumToRevision < ActiveRecord::Migration
+class AddNumToRevision < ActiveRecord::Migration[4.2]
   def change
     add_column :revisions, :num, :integer
   end

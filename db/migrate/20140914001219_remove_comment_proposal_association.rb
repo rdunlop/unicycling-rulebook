@@ -1,4 +1,4 @@
-class RemoveCommentProposalAssociation < ActiveRecord::Migration
+class RemoveCommentProposalAssociation < ActiveRecord::Migration[4.2]
   class Comment < ActiveRecord::Base
     belongs_to :proposal
     belongs_to :discussion
