@@ -96,7 +96,7 @@ class ProposalsController < ApplicationController
   # PUT /proposals/1
   def update
     respond_to do |format|
-      if @proposal.update_attributes(update_params)
+      if @proposal.update(update_params)
         format.html { redirect_to @proposal, notice: 'Proposal was successfully updated.' }
       else
         set_committee_breadcrumb(@proposal.committee)

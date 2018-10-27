@@ -59,6 +59,7 @@ class UserMailerPreview < ActionMailer::Preview
 
   def proposal
     return @proposal if @proposal
+
     @proposal = Proposal.all.sample
   end
 
@@ -72,11 +73,13 @@ class UserMailerPreview < ActionMailer::Preview
 
   def user
     return @user if @user
+
     @user = User.all.sample
   end
 
   def discussion
     return @discussion if @discussion
+
     @discussion = Discussion.all.sample
   end
 
@@ -87,6 +90,7 @@ class UserMailerPreview < ActionMailer::Preview
 
   def committee
     return @committee if @committee
+
     @committee = Committee.all.sample
   end
 

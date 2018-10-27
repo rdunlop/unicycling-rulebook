@@ -36,6 +36,7 @@ class Revision < ApplicationRecord
     if not self.new_record?
       return
     end
+
     if self.change_description.blank?
       if self.proposal
         if self.proposal.revisions.count.positive?

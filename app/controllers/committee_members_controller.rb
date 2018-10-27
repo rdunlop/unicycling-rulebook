@@ -54,6 +54,7 @@ class CommitteeMembersController < ApplicationController
     if params[:committee_member][:user_id]
       params[:committee_member][:user_id].each do |user|
         next if user.blank?
+
         @committee_member = CommitteeMember.new(
           user_id: user,
           voting: params[:committee_member][:voting],
@@ -84,7 +85,7 @@ class CommitteeMembersController < ApplicationController
     authorize @committee_member
 
     respond_to do |format|
-      if @committee_member.update_attributes(committee_member_params)
+      if @committee_member.update(committee_member_params)
         format.html { redirect_to committee_committee_members_path(@committee), notice: 'Committee member was successfully updated.' }
       else
         @users = User.all

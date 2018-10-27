@@ -65,11 +65,13 @@ class Discussion < ApplicationRecord
 
   def proposal_commentable?
     return true if proposal.nil?
+
     proposal.is_open_for_comments?
   end
 
   def close
     return false if proposal.present?
+
     update!(status: "closed")
   end
 
