@@ -49,7 +49,7 @@ describe RevisionsController, type: :controller do
       sign_in user
       get :show, params: {id: @revision.to_param, proposal_id: @proposal.id}
       expect(assigns(:revision)).to eq(@revision)
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(response).to render_template("show")
     end
     describe "as an editor" do

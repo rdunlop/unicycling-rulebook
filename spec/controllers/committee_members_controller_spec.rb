@@ -83,7 +83,7 @@ describe CommitteeMembersController, type: :controller do
       end
       it "should allow access" do
         get :index, params: {committee_id: @cm.committee.id}
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(assigns(:committee_members)).to eq([@cm])
       end
     end
@@ -97,7 +97,7 @@ describe CommitteeMembersController, type: :controller do
       end
       it "can access the :new page" do
         get :new, params: {committee_id: @committee.id}
-        expect(response).to be_success
+        expect(response).to be_successful
       end
 
       it "assigns a new committee_member as @committee_member" do
@@ -133,7 +133,7 @@ describe CommitteeMembersController, type: :controller do
       end
       it "can edit a user" do
         get :edit, params: {id: @cm.to_param, committee_id: @cm.committee.id}
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(assigns(:committee_member)).to eq(@cm)
       end
     end
