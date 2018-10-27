@@ -7,8 +7,8 @@ describe DiscussionPolicy do
 
   let(:subject) { described_class }
   let(:committee) { FactoryBot.create :committee }
-  let(:discussion) { FactoryBot.create(:discussion, committee: committee)}
-  let!(:committee_member) { FactoryBot.create(:committee_member, :admin, user: committee_admin, committee: committee)}
+  let(:discussion) { FactoryBot.create(:discussion, committee: committee) }
+  let!(:committee_member) { FactoryBot.create(:committee_member, :admin, user: committee_admin, committee: committee) }
 
   permissions :index?, :show? do
     it { expect(subject).to permit(user, discussion) }

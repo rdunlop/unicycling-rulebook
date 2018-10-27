@@ -8,10 +8,10 @@ FactoryBot.define do
     sequence(:title) { |e| "Discussion Title #{e}" }
     after(:build) do |discussion|
       discussion.committee ||= if discussion.proposal.present?
-                               discussion.proposal.committee
-                             else
-                               FactoryBot.build(:committee)
-                             end
+                                 discussion.proposal.committee
+                               else
+                                 FactoryBot.build(:committee)
+                               end
     end
   end
 end
