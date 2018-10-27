@@ -16,7 +16,7 @@ FactoryBot.define do
     mail_messageid { nil }
 
     after(:create) do |proposal|
-      proposal.discussion = FactoryBot.create(:discussion, proposal: proposal)
+      proposal.discussion ||= FactoryBot.create(:discussion, proposal: proposal)
     end
 
     trait :submitted do

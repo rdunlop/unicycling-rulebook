@@ -8,7 +8,9 @@ class DiscussionPolicy < ApplicationPolicy
   end
 
   def close?
-    record.active? && (record.owner == user || admin?)
+    return false unless record.active?
+
+    record.owner == user || admin? || committee_admin?(record.committee)
   end
 
   def create?
