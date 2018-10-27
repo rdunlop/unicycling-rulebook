@@ -59,7 +59,7 @@ describe CommitteesController, type: :controller do
       end
       it "succeeds for committee_admin" do
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
       end
       it "only shows MY committees" do
         get :index
@@ -213,12 +213,12 @@ describe CommitteesController, type: :controller do
     it "assigns all committees as @committees" do
       committee = FactoryBot.create(:committee)
       get :membership
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(assigns(:committees)).to eq([committee])
     end
     it "should assign all users as @users" do
       get :membership
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(assigns(:users)).to match_array([@user, @admin_user])
     end
   end

@@ -47,7 +47,7 @@ describe WelcomeController, type: :controller do
       end
       it "can send a message" do
         get :message
-        expect(response).to be_success
+        expect(response).to be_successful
       end
       it "sets the username to the current-signed-in-user" do
         get :message
@@ -63,7 +63,7 @@ describe WelcomeController, type: :controller do
       end
       it "can send a message" do
         get :message
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
   end
