@@ -7,7 +7,7 @@ FactoryBot.define do
     owner
     sequence(:title) { |e| "Discussion Title #{e}" }
     after(:build) do |discussion|
-      discussion.committee = if discussion.proposal.present?
+      discussion.committee ||= if discussion.proposal.present?
                                discussion.proposal.committee
                              else
                                FactoryBot.build(:committee)
