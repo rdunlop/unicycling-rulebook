@@ -63,7 +63,7 @@ class VotesController < ApplicationController
     previous_value = @vote.vote
 
     respond_to do |format|
-      if @vote.update_attributes(vote_params)
+      if @vote.update(vote_params)
         format.html { redirect_to [@proposal, @vote], notice: 'Vote was successfully updated.' }
       else
         format.html { render action: "edit" }

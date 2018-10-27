@@ -3,6 +3,7 @@ module SubdomainHelper
     current_tenant = Apartment::Tenant.current
     tenant = Rulebook.find_by(subdomain: current_tenant)
     raise Errors::TenantNotFound unless tenant
+
     { host: tenant.url }
   end
 end

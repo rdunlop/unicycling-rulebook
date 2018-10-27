@@ -24,6 +24,7 @@ class Vote < ApplicationRecord
     if self.new_record?
       return ""
     end
+
     res = user.to_s + " voted " + self.vote + " on " + self.created_at.strftime("%B %d, %Y, %I:%M %p")
     if comment.present?
       res += " (" + self.comment + ")"
