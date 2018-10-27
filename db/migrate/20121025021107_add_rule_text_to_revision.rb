@@ -1,9 +1,8 @@
 class AddRuleTextToRevision < ActiveRecord::Migration[4.2]
-  # class Revision < ActiveRecord::Base
-  # end
-  # class Proposal < ActiveRecord::Base
-  # end
-  ActiveRecord::Base.record_timestamps = false
+  class Revision < ActiveRecord::Base
+  end
+  class Proposal < ActiveRecord::Base
+  end
 
   def up
     add_column :revisions, :rule_text, :text
