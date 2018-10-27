@@ -13,6 +13,10 @@
 #  admin_upgrade_code :string(255)
 #  proposals_allowed  :boolean          default(TRUE), not null
 #
+# Indexes
+#
+#  index_rulebooks_on_subdomain  (subdomain) UNIQUE
+#
 
 class Rulebook < ApplicationRecord
   validates :subdomain, uniqueness: true
