@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,124 +10,122 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141114165106) do
+ActiveRecord::Schema.define(version: 2014_11_14_165106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "comments", force: true do |t|
-    t.integer  "user_id"
-    t.text     "comment"
+  create_table "comments", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.text "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "discussion_id"
+    t.integer "discussion_id"
   end
 
-  create_table "committee_members", force: true do |t|
-    t.integer  "committee_id"
-    t.integer  "user_id"
-    t.boolean  "voting",       default: true,  null: false
+  create_table "committee_members", id: :serial, force: :cascade do |t|
+    t.integer "committee_id"
+    t.integer "user_id"
+    t.boolean "voting", default: true, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "admin",        default: false, null: false
-    t.boolean  "editor",       default: false, null: false
+    t.boolean "admin", default: false, null: false
+    t.boolean "editor", default: false, null: false
   end
 
-  create_table "committees", force: true do |t|
-    t.string   "name"
+  create_table "committees", id: :serial, force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "preliminary", default: true, null: false
+    t.boolean "preliminary", default: true, null: false
   end
 
-  create_table "discussions", force: true do |t|
-    t.integer  "proposal_id"
-    t.string   "title"
-    t.string   "status"
-    t.integer  "owner_id"
+  create_table "discussions", id: :serial, force: :cascade do |t|
+    t.integer "proposal_id"
+    t.string "title"
+    t.string "status"
+    t.integer "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "committee_id"
-    t.text     "body"
+    t.integer "committee_id"
+    t.text "body"
   end
 
-  create_table "proposals", force: true do |t|
-    t.integer  "committee_id"
-    t.string   "status"
-    t.date     "submit_date"
-    t.date     "review_start_date"
-    t.date     "review_end_date"
-    t.date     "vote_start_date"
-    t.date     "vote_end_date"
-    t.date     "tabled_date"
-    t.boolean  "transition_straight_to_vote", default: true, null: false
-    t.integer  "owner_id"
-    t.text     "title"
+  create_table "proposals", id: :serial, force: :cascade do |t|
+    t.integer "committee_id"
+    t.string "status"
+    t.date "submit_date"
+    t.date "review_start_date"
+    t.date "review_end_date"
+    t.date "vote_start_date"
+    t.date "vote_end_date"
+    t.date "tabled_date"
+    t.boolean "transition_straight_to_vote", default: true, null: false
+    t.integer "owner_id"
+    t.text "title"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "mail_messageid"
+    t.string "mail_messageid"
   end
 
-  create_table "revisions", force: true do |t|
-    t.integer  "proposal_id"
-    t.text     "body"
-    t.text     "background"
-    t.text     "references"
-    t.text     "change_description"
-    t.integer  "user_id"
+  create_table "revisions", id: :serial, force: :cascade do |t|
+    t.integer "proposal_id"
+    t.text "body"
+    t.text "background"
+    t.text "references"
+    t.text "change_description"
+    t.integer "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "num"
-    t.text     "rule_text"
+    t.integer "num"
+    t.text "rule_text"
   end
 
-  create_table "rulebooks", force: true do |t|
-    t.string   "rulebook_name"
-    t.text     "front_page"
-    t.text     "faq"
+  create_table "rulebooks", id: :serial, force: :cascade do |t|
+    t.string "rulebook_name"
+    t.text "front_page"
+    t.text "faq"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "copyright"
-    t.string   "subdomain"
-    t.string   "admin_upgrade_code"
-    t.boolean  "proposals_allowed",  default: true, null: false
+    t.string "copyright"
+    t.string "subdomain"
+    t.string "admin_upgrade_code"
+    t.boolean "proposals_allowed", default: true, null: false
+    t.index ["subdomain"], name: "index_rulebooks_on_subdomain", unique: true
   end
 
-  add_index "rulebooks", ["subdomain"], name: "index_rulebooks_on_subdomain", unique: true, using: :btree
-
-  create_table "users", force: true do |t|
-    t.string   "email",                  default: "",    null: false
-    t.string   "encrypted_password",     default: "",    null: false
-    t.string   "reset_password_token"
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0
+    t.integer "sign_in_count", default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "admin",                  default: false, null: false
-    t.string   "name"
-    t.string   "location"
-    t.string   "confirmation_token"
+    t.boolean "admin", default: false, null: false
+    t.string "name"
+    t.string "location"
+    t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.text     "comments"
-    t.boolean  "no_emails",              default: false, null: false
+    t.text "comments"
+    t.boolean "no_emails", default: false, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-
-  create_table "votes", force: true do |t|
-    t.integer  "proposal_id"
-    t.integer  "user_id"
-    t.string   "vote"
+  create_table "votes", id: :serial, force: :cascade do |t|
+    t.integer "proposal_id"
+    t.integer "user_id"
+    t.string "vote"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "comment"
+    t.text "comment"
   end
 
 end

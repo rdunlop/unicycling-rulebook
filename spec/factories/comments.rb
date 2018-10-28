@@ -4,6 +4,6 @@ FactoryBot.define do
   factory :comment do
     discussion # FactoryBot
     user # FactoryBot
-    comment "MyText"
+    comment { "MyText" }
   end
 end

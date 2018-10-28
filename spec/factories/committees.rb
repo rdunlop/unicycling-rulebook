@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :committee do
     sequence(:name) { |n| "Rulebook Committee #{n}" }
-    preliminary false
+    preliminary { false }
   end
 end

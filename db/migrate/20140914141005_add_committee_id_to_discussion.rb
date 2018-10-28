@@ -1,4 +1,4 @@
-class AddCommitteeIdToDiscussion < ActiveRecord::Migration
+class AddCommitteeIdToDiscussion < ActiveRecord::Migration[4.2]
   class Proposal < ActiveRecord::Base
     belongs_to :committee
     has_one :discussion

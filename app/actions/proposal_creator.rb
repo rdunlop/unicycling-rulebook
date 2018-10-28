@@ -15,6 +15,7 @@ class ProposalCreator
 
   def perform
     return false if not entries_valid?
+
     begin
       Proposal.transaction do
         proposal.save!

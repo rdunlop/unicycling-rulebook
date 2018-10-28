@@ -1,4 +1,4 @@
-class SetBooleanDefaults < ActiveRecord::Migration
+class SetBooleanDefaults < ActiveRecord::Migration[4.2]
   def change
     change_column :users, :admin,              :boolean, default: false, null: false
     change_column :users, :no_emails,          :boolean, default: false, null: false

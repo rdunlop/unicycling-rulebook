@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
+
 ruby File.open(File.expand_path(".ruby-version", File.dirname(__FILE__))) { |f| f.read.chomp }
-gem 'rails'
+gem 'rails', '5.2.0'
 
 # authorization
 gem 'devise'
@@ -54,6 +56,7 @@ gem 'eye-patch', require: false
 group :development, :test, :cucumber do
   gem 'annotate'
   gem 'brakeman'
+  gem 'bundler-audit', require: false
   gem 'capybara'
   gem 'codeclimate_circle_ci_coverage'
   gem 'consistency_fail'

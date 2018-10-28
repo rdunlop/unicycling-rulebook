@@ -79,7 +79,7 @@ class CommitteesController < ApplicationController
   # PUT /committees/1.json
   def update
     respond_to do |format|
-      if @committee.update_attributes(committee_params)
+      if @committee.update(committee_params)
         format.html { redirect_to committees_path, notice: 'Committee was successfully updated.' }
         format.json { head :no_content }
       else
