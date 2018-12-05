@@ -416,7 +416,7 @@ GEM
     tilt (2.0.8)
     timers (4.1.2)
       hitimes
-    tinymce-rails (4.9.0)
+    tinymce-rails (4.9.1)
       railties (>= 3.1.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
