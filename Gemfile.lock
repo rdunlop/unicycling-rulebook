@@ -190,7 +190,7 @@ GEM
       kostya-sigar (~> 2.0.0)
       state_machines
       thor
-    eye-patch (1.0.1)
+    eye-patch (1.1.0)
       chronic_duration
       eye (>= 0.10.0)
     factory_bot (4.11.1)
@@ -213,7 +213,6 @@ GEM
     haml (5.0.4)
       temple (>= 0.8.0)
       tilt
-    hitimes (1.2.6)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
       haml (>= 4.0, < 6)
@@ -235,7 +234,7 @@ GEM
       aes_key_wrap
       bindata
     kgio (2.11.2)
-    kostya-sigar (2.0.2)
+    kostya-sigar (2.0.5)
     loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -343,7 +342,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rollbar (2.18.1)
+    rollbar (2.18.2)
       multi_json
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
@@ -414,8 +413,7 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    timers (4.1.2)
-      hitimes
+    timers (4.2.0)
     tinymce-rails (4.9.1)
       railties (>= 3.1.1)
     tzinfo (1.2.5)
