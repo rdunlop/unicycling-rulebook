@@ -25,6 +25,33 @@ This application depends on the following services:
 
       Set the code for creation of new rulebooks
 
+Docker Development Environment
+==============================
+
+We recommend running development within a docker environment.
+
+Benefits:
+- All daemons, processes are running at all times (easier to develop features)
+
+To do this:
+1. install docker (https://docs.docker.com/docker-for-mac/install/)
+1. run `./docker-setup.sh` to set up some files
+1. install `docker `and `docker-compose`.
+1. run `docker-compose up`
+1. Create the database schema with `docker-compose exec app bundle exec rake db:create db:schema:load`
+1. Add an entry to your /etc/hosts file `sudo vi /etc/hosts`: `127.0.0.1 www.local.com`
+1. open http://www.local.com:3000/new
+1. Create a new database `docker-compose run app bundle exec rake db:create db:schema:load`
+
+Setup the database
+==================
+    Copy `config/database_template.yml` to `config/database.yml`  and make
+      any necessary adjustments for your local environment.
+
+
+Non-Docker Deveolpment Environment
+==================================
+
 == Set up the local database
 
     cd unicycling-rulebook
