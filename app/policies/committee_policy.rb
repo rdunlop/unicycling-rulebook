@@ -4,7 +4,10 @@ class CommitteePolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    return true unless record.private?
+    return false unless user
+
+    user.is_in_committee(record)
   end
 
   def membership?

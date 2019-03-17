@@ -7,11 +7,28 @@ describe DiscussionPolicy do
 
   let(:subject) { described_class }
   let(:committee) { FactoryBot.create :committee }
+  let(:private_committee) { FactoryBot.create :committee, private: true }
   let(:discussion) { FactoryBot.create(:discussion, committee: committee) }
+  let(:private_discussion) { FactoryBot.create(:discussion, committee: private_committee) }
   let!(:committee_member) { FactoryBot.create(:committee_member, :admin, user: committee_admin, committee: committee) }
 
-  permissions :index?, :show? do
-    it { expect(subject).to permit(user, discussion) }
+  permissions :show? do
+    context "when logged in" do
+      it { expect(subject).to permit(user, discussion) }
+      it { expect(subject).not_to permit(user, private_discussion) }
+
+      context "when I'm a member of the private committee" do
+        let!(:committee_member) do
+          FactoryBot.create(:committee_member, user: user, committee: private_committee)
+        end
+        it { expect(subject).to permit(user, private_discussion) }
+      end
+    end
+
+    context "when not logged in" do
+      it { expect(subject).to permit(user, discussion) }
+      it { expect(subject).not_to permit(user, private_discussion) }
+    end
   end
 
   permissions :create? do

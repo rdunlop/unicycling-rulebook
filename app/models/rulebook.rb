@@ -3,14 +3,14 @@
 # Table name: public.rulebooks
 #
 #  id                 :integer          not null, primary key
-#  rulebook_name      :string(255)
+#  rulebook_name      :string
 #  front_page         :text
 #  faq                :text
 #  created_at         :datetime
 #  updated_at         :datetime
-#  copyright          :string(255)
-#  subdomain          :string(255)
-#  admin_upgrade_code :string(255)
+#  copyright          :string
+#  subdomain          :string
+#  admin_upgrade_code :string
 #  proposals_allowed  :boolean          default(TRUE), not null
 #
 # Indexes

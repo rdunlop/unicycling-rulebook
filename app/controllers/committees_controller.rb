@@ -110,7 +110,7 @@ class CommitteesController < ApplicationController
   private
 
   def committee_params
-    params.require(:committee).permit(:name, :preliminary)
+    params.require(:committee).permit(:name, :preliminary, :private)
   end
 
   def load_committee
