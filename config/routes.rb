@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       get 'membership'
     end
     resources :committee_members, except: [:show]
-    resources :discussions, only: %i[index create new]
+    resources :discussions, only: %i[create new]
     resources :proposals, only: %i[new create]
   end
   resources :bulk_users, only: %i[index create]

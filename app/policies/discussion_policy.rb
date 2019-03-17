@@ -1,10 +1,9 @@
 class DiscussionPolicy < ApplicationPolicy
-  def index?
-    true
-  end
-
   def show?
-    true
+    return true unless record.committee.private?
+    return false unless user
+
+    user.is_in_committee(record.committee)
   end
 
   def close?

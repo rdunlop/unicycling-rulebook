@@ -5,7 +5,7 @@
 #  id          :integer          not null, primary key
 #  proposal_id :integer
 #  user_id     :integer
-#  vote        :string(255)
+#  vote        :string
 #  created_at  :datetime
 #  updated_at  :datetime
 #  comment     :text

@@ -3,10 +3,11 @@
 # Table name: committees
 #
 #  id          :integer          not null, primary key
-#  name        :string(255)
+#  name        :string
 #  created_at  :datetime
 #  updated_at  :datetime
 #  preliminary :boolean          default(TRUE), not null
+#  private     :boolean          default(FALSE), not null
 #
 
 require 'spec_helper'
