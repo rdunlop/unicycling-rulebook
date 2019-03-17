@@ -9,6 +9,20 @@ describe CommitteePolicy do
 
   permissions :show? do
     it { expect(subject).to permit(user, committee) }
+
+    context "when the committee is private" do
+      let(:committee) { FactoryBot.create :committee, private: true }
+
+      it { expect(subject).not_to permit(user, committee) }
+
+      context "when I'm a member of the committee" do
+        let!(:committee_member) do
+          FactoryBot.create(:committee_member, user: user, committee: committee)
+        end
+
+        it { expect(subject).to permit(user, committee) }
+      end
+    end
   end
 
   permissions :create?, :update?, :destroy? do

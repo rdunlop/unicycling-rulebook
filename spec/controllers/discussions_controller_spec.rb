@@ -4,8 +4,8 @@
 #
 #  id           :integer          not null, primary key
 #  proposal_id  :integer
-#  title        :string(255)
-#  status       :string(255)
+#  title        :string
+#  status       :string
 #  owner_id     :integer
 #  created_at   :datetime
 #  updated_at   :datetime

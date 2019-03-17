@@ -4,7 +4,7 @@
 #
 #  id                          :integer          not null, primary key
 #  committee_id                :integer
-#  status                      :string(255)
+#  status                      :string
 #  submit_date                 :date
 #  review_start_date           :date
 #  review_end_date             :date
@@ -16,7 +16,7 @@
 #  title                       :text
 #  created_at                  :datetime
 #  updated_at                  :datetime
-#  mail_messageid              :string(255)
+#  mail_messageid              :string
 #
 
 require 'spec_helper'
