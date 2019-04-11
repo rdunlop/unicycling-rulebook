@@ -11,7 +11,7 @@ class ReviewState < BaseState
 
   def on_enter
     proposal.review_start_date = Date.current
-    proposal.review_end_date = proposal.review_start_date.next_day(10)
+    proposal.review_end_date = proposal.review_start_date.next_day(Proposal::REVIEW_DAYS)
   end
 
   def state_name

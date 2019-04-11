@@ -32,6 +32,9 @@ class Proposal < ApplicationRecord
   validates :committee, presence: true
   validates :status, inclusion: { in: ['Submitted', 'Review', 'Pre-Voting', 'Voting', 'Tabled', 'Passed', 'Failed'] }
 
+  REVIEW_DAYS = 8
+  VOTING_DAYS = 7
+
   # This is the auto-updated function CLASS METHOD
   def self.update_states
     Apartment.tenant_names.each do |tenant|
