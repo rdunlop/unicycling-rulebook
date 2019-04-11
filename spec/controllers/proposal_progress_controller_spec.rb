@@ -100,7 +100,7 @@ describe ProposalProgressController, type: :controller do
       proposal = Proposal.find(proposal.id)
       expect(proposal.status).to eq("Review")
       expect(proposal.review_start_date).to eq(Date.current)
-      expect(proposal.review_end_date - Date.current).to eq(10)
+      expect(proposal.review_end_date - Date.current).to eq(Proposal::REVIEW_DAYS)
     end
     it "should send an e-mail" do
       proposal = @proposal
@@ -121,7 +121,7 @@ describe ProposalProgressController, type: :controller do
       proposal = Proposal.find(proposal.id)
       expect(proposal.status).to eq("Review")
       expect(proposal.review_start_date).to eq(Date.current)
-      expect(proposal.review_end_date - Date.current).to eq(10)
+      expect(proposal.review_end_date - Date.current).to eq(Proposal::REVIEW_DAYS)
     end
 
     it "should not be allowed to change unless the status is Submitted" do
