@@ -100,7 +100,7 @@ GEM
       execjs (~> 2.0)
     bcrypt (3.1.12)
     bindata (2.4.4)
-    brakeman (4.5.0)
+    brakeman (4.5.1)
     breadcrumbs_on_rails (3.0.1)
     builder (3.2.3)
     bundler-audit (0.6.1)
