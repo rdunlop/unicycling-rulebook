@@ -171,7 +171,7 @@ GEM
     concurrent-ruby (1.1.5)
     connection_pool (2.2.2)
     consistency_fail (0.3.7)
-    crass (1.0.4)
+    crass (1.0.5)
     devise (4.6.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -236,7 +236,7 @@ GEM
       bindata
     kgio (2.11.2)
     kostya-sigar (2.0.5)
-    loofah (2.2.3)
+    loofah (2.3.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
