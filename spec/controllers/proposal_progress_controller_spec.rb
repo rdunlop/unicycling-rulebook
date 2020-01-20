@@ -49,7 +49,7 @@ describe ProposalProgressController, type: :controller do
       proposal = Proposal.find(proposal.id)
       expect(proposal.status).to eq("Voting")
       expect(proposal.vote_start_date).to eq(Date.current)
-      expect(proposal.vote_end_date - Date.current).to eq(7)
+      expect(proposal.vote_end_date - Date.current).to eq(Proposal::VOTING_DAYS)
     end
 
     it "should not be allowed to change unless the status is Pre-Voting" do
