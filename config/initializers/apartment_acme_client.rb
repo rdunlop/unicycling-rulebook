@@ -2,14 +2,12 @@
 # We will verify each of them before requesting a certificate from Let's Encrypt for all of them
 ApartmentAcmeClient.domains_to_check = lambda do
   # always assume base domain URL is correct
-  domains = [Rails.application.secrets.domain]
+  domains = []
 
-  Rulebook.all.each do |rulebook|
-    domains << rulebook.permanent_url
-  end
-
+  # there are no customized domains for the rulebook
   domains
 end
+ApartmentAcmeClient.wildcard_domain = Rails.application.secrets.domain
 
 # The base domain, a domain which is always going to be accessible.
 # because we need a common domain to be used on each request.
