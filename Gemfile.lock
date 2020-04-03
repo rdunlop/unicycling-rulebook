@@ -204,7 +204,7 @@ GEM
     faraday (0.17.3)
       multipart-post (>= 1.2, < 3)
     ffi (1.12.2)
-    foreman (0.87.0)
+    foreman (0.87.1)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
     foundation-rails (6.6.2.0)
