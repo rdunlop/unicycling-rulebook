@@ -389,8 +389,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    select2-rails (4.0.3)
-      thor (~> 0.14)
+    select2-rails (4.0.13)
     sexp_processor (4.11.0)
     sidekiq (5.2.9)
       connection_pool (~> 2.2, >= 2.2.2)
