@@ -117,7 +117,7 @@ GEM
       babel-source (>= 4.0, < 6)
       execjs (~> 2.0)
     bcrypt (3.1.16)
-    brakeman (4.10.0)
+    brakeman (4.10.1)
     breadcrumbs_on_rails (3.0.1)
     builder (3.2.4)
     bundler-audit (0.7.0.1)
