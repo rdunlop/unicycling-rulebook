@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 ruby File.open(File.expand_path(".ruby-version", File.dirname(__FILE__))) { |f| f.read.chomp }
-gem 'rails'
+gem 'rails', "~> 5.2"
 
 # authorization
 gem 'devise'
@@ -75,7 +75,7 @@ group :test do
   gem 'rspec_junit_formatter' # as per circleCI https://circleci.com/docs/test-metadata
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', "~> 4.3"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
