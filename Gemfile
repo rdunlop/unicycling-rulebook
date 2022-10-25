@@ -31,7 +31,6 @@ gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 gem 'apartment'
 gem 'aws-sdk-rails'
 gem 'mailjet'
-gem 'newrelic_rpm'
 gem 'rollbar'
 
 # other
