@@ -40,7 +40,7 @@ gem 'pg'
 gem 'rake'
 gem 'redis-namespace'
 gem 'redis-rails'
-gem 'sidekiq'
+gem 'sidekiq', "< 6"
 gem 'unicorn'
 gem 'whenever'
 
