@@ -3,7 +3,8 @@ source 'https://rubygems.org'
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 ruby File.open(File.expand_path(".ruby-version", File.dirname(__FILE__))) { |f| f.read.chomp }
-gem 'rails'
+gem 'rails', "~> 5.2"
+gem 'sprockets', '< 4' # sprockets 4 causes issues we don't need to solve
 
 # authorization
 gem 'devise'
@@ -40,7 +41,7 @@ gem 'pg'
 gem 'rake'
 gem 'redis-namespace'
 gem 'redis-rails'
-gem 'sidekiq'
+gem 'sidekiq', "< 6"
 gem 'unicorn'
 gem 'whenever'
 
@@ -65,7 +66,7 @@ group :development, :test, :cucumber do
   gem 'html2haml'
   gem 'pry'
   gem 'rspec-rails'
-  gem 'rubocop', require: false
+  gem 'rubocop',  '0.61.0', require: false
   gem 'syntax'
   gem 'watchr'
 end

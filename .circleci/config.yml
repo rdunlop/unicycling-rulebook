@@ -86,18 +86,9 @@ jobs:
                             --format progress \
                             $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
-      - store_artifacts:
-         path: coverage/.resultset.json
-         prefix: coverage
-
       # Save test results for timing analysis
       - store_test_results:
           path: test_results
-
-      # Use 'deploy' step so that it only runs on 1 node, after the nodes are all done
-      - deploy:
-          name: Merge and copy coverage data
-          command: bundle exec report_coverage --branch develop
 
   check_db_schema:
     <<: *default_job_config
@@ -156,13 +147,18 @@ workflows:
           filters:
             branches:
               only:
-                - develop
+                - master
+      - approve-prod-push:
+          type: approval
+          requires:
+            - release_stage
+          filters:
+            branches:
+              only:
+                - master
       - release_prod:
           requires:
-            - rspec
-            - rubocop
-            - bundle_audit
-            - check_db_schema
+            - approve-prod-push
           filters:
             branches:
               only:
