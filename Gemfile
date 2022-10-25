@@ -65,7 +65,7 @@ group :development, :test, :cucumber do
   gem 'html2haml'
   gem 'pry'
   gem 'rspec-rails'
-  gem 'rubocop', require: false
+  gem 'rubocop',  '0.61.0', require: false
   gem 'syntax'
   gem 'watchr'
 end
