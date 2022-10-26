@@ -25,7 +25,7 @@ processes:
   - name: sidekiq
     config:
       start_command: bundle exec sidekiq --config config/sidekiq.yml
-      stop_command: bundle exec sidekiqctl shutdown tmp/pids/sidekiq.pid
+      stop_command: "kill -TERM {PID}"
       stdall: log/sidekiq.log
       pid_file: tmp/pids/sidekiq.pid
       daemonize: true
