@@ -28,18 +28,18 @@ gem 'uglifier', '>= 1.0.3'
 # allows storing of secrets in ENV for heroku
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
-gem 'ros-apartment', require: 'apartment'
 gem 'aws-sdk-rails'
 gem 'mailjet'
 gem 'rollbar'
+gem 'ros-apartment', require: 'apartment'
 
 # other
-gem 'ros-apartment-sidekiq', require: 'apartment-sidekiq'
 gem 'apartment_acme_client', '0.0.7'
 gem 'pg'
 gem 'rake'
 gem 'redis-namespace'
 gem 'redis-rails'
+gem 'ros-apartment-sidekiq', require: 'apartment-sidekiq'
 gem 'sidekiq'
 gem 'unicorn'
 gem 'whenever'
