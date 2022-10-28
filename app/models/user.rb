@@ -74,9 +74,9 @@ class User < ApplicationRecord
   end
 
   def password_match?
-    self.errors[:password] << "can't be blank" if password.blank?
-    self.errors[:password_confirmation] << "can't be blank" if password_confirmation.blank?
-    self.errors[:password_confirmation] << "does not match password" if password != password_confirmation
+    self.errors.add(:password, message: "can't be blank") if password.blank?
+    self.errors.add(:password_confirmation, message: "can't be blank") if password_confirmation.blank?
+    self.errors.add(:password_confirmation, message: "does not match password") if password != password_confirmation
     password == password_confirmation && password.present?
   end
 
