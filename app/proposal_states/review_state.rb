@@ -1,10 +1,10 @@
 class ReviewState < BaseState
   def status_summary
-    "Ends " + review_end_date.to_date.to_s(:long)
+    "Ends " + review_end_date.to_date.to_fs(:long)
   end
 
   def status_string
-    "Review from " + review_start_date.to_date.to_s(:long) + " to " + review_end_date.to_date.to_s(:long)
+    "Review from " + review_start_date.to_date.to_fs(:long) + " to " + review_end_date.to_date.to_fs(:long)
   end
 
   can_transition_to "Tabled"

@@ -4,11 +4,11 @@ class VotingState < BaseState
   end
 
   def status_summary
-    "Ends " + vote_end_date.to_date.to_s(:long)
+    "Ends " + vote_end_date.to_date.to_fs(:long)
   end
 
   def status_string
-    "Voting from " + vote_start_date.to_date.to_s(:long) + " to " + vote_end_date.to_date.to_s(:long)
+    "Voting from " + vote_start_date.to_date.to_fs(:long) + " to " + vote_end_date.to_date.to_fs(:long)
   end
 
   can_transition_to "Pre-Voting"
