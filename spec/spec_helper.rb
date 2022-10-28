@@ -59,6 +59,7 @@ RSpec.configure do |config|
 
   # In order to cause .deliver_later to actually .deliver_now
   config.before(:each) do
+    ActiveJob::Base.queue_adapter = :test
     ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
     ActiveJob::Base.queue_adapter.perform_enqueued_at_jobs = true
   end

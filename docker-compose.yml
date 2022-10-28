@@ -20,7 +20,7 @@ services:
 
   sidekiq:
     build: .
-    command: bundle exec sidekiq --config config/sidekiq.yml --logfile log/sidekiq.log
+    command: bundle exec sidekiq --config config/sidekiq.yml
     depends_on:
       - db
       - redis

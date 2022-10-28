@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Pundit
+  include Pundit::Authorization
 
   protect_from_forgery
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -8,8 +8,6 @@ class ApplicationController < ActionController::Base
   before_action :set_base_breadcrumb
 
   after_action :verify_authorized, unless: :devise_controller?
-
-  force_ssl if: :ssl_configured?
 
   protected
 
@@ -59,12 +57,5 @@ class ApplicationController < ActionController::Base
   def set_proposal_breadcrumb(proposal = @proposal)
     set_committee_breadcrumb(proposal.committee)
     add_breadcrumb "Proposal: #{proposal.title}", proposal_path(proposal)
-  end
-
-  # Internal: Is SSL configured?
-  #
-  # Returns a boolean.
-  def ssl_configured?
-    Rails.application.secrets.ssl_enabled
   end
 end

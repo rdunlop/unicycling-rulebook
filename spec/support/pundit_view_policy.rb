@@ -1,18 +1,13 @@
 module PunditViewPolicy
   extend ActiveSupport::Concern
 
-  included do
-    before do
-      controller.singleton_class.class_eval do
-        def policy(_instance)
-          Class.new do
-            def method_missing(*_args, &_block)
-              true
-            end
-          end.new
+  class ActionView::Base # rubocop:disable Style/ClassAndModuleChildren
+    def policy(_args)
+      Class.new do
+        def method_missing(*_args, &_block)
+          true
         end
-        helper_method :policy
-      end
+      end.new
     end
   end
 end
