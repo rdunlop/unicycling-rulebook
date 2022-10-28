@@ -1,7 +1,7 @@
 module PunditViewPolicy
   extend ActiveSupport::Concern
 
-  class ActionView::Base
+  class ActionView::Base # rubocop:disable Style/ClassAndModuleChildren
     def policy(_args)
       Class.new do
         def method_missing(*_args, &_block)
