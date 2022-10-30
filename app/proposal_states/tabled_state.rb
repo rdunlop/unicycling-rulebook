@@ -4,11 +4,11 @@ class TabledState < BaseState
   end
 
   def status_summary
-    "" + tabled_date.to_date.to_s(:long)
+    "" + tabled_date.to_date.to_fs(:long)
   end
 
   def status_string
-    "Set-Aside (Reviewed from " + review_start_date.to_date.to_s(:long) + " to " + review_end_date.to_date.to_s(:long) + ")"
+    "Set-Aside (Reviewed from " + review_start_date.to_date.to_fs(:long) + " to " + review_end_date.to_date.to_fs(:long) + ")"
   end
 
   can_transition_to "Review"

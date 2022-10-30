@@ -1,6 +1,6 @@
 = link_to discussion.display_title, discussion_path(discussion)
 %small
   Created:
-  = discussion.created_at.to_date.to_s(:long) + "."
+  = discussion.created_at.to_date.to_fs(:long) + "."
   Last comment:
   %time.js--days-ago{ datetime: discussion.updated_at.iso8601 }

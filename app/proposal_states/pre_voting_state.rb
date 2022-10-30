@@ -1,10 +1,10 @@
 class PreVotingState < BaseState
   def status_summary
-    "Ended " + review_end_date.to_date.to_s(:long)
+    "Ended " + review_end_date.to_date.to_fs(:long)
   end
 
   def status_string
-    "Pre-Voting (Reviewed from " + review_start_date.to_date.to_s(:long) + " to " + review_end_date.to_date.to_s(:long) + ")"
+    "Pre-Voting (Reviewed from " + review_start_date.to_date.to_fs(:long) + " to " + review_end_date.to_date.to_fs(:long) + ")"
   end
 
   can_transition_to "Tabled"
