@@ -30,9 +30,9 @@ gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 gem 'aws-sdk-rails'
 gem 'mailjet'
+gem 'pry-rails' # supports the custom apartment console
 gem 'rollbar'
 gem 'ros-apartment', require: 'apartment'
-gem 'pry-rails' # supports the custom apartment console
 
 # other
 gem 'apartment_acme_client'
