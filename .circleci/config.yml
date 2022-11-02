@@ -14,7 +14,7 @@ references:
           BUNDLE_APP_CONFIG: ~/tmp/vendor/bundle
       - image: cimg/postgres:14.5
         environment:
-          POSTGRES_USER: ubuntu
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
 jobs:
   build:
