@@ -29,7 +29,7 @@ services:
       - gem_cache:/gems
 
   db:
-    image: postgres:9.4.12
+    image: postgres:14
     restart: always
     environment:
       POSTGRES_USER: ubuntu
