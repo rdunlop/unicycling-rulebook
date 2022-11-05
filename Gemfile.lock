@@ -275,10 +275,10 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
-    mailjet (1.5.4)
+    mailjet (1.7.1)
       activesupport (>= 3.1.0)
       rack (>= 1.4.0)
-      rest-client
+      rest-client (>= 2.0.0)
     marcel (1.0.2)
     matrix (0.4.2)
     method_source (1.0.0)
