@@ -39,7 +39,13 @@ class ApplicationController < ActionController::Base
     @config = Rulebook.current_rulebook
 
     # if there is no subdomain specified, redirect to the 'choose-subdomain' page
-    redirect_to welcome_index_all_path, flash: { alert: "Invalid subdomain" } if @config.nil? && !(controller_name == "welcome" && (action_name == "index_all" || action_name == "new_location"))
+    if @config.nil? &&
+       !(
+         (controller_name == "welcome" && (action_name == "index_all" || action_name == "new_location")) ||
+         (controller_name == "rulebooks")
+       )
+      redirect_to welcome_index_all_path, flash: { alert: "Invalid subdomain" }
+    end
   end
 
   def set_base_breadcrumb
