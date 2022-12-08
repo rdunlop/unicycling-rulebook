@@ -39,8 +39,7 @@ To do this:
 1. install `docker `and `docker-compose`.
 1. run `docker-compose up`
 1. Create the database schema with `docker-compose exec app bundle exec rake db:create db:schema:load`
-1. Add an entry to your /etc/hosts file `sudo vi /etc/hosts`: `127.0.0.1 www.local.com`
-1. open http://www.local.com:3000/new
+1. open http://www.lvh.me:3000/new
 1. Create a new database `docker-compose run app bundle exec rake db:create db:schema:load`
 
 Setup the database
