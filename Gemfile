@@ -64,7 +64,7 @@ group :development, :test, :cucumber do
   gem 'html2haml'
   gem 'pry'
   gem 'rspec-rails'
-  gem 'rubocop',  '0.71.0', require: false
+  gem 'rubocop',  '1.42.0', require: false
 end
 
 group :test do
