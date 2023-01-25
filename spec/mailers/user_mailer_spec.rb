@@ -90,7 +90,7 @@ describe UserMailer, type: :mailer do
       expect(mail.body.encoded).to match("Sometimes I <link> somewhere")
     end
     it "should have a in-reply-to set" do
-      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
+      expect(mail['In-Reply-To'].value).to eq(@proposal.mail_messageid)
     end
   end
 
@@ -111,7 +111,7 @@ describe UserMailer, type: :mailer do
       expect(mail.body.encoded).to match("Sometimes I <link> somewhere")
     end
     it "should have a in-reply-to set" do
-      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
+      expect(mail['In-Reply-To'].value).to eq(@proposal.mail_messageid)
     end
   end
 
@@ -150,7 +150,7 @@ describe UserMailer, type: :mailer do
       expect(mail.body.encoded).to match("Did you place your vote?")
     end
     it "should have a in-reply-to set" do
-      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
+      expect(mail['In-Reply-To'].value).to eq(@proposal.mail_messageid)
     end
   end
 
@@ -168,7 +168,7 @@ describe UserMailer, type: :mailer do
       expect(mail.body.encoded).to match("Make a revision to the proposal")
     end
     it "should have a in-reply-to set" do
-      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
+      expect(mail['In-Reply-To'].value).to eq(@proposal.mail_messageid)
     end
   end
 
@@ -185,7 +185,7 @@ describe UserMailer, type: :mailer do
       expect(mail.body.encoded).to match("read through the latest revision")
     end
     it "should have a in-reply-to set" do
-      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
+      expect(mail['In-Reply-To'].value).to eq(@proposal.mail_messageid)
     end
   end
 
@@ -202,7 +202,7 @@ describe UserMailer, type: :mailer do
       expect(mail.body.encoded).to match("proposal has Passed")
     end
     it "should have a in-reply-to set" do
-      expect(mail['In-Reply-To'].to_s).to eq(@proposal.mail_messageid)
+      expect(mail['In-Reply-To'].value).to eq(@proposal.mail_messageid)
     end
   end
 
