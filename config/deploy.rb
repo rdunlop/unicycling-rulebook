@@ -17,3 +17,5 @@ set :whenever_roles,        -> { %i[db app] }
 set :rollbar_token, ENV["ROLLBAR_ACCESS_TOKEN"]
 set :rollbar_env, proc { fetch :rails_env }
 set :rollbar_role, proc { :app }
+
+set :bundle_jobs, 1 # due to memory limitations on the staging and prod servers
