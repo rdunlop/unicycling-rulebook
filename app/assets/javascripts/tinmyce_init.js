@@ -10,7 +10,7 @@ $(document).ready(function() {
     paste_word_valid_elements: 'ol,ul,li,b,strong,i,em,u,ins',
     target_list: false,
     link_title: false,
-    valid_elements : "@[id|class|style|title],a[rel|rev|href|target|title|class],strong/b,em/i,strike,u,"
+    valid_elements : "@[id|class|style|title],a[rel|rev|href|target|title|class],strong/b,em/i,strike/s,u,"
                       + "#p,-ol[type|compact],-ul[type|compact],-li,br,-blockquote,-div,"
                       + "-span,address,-h1,-h2,-h3,-h4,-h5,-h6,-font[style|color],"
                       + "del[datetime|cite],ins[datetime|cite],q[cite],small,big",
