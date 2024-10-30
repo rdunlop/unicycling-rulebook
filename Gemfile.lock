@@ -275,6 +275,7 @@ GEM
     json (2.6.2)
     kgio (2.11.4)
     kostya-sigar (2.0.10)
+    logger (1.6.1)
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -374,7 +375,7 @@ GEM
     recaptcha (5.16.0)
     redis (5.0.8)
       redis-client (>= 0.17.0)
-    redis-client (0.18.0)
+    redis-client (0.22.2)
       connection_pool
     regexp_parser (2.8.1)
     responders (3.0.1)
@@ -441,11 +442,11 @@ GEM
       tilt
     select2-rails (4.0.13)
     sexp_processor (4.16.1)
-    sidekiq (7.2.0)
-      concurrent-ruby (< 2)
+    sidekiq (7.3.4)
       connection_pool (>= 2.3.0)
+      logger
       rack (>= 2.2.4)
-      redis-client (>= 0.14.0)
+      redis-client (>= 0.22.2)
     simplecov (0.13.0)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
