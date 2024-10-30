@@ -16,11 +16,14 @@ class Redis
   end
 
   def self.configuration
-    valid_options = %i[host port password db]
-    config = ::Rails.application.secrets.redis.slice(*valid_options)
+    config = {
+      host: ::Rails.application.secrets.redis_host,
+      port: ::Rails.application.secrets.redis_port,
+      db: ::Rails.application.secrets.redis_db
+    }
 
     yield config
 
-    config.symbolize_keys
+    config
   end
 end
