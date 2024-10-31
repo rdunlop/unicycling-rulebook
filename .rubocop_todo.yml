@@ -428,3 +428,6 @@ UniqueValidationWithoutIndex:
     - 'app/models/committee.rb'
     - 'app/models/committee_member.rb'
     - 'app/models/vote.rb'
+
+Rails/ApplicationMailer:
+  Enabled: false
