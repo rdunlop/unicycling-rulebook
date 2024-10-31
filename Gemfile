@@ -47,11 +47,11 @@ gem 'whenever'
 
 # deployment
 gem 'capistrano'
+gem 'capistrano3-unicorn'
 gem 'capistrano-bundler'
 gem "capistrano-deploytags", require: false
 gem 'capistrano-rails'
 gem 'capistrano-rvm'
-gem 'capistrano3-unicorn'
 gem 'eye-patch', require: false
 
 group :development, :test, :cucumber do
@@ -64,7 +64,8 @@ group :development, :test, :cucumber do
   gem 'html2haml'
   gem 'pry'
   gem 'rspec-rails'
-  gem 'rubocop',  '0.71.0', require: false
+  gem 'rubocop',  '0.93.1', require: false
+  gem 'rubocop-rails', require: false
 end
 
 group :test do
