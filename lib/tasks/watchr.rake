@@ -1,4 +1,4 @@
 desc "Run watchr"
-task :watchr do
+task watchr: :environment do
   sh %{bundle exec watchr .watchr}
 end

@@ -1,5 +1,8 @@
+require:
+  - rubocop-rails
+
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 3.0
   Exclude:
     - ".bundle/**/*" # Auto-generated
     - "bin/**/*" # Auto-generated
@@ -9,10 +12,6 @@ Rails:
   Enabled: true
 
 inherit_from: .rubocop_todo.yml
-
-Style/BracesAroundHashParameters:
-  EnforcedStyle: context_dependent
-  Enabled: true
 
 Style/FrozenStringLiteralComment:
   Enabled: false

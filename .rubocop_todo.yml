@@ -26,12 +26,6 @@ Lint/DeprecatedClassMethods:
     - 'config/unicorn/production.rb'
     - 'config/unicorn/stage.rb'
 
-# Offense count: 2
-Lint/HandleExceptions:
-  Exclude:
-    - 'config/unicorn/production.rb'
-    - 'config/unicorn/stage.rb'
-
 # Offense count: 1
 # Configuration parameters: MaximumRangeSize.
 Lint/MissingCopEnableDirective:
@@ -73,6 +67,8 @@ Lint/UselessAssignment:
 # Offense count: 18
 Metrics/AbcSize:
   Max: 29
+  Exclude:
+    - 'app/controllers/committee_members_controller.rb'
 
 # Offense count: 1
 # Configuration parameters: CountComments.
@@ -82,6 +78,8 @@ Metrics/ClassLength:
 # Offense count: 1
 Metrics/CyclomaticComplexity:
   Max: 8
+  Exclude:
+    - 'app/models/proposal.rb'
 
 # Offense count: 20
 # Configuration parameters: CountComments, ExcludedMethods.
@@ -91,6 +89,8 @@ Metrics/MethodLength:
 # Offense count: 1
 Metrics/PerceivedComplexity:
   Max: 10
+  Exclude:
+    - 'app/models/proposal.rb'
 
 # Offense count: 3
 Naming/AccessorMethodName:
@@ -141,6 +141,7 @@ Rails/Delegate:
 Rails/FilePath:
   Exclude:
     - 'spec/spec_helper.rb'
+    - 'config/environments/development.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -233,16 +234,6 @@ Style/BlockDelimiters:
     - 'spec/controllers/votes_controller_spec.rb'
     - 'spec/spec_helper.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: braces, no_braces, context_dependent
-Style/BracesAroundHashParameters:
-  Exclude:
-    - 'app/controllers/admin_upgrades_controller.rb'
-    - 'lib/tasks/auto_annotate_models.rake'
-    - 'spec/models/user_spec.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: Keywords.
@@ -300,7 +291,7 @@ Style/MethodCallWithoutArgsParentheses:
     - 'spec/controllers/revisions_controller_spec.rb'
 
 # Offense count: 1
-Style/MethodMissingSuper:
+Lint/MissingSuper:
   Exclude:
     - 'spec/support/pundit_view_policy.rb'
 
@@ -431,3 +422,12 @@ Style/WordArray:
 # URISchemes: http, https
 Metrics/LineLength:
   Max: 652
+
+UniqueValidationWithoutIndex:
+  Exclude:
+    - 'app/models/committee.rb'
+    - 'app/models/committee_member.rb'
+    - 'app/models/vote.rb'
+
+Rails/ApplicationMailer:
+  Enabled: false
