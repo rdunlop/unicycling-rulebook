@@ -57,7 +57,7 @@ jobs:
       - attach_workspace:
           at: ~/tmp
       - run: bundle exec bundle-audit update
-      - run: bundle exec bundle-audit --ignore GHSA-r95h-9x8f-r3f7 # ignore nokogiri until we have ruby 3 installed
+      - run: bundle exec bundle-audit
 
   rspec:
     <<: *default_job_config
