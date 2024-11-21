@@ -451,7 +451,7 @@ GEM
       tilt
     select2-rails (4.0.13)
     sexp_processor (4.16.1)
-    sidekiq (7.3.4)
+    sidekiq (7.3.6)
       connection_pool (>= 2.3.0)
       logger
       rack (>= 2.2.4)
