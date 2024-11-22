@@ -279,6 +279,7 @@ GEM
     json (2.6.2)
     kgio (2.11.4)
     kostya-sigar (2.0.10)
+    language_server-protocol (3.17.0.3)
     logger (1.6.1)
     loofah (2.23.1)
       crass (~> 1.0.2)
@@ -328,7 +329,7 @@ GEM
     orm_adapter (0.5.0)
     ostruct (0.6.1)
     parallel (1.26.3)
-    parser (3.3.5.0)
+    parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
     pg (1.4.6)
@@ -396,7 +397,6 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rexml (3.3.9)
     rollbar (3.6.0)
     ros-apartment (3.1.0)
       activerecord (>= 6.1.0, < 7.2)
@@ -425,16 +425,17 @@ GEM
     rspec-support (3.13.1)
     rspec_junit_formatter (0.6.0)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (0.93.1)
+    rubocop (1.68.0)
+      json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
-      parser (>= 2.7.1.5)
+      parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.8)
-      rexml
-      rubocop-ast (>= 0.6.0)
+      regexp_parser (>= 2.4, < 3.0)
+      rubocop-ast (>= 1.32.2, < 2.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 2.0)
-    rubocop-ast (1.33.0)
+      unicode-display_width (>= 2.4.0, < 3.0)
+    rubocop-ast (1.36.1)
       parser (>= 3.3.1.0)
     rubocop-rails (2.8.1)
       activesupport (>= 4.2.0)
@@ -502,7 +503,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
-    unicode-display_width (1.8.0)
+    unicode-display_width (2.6.0)
     unicorn (6.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
@@ -562,7 +563,7 @@ DEPENDENCIES
   ros-apartment-sidekiq
   rspec-rails
   rspec_junit_formatter
-  rubocop (= 0.93.1)
+  rubocop (= 1.68.0)
   rubocop-rails
   sass-rails
   select2-rails
