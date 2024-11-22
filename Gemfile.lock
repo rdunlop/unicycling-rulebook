@@ -394,7 +394,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.3.9)
-    rollbar (3.4.2)
+    rollbar (3.6.0)
     ros-apartment (3.1.0)
       activerecord (>= 6.1.0, < 7.2)
       parallel (< 2.0)
