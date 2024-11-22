@@ -240,7 +240,7 @@ GEM
     drb (2.2.1)
     erubi (1.13.0)
     erubis (2.7.0)
-    execjs (2.8.1)
+    execjs (2.10.0)
     eye (0.10.0)
       celluloid (~> 0.17.3)
       celluloid-io (~> 0.17.0)
@@ -533,7 +533,7 @@ GEM
       railties (>= 3.1.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.0)
+    uglifier (4.2.1)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
