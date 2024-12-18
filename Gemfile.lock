@@ -417,7 +417,7 @@ GEM
     recaptcha (5.17.0)
     redis (5.3.0)
       redis-client (>= 0.22.0)
-    redis-client (0.22.2)
+    redis-client (0.23.0)
       connection_pool
     regexp_parser (2.9.2)
     reline (0.6.0)
@@ -496,7 +496,7 @@ GEM
     securerandom (0.3.2)
     select2-rails (4.0.13)
     sexp_processor (4.16.1)
-    sidekiq (7.3.6)
+    sidekiq (7.3.7)
       connection_pool (>= 2.3.0)
       logger
       rack (>= 2.2.4)
