@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 ruby File.open(File.expand_path(".ruby-version", File.dirname(__FILE__))) { |f| f.read.chomp }
-gem 'rails', "~> 7.0"
+gem 'rails', "~> 7.1.5"
 gem 'sprockets', '< 4' # sprockets 4 causes issues we don't need to solve
 
 # authorization
@@ -31,6 +31,7 @@ gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 gem 'aws-sdk-rails'
 gem 'mailjet'
 gem 'pry-rails' # supports the custom apartment console
+gem 'recaptcha'
 gem 'rollbar'
 gem 'ros-apartment', require: 'apartment'
 
@@ -38,8 +39,7 @@ gem 'ros-apartment', require: 'apartment'
 gem 'apartment_acme_client'
 gem 'pg'
 gem 'rake'
-gem 'redis-namespace'
-gem 'redis-rails'
+gem 'redis'
 gem 'ros-apartment-sidekiq', require: 'apartment-sidekiq'
 gem 'sidekiq'
 gem 'unicorn'
@@ -47,11 +47,11 @@ gem 'whenever'
 
 # deployment
 gem 'capistrano'
+gem 'capistrano3-unicorn'
 gem 'capistrano-bundler'
 gem "capistrano-deploytags", require: false
 gem 'capistrano-rails'
 gem 'capistrano-rvm'
-gem 'capistrano3-unicorn'
 gem 'eye-patch', require: false
 
 group :development, :test, :cucumber do
@@ -64,7 +64,8 @@ group :development, :test, :cucumber do
   gem 'html2haml'
   gem 'pry'
   gem 'rspec-rails'
-  gem 'rubocop',  '0.71.0', require: false
+  gem 'rubocop',  '1.68.0', require: false
+  gem 'rubocop-rails', require: false
 end
 
 group :test do

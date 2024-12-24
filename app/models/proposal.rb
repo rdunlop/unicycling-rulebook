@@ -30,7 +30,7 @@ class Proposal < ApplicationRecord
   validates :owner, presence: true
   validates :title, presence: true
   validates :committee, presence: true
-  validates :status, inclusion: { in: ['Submitted', 'Review', 'Pre-Voting', 'Voting', 'Tabled', 'Passed', 'Failed'] }
+  validates :status, inclusion: { in: %w[Submitted Review Pre-Voting Voting Tabled Passed Failed] }
 
   REVIEW_DAYS = 5
   VOTING_DAYS = 5
