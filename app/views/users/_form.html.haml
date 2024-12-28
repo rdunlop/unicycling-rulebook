@@ -1,0 +1,32 @@
+= form_for(@user, url: user_path(@user)) do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@user.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    Email
+    %br
+    = @user.email
+  .field
+    Admin?
+    %br
+    = @user.admin?
+  .field
+    Comments
+    %br
+    = raw(@user.comments)
+
+  .field
+    = f.label :name
+    %br
+    = f.text_field :name
+  .field
+    = f.label :location
+    %br
+    = f.text_field :location
+  .actions
+    = f.submit
