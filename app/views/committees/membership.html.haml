@@ -10,4 +10,6 @@
 - @users.each do |user|
   %b= user
   \- #{user.location}
+  - if policy(user).edit?
+    = link_to "Edit", edit_user_path(user)
   %br
