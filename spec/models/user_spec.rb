@@ -115,4 +115,19 @@ describe User, type: :model do
     expect(user.no_emails).to eq(true)
     expect(user.valid?).to eq(true)
   end
+
+  context "when a user is not a committee_member" do
+    it "can be destroyed" do
+      user = FactoryBot.create(:user)
+      expect(user.destroy).to be_truthy
+    end
+  end
+
+  context "when a user is a committee_member" do
+    it "cannot be destroyed" do
+      user = FactoryBot.create(:user)
+      FactoryBot.create(:committee_member, user: user)
+      expect(user.destroy).to be_falsy
+    end
+  end
 end

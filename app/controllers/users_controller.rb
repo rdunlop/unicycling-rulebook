@@ -19,6 +19,18 @@ class UsersController < ApplicationController
     end
   end
 
+  # DELETE /users/:id
+  def destroy
+    authorize @user
+
+    if @user.destroy
+      flash[:notice] = "User was successfully deleted"
+    else
+      flash[:alert] = "Unable to delete user (they have committee membership)"
+    end
+    redirect_back(fallback_location: membership_committees_path)
+  end
+
   private
 
   def load_user

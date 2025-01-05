@@ -53,4 +53,19 @@ describe UsersController, type: :controller do
       end
     end
   end
+
+  describe "DELETE destroy" do
+    it "can delete the user who has NO commitee_membership" do
+      empty_user = FactoryBot.create(:user)
+      expect do
+        delete :destroy, params: {id: empty_user.to_param}
+      end.to change(User, :count).by(-1)
+    end
+
+    it "cannot delete the user who has commitee_membership" do
+      expect do
+        delete :destroy, params: {id: @user.to_param}
+      end.not_to change(User, :count)
+    end
+  end
 end

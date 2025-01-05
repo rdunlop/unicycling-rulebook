@@ -6,4 +6,8 @@ class UserPolicy < ApplicationPolicy
   def update?
     admin?
   end
+
+  def destroy?
+    admin?
+  end
 end

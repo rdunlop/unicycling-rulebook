@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   end
   resources :bulk_users, only: %i[index create]
   resources :statistics, only: :index
-  resources :users, only: %i[edit update]
+  resources :users, only: %i[edit update destroy]
 
   as :user do
     patch '/user/confirmation' => 'confirmations#update', :via => :patch, :as => :update_user_confirmation
