@@ -12,4 +12,6 @@
   \- #{user.location}
   - if policy(user).edit?
     = link_to "Edit", edit_user_path(user)
+  - if policy(user).destroy?
+    = link_to "Destroy", user_path(user), data: { confirm: "Are you sure?" }, method: :delete
   %br

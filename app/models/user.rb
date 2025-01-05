@@ -38,7 +38,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :committee_members, inverse_of: :user
+  has_many :committee_members, inverse_of: :user, dependent: :restrict_with_error
   has_many :committees, through: :committee_members
   has_many :votes
   has_many :discussion_comments, class_name: "Comment"
