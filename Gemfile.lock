@@ -304,7 +304,7 @@ GEM
     mutex_m (0.3.0)
     net-http (0.5.0)
       uri
-    net-imap (0.4.18)
+    net-imap (0.4.19)
       date
       net-protocol
     net-pop (0.1.2)
@@ -343,7 +343,7 @@ GEM
     pundit (2.3.1)
       activesupport (>= 3.0.0)
     racc (1.8.1)
-    rack (2.2.10)
+    rack (2.2.13)
     rack-session (1.0.2)
       rack (< 3)
     rack-test (2.1.0)
@@ -522,7 +522,7 @@ GEM
     unicorn (6.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    uri (1.0.2)
+    uri (1.0.3)
     warden (1.2.9)
       rack (>= 2.0.9)
     webrick (1.9.1)
