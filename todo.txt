@@ -1,32 +1,49 @@
 - USE SES
-Amazon Ec2 installation:
-- yum update
-- yum groupinstall "Development Tools" (may not be required)
+===== Amazon Ec2 installation =====
+- #yum update
+- #yum groupinstall "Development Tools" (may not be required)
 - yum install libxml2-devel libxslt-devel (for nokogiri)
-- gpg2 --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3 ( trust the rvm guy)
-- \curl -sSL https://get.rvm.io | bash -s stable
-- source ~/.profile
-- rvm install ruby 2.1.2
-- rvm alias create default ruby-2.1.2 (set the default ruby)
-- sudo yum install nodejs npm --enablerepo=epel (for js-runtime)
-- sudo yum install nginx
+- Install crontab support `sudo yum install cronie`
+- sudo dnf swap gnupg2-minimal gnupg2-full (install new gpg for rvm)
+- sudo yum install git
+- Install rvm:
+  - gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+  - \curl -sSL https://get.rvm.io | bash -s stable
+- source ~/.profile (load rvm)
+- rvm install ruby 3.1.6 (check Gemfile)
+- rvm alias create default ruby-3.1.6 (set the default ruby)
+- install a JavaScript runtime
+  - Install nvm (node version manager) `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash`
+  - MUST logout and login in order to initialize `nvm`
+  - Install new version of nodejs `nvm install 14`
 - bash --login (so that I can use the ruby)
-- yum install postgresql-devel
+- sudo yum install postgresql15
+- sudo yum install postgresql-devel
 - gem install bundler
-- ? install postgresql 93 (yum install postgresql93) ?
-- `createuser rulebooktestuser -h unisoftdbmaster.cdotscaeyshe.us-west-2.rds.amazonaws.com -d -P -U robindunlop`
-- write these credentials into the database.yml
-- then `RAILS_ENV=stage bundle exec rake db:create`
 
-- install redis via script/install_redis.sh
+- Install a redis-server on the server:
+  - See https://gist.github.com/avtaniket/990df8fcc46bb4a64d30fdc070eda3b7
+  - `sudo yum install redis6`
+  - `sudo systemctl start redis6`
+  - `sudo systemctl enable redis6`
 
-- copy nginx.conf.template to /etc/nginx/nginx.conf
+- Nginx:
+  - sudo yum install nginx
+  - copy nginx.conf.template to /etc/nginx/nginx.conf
+  - update the `/usr/lib/systemd/system/nginx.service` file with `PrivateTmp=false` or else the `/tmp/unicorn-unicycling-registration.socket` will not be visible to nginx
+  - `sudo systemctl start nginx`
+  - `sudo systemctl enable nginx`
 - copy database.yml.template and secrets.yml.template to /home/ec2-user/unicycling-rulebook/shared/config/
 - cap prod deploy
 
+======= DB Setup =========
+- `createuser rulebooktestuser -h unisoftdbmaster.cdotscaeyshe.us-west-2.rds.amazonaws.com -d -P -U robindunlop`
+- write these credentials into the database.yml
+- then `RAILS_ENV=stage bundle exec rake db:create`
 - bundle
 - rvmsudo bundle exec rails s -p 80 -e production
 
+===================================
 Allow SuperAdmin:
 Known issues:
 - Fix that some discussions have no associated committee (but they _do_ have a proposal?...bad migration?)

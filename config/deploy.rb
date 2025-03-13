@@ -19,3 +19,20 @@ set :rollbar_env, proc { fetch :rails_env }
 set :rollbar_role, proc { :app }
 
 set :bundle_jobs, 1 # due to memory limitations on the staging and prod servers
+
+namespace :eye do
+  desc "Start eye with the desired configuration file"
+  task :load_config do
+    on roles(fetch(:eye_roles)) do
+      within current_path do
+        with fetch(:eye_env) do
+          execute fetch(:eye_bin), "quit"
+          # With ruby 3.1, on Amazon Linux 2023, the following
+          # command is hanging unless we have a PTY.
+          SSHKit::Backend::Netssh.config.pty = true
+          execute fetch(:eye_bin), "load #{fetch(:eye_config)}"
+        end
+      end
+    end
+  end
+end
