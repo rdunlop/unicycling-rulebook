@@ -47,12 +47,11 @@ gem 'whenever'
 
 # deployment
 gem 'capistrano'
-gem 'capistrano3-unicorn'
 gem 'capistrano-bundler'
 gem "capistrano-deploytags", require: false
 gem 'capistrano-rails'
 gem 'capistrano-rvm'
-gem 'eye-patch', require: false
+gem 'eye'
 
 group :development, :test, :cucumber do
   gem 'annotate'
