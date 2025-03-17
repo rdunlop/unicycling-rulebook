@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UsersController, type: :controller do
+describe Admin::UsersController, type: :controller do
   let(:committee) { FactoryBot.create(:committee) }
   before(:each) do
     @user = FactoryBot.create(:user)

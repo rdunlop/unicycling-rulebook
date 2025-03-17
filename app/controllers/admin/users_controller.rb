@@ -1,13 +1,13 @@
-class UsersController < ApplicationController
+class Admin::UsersController < ApplicationController # rubocop:disable Style/ClassAndModuleChildren
   before_action :authenticate_user!
   before_action :load_user
 
-  # GET /users/:id/edit
+  # GET /admin/users/:id/edit
   def edit
     authorize @user
   end
 
-  # PUT /users/:id
+  # PUT /admin/users/:id
   def update
     authorize @user
     respond_to do |format|
@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/:id
+  # DELETE /admin/users/:id
   def destroy
     authorize @user
 
