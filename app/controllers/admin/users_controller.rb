@@ -1,4 +1,4 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < ApplicationController # rubocop:disable Style/ClassAndModuleChildren
   before_action :authenticate_user!
   before_action :load_user
 
