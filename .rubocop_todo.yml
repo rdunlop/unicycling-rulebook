@@ -140,6 +140,7 @@ Rails/BulkChangeTable:
     - 'db/migrate/20120911153404_add_confirmable_to_user.rb'
     - 'db/migrate/20121001180313_change_app_config_fields_to_text_area.rb'
     - 'db/migrate/20141019205813_set_boolean_defaults.rb'
+    - 'db/migrate/20250403144549_add_voting_and_review_days_configurations.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
