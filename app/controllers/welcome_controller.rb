@@ -26,9 +26,9 @@ class WelcomeController < ApplicationController
     @contactemail = "robin@dunlopweb.com"
     @contactname = "robin"
     @committeename = "the committee"
-    @REVIEWTIME_TEXT = "#{Proposal::REVIEW_DAYS} days" # rubocop:disable Naming/VariableName
+    @REVIEWTIME_TEXT = "#{@config.review_days} days" # rubocop:disable Naming/VariableName
     @REVISIONTIME_TEXT = "3 days" # rubocop:disable Naming/VariableName
-    @VOTETIME_TEXT = "#{Proposal::VOTING_DAYS} days" # rubocop:disable Naming/VariableName
+    @VOTETIME_TEXT = "#{@config.voting_days} days" # rubocop:disable Naming/VariableName
     # if majority == 2/3
     @majority_text = "2/3"
     @majority = true

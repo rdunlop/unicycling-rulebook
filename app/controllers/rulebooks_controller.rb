@@ -66,7 +66,7 @@ class RulebooksController < ApplicationController
   private
 
   def rulebook_params
-    params.require(:rulebook).permit(:rulebook_name, :front_page, :faq, :copyright, :subdomain, :admin_upgrade_code, :proposals_allowed)
+    params.require(:rulebook).permit(:rulebook_name, :front_page, :faq, :copyright, :subdomain, :admin_upgrade_code, :proposals_allowed, :voting_days, :review_days)
   end
 
   def load_rulebook

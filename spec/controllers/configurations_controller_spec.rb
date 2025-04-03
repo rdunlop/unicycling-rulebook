@@ -19,7 +19,9 @@ describe ConfigurationsController, type: :controller do
       faq: "FAQ lives here",
       copyright: "Teh new Copyright",
       subdomain: "the_rulebook",
-      proposals_allowed: true}
+      proposals_allowed: true,
+      voting_days: 6,
+      review_days: 7}
   end
 
   describe "GET show" do

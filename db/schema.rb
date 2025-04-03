@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2019_03_17_191013) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_03_144549) do
+  create_schema "test"
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,6 +93,8 @@ ActiveRecord::Schema[7.1].define(version: 2019_03_17_191013) do
     t.string "subdomain"
     t.string "admin_upgrade_code"
     t.boolean "proposals_allowed", default: true, null: false
+    t.integer "voting_days", default: 5, null: false
+    t.integer "review_days", default: 5, null: false
     t.index ["subdomain"], name: "index_rulebooks_on_subdomain", unique: true
   end
 

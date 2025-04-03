@@ -40,7 +40,7 @@ class ConfigurationsController < ApplicationController
   private
 
   def rulebook_params
-    params.require(:rulebook).permit(:rulebook_name, :front_page, :faq, :copyright, :proposals_allowed)
+    params.require(:rulebook).permit(:rulebook_name, :front_page, :faq, :copyright, :proposals_allowed, :voting_days, :review_days)
   end
 
   def ensure_current_rulebook
