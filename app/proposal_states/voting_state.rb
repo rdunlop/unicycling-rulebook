@@ -15,7 +15,7 @@ class VotingState < BaseState
 
   def on_enter
     proposal.vote_start_date = Date.current
-    proposal.vote_end_date = @proposal.vote_start_date.next_day(Proposal::VOTING_DAYS)
+    proposal.vote_end_date = @proposal.vote_start_date.next_day(Rulebook.current_rulebook.voting_days)
   end
 
   def state_name
