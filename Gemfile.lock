@@ -270,7 +270,7 @@ GEM
     kgio (2.11.4)
     kostya-sigar (2.0.10)
     language_server-protocol (3.17.0.3)
-    logger (1.6.5)
+    logger (1.7.0)
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -387,7 +387,7 @@ GEM
     recaptcha (5.19.0)
     redis (5.3.0)
       redis-client (>= 0.22.0)
-    redis-client (0.23.2)
+    redis-client (0.24.0)
       connection_pool
     regexp_parser (2.10.0)
     reline (0.6.0)
@@ -466,7 +466,7 @@ GEM
     securerandom (0.3.2)
     select2-rails (4.0.13)
     sexp_processor (4.16.1)
-    sidekiq (7.3.8)
+    sidekiq (7.3.9)
       base64
       connection_pool (>= 2.3.0)
       logger
