@@ -62,5 +62,27 @@ module RulebookApp
     config.assets.version = '1.0'
 
     config.tinymce.install = :compile
+
+    # ENV variables
+    config.secret_key_base = ENV["SECRET_KEY_BASE"]
+
+    config.domain = ENV["DOMAIN"]
+    config.ssl_enabled = ENV["SSL_ENABLED"]
+    config.rulebook_creation_access_code = ENV["RULEBOOK_CREATION_ACCESS_CODE"]
+    config.mail_server = ENV["MAIL_SERVER"]
+    config.mail_port = ENV["MAIL_PORT"]
+    config.mail_domain = ENV["MAIL_DOMAIN"]
+    config.mail_username = ENV["MAIL_USERNAME"]
+    config.mail_password = ENV["MAIL_PASSWORD"]
+    config.mail_full_email = ENV["MAIL_FULL_EMAIL"]
+    config.mail_authentication = ENV["MAIL_AUTHENTICATION"]
+    config.mail_tls = ENV["MAIL_TLS"]
+
+    config.redis_host = ENV["REDIS_HOST"]
+    config.redis_port = ENV["REDIS_PORT"]
+    config.redis_db = ENV["REDIS_DB"]
+    config.recaptcha_site_key = ENV["RECAPTCHA_SITE_KEY"]
+    config.recaptcha_secret_key = ENV["RECAPTCHA_SECRET_KEY"]
+
   end
 end

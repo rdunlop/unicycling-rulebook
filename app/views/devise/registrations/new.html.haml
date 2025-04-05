@@ -35,6 +35,6 @@
       %br
       %div= f.text_area :comments
       %div= f.submit "Sign up"
-    - if Rails.application.secrets.recaptcha_site_key.present?
+    - if Rails.configuration.recaptcha_site_key.present?
       = recaptcha_v3(action: 'signup')
 = render "links"

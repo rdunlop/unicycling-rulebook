@@ -1,0 +1,23 @@
+SECRET_KEY_BASE=someothersecretstringisreallylongenoughtobesecurecheckpassing
+DOMAIN="localhost:9292"
+SSL_ENABLED=false
+RULEBOOK_CREATION_ACCESS_CODE="I am authorized"
+MAIL_SERVER=smtp.gmail.com
+MAIL_PORT=587
+MAIL_DOMAIN=dunlopweb.com
+MAIL_USERNAME=unicycling@dunlopweb.com
+MAIL_PASSWORD=<redacted>
+MAIL_FULL_EMAIL="LOCAL UDA <unicycling@dunlopweb.com>"
+MAIL_AUTHENTICATION=plain
+MAIL_TLS=true
+
+REDIS_HOST='redis'
+REDIS_PORT='6379'
+REDIS_DB=0
+RECAPTCHA_SITE_KEY=6Ldt0nAqAAAAAM69Xm54PscrNaCZVEYb1IauZi4E
+RECAPTCHA_SECRET_KEY=6Ldt0nAqAAAAAMMZk4hjq9jRhuuKg6JQR6qZamvr
+
+DATABASE_HOST=db
+POSTGRES_USER=ubuntu
+POSTGRES_USER=password
+POSTGRES_DB=rulebook_development

@@ -3,7 +3,7 @@ class RegistrationsController < Devise::RegistrationsController
   before_action :check_captcha, only: [:create] # rubocop:disable Rails/LexicallyScopedActionFilter
 
   def check_captcha
-    return if Rails.application.secrets.recaptcha_site_key.blank?
+    return if Rails.configuration.recaptcha_site_key.blank?
     return if verify_recaptcha(action: 'signup')
 
     self.resource = resource_class.new sign_up_params

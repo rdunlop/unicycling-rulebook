@@ -17,9 +17,9 @@ class Redis
 
   def self.configuration
     config = {
-      host: ::Rails.application.secrets.redis_host,
-      port: ::Rails.application.secrets.redis_port,
-      db: ::Rails.application.secrets.redis_db
+      host: ::Rails.configuration.redis_host,
+      port: ::Rails.configuration.redis_port,
+      db: ::Rails.configuration.redis_db
     }
 
     yield config

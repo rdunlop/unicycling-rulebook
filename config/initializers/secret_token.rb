@@ -12,5 +12,5 @@
 Rails.application.config.secret_token = if Rails.env.development? or Rails.env.test? or Rails.env.naucc?
                                           ('x' * 30) # meets minimum requirement of 30 chars long
                                         else
-                                          Rails.application.secrets.secret
+                                          Rails.configuration.secret
                                         end

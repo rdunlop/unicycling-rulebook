@@ -4,7 +4,7 @@ set :repo_url, 'git@github.com:rdunlop/unicycling-rulebook.git'
 set :stages, %w(prod)
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/eye.rb config/database.yml config/secrets.yml}
+set :linked_files, %w{config/eye.rb .env.local}
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/sitemaps}
