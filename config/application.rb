@@ -68,7 +68,7 @@ module RulebookApp
     config.secret = ENV["SECRET"]
 
     config.domain = ENV["DOMAIN"]
-    config.ssl_enabled = ENV["SSL_ENABLED"]
+    config.ssl_enabled = ENV["SSL_ENABLED"].to_s == "true"
     config.rulebook_creation_access_code = ENV["RULEBOOK_CREATION_ACCESS_CODE"]
     config.mail_server = ENV["MAIL_SERVER"]
     config.mail_port = ENV["MAIL_PORT"]
@@ -77,7 +77,7 @@ module RulebookApp
     config.mail_password = ENV["MAIL_PASSWORD"]
     config.mail_full_email = ENV["MAIL_FULL_EMAIL"]
     config.mail_authentication = ENV["MAIL_AUTHENTICATION"]
-    config.mail_tls = ENV["MAIL_TLS"]
+    config.mail_tls = ENV["MAIL_TLS"].to_s == "true"
     config.mail_from_name = ENV["MAIL_FROM_NAME"]
     config.rollbar_access_token = ENV["ROLLBAR_ACCESS_TOKEN"]
     config.google_analytics_tracking_id = ENV["GOOGLE_ANALYTICS_TRACKING_ID"]
