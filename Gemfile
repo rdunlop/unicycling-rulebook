@@ -26,6 +26,7 @@ gem 'uglifier', '>= 1.0.3'
 # gem 'therubyracer'
 
 gem 'aws-sdk-rails'
+gem 'dotenv-rails'
 gem 'mailjet'
 gem 'pry-rails' # supports the custom apartment console
 gem 'recaptcha'

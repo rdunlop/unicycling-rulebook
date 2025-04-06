@@ -49,7 +49,7 @@ class RulebooksController < ApplicationController
   def create
     @rulebook = Rulebook.new(rulebook_params)
     errors = []
-    errors << "Incorrect Access code" unless params[:access_code] == Rails.application.secrets.rulebook_creation_access_code
+    errors << "Incorrect Access code" unless params[:access_code] == Rails.configuration.rulebook_creation_access_code
     errors << "Unable to name a schema 'public'" if @rulebook.subdomain == "public"
 
     respond_to do |format|

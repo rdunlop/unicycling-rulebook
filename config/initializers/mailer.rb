@@ -1,21 +1,21 @@
-ActionMailer::Base.default from: Rails.application.secrets.mail_full_email
+ActionMailer::Base.default from: Rails.configuration.mail_full_email
 
-ActionMailer::Base.default_url_options[:host] = Rails.application.secrets.domain
+ActionMailer::Base.default_url_options[:host] = Rails.configuration.domain
 
 unless Rails.env.test?
-  if Rails.application.secrets.mailjet_api_key.present?
+  if Rails.configuration.mailjet_api_key.present?
     ActionMailer::Base.delivery_method = :mailjet
-  elsif Rails.application.secrets.aws_access_key.present?
+  elsif Rails.configuration.aws_access_key.present?
     ActionMailer::Base.delivery_method = :aws_sdk
   else
     ActionMailer::Base.smtp_settings = {
-      address: Rails.application.secrets.mail_server,
-      port: Rails.application.secrets.mail_port,
-      domain: Rails.application.secrets.mail_domain,
-      user_name: Rails.application.secrets.mail_username,
-      password: Rails.application.secrets.mail_password,
-      authentication: Rails.application.secrets.mail_authentication,
-      enable_starttls_auto: (Rails.application.secrets.mail_tls.to_s == 'true')
+      address: Rails.configuration.mail_server,
+      port: Rails.configuration.mail_port,
+      domain: Rails.configuration.mail_domain,
+      user_name: Rails.configuration.mail_username,
+      password: Rails.configuration.mail_password,
+      authentication: Rails.configuration.mail_authentication,
+      enable_starttls_auto: (Rails.configuration.mail_tls.to_s == 'true')
     }
     ActionMailer::Base.delivery_method = :smtp
   end

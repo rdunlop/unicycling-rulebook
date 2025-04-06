@@ -34,7 +34,7 @@ class Rulebook < ApplicationRecord
   end
 
   def permanent_url
-    "#{subdomain}.#{Rails.application.secrets.domain}"
+    "#{subdomain}.#{Rails.configuration.domain}"
   end
 
   def self.current_rulebook

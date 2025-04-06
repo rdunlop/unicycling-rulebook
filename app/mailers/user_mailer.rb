@@ -1,7 +1,7 @@
 class UserMailer < TenantAwareMailer
-  default return_path: (Rails.application.secrets.mail_full_email || "unicycling@dunlopweb.com")
+  default return_path: (Rails.configuration.mail_full_email || "unicycling@dunlopweb.com")
 
-  def create_from(from_name = Rails.application.secrets.mail_from_name, from_email = Rails.application.secrets.mail_full_email)
+  def create_from(from_name = Rails.configuration.mail_from_name, from_email = Rails.configuration.mail_full_email)
     if from_email.nil?
       from_email = "unicycling@dunlopweb.com"
     end

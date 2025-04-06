@@ -10,7 +10,7 @@ Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
-  config.mailer_sender = Rails.application.secrets.mail_full_email
+  config.mailer_sender = Rails.configuration.mail_full_email
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
@@ -219,6 +219,6 @@ Devise.setup do |config|
   config.secret_key = if Rails.env.development? or Rails.env.test?
                         ('x' * 30)
                       else
-                        Rails.application.secrets.secret
+                        Rails.configuration.secret
                       end
 end
