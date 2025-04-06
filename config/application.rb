@@ -65,6 +65,7 @@ module RulebookApp
 
     # ENV variables
     config.secret_key_base = ENV["SECRET_KEY_BASE"]
+    config.secret = ENV["SECRET"]
 
     config.domain = ENV["DOMAIN"]
     config.ssl_enabled = ENV["SSL_ENABLED"]
@@ -77,12 +78,25 @@ module RulebookApp
     config.mail_full_email = ENV["MAIL_FULL_EMAIL"]
     config.mail_authentication = ENV["MAIL_AUTHENTICATION"]
     config.mail_tls = ENV["MAIL_TLS"]
+    config.mail_from_name = ENV["MAIL_FROM_NAME"]
+    config.rollbar_access_token = ENV["ROLLBAR_ACCESS_TOKEN"]
+    config.google_analytics_tracking_id = ENV["GOOGLE_ANALYTICS_TRACKING_ID"]
+    config.google_analytics_4_tracking_id = ENV["GOOGLE_ANALYTICS_4_TRACKING_ID"]
 
     config.redis_host = ENV["REDIS_HOST"]
     config.redis_port = ENV["REDIS_PORT"]
     config.redis_db = ENV["REDIS_DB"]
     config.recaptcha_site_key = ENV["RECAPTCHA_SITE_KEY"]
     config.recaptcha_secret_key = ENV["RECAPTCHA_SECRET_KEY"]
+
+    config.aws_region = ENV["AWS_REGION"]
+    config.aws_bucket = ENV["AWS_BUCKET"]
+    config.aws_access_key = ENV["AWS_ACCESS_KEY"]
+    config.aws_secret_access_key = ENV["AWS_SECRET_ACCESS_KEY"]
+
+    config.mailjet_api_key = ENV["MAILJET_API_KEY"]
+    config.mailjet_secret_key = ENV["MAILJET_SECRET_KEY"]
+    config.mailjet_default_from = ENV["MAILJET_DEFAULT_FROM"]
 
   end
 end
