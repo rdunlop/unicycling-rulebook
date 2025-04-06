@@ -85,7 +85,7 @@ module RulebookApp
 
     config.redis_host = ENV["REDIS_HOST"]
     config.redis_port = ENV["REDIS_PORT"]
-    config.redis_db = ENV["REDIS_DB"]
+    config.redis_db = ENV["REDIS_DB"].to_i
     config.recaptcha_site_key = ENV["RECAPTCHA_SITE_KEY"]
     config.recaptcha_secret_key = ENV["RECAPTCHA_SECRET_KEY"]
 
