@@ -97,6 +97,5 @@ module RulebookApp
     config.mailjet_api_key = ENV["MAILJET_API_KEY"]
     config.mailjet_secret_key = ENV["MAILJET_SECRET_KEY"]
     config.mailjet_default_from = ENV["MAILJET_DEFAULT_FROM"]
-
   end
 end
