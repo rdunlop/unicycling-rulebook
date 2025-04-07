@@ -517,3 +517,7 @@ Style/WordArray:
 # URISchemes: http, https
 Layout/LineLength:
   Max: 652
+
+Style/NumericLiterals:
+  Exclude:
+    - 'db/schema.rb'
