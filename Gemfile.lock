@@ -185,7 +185,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.3.5)
-    connection_pool (2.5.0)
+    connection_pool (2.5.3)
     consistency_fail (0.3.7)
     crass (1.0.6)
     date (3.4.1)
@@ -373,9 +373,9 @@ GEM
     rdoc (6.13.1)
       psych (>= 4.0.0)
     recaptcha (5.19.0)
-    redis (5.4.0)
+    redis (5.4.1)
       redis-client (>= 0.22.0)
-    redis-client (0.24.0)
+    redis-client (0.25.1)
       connection_pool
     regexp_parser (2.10.0)
     reline (0.6.1)
