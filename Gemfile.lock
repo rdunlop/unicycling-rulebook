@@ -264,7 +264,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (2.18.1)
     kgio (2.11.4)
-    kostya-sigar (2.0.10)
+    kostya-sigar (2.0.11)
     language_server-protocol (3.17.0.4)
     logger (1.7.0)
     loofah (2.24.1)
@@ -582,7 +582,7 @@ DEPENDENCIES
   whenever
 
 RUBY VERSION
-   ruby 3.1.6p260
+   ruby 3.2.10p266
 
 BUNDLED WITH
    2.2.33

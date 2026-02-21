@@ -5,7 +5,7 @@ references:
     # install/cache everything relative to that location
     working_directory: ~/tmp
     docker:
-      - image: cimg/ruby:3.1.6-node
+      - image: cimg/ruby:3.2.10-node
         environment:
           RAILS_ENV: test
           # Bundle paths are necessary so that the gems are installed within the workspace
@@ -22,6 +22,7 @@ references:
           POSTGRES_PASSWORD: password
 jobs:
   build:
+    resource_class: large
     <<: *default_job_config
     steps:
       - checkout
@@ -30,7 +31,8 @@ jobs:
       # Restore the bundle of gems
       - restore_cache:
           key: gemfile-cache-{{ checksum "Gemfile.lock" }}
-      - run: bundle install --without=development --jobs=2 --retry=3
+      - run: bundle config set without 'development'
+      - run: bundle install --jobs=2 --retry=3
 
       - save_cache:
           key: gemfile-cache-{{ checksum "Gemfile.lock" }}
