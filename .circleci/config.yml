@@ -22,6 +22,7 @@ references:
           POSTGRES_PASSWORD: password
 jobs:
   build:
+    resource_class: large
     <<: *default_job_config
     steps:
       - checkout
