@@ -8,7 +8,8 @@
     %title= content_for?(:title) ? yield(:title) : "Rulebook"
 
     = stylesheet_link_tag "application"
-    = javascript_include_tag "application", 'data-turbolinks-track' => true
+    %script{src: "/tinymce/tinymce.min.js"}
+    = javascript_include_tag "application"
     = csrf_meta_tag
     = render "shared/analytics/google"
     = render "shared/analytics/google_4"

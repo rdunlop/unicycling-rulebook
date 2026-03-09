@@ -7,15 +7,6 @@ function getStats(id) {
     };
 }
 
-$(document).ready(function() {
-  //= form.text_area :background, {class: "js--wysiwyg js--wordcount", data: { wordCountField: 'countdown', maxCharacters: $MAX_CHARACTERS.to_s } }
-  $('.js--wordcountNOTWORKING').each(function(i, elem) {
-    tmc = tinyMCE.editors[elem.id];
-    tmc.onKeyDown.add(function(ed, e) {
-      console.log("key pressed " + ed);
-    });
-  });
-});
 function limitText(limitField, limitCount, limitNum) {
   if (limitField.value.length > limitNum) {
     limitField.value = limitField.value.substring(0, limitNum);

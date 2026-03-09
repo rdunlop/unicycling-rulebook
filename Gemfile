@@ -4,7 +4,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 ruby File.open(File.expand_path(".ruby-version", File.dirname(__FILE__))) { |f| f.read.chomp }
 gem 'rails', "~> 7.2.3"
-gem 'sprockets', '< 4' # sprockets 4 causes issues we don't need to solve
+gem 'propshaft'
 
 # authorization
 gem 'devise'
@@ -12,15 +12,10 @@ gem 'pundit'
 
 # front end
 gem 'breadcrumbs_on_rails'
-gem 'coffee-rails'
+gem 'dartsass-rails'
 gem 'formtastic' # currently user for user-confirmation step only
-gem 'foundation-rails'
 gem 'haml'
-gem 'momentjs-rails'
-gem 'sass-rails'
-gem 'select2-rails'
-gem 'tinymce-rails'
-gem 'uglifier', '>= 1.0.3'
+gem 'jsbundling-rails'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer'
@@ -69,8 +64,6 @@ group :test do
   gem 'rails-controller-testing'
   gem 'rspec_junit_formatter' # as per circleCI https://circleci.com/docs/test-metadata
 end
-
-gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

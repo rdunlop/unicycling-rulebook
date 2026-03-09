@@ -1,0 +1,16 @@
+{
+  "name": "unicycling-rulebook",
+  "private": true,
+  "scripts": {
+    "build": "esbuild app/javascript/application.js --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets"
+  },
+  "dependencies": {
+    "@rails/ujs": "^7.0.0",
+    "esbuild": "^0.23.0",
+    "foundation-sites": "^6.8.1",
+    "jquery": "^3.7.1",
+    "moment": "^2.30.1",
+    "select2": "^4.0.13",
+    "tinymce": "^6.8.0"
+  }
+}
