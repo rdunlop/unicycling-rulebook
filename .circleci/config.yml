@@ -42,6 +42,16 @@ jobs:
           paths:
             - ~/tmp/vendor/bundle
 
+      # npm
+      - restore_cache:
+          key: npm-cache-{{ checksum "package-lock.json" }}
+      - run: npm ci
+      - run: npm run build
+      - save_cache:
+          key: npm-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+
       # Store the application code, configuration, and gems in a workspace
       - persist_to_workspace:
           root: .
