@@ -52,6 +52,9 @@ jobs:
           paths:
             - ~/.npm
 
+      # Compile CSS so app/assets/builds/application.css exists in the workspace
+      - run: bundle exec rails dartsass:build
+
       # Store the application code, configuration, and gems in a workspace
       - persist_to_workspace:
           root: .
