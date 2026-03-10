@@ -1,6 +1,6 @@
 namespace :tinymce do
   desc "Copy TinyMCE from node_modules to public/"
-  task :copy do
+  task copy: :environment do
     source = Rails.root.join("node_modules/tinymce")
     dest = Rails.root.join("public/tinymce")
     FileUtils.rm_rf(dest)
