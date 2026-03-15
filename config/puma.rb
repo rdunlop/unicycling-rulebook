@@ -20,6 +20,6 @@ state_path "tmp/pids/puma.state"
 
 stdout_redirect "log/puma.stdout.log", "log/puma.stderr.log", true
 
-on_worker_boot do
+before_worker_boot do
   ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
 end
