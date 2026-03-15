@@ -31,11 +31,11 @@ gem 'ros-apartment', require: 'apartment'
 # other
 gem 'apartment_acme_client'
 gem 'pg'
+gem 'puma'
 gem 'rake'
 gem 'redis'
 gem 'ros-apartment-sidekiq', require: 'apartment-sidekiq'
 gem 'sidekiq'
-gem 'unicorn'
 gem 'whenever'
 
 # deployment
@@ -70,9 +70,6 @@ end
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
