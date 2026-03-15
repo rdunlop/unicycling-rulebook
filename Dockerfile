@@ -2,7 +2,7 @@ FROM ruby:3.2.10
 
 # Install NodeJS based on https://github.com/nodesource/distributions#installation-instructions
 RUN apt-get update
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash # Installs the node repository
+RUN curl -sL https://deb.nodesource.com/setup_24.x | bash # Installs the node repository
 RUN apt-get install --yes nodejs # Actually install NODEJS
 
 RUN mkdir /app
