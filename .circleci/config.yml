@@ -1,11 +1,14 @@
-version: 2
+version: 2.1
+orbs:
+  node: circleci/node@6
+
 references:
   default_job_config: &default_job_config
     # The working directory is important, so that we
     # install/cache everything relative to that location
     working_directory: ~/tmp
     docker:
-      - image: cimg/ruby:3.2.10-node
+      - image: cimg/ruby:3.2.10
         environment:
           RAILS_ENV: test
           # Bundle paths are necessary so that the gems are installed within the workspace
@@ -26,6 +29,10 @@ jobs:
     <<: *default_job_config
     steps:
       - checkout
+
+      # Node
+      - node/install:
+          node-version-file: '.node-version'
 
       # Gems
       # Restore the bundle of gems
@@ -80,6 +87,8 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/tmp
+      - node/install:
+          node-version-file: '.node-version'
       - run: npm audit --audit-level=high
 
   rspec:
