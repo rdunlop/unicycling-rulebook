@@ -1,7 +1,7 @@
 import Rails from "@rails/ujs";
 import $ from "jquery";
 import moment from "moment";
-import "select2";
+import select2 from "select2";
 import "foundation-sites";
 
 // Make jQuery global — Foundation, Select2, and legacy code expect window.$
@@ -10,6 +10,9 @@ window.moment = moment;
 
 // Initialize Rails UJS (replaces jquery_ujs — handles data-method and data-confirm)
 Rails.start();
+
+// Register Select2 as a jQuery plugin (esbuild bundles it as a factory in CommonJS mode)
+if (typeof select2 === 'function') { select2(window, $); }
 
 // Initialize Foundation
 $(function() { $(document).foundation(); });

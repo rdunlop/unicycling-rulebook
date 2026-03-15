@@ -32,7 +32,7 @@ jobs:
 
       # Node
       - node/install:
-          node-version-file: '.node-version'
+          node-version: "24"
 
       # Gems
       # Restore the bundle of gems
@@ -88,7 +88,7 @@ jobs:
       - attach_workspace:
           at: ~/tmp
       - node/install:
-          node-version-file: '.node-version'
+          node-version: "24"
       - run: npm audit --audit-level=high
 
   rspec:
