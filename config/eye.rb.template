@@ -10,9 +10,6 @@ def puma_process(proxy, name)
 
     stop_signals [:TERM, 10.seconds]
 
-    # Phased restart (zero-downtime): sends SIGUSR1 to the Puma master
-    restart_command 'kill -USR1 {PID}'
-
     start_timeout 30.seconds
     restart_grace 30.seconds
 
