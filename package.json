@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@rails/ujs": "^7.0.0",
-    "esbuild": "^0.23.0",
+    "esbuild": "^0.27.0",
     "foundation-sites": "^6.8.1",
     "jquery": "^3.7.1",
     "moment": "^2.30.1",
