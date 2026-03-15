@@ -7,7 +7,7 @@ set :stages, %w(prod)
 set :linked_files, %w{config/eye.rb .env.local}
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/sitemaps}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/sitemaps node_modules}
 
 set :whenever_command,      -> { %i[bundle exec whenever] }
 set :whenever_environment,  -> { fetch :rails_env }
@@ -69,6 +69,18 @@ namespace :eye do
         with fetch(:eye_env) do
           execute fetch(:eye_bin), "restart all"
         end
+      end
+    end
+  end
+end
+
+before 'deploy:assets:precompile', 'deploy:npm_build'
+namespace :deploy do
+  task :npm_build do
+    on roles(:web) do
+      within release_path do
+        execute :npm, 'ci'
+        execute :npm, 'run', 'build'
       end
     end
   end

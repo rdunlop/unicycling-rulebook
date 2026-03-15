@@ -5,3 +5,6 @@ log
 config/newrelic.yml
 *.rdb
 /.env.local
+node_modules/
+app/assets/builds/
+public/tinymce/

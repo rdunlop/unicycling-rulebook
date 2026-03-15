@@ -51,17 +51,11 @@ module RulebookApp
     # config.active_record.schema_format = :sql
     config.action_dispatch.rescue_responses['Errors::TenantNotFound'] = :not_found
 
-    # Enable the asset pipeline
-    config.assets.enabled = true
-
     config.active_record.belongs_to_required_by_default = true
 
-    config.assets.initialize_on_precompile = false
-
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
-
-    config.tinymce.install = :compile
+    config.dartsass.builds = { "application.scss" => "application.css" }
+    config.assets.paths << Rails.root.join("node_modules/foundation-sites/scss")
+    config.assets.paths << Rails.root.join("node_modules/select2/dist/css")
 
     # ENV variables
     config.secret_key_base = ENV["SECRET_KEY_BASE"]

@@ -42,6 +42,19 @@ jobs:
           paths:
             - ~/tmp/vendor/bundle
 
+      # npm
+      - restore_cache:
+          key: npm-cache-{{ checksum "package-lock.json" }}
+      - run: npm ci
+      - run: npm run build
+      - save_cache:
+          key: npm-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+
+      # Compile CSS so app/assets/builds/application.css exists in the workspace
+      - run: bundle exec rails dartsass:build
+
       # Store the application code, configuration, and gems in a workspace
       - persist_to_workspace:
           root: .
@@ -61,6 +74,13 @@ jobs:
           at: ~/tmp
       - run: bundle exec bundle-audit update
       - run: bundle exec bundle-audit
+
+  npm_audit:
+    <<: *default_job_config
+    steps:
+      - attach_workspace:
+          at: ~/tmp
+      - run: npm audit --audit-level=high
 
   rspec:
     <<: *default_job_config
@@ -136,6 +156,9 @@ workflows:
       - bundle_audit:
           requires:
             - build
+      - npm_audit:
+          requires:
+            - build
       - check_db_schema:
           requires:
             - build
@@ -144,6 +167,7 @@ workflows:
             - rspec
             - rubocop
             - bundle_audit
+            - npm_audit
             - check_db_schema
           filters:
             branches:
