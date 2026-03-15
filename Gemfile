@@ -31,10 +31,10 @@ gem 'ros-apartment', require: 'apartment'
 # other
 gem 'apartment_acme_client'
 gem 'pg'
+gem 'puma'
 gem 'rake'
 gem 'redis'
 gem 'ros-apartment-sidekiq', require: 'apartment-sidekiq'
-gem 'puma'
 gem 'sidekiq'
 gem 'whenever'
 
@@ -70,7 +70,6 @@ end
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
-
 
 # Deploy with Capistrano
 # gem 'capistrano'
