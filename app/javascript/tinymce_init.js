@@ -2,14 +2,14 @@ document.addEventListener("DOMContentLoaded", function() {
   if (typeof tinymce === 'undefined') return;
   tinymce.init({
     selector: '.js--wysiwyg',
+    license_key: 'gpl',
     menubar: false,
     height: 300,
     width: '100%',
     statusbar: false,
     browser_spellcheck: true,
     plugins: 'link table',
-    toolbar1: 'bold italic underline strikethrough | bullist numlist | cut copy paste | link unlink | table | undo redo',
-    paste_word_valid_elements: 'ol,ul,li,b,strong,i,em,u,ins',
+    toolbar: 'bold italic underline strikethrough | bullist numlist | cut copy paste | link unlink | table | undo redo',
     target_list: false,
     link_title: false,
     valid_elements: "@[id|class|style|title],a[rel|rev|href|target|title|class],strong/b,em/i,strike/s,u,"
