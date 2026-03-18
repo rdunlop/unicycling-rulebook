@@ -1,6 +1,6 @@
 %h2 You're almost done! Now create a password to securely access your account.
 = semantic_form_for(resource, :as => resource_name, :url => update_user_confirmation_path, method: :patch) do |form|
-  = devise_error_messages!
+  = render "devise/shared/error_messages", resource: resource
   = form.inputs do
     = form.input :name, required: true, :input_html => {:autofocus => true}
     = form.input :location, label: "Location (ie. City, Region, Country)"
