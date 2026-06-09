@@ -8,3 +8,8 @@ config/newrelic.yml
 node_modules/
 app/assets/builds/
 public/tinymce/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup

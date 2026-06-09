@@ -29,7 +29,6 @@ gem 'rollbar'
 gem 'ros-apartment', require: 'apartment'
 
 # other
-gem 'apartment_acme_client'
 gem 'pg'
 gem 'puma'
 gem 'rake'
