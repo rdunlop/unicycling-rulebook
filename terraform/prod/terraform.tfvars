@@ -1,6 +1,10 @@
 environment           = "prod"
 domain                = "rulebook.unicycling-software.com"
-subject_alt_names     = ["*.rulebook.unicycling-software.com"]
+subject_alt_names     = [
+  "*.rulebook.unicycling-software.com",
+  "committees.unicycling-software.com",
+  "*.committees.unicycling-software.com",
+]
 
 # Fill these in from the AWS CLI lookup commands in the README
 ec2_instance_id       = "i-088dda906cd2deb5d"
