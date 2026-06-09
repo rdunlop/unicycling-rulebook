@@ -8,7 +8,7 @@
     "@rails/ujs": "^7.0.0",
     "esbuild": "^0.28.0",
     "foundation-sites": "^6.8.1",
-    "jquery": "^3.7.1",
+    "jquery": "^4.0.0",
     "moment": "^2.30.1",
     "select2": "^4.1.0",
     "tinymce": "^8.6.0"
