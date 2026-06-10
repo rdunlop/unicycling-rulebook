@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@6
+  aws-ecr: circleci/aws-ecr@9
 
 references:
   default_job_config: &default_job_config
@@ -135,6 +136,18 @@ jobs:
       # # check that the schema.rb is the same result
       - run: git diff --exit-code db/schema.rb
 
+  build_and_push_docker:
+    machine:
+      image: ubuntu-2204:current
+    steps:
+      - checkout
+      - aws-ecr/build_and_push_image:
+          dockerfile: Dockerfile.production
+          repo: unicycling-rulebook
+          tag: "$CIRCLE_SHA1,latest"
+          region: "${AWS_DEFAULT_REGION}"
+          registry-id: AWS_ACCOUNT_ID
+
   release_stage:
     <<: *default_job_config
     steps:
@@ -171,6 +184,17 @@ workflows:
       - check_db_schema:
           requires:
             - build
+      - build_and_push_docker:
+          requires:
+            - rspec
+            - rubocop
+            - bundle_audit
+            - npm_audit
+            - check_db_schema
+          filters:
+            branches:
+              only:
+                - main
       - release_stage:
           requires:
             - rspec
