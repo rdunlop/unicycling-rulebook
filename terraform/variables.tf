@@ -43,3 +43,13 @@ variable "subnet_ids" {
   type        = list(string)
   description = "List of public subnet IDs (minimum 2, in different AZs) for the ALB"
 }
+
+variable "elasticache_cluster_id" {
+  type        = string
+  description = "ID of the existing shared ElastiCache Redis replication group"
+}
+
+variable "elasticache_security_group_id" {
+  type        = string
+  description = "Security group ID attached to the existing ElastiCache replication group"
+}
