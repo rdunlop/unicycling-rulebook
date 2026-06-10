@@ -8,6 +8,11 @@ variable "environment" {
   }
 }
 
+variable "rails_env" {
+  type = string
+  description = "The rails environment to set on the server"
+}
+
 variable "domain" {
   type        = string
   description = "Primary domain for the ACM certificate and Route53 record"
@@ -52,4 +57,30 @@ variable "elasticache_cluster_id" {
 variable "elasticache_security_group_id" {
   type        = string
   description = "Security group ID attached to the existing ElastiCache replication group"
+}
+
+variable "ecr_repository_url" {
+  type        = string
+  description = "ECR repository URL (without tag) — from terraform/global output ecr_repository_url"
+}
+
+variable "image_tag" {
+  type        = string
+  description = "Image tag to deploy (git SHA from CircleCI)"
+}
+
+variable "redis_db" {
+  type        = number
+  description = "Redis database number for the web/sidekiq processes (sidekiq uses redis_db+1)"
+}
+
+variable "ecs_traffic_weight" {
+  type        = number
+  default     = 0
+  description = "Weight of traffic sent to ECS (0-100). EC2 receives 100 minus this value. Set to 100 for full ECS cutover."
+
+  validation {
+    condition     = var.ecs_traffic_weight >= 0 && var.ecs_traffic_weight <= 100
+    error_message = "ecs_traffic_weight must be between 0 and 100."
+  }
 }
