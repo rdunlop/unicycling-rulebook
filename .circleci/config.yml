@@ -135,6 +135,25 @@ jobs:
       # # check that the schema.rb is the same result
       - run: git diff --exit-code db/schema.rb
 
+  build_and_push_docker:
+    machine:
+      image: ubuntu-2204:current
+    steps:
+      - checkout
+      - run:
+          name: Login to ECR
+          command: |
+            aws ecr get-login-password --region $AWS_DEFAULT_REGION | \
+              docker login --username AWS --password-stdin \
+              $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - run:
+          name: Build and push Docker image
+          command: |
+            ECR_URL=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/unicycling-rulebook
+            docker build -f Dockerfile.production -t $ECR_URL:$CIRCLE_SHA1 -t $ECR_URL:latest .
+            docker push $ECR_URL:$CIRCLE_SHA1
+            docker push $ECR_URL:latest
+
   release_stage:
     <<: *default_job_config
     steps:
@@ -171,6 +190,17 @@ workflows:
       - check_db_schema:
           requires:
             - build
+      - build_and_push_docker:
+          requires:
+            - rspec
+            - rubocop
+            - bundle_audit
+            - npm_audit
+            - check_db_schema
+          filters:
+            branches:
+              only:
+                - main
       - release_stage:
           requires:
             - rspec
