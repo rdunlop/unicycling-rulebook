@@ -276,6 +276,21 @@ jobs:
               --cluster "${CLUSTER}" \
               --services "${WEB_SERVICE}" "${SIDEKIQ_SERVICE}"
 
+            # Tag the deployed image so the ECR lifecycle policy protects it from expiration.
+            # prod-<sha> tags are kept by the prod- lifecycle rule; staging images
+            # are always recent enough to be covered by the catch-all any rule.
+            MANIFEST=$(aws ecr batch-get-image \
+              --repository-name unicycling-rulebook \
+              --image-ids imageTag="${CIRCLE_SHA1}" \
+              --query 'images[0].imageManifest' \
+              --output text)
+
+            aws ecr put-image \
+              --repository-name unicycling-rulebook \
+              --image-tag "${ENVIRONMENT}-${CIRCLE_SHA1}" \
+              --image-manifest "$MANIFEST"
+
+            echo "Tagged image as ${ENVIRONMENT}-${CIRCLE_SHA1}"
             echo "Deploy complete."
 
 workflows:
