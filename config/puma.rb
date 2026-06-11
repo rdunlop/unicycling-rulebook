@@ -11,7 +11,7 @@ else
   bind "unix:///tmp/unicorn-unicycling-rulebook.socket"
 end
 
-workers ENV.fetch("WEB_CONCURRENCY") { 1 }
+workers ENV.fetch("WEB_CONCURRENCY") { 0 }.to_i
 
 preload_app!
 

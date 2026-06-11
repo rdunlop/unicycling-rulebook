@@ -94,9 +94,7 @@ resource "aws_ecs_task_definition" "web" {
     portMappings   = [{ containerPort = 3000, protocol = "tcp" }]
     linuxParameters = { initProcessEnabled = true }
 
-    environment = concat(local.container_environment, [
-      { name = "WEB_CONCURRENCY", value = "1" },
-    ])
+    environment = local.container_environment
     secrets = local.container_secrets
 
     logConfiguration = {
