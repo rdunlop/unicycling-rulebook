@@ -59,6 +59,11 @@ variable "elasticache_security_group_id" {
   description = "Security group ID attached to the existing ElastiCache replication group"
 }
 
+variable "rds_security_group_id" {
+  type        = string
+  description = "Security group ID attached to the shared RDS instance (dbaccess)"
+}
+
 variable "ecr_repository_url" {
   type        = string
   description = "ECR repository URL (without tag) — from terraform/global output ecr_repository_url"

@@ -65,6 +65,7 @@ locals {
     { name = "PORT",                value = "3000" },
     { name = "RAILS_LOG_TO_STDOUT", value = "1" },
     { name = "RAILS_MAX_THREADS",   value = "5" },
+    { name = "RAILS_SERVE_STATIC_FILES", value = "true" },
     { name = "REDIS_HOST",          value = data.aws_elasticache_replication_group.redis.primary_endpoint_address },
     { name = "REDIS_PORT",          value = "6379" },
     { name = "REDIS_DB",            value = tostring(var.redis_db) },
@@ -90,7 +91,8 @@ resource "aws_ecs_task_definition" "web" {
     image     = "${var.ecr_repository_url}:${var.image_tag}"
     essential = true
 
-    portMappings = [{ containerPort = 3000, protocol = "tcp" }]
+    portMappings   = [{ containerPort = 3000, protocol = "tcp" }]
+    linuxParameters = { initProcessEnabled = true }
 
     environment = concat(local.container_environment, [
       { name = "WEB_CONCURRENCY", value = "1" },
@@ -123,7 +125,8 @@ resource "aws_ecs_task_definition" "sidekiq" {
     name      = "sidekiq"
     image     = "${var.ecr_repository_url}:${var.image_tag}"
     essential = true
-    command   = ["bundle", "exec", "sidekiq"]
+    command          = ["bundle", "exec", "sidekiq"]
+    linuxParameters  = { initProcessEnabled = true }
 
     environment = local.container_environment
     secrets     = local.container_secrets
@@ -147,11 +150,12 @@ resource "aws_ecs_task_definition" "sidekiq" {
 # that CircleCI deployments (Phase 4) can update them without terraform reverting.
 
 resource "aws_ecs_service" "web" {
-  name            = "unicycling-rulebook-${var.environment}-web"
-  cluster         = aws_ecs_cluster.app.id
-  task_definition = aws_ecs_task_definition.web.arn
-  desired_count   = 0
-  launch_type     = "FARGATE"
+  name                   = "unicycling-rulebook-${var.environment}-web"
+  cluster                = aws_ecs_cluster.app.id
+  task_definition        = aws_ecs_task_definition.web.arn
+  desired_count          = 0
+  launch_type            = "FARGATE"
+  enable_execute_command = true
 
   network_configuration {
     subnets          = var.subnet_ids
@@ -173,11 +177,12 @@ resource "aws_ecs_service" "web" {
 }
 
 resource "aws_ecs_service" "sidekiq" {
-  name            = "unicycling-rulebook-${var.environment}-sidekiq"
-  cluster         = aws_ecs_cluster.app.id
-  task_definition = aws_ecs_task_definition.sidekiq.arn
-  desired_count   = 0
-  launch_type     = "FARGATE"
+  name                   = "unicycling-rulebook-${var.environment}-sidekiq"
+  cluster                = aws_ecs_cluster.app.id
+  task_definition        = aws_ecs_task_definition.sidekiq.arn
+  desired_count          = 0
+  launch_type            = "FARGATE"
+  enable_execute_command = true
 
   network_configuration {
     subnets          = var.subnet_ids
