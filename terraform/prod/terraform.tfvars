@@ -19,3 +19,4 @@ ecr_repository_url            = "197931692346.dkr.ecr.us-west-2.amazonaws.com/un
 image_tag                     = "38102f3d4f76f7e08d21850a52dcdb5bac2d5efd"
 redis_db                      = 0
 rds_security_group_id         = "sg-d51560b0"
+ecs_traffic_weight = 100
