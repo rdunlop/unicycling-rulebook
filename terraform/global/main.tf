@@ -101,10 +101,15 @@ resource "aws_iam_user_policy" "circleci_ecs_migrate" {
       },
       {
         # Launch one-off migration tasks.
+        # Resource must include both the task definition ARN (with revision wildcard)
+        # and the cluster ARN — ECS RunTask checks both.
         Sid    = "ECSRunTask"
         Effect = "Allow"
         Action = "ecs:RunTask"
-        Resource = "arn:aws:ecs:us-west-2:*:task-definition/unicycling-rulebook-*-web"
+        Resource = [
+          "arn:aws:ecs:us-west-2:*:task-definition/unicycling-rulebook-*-web:*",
+          "arn:aws:ecs:us-west-2:*:cluster/unicycling-rulebook-*",
+        ]
       },
       {
         # Poll and inspect task status (used by `aws ecs wait tasks-stopped`).
