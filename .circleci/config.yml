@@ -153,6 +153,50 @@ jobs:
             docker build -f Dockerfile.production -t $ECR_URL:$CIRCLE_SHA1 .
             docker push $ECR_URL:$CIRCLE_SHA1
 
+  migrate_db:
+    parameters:
+      environment:
+        type: string
+    machine:
+      image: ubuntu-2204:current
+    steps:
+      - run:
+          name: Run db:migrate on ECS (<< parameters.environment >>)
+          command: |
+            set -euo pipefail
+            ENVIRONMENT="<< parameters.environment >>"
+            ECR_URL="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/unicycling-rulebook"
+            CLUSTER="unicycling-rulebook-${ENVIRONMENT}"
+            TASK_FAMILY="unicycling-rulebook-${ENVIRONMENT}-web"
+
+            SG_ID=$(aws ec2 describe-security-groups \
+              --filters "Name=group-name,Values=unicycling-rulebook-${ENVIRONMENT}-ecs-tasks" \
+              --query 'SecurityGroups[0].GroupId' \
+              --output text)
+
+            echo "Launching db:migrate task on ${CLUSTER} with image ${ECR_URL}:${CIRCLE_SHA1}"
+
+            TASK_ARN=$(aws ecs run-task \
+              --cluster "${CLUSTER}" \
+              --task-definition "${TASK_FAMILY}" \
+              --launch-type FARGATE \
+              --network-configuration "awsvpcConfiguration={subnets=[${ECS_SUBNET_ID}],securityGroups=[${SG_ID}],assignPublicIp=ENABLED}" \
+              --overrides "{\"containerOverrides\":[{\"name\":\"web\",\"image\":\"${ECR_URL}:${CIRCLE_SHA1}\",\"command\":[\"bundle\",\"exec\",\"rails\",\"db:migrate\"]}]}" \
+              --query 'tasks[0].taskArn' \
+              --output text)
+
+            echo "Waiting for task ${TASK_ARN} ..."
+            aws ecs wait tasks-stopped --cluster "${CLUSTER}" --tasks "${TASK_ARN}"
+
+            EXIT_CODE=$(aws ecs describe-tasks \
+              --cluster "${CLUSTER}" \
+              --tasks "${TASK_ARN}" \
+              --query 'tasks[0].containers[0].exitCode' \
+              --output text)
+
+            echo "Task exited with code: ${EXIT_CODE}"
+            [ "${EXIT_CODE}" = "0" ] || { echo "db:migrate failed"; exit 1; }
+
   release_stage:
     <<: *default_job_config
     steps:
@@ -200,13 +244,18 @@ workflows:
             branches:
               only:
                 - main
+      - migrate_db:
+          name: migrate_staging
+          environment: staging
+          requires:
+            - build_and_push_docker
+          filters:
+            branches:
+              only:
+                - main
       - release_stage:
           requires:
-            - rspec
-            - rubocop
-            - bundle_audit
-            - npm_audit
-            - check_db_schema
+            - migrate_staging
           filters:
             branches:
               only:
@@ -219,9 +268,18 @@ workflows:
             branches:
               only:
                 - main
-      - release_prod:
+      - migrate_db:
+          name: migrate_prod
+          environment: prod
           requires:
             - approve-prod-push
+          filters:
+            branches:
+              only:
+                - main
+      - release_prod:
+          requires:
+            - migrate_prod
           filters:
             branches:
               only:

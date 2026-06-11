@@ -73,12 +73,52 @@ resource "aws_iam_user_policy" "circleci_ecr" {
         Effect = "Allow"
         Action = [
           "ecr:BatchCheckLayerAvailability",
+          "ecr:BatchGetImage",
           "ecr:InitiateLayerUpload",
           "ecr:UploadLayerPart",
           "ecr:CompleteLayerUpload",
           "ecr:PutImage",
         ]
         Resource = aws_ecr_repository.app.arn
+      },
+    ]
+  })
+}
+
+resource "aws_iam_user_policy" "circleci_ecs_migrate" {
+  name = "ecs-migrate"
+  user = aws_iam_user.circleci.name
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        # Needed to look up ECS task security groups by name.
+        Sid      = "EC2DescribeSGs"
+        Effect   = "Allow"
+        Action   = "ec2:DescribeSecurityGroups"
+        Resource = "*"
+      },
+      {
+        # Launch one-off migration tasks.
+        Sid    = "ECSRunTask"
+        Effect = "Allow"
+        Action = "ecs:RunTask"
+        Resource = "arn:aws:ecs:us-west-2:*:task-definition/unicycling-rulebook-*-web"
+      },
+      {
+        # Poll and inspect task status (used by `aws ecs wait tasks-stopped`).
+        Sid      = "ECSDescribeTasks"
+        Effect   = "Allow"
+        Action   = "ecs:DescribeTasks"
+        Resource = "*"
+      },
+      {
+        # Required so ECS can assume the execution and task roles on CircleCI's behalf.
+        Sid    = "PassECSRoles"
+        Effect = "Allow"
+        Action = "iam:PassRole"
+        Resource = "arn:aws:iam::*:role/unicycling-rulebook-*-ecs-*"
       },
     ]
   })
