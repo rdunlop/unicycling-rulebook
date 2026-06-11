@@ -55,9 +55,8 @@ resource "aws_iam_access_key" "circleci" {
   user = aws_iam_user.circleci.name
 }
 
-resource "aws_iam_user_policy" "circleci_ecr" {
-  name = "ecr-push"
-  user = aws_iam_user.circleci.name
+resource "aws_iam_policy" "circleci" {
+  name = "circleci-unicycling-rulebook"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -81,47 +80,58 @@ resource "aws_iam_user_policy" "circleci_ecr" {
         ]
         Resource = aws_ecr_repository.app.arn
       },
-    ]
-  })
-}
-
-resource "aws_iam_user_policy" "circleci_ecs_migrate" {
-  name = "ecs-migrate"
-  user = aws_iam_user.circleci.name
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
       {
-        # Needed to look up ECS task security groups by name.
         Sid      = "EC2DescribeSGs"
         Effect   = "Allow"
         Action   = "ec2:DescribeSecurityGroups"
         Resource = "*"
       },
       {
-        # Launch one-off migration tasks.
-        Sid    = "ECSRunTask"
+        Sid    = "ECSTaskDefs"
         Effect = "Allow"
-        Action = "ecs:RunTask"
-        Resource = "arn:aws:ecs:us-west-2:*:task-definition/unicycling-rulebook-*-web"
-      },
-      {
-        # Poll and inspect task status (used by `aws ecs wait tasks-stopped`).
-        Sid      = "ECSDescribeTasks"
-        Effect   = "Allow"
-        Action   = "ecs:DescribeTasks"
+        Action = [
+          "ecs:DescribeTaskDefinition",
+          "ecs:RegisterTaskDefinition",
+        ]
         Resource = "*"
       },
       {
-        # Required so ECS can assume the execution and task roles on CircleCI's behalf.
-        Sid    = "PassECSRoles"
+        Sid    = "ECSRunTask"
         Effect = "Allow"
-        Action = "iam:PassRole"
+        Action = "ecs:RunTask"
+        Resource = [
+          "arn:aws:ecs:us-west-2:*:task-definition/unicycling-rulebook-*:*",
+          "arn:aws:ecs:us-west-2:*:cluster/unicycling-rulebook-*",
+        ]
+      },
+      {
+        Sid    = "ECSInspect"
+        Effect = "Allow"
+        Action = [
+          "ecs:DescribeTasks",
+          "ecs:DescribeServices",
+        ]
+        Resource = "*"
+      },
+      {
+        Sid      = "ECSUpdateService"
+        Effect   = "Allow"
+        Action   = "ecs:UpdateService"
+        Resource = "arn:aws:ecs:us-west-2:*:service/unicycling-rulebook-*/*"
+      },
+      {
+        Sid      = "PassECSRoles"
+        Effect   = "Allow"
+        Action   = "iam:PassRole"
         Resource = "arn:aws:iam::*:role/unicycling-rulebook-*-ecs-*"
       },
     ]
   })
+}
+
+resource "aws_iam_user_policy_attachment" "circleci" {
+  user       = aws_iam_user.circleci.name
+  policy_arn = aws_iam_policy.circleci.arn
 }
 
 output "circleci_access_key_id" {
