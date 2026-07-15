@@ -63,3 +63,167 @@ Non-Docker Deveolpment Environment
 
 It is assumed that the server is running logrotate.
 In order to have the production logs backed up in a rotating basis, install the logrotation file `server_config/unicorn-unicycling-rulebook-logs` into the `/etc/logrotate.d/` directory.
+
+
+= ECS Operations
+
+All production and staging workloads run on ECS Fargate. Use +--profile unicycling+ for AWS CLI
+commands targeting these environments.
+
+== Scheduled Tasks
+
+A nightly EventBridge rule runs <tt>rake update_proposal_states</tt> at midnight UTC.
+Rule names: <tt>unicycling-rulebook-{env}-update-proposal-states</tt>
+
+=== Did the task fire? (EventBridge invocation)
+
+AWS Console: *EventBridge → Rules → {rule name} → Monitoring tab*
+
+Shows +InvocationCount+ and +FailedInvocationCount+ metrics. A failed invocation means
+EventBridge could not launch the ECS task at all (usually an IAM issue). Check CloudTrail
+for the exact error:
+
+  aws cloudtrail lookup-events \
+    --lookup-attributes AttributeKey=EventName,AttributeValue=RunTask \
+    --region us-west-2 --profile unicycling \
+    --query 'Events[0].CloudTrailEvent' --output text | python3 -m json.tool
+
+Look for <tt>errorCode</tt> and <tt>errorMessage</tt> in the output.
+
+=== Did the task succeed? (ECS exit code)
+
+AWS Console: *ECS → Clusters → unicycling-rulebook-{env} → Tasks tab → filter: Stopped*
+
+Click the task and check *Exit code* under the container. Exit code 0 = success.
+
+CLI:
+
+  # List recently stopped tasks
+  aws ecs list-tasks --cluster unicycling-rulebook-prod \
+    --desired-status STOPPED --region us-west-2 --profile unicycling
+
+  # Inspect exit code and stop reason for a specific task
+  aws ecs describe-tasks --cluster unicycling-rulebook-prod \
+    --region us-west-2 --profile unicycling --tasks <task-arn> \
+    --query 'tasks[0].{ExitCode:containers[0].exitCode,StopReason:stoppedReason}'
+
+Tasks started by EventBridge have <tt>startedBy: "events"</tt>, which distinguishes them from
+manually launched tasks.
+
+=== What did the task do? (application logs)
+
+All task output goes to the *web* CloudWatch log group. The log stream name is
+<tt>web/web/{short-task-id}</tt> where the short task ID is the last segment of the task ARN.
+
+AWS Console: *CloudWatch → Log Groups → /ecs/unicycling-rulebook-{env}-web*
+Filter streams by the task ID fragment.
+
+CLI:
+
+  aws logs get-log-events \
+    --log-group-name /ecs/unicycling-rulebook-prod-web \
+    --log-stream-name web/web/<short-task-id> \
+    --region us-west-2 --profile unicycling \
+    --query 'events[*].message' --output text
+
+
+== General Health Monitoring
+
+=== Application logs (web container)
+
+Tail recent log output across all streams:
+
+  aws logs tail /ecs/unicycling-rulebook-prod-web \
+    --since 1h --follow \
+    --region us-west-2 --profile unicycling
+
+Filter for errors only:
+
+  aws logs tail /ecs/unicycling-rulebook-prod-web \
+    --since 1h --filter-pattern "ERROR" \
+    --region us-west-2 --profile unicycling
+
+=== 500 errors
+
+*ALB access logs* are the authoritative source for HTTP status codes. In the AWS Console:
+*EC2 → Load Balancers → unicycling-rulebook-{env} → Monitoring tab* shows
++HTTPCode_Target_5XX_Count+ and +HTTPCode_ELB_5XX_Count+.
+
+For the request that caused the error, check the Rails log in CloudWatch for the
+corresponding timestamp:
+
+  aws logs tail /ecs/unicycling-rulebook-prod-web \
+    --since 30m --filter-pattern '"500"' \
+    --region us-west-2 --profile unicycling
+
+=== CPU usage
+
+AWS Console: *ECS → Clusters → unicycling-rulebook-{env} → Services → web →
+Metrics tab* — shows CPU and memory utilisation for the service.
+
+CLI (last hour, average % utilisation):
+
+  aws cloudwatch get-metric-statistics \
+    --namespace AWS/ECS \
+    --metric-name CPUUtilization \
+    --dimensions Name=ClusterName,Value=unicycling-rulebook-prod \
+                 Name=ServiceName,Value=unicycling-rulebook-prod-web \
+    --start-time $(date -u -v-1H +%Y-%m-%dT%H:%M:%SZ) \
+    --end-time $(date -u +%Y-%m-%dT%H:%M:%SZ) \
+    --period 300 --statistics Average \
+    --region us-west-2 --profile unicycling
+
+Sustained CPU above ~70% (of the 512 CPU units allocated) indicates the task is
+CPU-bound. Options: increase the task CPU in <tt>terraform/ecs.tf</tt>, or add more web
+tasks by increasing the service's +desired_count+.
+
+=== Memory usage
+
+Same console path as CPU. CLI (swap ClusterName/ServiceName metric name to +MemoryUtilization+):
+
+  aws cloudwatch get-metric-statistics \
+    --namespace AWS/ECS \
+    --metric-name MemoryUtilization \
+    --dimensions Name=ClusterName,Value=unicycling-rulebook-prod \
+                 Name=ServiceName,Value=unicycling-rulebook-prod-web \
+    --start-time $(date -u -v-1H +%Y-%m-%dT%H:%M:%SZ) \
+    --end-time $(date -u +%Y-%m-%dT%H:%M:%SZ) \
+    --period 300 --statistics Maximum \
+    --region us-west-2 --profile unicycling
+
+Each task has 1024 MB allocated. If utilisation regularly exceeds 80%, consider
+increasing memory in <tt>terraform/ecs.tf</tt> (bump the task +memory+ field). If tasks are
+being killed with exit code 137, they are OOM-killed — check CloudWatch for
+<tt>OutOfMemoryError</tt> in stopped task events.
+
+=== Service stability / task restarts
+
+If a service is crash-looping, ECS will show repeated task launches in the Events tab.
+
+AWS Console: *ECS → Services → {service} → Events tab* — shows deployment and task
+start/stop events in reverse chronological order.
+
+CLI — show the 5 most recent service events:
+
+  aws ecs describe-services \
+    --cluster unicycling-rulebook-prod \
+    --services unicycling-rulebook-prod-web \
+    --region us-west-2 --profile unicycling \
+    --query 'services[0].events[:5]'
+
+=== Open a shell on a running container (ECS Exec)
+
+Requires the <tt>session-manager-plugin</tt> installed locally.
+
+  # Find a running task ID
+  aws ecs list-tasks --cluster unicycling-rulebook-prod \
+    --service-name unicycling-rulebook-prod-web \
+    --region us-west-2 --profile unicycling
+
+  # Open a shell
+  aws ecs execute-command \
+    --cluster unicycling-rulebook-prod \
+    --task <task-id> \
+    --container web \
+    --interactive --command "/bin/bash" \
+    --region us-west-2 --profile unicycling
