@@ -48,3 +48,20 @@ describe Revision, type: :model do
     expect(rev2.num).to eq(2)
   end
 end
+
+# == Schema Information
+#
+# Table name: revisions
+#
+#  id                 :integer          not null, primary key
+#  proposal_id        :integer
+#  body               :text
+#  background         :text
+#  references         :text
+#  change_description :text
+#  user_id            :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#  num                :integer
+#  rule_text          :text
+#

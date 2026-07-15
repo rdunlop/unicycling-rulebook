@@ -13,3 +13,17 @@ FactoryBot.define do
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: committee_members
+#
+#  id           :integer          not null, primary key
+#  committee_id :integer
+#  user_id      :integer
+#  voting       :boolean          default(TRUE), not null
+#  created_at   :datetime
+#  updated_at   :datetime
+#  admin        :boolean          default(FALSE), not null
+#  editor       :boolean          default(FALSE), not null
+#

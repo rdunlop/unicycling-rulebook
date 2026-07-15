@@ -12,6 +12,8 @@
 #  subdomain          :string
 #  admin_upgrade_code :string
 #  proposals_allowed  :boolean          default(TRUE), not null
+#  voting_days        :integer          default(5), not null
+#  review_days        :integer          default(5), not null
 #
 # Indexes
 #

@@ -335,3 +335,24 @@ describe Proposal, type: :model do
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: proposals
+#
+#  id                          :integer          not null, primary key
+#  committee_id                :integer
+#  status                      :string
+#  submit_date                 :date
+#  review_start_date           :date
+#  review_end_date             :date
+#  vote_start_date             :date
+#  vote_end_date               :date
+#  tabled_date                 :date
+#  transition_straight_to_vote :boolean          default(TRUE), not null
+#  owner_id                    :integer
+#  title                       :text
+#  created_at                  :datetime
+#  updated_at                  :datetime
+#  mail_messageid              :string
+#

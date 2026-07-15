@@ -15,3 +15,18 @@ FactoryBot.define do
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: discussions
+#
+#  id           :integer          not null, primary key
+#  proposal_id  :integer
+#  title        :string
+#  status       :string
+#  owner_id     :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#  committee_id :integer
+#  body         :text
+#

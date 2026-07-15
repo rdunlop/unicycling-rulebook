@@ -65,3 +65,16 @@ describe Vote, type: :model do
     expect(@vote2.valid?).to eq(true)
   end
 end
+
+# == Schema Information
+#
+# Table name: votes
+#
+#  id          :integer          not null, primary key
+#  proposal_id :integer
+#  user_id     :integer
+#  vote        :string
+#  created_at  :datetime
+#  updated_at  :datetime
+#  comment     :text
+#
