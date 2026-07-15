@@ -46,7 +46,7 @@ gem 'capistrano-rvm'
 gem 'eye'
 
 group :development, :test, :cucumber do
-  gem 'annotate'
+  gem 'annotaterb'
   gem 'bundler-audit', require: false
   gem 'capybara'
   gem 'codeclimate_circle_ci_coverage'
