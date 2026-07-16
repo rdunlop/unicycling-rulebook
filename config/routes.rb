@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       put 'table', to: 'proposal_progress#table'
     end
     resources :votes, except: [:show]
-    resources :revisions, except: %i[edit index put destroy]
+    resources :revisions, except: %i[edit index update destroy]
   end
 
   resources :discussions, only: [:show] do

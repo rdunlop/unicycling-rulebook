@@ -4,7 +4,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 ruby File.open(File.expand_path(".ruby-version", File.dirname(__FILE__))) { |f| f.read.chomp }
 gem 'propshaft'
-gem 'rails', "~> 7.2.3"
+gem 'rails', "~> 8.0.0"
 
 # authorization
 gem 'devise'
@@ -46,7 +46,7 @@ gem 'capistrano-rvm'
 gem 'eye'
 
 group :development, :test, :cucumber do
-  gem 'annotate'
+  gem 'annotaterb'
   gem 'bundler-audit', require: false
   gem 'capybara'
   gem 'codeclimate_circle_ci_coverage'

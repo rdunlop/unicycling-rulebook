@@ -39,3 +39,18 @@ describe Proposal, type: :model do
     expect(discussion.reload.comments).to eq([comment1, comment2, comment3])
   end
 end
+
+# == Schema Information
+#
+# Table name: discussions
+#
+#  id           :integer          not null, primary key
+#  proposal_id  :integer
+#  title        :string
+#  status       :string
+#  owner_id     :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#  committee_id :integer
+#  body         :text
+#
