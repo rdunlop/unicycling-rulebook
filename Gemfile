@@ -4,7 +4,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 ruby File.open(File.expand_path(".ruby-version", File.dirname(__FILE__))) { |f| f.read.chomp }
 gem 'propshaft'
-gem 'rails', "~> 8.0.0"
+gem 'rails', "~> 8.1.3"
 
 # authorization
 gem 'devise'
