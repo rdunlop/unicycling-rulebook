@@ -78,6 +78,16 @@ describe CommitteesController, type: :controller do
   end
 
   describe "GET show" do
+    describe "when not authorized and referred from another host" do
+      it "redirects to the root path instead of the external referer" do
+        committee = FactoryBot.create(:committee, private: true)
+        request.env["HTTP_REFERER"] = "https://www.google.com/"
+        get :show, params: { id: committee.id }
+        expect(response).to redirect_to(root_path)
+        expect(flash[:alert]).to eq("You are not authorized to perform this action.")
+      end
+    end
+
     describe "when not signed in" do
       before(:each) do
         sign_out @user
