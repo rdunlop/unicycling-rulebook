@@ -9,8 +9,13 @@ variable "environment" {
 }
 
 variable "rails_env" {
-  type = string
+  type        = string
   description = "The rails environment to set on the server"
+}
+
+variable "alb_domain" {
+  type        = string
+  description = "Name the ALB serves, e.g. rulebook-alb.unicycling-software.com. The public domain becomes a CNAME to this."
 }
 
 variable "domain" {
@@ -27,16 +32,6 @@ variable "subject_alt_names" {
 variable "zone_id" {
   type        = string
   description = "Route53 hosted zone ID"
-}
-
-variable "ec2_instance_id" {
-  type        = string
-  description = "ID of the existing EC2 instance to register in the ALB target group"
-}
-
-variable "ec2_security_group_id" {
-  type        = string
-  description = "ID of the existing EC2 security group; an ingress rule will be added allowing port 80 from the ALB"
 }
 
 variable "vpc_id" {
@@ -79,13 +74,3 @@ variable "redis_db" {
   description = "Redis database number for the web/sidekiq processes (sidekiq uses redis_db+1)"
 }
 
-variable "ecs_traffic_weight" {
-  type        = number
-  default     = 0
-  description = "Weight of traffic sent to ECS (0-100). EC2 receives 100 minus this value. Set to 100 for full ECS cutover."
-
-  validation {
-    condition     = var.ecs_traffic_weight >= 0 && var.ecs_traffic_weight <= 100
-    error_message = "ecs_traffic_weight must be between 0 and 100."
-  }
-}
