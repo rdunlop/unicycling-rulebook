@@ -28,7 +28,7 @@ describe Rulebook, type: :model do
     end
 
     it "is excluded even when explicitly requested with only:" do
-      expect(rulebook.to_json(only: [:subdomain, :admin_upgrade_code])).not_to include("SUPERSECRET")
+      expect(rulebook.to_json(only: %i[subdomain admin_upgrade_code])).not_to include("SUPERSECRET")
     end
 
     it "is excluded when serializing a collection" do

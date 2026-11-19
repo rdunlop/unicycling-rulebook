@@ -1,5 +1,11 @@
 # CLAUDE.md
 
+## Deployment and logs
+
+- The app runs on ECS. Deploys go through CI, and the image is what is running in ECS.
+- Production and staging logs are in CloudWatch, not on the servers. Do not look for logs in `shared/log/` or any other server path.
+- Capistrano (`config/deploy.rb`, `config/deploy/`) is dead and must not be used. Do not run `cap` commands or treat `/home/ec2-user/unicycling-rulebook` as the live app. Removal is tracked in `TODO`.
+
 ## Terraform
 
 - Run Terraform only through `terraform/bin/tf <staging|prod> <command> [args]`. Do not run `terraform` directly, and do not run `terraform init` by hand in `terraform/`. The wrapper re-initializes the backend for the environment on every run, which stops a prod plan from using the staging state.
