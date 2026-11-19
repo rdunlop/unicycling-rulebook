@@ -41,6 +41,12 @@ describe RulebooksController, type: :controller do
       get :index
       expect(assigns(:rulebooks)).to include(rulebook)
     end
+
+    it "does not serve JSON" do
+      expect {
+        get :index, format: :json
+      }.to raise_error(ActionController::UnknownFormat)
+    end
   end
 
   describe "GET show" do
