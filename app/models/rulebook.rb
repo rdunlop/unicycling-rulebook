@@ -21,6 +21,8 @@
 #
 
 class Rulebook < ApplicationRecord
+  self.filter_attributes += [:admin_upgrade_code]
+
   validates :subdomain, uniqueness: true
 
   def rulebook
@@ -45,5 +47,11 @@ class Rulebook < ApplicationRecord
 
   def self.find_first_by_hostname(hostname)
     find_by(subdomain: hostname.split('.')[0])
+  end
+
+  # The admin upgrade code is a secret: never include it in as_json, to_json or to_xml.
+  # Strip it from the result, not via :except, because Rails ignores :except when :only is given.
+  def serializable_hash(options = nil)
+    super.except("admin_upgrade_code")
   end
 end
