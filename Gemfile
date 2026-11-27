@@ -9,6 +9,7 @@ gem 'rails', "~> 8.1.4"
 # authorization
 gem 'devise'
 gem 'pundit'
+gem 'rack-attack'
 
 # front end
 gem 'breadcrumbs_on_rails'
