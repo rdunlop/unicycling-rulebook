@@ -10,7 +10,7 @@
     "foundation-sites": "^6.8.1",
     "jquery": "^4.0.0",
     "moment": "^2.31.0",
-    "select2": "^4.1.1",
+    "select2": "^4.2.0",
     "tinymce": "^8.10.2"
   }
 }
